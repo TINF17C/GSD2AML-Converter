@@ -2,3 +2,4 @@ src/*/obj
 src/*/bin
 src/*/.vs
 src/.vs
+*.user
