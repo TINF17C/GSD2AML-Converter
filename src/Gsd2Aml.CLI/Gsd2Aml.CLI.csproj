@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gda2AmlConverter\Gsd2AmlConverter.csproj">
+    <ProjectReference Include="..\Gsd2AmlConverter\Gsd2AmlConverter.csproj">
       <Project>{ae5f413e-6e4f-41fd-b352-2ca720e98551}</Project>
       <Name>Gsd2AmlConverter</Name>
     </ProjectReference>
