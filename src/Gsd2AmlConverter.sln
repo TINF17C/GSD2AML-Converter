@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2AmlConverter", "Gda2AmlConverter\Gsd2AmlConverter.csproj", "{AE5F413E-6E4F-41FD-B352-2CA720E98551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.CLI", "Gsd2Aml.CLI\Gsd2Aml.CLI.csproj", "{230F627D-51CA-4456-9ADA-DA98A6260E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.CLI", "Gda2Aml.CLI\Gsd2Aml.CLI.csproj", "{230F627D-51CA-4456-9ADA-DA98A6260E8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Gui", "Gsd2Aml.Gui\Gsd2Aml.Gui.csproj", "{866BA688-F4E8-4CC9-A832-C16E7C0795ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Gui", "Gda2Aml.Gui\Gsd2Aml.Gui.csproj", "{866BA688-F4E8-4CC9-A832-C16E7C0795ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2AmlConverter", "Gsd2AmlConverter\Gsd2AmlConverter.csproj", "{AE5F413E-6E4F-41FD-B352-2CA720E98551}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Release|Any CPU.Build.0 = Release|Any CPU
 		{230F627D-51CA-4456-9ADA-DA98A6260E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{230F627D-51CA-4456-9ADA-DA98A6260E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{230F627D-51CA-4456-9ADA-DA98A6260E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{866BA688-F4E8-4CC9-A832-C16E7C0795ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{866BA688-F4E8-4CC9-A832-C16E7C0795ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{866BA688-F4E8-4CC9-A832-C16E7C0795ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
