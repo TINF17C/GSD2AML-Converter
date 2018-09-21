@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{866BA688-F4E8-4CC9-A832-C16E7C0795ED}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Gda2Aml.Gui</RootNamespace>
-    <AssemblyName>Gda2Aml.Gui</AssemblyName>
+    <RootNamespace>Gsd2Aml.Gui</RootNamespace>
+    <AssemblyName>Gsd2Aml.Gui</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -95,9 +95,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gda2AmlConverter\Gda2AmlConverter.csproj">
+    <ProjectReference Include="..\Gda2AmlConverter\Gsd2AmlConverter.csproj">
       <Project>{ae5f413e-6e4f-41fd-b352-2ca720e98551}</Project>
-      <Name>Gda2AmlConverter</Name>
+      <Name>Gsd2AmlConverter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
