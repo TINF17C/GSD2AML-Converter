@@ -20,10 +20,8 @@ namespace Gsd2Aml.CLI
         {
             var parameter = new Dictionary<string, string>
             {
-                { CPathToFile, null },
-                { CPathToFileShort, null },
-                { CStringOutput, null },
-                { CStringOutputShort, null}
+                { CPathToFile, string.Empty },
+                { CPathToFileShort, string.Empty }
             };
 
             if (args.Length == 0)
@@ -31,19 +29,22 @@ namespace Gsd2Aml.CLI
                 PrintHelpText();
             }
 
-            ParseCliParameter(args, parameter);
+            CheckCliArguments(args);
 
-            if (File.Exists(args[0]))
+            ParseCliArguments(args, parameter);
+
+            var pathToFile = string.IsNullOrEmpty(parameter[CPathToFileShort]) ? parameter[CPathToFile] : parameter[CPathToFileShort];
+            var stringOutput = Array.IndexOf(args, CStringOutputShort) >= 0 || Array.IndexOf(args, CStringOutput) >= 0;
+
+            if (!string.IsNullOrEmpty(pathToFile) && File.Exists(pathToFile))
             {
                 // TODO: call converter
+                // convert(pathToFile, stringOutput);
             }
-            else if (File.Exists(parameter[CPathToFileShort]))
+            else if (File.Exists(args[0]))
             {
                 // TODO: call converter
-            }
-            else if (File.Exists(parameter[CPathToFile]))
-            {
-                // TODO: call converter
+                // convert(args[0], stringOutput);
             }
             else
             {
@@ -52,7 +53,7 @@ namespace Gsd2Aml.CLI
             }
         }
 
-        private static void ParseCliParameter(IList<string> args, IDictionary<string, string> parameter)
+        private static void ParseCliArguments(IList<string> args, IDictionary<string, string> parameter)
         {
             for (var i = 0; i < args.Count; i++)
             {
@@ -67,6 +68,20 @@ namespace Gsd2Aml.CLI
                         parameter[args[i]] = args[i + 1];
                     }
                 }
+            }
+        }
+
+        private static void CheckCliArguments(IList<string> args)
+        {
+            if (args.IndexOf(CPathToFileShort) >= 0 && args.IndexOf(CPathToFile) >= 0)
+            {
+                Console.WriteLine($"{Environment.NewLine}Error: You used {CPathToFile} and {CPathToFileShort} while only one of them is allowed.{Environment.NewLine}For more information: 'gsd2aml --help'.");
+                Environment.Exit(1);
+            }
+            else if (args.IndexOf(CStringOutputShort) >= 0 && args.IndexOf(CStringOutput) >= 0)
+            {
+                Console.WriteLine($"{Environment.NewLine}Error: You used {CStringOutput} and {CStringOutputShort} while only one of them is allowed.{Environment.NewLine}For more information: 'gsd2aml --help'.");
+                Environment.Exit(1);
             }
         }
 
