@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -52,7 +52,7 @@ namespace Gsd2Aml.CLI
             }
         }
 
-        private static void ParseCliParameter(IReadOnlyList<string> args, IDictionary<string, string> parameter)
+        private static void ParseCliParameter(IList<string> args, IDictionary<string, string> parameter)
         {
             for (var i = 0; i < args.Count; i++)
             {
