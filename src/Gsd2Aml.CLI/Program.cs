@@ -29,8 +29,6 @@ namespace Gsd2Aml.CLI
                                                   $"{Environment.NewLine}\t-p, --path file\t\tThe path to the file which should be converted. (REQUIRED)" +
                                                   $"{Environment.NewLine}\t-s, --string\t\tSet the output type to a string. Default: the output type is a file. (OPTIONAL)" +
                                                   $"{Environment.NewLine}\t-o, --output string\tSet the path of the output directory. Default: the output path is the input path of the gsd file. (OPTIONAL)" +
-                                                  $"{Environment.NewLine}" +
-                                                  $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Note:" +
                                                   $"{Environment.NewLine}\t--output and --string can't be used together.";
 
