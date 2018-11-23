@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.CLI", "Gsd2Aml.CLI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Gui", "Gsd2Aml.Gui\Gsd2Aml.Gui.csproj", "{866BA688-F4E8-4CC9-A832-C16E7C0795ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2AmlConverter", "Gsd2AmlConverter\Gsd2AmlConverter.csproj", "{AE5F413E-6E4F-41FD-B352-2CA720E98551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Lib", "Gsd2Aml.Lib\Gsd2Aml.Lib.csproj", "{AE5F413E-6E4F-41FD-B352-2CA720E98551}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
