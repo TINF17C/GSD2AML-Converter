@@ -52,6 +52,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gsd2Aml.CLI\Gsd2Aml.CLI.csproj">
+      <Project>{230f627d-51ca-4456-9ada-da98a6260e8a}</Project>
+      <Name>Gsd2Aml.CLI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gsd2Aml.Gui\Gsd2Aml.Gui.csproj">
+      <Project>{866ba688-f4e8-4cc9-a832-c16e7c0795ed}</Project>
+      <Name>Gsd2Aml.Gui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gsd2Aml.Lib\Gsd2Aml.Lib.csproj">
+      <Project>{ae5f413e-6e4f-41fd-b352-2ca720e98551}</Project>
+      <Name>Gsd2Aml.Lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

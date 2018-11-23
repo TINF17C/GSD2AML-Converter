@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Gui", "Gsd2Aml.Gui\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Lib", "Gsd2Aml.Lib\Gsd2Aml.Lib.csproj", "{AE5F413E-6E4F-41FD-B352-2CA720E98551}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsd2Aml.Test", "Gsd2Aml.Test\Gsd2Aml.Test.csproj", "{D39B038A-BE29-4016-85C3-7691A138CD71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE5F413E-6E4F-41FD-B352-2CA720E98551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D39B038A-BE29-4016-85C3-7691A138CD71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D39B038A-BE29-4016-85C3-7691A138CD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D39B038A-BE29-4016-85C3-7691A138CD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D39B038A-BE29-4016-85C3-7691A138CD71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
