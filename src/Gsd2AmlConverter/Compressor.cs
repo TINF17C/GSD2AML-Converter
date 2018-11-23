@@ -18,7 +18,7 @@ namespace Gsd2AmlConverter
         /// <param name="source">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in.</param>
         /// <exception cref="IOException"></exception>
-        private void zip(string source, string destination)
+        private void Zip(string source, string destination)
         {
             try
             {
