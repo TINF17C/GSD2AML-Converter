@@ -3,10 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gda2Aml.Gui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="GSD2AML Converter" Height="300" ResizeMode="NoResize" Width="700" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Content="Input file:" Grid.Column="0" Grid.Row="0" Margin="5" VerticalAlignment="Center" />
+        <DockPanel Grid.Column="1" Grid.Row="0" Margin="5" VerticalAlignment="Center">
+            <Button Content="..." DockPanel.Dock="Right" Padding="5,0" />
+            <TextBox/>
+        </DockPanel>
+        <Label Content="Output file:" Grid.Column="0" Grid.Row="1" Margin="5" VerticalAlignment="Center" />
+        <DockPanel Grid.Column="1" Grid.Row="1" Margin="5" VerticalAlignment="Center">
+            <Button Content="..." DockPanel.Dock="Right" Padding="5,0" />
+            <TextBox/>
+        </DockPanel>
+        <Button Content="Convert" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Height="Auto" HorizontalAlignment="Center" Padding="5" VerticalAlignment="Center"  Width="Auto" />
     </Grid>
 </Window>
