@@ -6,10 +6,34 @@ namespace Gsd2AmlConverter
 {
     public class Compressor
     {
-        // TODO: .NET doc
-        public void Compress(string amlFilePath)
-        {
 
+        const string GSD2AML_NAME = "GSD2AML";
+
+        /// <summary>
+        /// Creates a zip archive from a directory and the relevant GSD ressources.
+        /// </summary>
+        /// <param name="aml">The aml file you want to be zipped.</param>
+        /// <param name="destination">The directory you want to store the archive in.</param>
+        /// <param name="ressources">An array of paths to ressources to be part of the AMLX package.</param>
+        /// <exception cref="IOException"></exception>
+        public void Compress(string aml, string destination, string amlx_name, string[] ressources)
+        {
+            string tmp_path = CreateTmpDirectory(GSD2AML_NAME);
+
+            try
+            {
+                foreach (string ressource in ressources)
+                {
+                    MoveFile(ressource, tmp_path);
+                }
+                MoveFile(aml, tmp_path);
+
+                Zip(tmp_path, Path.Combine(destination, amlx_name));
+            }
+            catch (IOException)
+            {
+                // TODO: Wait for logger module.
+            }
         }
 
         /// <summary>
@@ -27,22 +51,7 @@ namespace Gsd2AmlConverter
             catch (IOException)
             {
                 // TODO: Wait for logger module.
-                throw;
             }
-        }
-
-        /// <summary>
-        /// Parses the gsd object for external resources and makes a list out of them.
-        /// </summary>
-        /// <param name="gsd">The gsd object to be parsed.</param>
-        /// <returns>A list of external resources.</returns>
-        private List<string> ParseGsdForResources()
-        {
-            List<string> resources = new List<string>();
-
-            // TODO: Parse the GSD
-
-            return resources;
         }
 
         /// <summary>
@@ -71,16 +80,35 @@ namespace Gsd2AmlConverter
         /// <param name="destination">The destination path.</param>
         /// <param name="newFileName">The new file name.</param>
         /// <exception cref="IOException"></exception>
-        private void MoveFile(string source, string destination, string newFileName)
+        private void MoveFile(string source, string destination)
         {
             try
             {
-                File.Move(source, Path.Combine(destination, newFileName));
+                File.Move(source, destination);
             }
             catch (IOException)
             {
                 // TODO: Wait for logger module.
-                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a folder if it exists.
+        /// </summary>
+        /// <param name="target">The target path.</param>
+        /// <exception cref="IOException"></exception>
+        private void DelteFolder(string target)
+        {
+            try
+            {
+                if (Directory.Exists(target))
+                {
+                    Directory.Delete(target);
+                }
+            }
+            catch (IOException)
+            {
+                // TODO: Wait for logger module.
             }
         }
     }

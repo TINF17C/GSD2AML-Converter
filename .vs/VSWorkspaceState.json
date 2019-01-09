@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Gsd2Aml.CLI",
+    "\\src\\Gsd2AmlConverter"
+  ],
+  "SelectedNode": "\\src\\Gsd2AmlConverter\\Compressor.cs",
+  "PreviewInSolutionExplorer": false
+}
