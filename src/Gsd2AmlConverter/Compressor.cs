@@ -29,6 +29,8 @@ namespace Gsd2AmlConverter
                 MoveFile(aml, tmp_path);
 
                 Zip(tmp_path, Path.Combine(destination, amlx_name));
+
+                DelteFolder(tmp_path);
             }
             catch (IOException)
             {
