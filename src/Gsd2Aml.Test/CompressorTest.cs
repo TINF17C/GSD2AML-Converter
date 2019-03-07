@@ -1,40 +1,32 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using Gsd2Aml.Lib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO.Compression;
-using System.Diagnostics;
 
-namespace Gsd2AmlConverter.Test
+namespace Gsd2Aml.Test
 {
     [TestClass]
     public class CompressorTest
     {
-        /// <summary>
-        ///  Gets or sets the test context which provides
-        ///  information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
-
         [TestMethod]
         public void TestCompressor()
         {
-            string testDir = new Uri(System.IO.Path
+            var testDir = new Uri(Path
                 .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)
                 .AbsolutePath, @"..\..\..\..\..\tst"))
                 .LocalPath;
 
             const string amlFileName = "aml.xml";
 
-            var res = Directory.GetFiles(testDir).Where((f) => !Path.GetFileName(f).Equals(amlFileName)).ToArray();
-            var amlFile = Directory.GetFiles(testDir).Where((f) => Path.GetFileName(f).Equals(amlFileName)).First();
+            var res = Directory.GetFiles(testDir).Where(f => !Path.GetFileName(f).Equals(amlFileName)).ToArray();
+            var amlFile = Directory.GetFiles(testDir).First(f => Path.GetFileName(f).Equals(amlFileName));
+            
+            var finalAmlxFile = Compressor.Compress(amlFile, testDir, "myAmlx.amlx", res);
 
-            var compressor = new Compressor();
-
-            var finalAMLXFile = compressor.Compress(amlFile, testDir, "myAmlx.amlx", res);
-
-            using (var archive = ZipFile.OpenRead(finalAMLXFile))
+            using (var archive = ZipFile.OpenRead(finalAmlxFile))
             {
                 foreach (var entry in archive.Entries)
                 {
@@ -44,19 +36,18 @@ namespace Gsd2AmlConverter.Test
                         throw new ArgumentException($"We found {entry.Name}, which was not expected.");
                     }
                 }
-                foreach (var fileName in res.Select(f => Path.GetFileName(f)))
+                foreach (var fileName in res.Select(Path.GetFileName))
                 {
-                    if (!archive.Entries.Any((f) => f.Equals(fileName)))
+                    if (!archive.Entries.Any(f => f.Name.Equals(fileName)))
                     {
                         throw new ArgumentException($"We are missing {fileName} in the ZIP-archive.");
                     }
-
                 }
             }
 
             try
             {
-                File.Delete(finalAMLXFile);
+                File.Delete(finalAmlxFile);
             }
             catch
             {

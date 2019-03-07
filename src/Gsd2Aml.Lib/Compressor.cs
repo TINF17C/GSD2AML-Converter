@@ -1,38 +1,38 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 
-namespace Gsd2AmlConverter
+namespace Gsd2Aml.Lib
 {
     public class Compressor
     {
 
-        const string GSD2AML_NAME = "GSD2AML";
+        private const string Gsd2AmlName = "GSD2AML";
 
         /// <summary>
         /// Creates a zip archive from a directory and the relevant GSD ressources.
         /// </summary>
         /// <param name="aml">The aml file you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in.</param>
+        /// <param name="amlxName"></param>
         /// <param name="ressources">An array of paths to ressources to be part of the AMLX package.</param>
         /// <exception cref="IOException"></exception>
-        public string Compress(string aml, string destination, string amlxName, string[] ressources)
+        public static string Compress(string aml, string destination, string amlxName, string[] ressources)
         {
-            string tmp_path = CreateTmpDirectory(GSD2AML_NAME);
+            var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
             try
             {
-                foreach (string ressource in ressources)
+                foreach (var ressource in ressources)
                 {
                     var fileName = Path.GetFileName(ressource);
-                    CopyFile(ressource, Path.Combine(tmp_path, fileName));
+                    CopyFile(ressource, Path.Combine(tmpPath, fileName));
                 }
                 var amlFileName = Path.GetFileName(aml);
-                CopyFile(aml, Path.Combine(tmp_path, amlFileName));
+                CopyFile(aml, Path.Combine(tmpPath, amlFileName));
 
-                Zip(tmp_path, Path.Combine(destination, amlxName));
+                Zip(tmpPath, Path.Combine(destination, amlxName));
 
-                DelteFolder(tmp_path);
+                DelteFolder(tmpPath);
 
                 return Path.Combine(destination, amlxName);
             }
@@ -50,7 +50,7 @@ namespace Gsd2AmlConverter
         /// <param name="source">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in.</param>
         /// <exception cref="IOException"></exception>
-        private void Zip(string source, string destination)
+        private static void Zip(string source, string destination)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Gsd2AmlConverter
         /// <param name="folderName">The folder to be created.</param>
         /// <returns>The path to the directory as a string.</returns>
         /// <exception cref="IOException"></exception>
-        private string CreateTmpDirectory(string folderName)
+        private static string CreateTmpDirectory(string folderName)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Gsd2AmlConverter
         /// <param name="destination">The destination path.</param>
         /// <param name="newFileName">The new file name.</param>
         /// <exception cref="IOException"></exception>
-        private void CopyFile(string source, string destination)
+        private static void CopyFile(string source, string destination)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace Gsd2AmlConverter
         /// </summary>
         /// <param name="target">The target path.</param>
         /// <exception cref="IOException"></exception>
-        private void DelteFolder(string target)
+        private static void DelteFolder(string target)
         {
             try
             {

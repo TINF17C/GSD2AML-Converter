@@ -7,8 +7,8 @@
     <ProjectGuid>{AE5F413E-6E4F-41FD-B352-2CA720E98551}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gsd2AmlConverter</RootNamespace>
-    <AssemblyName>Gsd2AmlConverter</AssemblyName>
+    <RootNamespace>Gsd2Aml.Lib</RootNamespace>
+    <AssemblyName>Gsd2Aml.Lib</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -1,4 +1,4 @@
-﻿namespace Gsd2AmlConverter.Models
+﻿namespace Gsd2Aml.Lib.Models
 {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
