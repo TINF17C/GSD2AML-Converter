@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Gsd2Aml.Test")]
+[assembly: AssemblyTitle("Gsd2AmlConverter.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Gsd2Aml.Test")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("dmc-digital-media-center-GmbH")]
+[assembly: AssemblyProduct("Gsd2AmlConverter.Test")]
+[assembly: AssemblyCopyright("Copyright © dmc-digital-media-center-GmbH 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("d39b038a-be29-4016-85c3-7691a138cd71")]
+[assembly: Guid("43b3b135-3a66-42a9-941e-9f787bfe7e26")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
