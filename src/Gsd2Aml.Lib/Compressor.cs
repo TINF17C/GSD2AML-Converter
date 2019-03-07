@@ -16,7 +16,7 @@ namespace Gsd2AmlConverter
         /// <param name="destination">The directory you want to store the archive in.</param>
         /// <param name="ressources">An array of paths to ressources to be part of the AMLX package.</param>
         /// <exception cref="IOException"></exception>
-        public void Compress(string aml, string destination, string amlx_name, string[] ressources)
+        public string Compress(string aml, string destination, string amlxName, string[] ressources)
         {
             string tmp_path = CreateTmpDirectory(GSD2AML_NAME);
 
@@ -24,18 +24,24 @@ namespace Gsd2AmlConverter
             {
                 foreach (string ressource in ressources)
                 {
-                    MoveFile(ressource, tmp_path);
+                    var fileName = Path.GetFileName(ressource);
+                    CopyFile(ressource, Path.Combine(tmp_path, fileName));
                 }
-                MoveFile(aml, tmp_path);
+                var amlFileName = Path.GetFileName(aml);
+                CopyFile(aml, Path.Combine(tmp_path, amlFileName));
 
-                Zip(tmp_path, Path.Combine(destination, amlx_name));
+                Zip(tmp_path, Path.Combine(destination, amlxName));
 
                 DelteFolder(tmp_path);
+
+                return Path.Combine(destination, amlxName);
             }
             catch (IOException)
             {
+                throw;
                 // TODO: Wait for logger module.
             }
+            return string.Empty;
         }
 
         /// <summary>
@@ -52,6 +58,7 @@ namespace Gsd2AmlConverter
             }
             catch (IOException)
             {
+                throw;
                 // TODO: Wait for logger module.
             }
         }
@@ -82,11 +89,11 @@ namespace Gsd2AmlConverter
         /// <param name="destination">The destination path.</param>
         /// <param name="newFileName">The new file name.</param>
         /// <exception cref="IOException"></exception>
-        private void MoveFile(string source, string destination)
+        private void CopyFile(string source, string destination)
         {
             try
             {
-                File.Move(source, destination);
+                File.Copy(source, destination, true);
             }
             catch (IOException)
             {
@@ -105,11 +112,12 @@ namespace Gsd2AmlConverter
             {
                 if (Directory.Exists(target))
                 {
-                    Directory.Delete(target);
+                    Directory.Delete(target, true);
                 }
             }
             catch (IOException)
             {
+                throw;
                 // TODO: Wait for logger module.
             }
         }
