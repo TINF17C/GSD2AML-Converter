@@ -1,45 +1,49 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Gsd2Aml.CLI
 {
     public class Program
     {
-        private const string CPathToFile = "--path";
-        private const string CPathToFileShort = "-p";
+        private const string CHelp = "--help";
+        private const string CHelpShort = "-h";
+
+        private const string CInputFile = "--input";
+        private const string CInputFileShort = "-i";
+
+        private const string COutputFile = "--output";
+        private const string COutputFileShort = "-o";
 
         private const string CStringOutput = "--string";
         private const string CStringOutputShort = "-s";
 
-        private const string CHelp = "--help";
-        private const string CHelpShort = "-h";
-
-        private const string COutputPath = "--output";
-        private const string COutputPathShort = "-o";
-
+        private static readonly string[] Arguments = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
         private static readonly string HelpText = $"{Environment.NewLine}GSD2AML Converter" +
                                                   $"{Environment.NewLine}" +
-                                                  $"{Environment.NewLine}Converts a GSD-formatted file in a AML-formatted file." +
+                                                  $"{Environment.NewLine}Converts a GSD-formatted file in an AML-formatted file." +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Usage:" +
-                                                  $"{Environment.NewLine}\tgsd2aml [-p | --path] <path-to-gsd-file> [options]" +
+                                                  $"{Environment.NewLine}\tgsd2aml [-i | --input] <path-to-gsd-file> [options]" +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Options:" +
-                                                  $"{Environment.NewLine}\t-p, --path file\t\tThe path to the file which should be converted. (REQUIRED)" +
-                                                  $"{Environment.NewLine}\t-s, --string\t\tSet the output type to a string. Default: the output type is a file. (OPTIONAL)" +
-                                                  $"{Environment.NewLine}\t-o, --output string\tSet the path of the output directory. Default: the output path is the input path of the gsd file. (OPTIONAL)" +
+                                                  $"{Environment.NewLine}\t-h, --help\t\tPrints this info and the converter's usage/options." +
+                                                  $"{Environment.NewLine}\t-i, --input file\tThe path to the file which should be converted. Example: C:\\path\\to\\input\\file.xml" +
+                                                  $"{Environment.NewLine}\t-o, --output file\tSets the path to the output file. Example: C:\\path\\to\\output\\file.amlx" +
+                                                  $"{Environment.NewLine}\t\t\t\tIf nothing is specified default is: C:\\path\\to\\input\\file\\<timestamp>.amlx (OPTIONAL)" +
+                                                  $"{Environment.NewLine}\t-s, --string\t\tPrints the generated AML XML file to stdout. No *.amlx file will be generated. (OPTIONAL)" +
                                                   $"{Environment.NewLine}Note:" +
-                                                  $"{Environment.NewLine}\t--output and --string can't be used together.";
+                                                  $"{Environment.NewLine}\t--output and --string cannot be used together.";
 
         private static void Main(string[] args)
         {
             var parameter = new Dictionary<string, string>
             {
-                { CPathToFile, string.Empty },
-                { CPathToFileShort, string.Empty },
-                { COutputPath, string.Empty },
-                { COutputPathShort, string.Empty }
+                { CInputFile, string.Empty },
+                { CInputFileShort, string.Empty },
+                { COutputFile, string.Empty },
+                { COutputFileShort, string.Empty }
             };
 
             if (args.Length == 0)
@@ -51,44 +55,43 @@ namespace Gsd2Aml.CLI
 
             ParseCliArguments(args, parameter);
 
-            var pathToFile = string.IsNullOrEmpty(parameter[CPathToFileShort]) ? parameter[CPathToFile] : parameter[CPathToFileShort];
-            var outputPath = string.IsNullOrEmpty(parameter[COutputPath]) ? parameter[COutputPathShort] : parameter[COutputPath];
+            var inputFile = string.IsNullOrEmpty(parameter[CInputFile]) ? parameter[CInputFileShort] : parameter[CInputFile];
+            var outputFile = string.IsNullOrEmpty(parameter[COutputFile]) ? parameter[COutputFileShort] : parameter[COutputFile];
             var stringOutput = Array.IndexOf(args, CStringOutputShort) >= 0 || Array.IndexOf(args, CStringOutput) >= 0;
 
-            if (!string.IsNullOrEmpty(pathToFile) && File.Exists(pathToFile))
+            if (File.Exists(inputFile))
             {
-                throw new NotImplementedException();
-                if (!string.IsNullOrEmpty(outputPath) && Directory.Exists(outputPath))
-                {
-                    // TODO: call converter
-                    // convert(pathToFile, stringOutput, outputPath);
-                }
-                else
-                {
-                    Console.WriteLine($"Using default directory...{Environment.NewLine}");
-                    // TODO: call converter
-                    // convert(pathToFile, stringOutput, outputPath=DEFAULT);
-                }
+                CheckOutputAndRunConverter(inputFile, outputFile, stringOutput);
             }
             else if (File.Exists(args[0]))
             {
-                throw new NotImplementedException();
-                if (!string.IsNullOrEmpty(outputPath) && Directory.Exists(outputPath))
-                {
-                    // TODO: call converter
-                    // convert(args[0], stringOutput, outputPath);
-                }
-                else
-                {
-                    Console.WriteLine($"Using default directory...{Environment.NewLine}");
-                    // TODO: call converter
-                    // convert(args[0], stringOutput, outputPath=DEFAULT);
-                }
+                CheckOutputAndRunConverter(args[0], outputFile, stringOutput);
             }
             else
             {
-                Console.WriteLine($"{Environment.NewLine}File not found. Please enter a valid path to a GSD-formatted file.{Environment.NewLine}For more information: 'gsd2aml --help'.");
+                Console.WriteLine($"{Environment.NewLine}Input file not found. Please enter a valid path to a GSD-formatted file.{Environment.NewLine}For more information run 'gsd2aml --help'.");
                 Environment.Exit(1);
+            }
+        }
+
+        private static void CheckCliArguments(IList<string> args)
+        {
+            for (var i = 0; i < Arguments.Length - 1; i++)
+            {
+                if (args.IndexOf(Arguments[i]) >= 0 && args.IndexOf(Arguments[i + 1]) >= 0)
+                {
+                    PrintLongShortParameterError(Arguments[i], Arguments[i + 1]);
+                }
+                i++;
+            }
+
+            if (args.Count != args.Distinct().Count())
+            {
+                PrintMultipleParameterError(args);
+            }
+            if ((args.IndexOf(COutputFile) >= 0 || args.IndexOf(COutputFileShort) >= 0) && (args.IndexOf(CStringOutput) >= 0 || args.IndexOf(CStringOutputShort) >= 0))
+            {
+                PrintLongShortParameterError(COutputFile, CStringOutput);
             }
         }
 
@@ -100,9 +103,9 @@ namespace Gsd2Aml.CLI
                 {
                     PrintHelpText();
                 }
-                else if (i + 1 < args.Count)
+                else if (parameter.ContainsKey(args[i]))
                 {
-                    if (parameter.ContainsKey(args[i]))
+                    if (i + 1 < args.Count)
                     {
                         parameter[args[i]] = args[i + 1];
                     }
@@ -110,32 +113,77 @@ namespace Gsd2Aml.CLI
             }
         }
 
-        private static void CheckCliArguments(IList<string> args)
+        private static void CheckOutputAndRunConverter(string inputFile, string outputFile, bool stringOutput)
         {
-            if (args.IndexOf(CPathToFileShort) >= 0 && args.IndexOf(CPathToFile) >= 0)
+            // Determine if outputFile is valid. If not a default with the timestamp as the name will be generated.
+            if (string.IsNullOrEmpty(outputFile))
             {
-                Console.WriteLine($"{Environment.NewLine}Error: You used {CPathToFile} and {CPathToFileShort} while only one of them is allowed." +
-                                  $"{Environment.NewLine}For more information: 'gsd2aml --help'.");
-                Environment.Exit(1);
+                outputFile = Path.Combine(Path.GetDirectoryName(inputFile), DateTime.Now + ".amlx");
             }
-            else if (args.IndexOf(CStringOutputShort) >= 0 && args.IndexOf(CStringOutput) >= 0)
+
+            var finfo = new FileInfo(outputFile);
+            
+            // Directory check. If it does not exist, it tries to create the output directory.
+            if (finfo.Directory != null && !string.IsNullOrEmpty(finfo.DirectoryName) && !finfo.Directory.Exists)
             {
-                Console.WriteLine($"{Environment.NewLine}Error: You used {CStringOutput} and {CStringOutputShort} while only one of them is allowed." +
-                                  $"{Environment.NewLine}For more information: 'gsd2aml --help'.");
-                Environment.Exit(1);
+                try
+                {
+                    Directory.CreateDirectory(finfo.DirectoryName);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{Environment.NewLine}Could not create output directory.");
+                    Environment.Exit(1);
+                }
             }
-            else if (args.IndexOf(COutputPathShort) >= 0 && args.IndexOf(COutputPath) >= 0)
+
+            // File check. If the output file exists, it asks if the user wants to overwrite the file.
+            if (!finfo.Exists) return;
+
+            string userInput;
+
+            do
             {
-                Console.WriteLine($"{Environment.NewLine}Error: You used {COutputPath} and {COutputPathShort} while only one of them is allowed." +
-                                  $"{Environment.NewLine}For more information: 'gsd2aml --help'.");
-                Environment.Exit(1);
-            }
-            else if ((args.IndexOf(COutputPathShort) >= 0 || args.IndexOf(COutputPath) >= 0) && (args.IndexOf(CStringOutputShort) >= 0 || args.IndexOf(CStringOutput) >= 0))
+                Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
+                userInput = Console.ReadKey().KeyChar.ToString().ToLower();
+                Console.WriteLine(Environment.NewLine);
+            } while (!userInput.Equals("y") && !userInput.Equals("n"));
+
+            if (userInput.Equals("y"))
             {
-                Console.WriteLine($"{Environment.NewLine}Error: You used {COutputPath} and {CStringOutput} while only one of them is allowed." +
-                                  $"{Environment.NewLine}For more information: 'gsd2aml --help'.");
-                Environment.Exit(1);
+                Environment.Exit(0);
             }
+            else
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        private static void PrintMultipleParameterError(IEnumerable<string> args)
+        {
+            var iteratedArguments = new HashSet<string>();
+
+            foreach (var argument in args)
+            {
+                if (!Arguments.Contains(argument)) continue;
+                if (!iteratedArguments.Contains(argument))
+                {
+                    iteratedArguments.Add(argument);
+                }
+                else
+                {
+                    Console.WriteLine($"{Environment.NewLine}Error: You used {argument} multiple times." +
+                                      $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
+                    Environment.Exit(1);
+                }
+            }
+        }
+
+        private static void PrintLongShortParameterError(string firstParameter, string secondParameter)
+        {
+            Console.WriteLine($"{Environment.NewLine}Error: You used {firstParameter} and {secondParameter} while only one of them is allowed." +
+                              $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
+            Environment.Exit(1);
         }
 
         private static void PrintHelpText()
