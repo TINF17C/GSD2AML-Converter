@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.CLI
 {
@@ -34,6 +35,8 @@ namespace Gsd2Aml.CLI
 
         private static void Main(string[] args)
         {
+            var logger = new Logger();
+            logger.Log(LogLevel.Info, "Programm start!");
             var parameter = new Dictionary<string, string>
             {
                 { CPathToFile, string.Empty },
