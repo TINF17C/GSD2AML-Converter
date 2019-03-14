@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Models\AML.cs" />
     <Compile Include="Models\GSD.cs" />
     <Compile Include="Compressor.cs" />
