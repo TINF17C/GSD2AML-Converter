@@ -30,8 +30,7 @@ namespace Gsd2Aml.Test
             {
                 foreach (var entry in archive.Entries)
                 {
-                    if (!entry.Name.Equals(amlFileName) &&
-                        !res.Any(f => Path.GetFileName(f).Equals(entry.Name)))
+                    if (!entry.Name.Equals(amlFileName) && !res.Any(f => Path.GetFileName(f).Equals(entry.Name)))
                     {
                         throw new ArgumentException($"We found {entry.Name}, which was not expected.");
                     }
