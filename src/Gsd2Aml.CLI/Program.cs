@@ -1,3 +1,4 @@
+using Gsd2Aml.Lib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,6 +37,10 @@ namespace Gsd2Aml.CLI
                                                   $"{Environment.NewLine}Note:" +
                                                   $"{Environment.NewLine}\t--output and --string cannot be used together.";
 
+        /// <summary>
+        /// Starting point for the CLI Program. 
+        /// </summary>
+        /// <param name="args">Arguments which are passed to the program.</param>
         private static void Main(string[] args)
         {
             var parameter = new Dictionary<string, string>
@@ -69,11 +74,20 @@ namespace Gsd2Aml.CLI
             }
             else
             {
-                Console.WriteLine($"{Environment.NewLine}Input file not found. Please enter a valid path to a GSD-formatted file.{Environment.NewLine}For more information run 'gsd2aml --help'.");
+                Console.WriteLine($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
+                                  $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                 Environment.Exit(1);
             }
+            Environment.Exit(0);
         }
 
+        /// <summary>
+        /// This method checks three things:
+        /// 1) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
+        /// 2) If the user passed multiple times the corresponding long/short argument to a argument. E.g. gsd2aml -i --input
+        /// 3) If the user passed --output and --string at the same time.
+        /// </summary>
+        /// <param name="args">Arguments which are passed to the program.</param>
         private static void CheckCliArguments(IList<string> args)
         {
             for (var i = 0; i < Arguments.Length - 1; i++)
@@ -95,6 +109,11 @@ namespace Gsd2Aml.CLI
             }
         }
 
+        /// <summary>
+        /// This method parsed the CLI Arguments and saves them to a dictionary.
+        /// </summary>
+        /// <param name="args">Arguments which are passed to the program.</param>
+        /// <param name="parameter">The dictionary which will contain the arguments and the corresponding data.</param>
         private static void ParseCliArguments(IList<string> args, IDictionary<string, string> parameter)
         {
             for (var i = 0; i < args.Count; i++)
@@ -113,16 +132,17 @@ namespace Gsd2Aml.CLI
             }
         }
 
+        /// <summary>
+        /// This method checks the output directory and file. Then it runs the converter.
+        /// </summary>
+        /// <param name="inputFile">The path to the input file.</param>
+        /// <param name="outputFile">The path to the output file.</param>
+        /// <param name="stringOutput">A boolean whether a file output or a string output is needed.</param>
         private static void CheckOutputAndRunConverter(string inputFile, string outputFile, bool stringOutput)
         {
-            // Determine if outputFile is valid. If not a default with the timestamp as the name will be generated.
-            if (string.IsNullOrEmpty(outputFile))
-            {
-                outputFile = Path.Combine(Path.GetDirectoryName(inputFile), DateTime.Now + ".amlx");
-            }
-
+            outputFile = GetOutputFile(inputFile, outputFile);
             var finfo = new FileInfo(outputFile);
-            
+
             // Directory check. If it does not exist, it tries to create the output directory.
             if (finfo.Directory != null && !string.IsNullOrEmpty(finfo.DirectoryName) && !finfo.Directory.Exists)
             {
@@ -132,33 +152,60 @@ namespace Gsd2Aml.CLI
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"{Environment.NewLine}Could not create output directory.");
+                    Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory.");
                     Environment.Exit(1);
                 }
             }
 
             // File check. If the output file exists, it asks if the user wants to overwrite the file.
-            if (!finfo.Exists) return;
-
-            string userInput;
-
-            do
+            if (finfo.Exists)
             {
-                Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
-                userInput = Console.ReadKey().KeyChar.ToString().ToLower();
-                Console.WriteLine(Environment.NewLine);
-            } while (!userInput.Equals("y") && !userInput.Equals("n"));
+                string userInput;
 
-            if (userInput.Equals("y"))
+                do
+                {
+                    Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
+                    userInput = Console.ReadKey().KeyChar.ToString().ToLower();
+                    Console.WriteLine(Environment.NewLine);
+                } while (!userInput.Equals("y") && !userInput.Equals("n"));
+
+                if (userInput.Equals("n"))
+                {
+                    Environment.Exit(0);
+                }
+            }
+            var converter = new Converter(inputFile, outputFile, stringOutput);
+            converter.Convert();
+        }
+
+        /// <summary>
+        /// Checks if the output file is valid. If not it changes the string:
+        /// 1) outputFile is empty --> inputFileDirectory + timestamp.amlx
+        /// 2) outputFile is like ...\test or ...\.amlx --> outputDirectory + timestamp.amlx (Example: ...\test\[timestamp].amlx ...\.amlx\[timestamp].amlx)
+        /// </summary>
+        /// <param name="inputFile">The path to the input file.</param>
+        /// <param name="outputFile">The path to the output file.</param>
+        /// <returns>A valid outputFile string.</returns>
+        private static string GetOutputFile(string inputFile, string outputFile)
+        {
+            if (string.IsNullOrEmpty(outputFile))
             {
-                Environment.Exit(0);
+                return Path.Combine(Path.GetDirectoryName(inputFile), DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+            }
+            else if (string.IsNullOrEmpty(Path.GetExtension(outputFile)) || string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(outputFile)))
+            {
+                return Path.Combine(outputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
             }
             else
             {
-                Environment.Exit(0);
+                return outputFile;
             }
         }
 
+        /// <summary>
+        /// Prints an error message if the same parameter is used mutliple times.
+        /// </summary>
+        /// <param name="args">Arguments which are passed to the program.</param>
         private static void PrintMultipleParameterError(IEnumerable<string> args)
         {
             var iteratedArguments = new HashSet<string>();
@@ -179,6 +226,11 @@ namespace Gsd2Aml.CLI
             }
         }
 
+        /// <summary>
+        /// Prints an error message if an argument is used with the corresponding long/short parameter.
+        /// </summary>
+        /// <param name="firstParameter">The first parameter of the long/short argument pair.</param>
+        /// <param name="secondParameter">The second parameter of the long/short argument pair.</param>
         private static void PrintLongShortParameterError(string firstParameter, string secondParameter)
         {
             Console.WriteLine($"{Environment.NewLine}Error: You used {firstParameter} and {secondParameter} while only one of them is allowed." +
@@ -186,6 +238,9 @@ namespace Gsd2Aml.CLI
             Environment.Exit(1);
         }
 
+        /// <summary>
+        /// Prints the help text and exits the program.
+        /// </summary>
         private static void PrintHelpText()
         {
             Console.WriteLine(HelpText);
