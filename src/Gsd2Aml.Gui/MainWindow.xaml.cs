@@ -22,7 +22,7 @@ namespace Gsd2Aml.Gui
             {
                 CheckFileExists = true,
                 DefaultExt = ".gsd",
-                Filter = "Generic station description files (.gsdml; .xml)|*.gsdml;*.xml",
+                Filter = "Generic station description files (.xml)|*.xml",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Title = "GSD2AML Converter"
             };
