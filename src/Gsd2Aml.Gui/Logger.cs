@@ -6,7 +6,12 @@ namespace Gsd2Aml.Gui
 {
     class Logger : ILoggingService
     {
-        private NLog.Logger NlogLogger { get; } = LogManager.GetCurrentClassLogger();
+        private NLog.Logger NlogLogger { get; }
+
+        public Logger()
+        {
+            NlogLogger = LogManager.GetCurrentClassLogger();
+        }
 
         public void Log(LogLevel level, string message)
         {
