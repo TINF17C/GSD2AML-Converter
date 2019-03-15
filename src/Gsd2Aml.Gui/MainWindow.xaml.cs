@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 
 namespace Gsd2Aml.Gui
@@ -53,6 +55,124 @@ namespace Gsd2Aml.Gui
         private void Convert_OnClick(object sender, RoutedEventArgs e)
         {
             //ToDo: Do conversion
+        }
+
+        private void MainWindow_OnDragEnter(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            if ((data as string[])?.FirstOrDefault() != null)
+            {
+                var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
+                    fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    e.Effects = DragDropEffects.All | DragDropEffects.Copy | DragDropEffects.Link | DragDropEffects.Move;
+                }
+                else
+                {
+                    e.Effects = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void MainWindow_OnPreviewDragOver(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            if ((data as string[])?.FirstOrDefault() != null)
+            {
+                var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
+                    fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    e.Effects = DragDropEffects.All | DragDropEffects.Copy | DragDropEffects.Link | DragDropEffects.Move;
+                }
+                else
+                {
+                    e.Effects = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void MainWindow_OnDrop(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+
+            if ((data as string[])?.FirstOrDefault() == null) return;
+
+            var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+            if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
+                fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
+            {
+                TxtGsdFile.Text = fileName;
+            }
+        }
+
+        private void TxtGsdFile_OnDragEnter(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            if ((data as string[])?.FirstOrDefault() != null)
+            {
+                var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
+                    fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    e.Effects = DragDropEffects.All | DragDropEffects.Copy | DragDropEffects.Link | DragDropEffects.Move;
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Effects = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void TxtGsdFile_OnPreviewDragOver(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            if ((data as string[])?.FirstOrDefault() != null)
+            {
+                var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
+                    fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    e.Effects = DragDropEffects.All | DragDropEffects.Copy | DragDropEffects.Link | DragDropEffects.Move;
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Effects = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void TxtGsdFile_OnDrop(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+
+            if ((data as string[])?.FirstOrDefault() == null) return;
+
+            var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+            if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
+                fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
+            {
+                ((TextBox)sender).Text = fileName;
+            }
         }
     }
 }
