@@ -4,7 +4,7 @@ using LogLevel = Gsd2Aml.Lib.Logging.LogLevel;
 
 namespace Gsd2Aml.CLI
 {
-    class Logger : ILoggingService
+    public class Logger : ILoggingService
     {
         private NLog.Logger NlogLogger { get; } = LogManager.GetCurrentClassLogger();
         
