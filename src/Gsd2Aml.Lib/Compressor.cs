@@ -11,11 +11,10 @@ namespace Gsd2Aml.Lib
         /// Creates a zip archive from a directory and the relevant GSD ressources.
         /// </summary>
         /// <param name="aml">The AML file which will be zipped.</param>
-        /// <param name="destination">The directory you want to store the archive in.</param>
-        /// <param name="amlxName"></param>
+        /// <param name="destination">The directory you want to store the archive in including the name of the archive.amlx.</param>
         /// <param name="ressources">An array of paths to the ressources to be part of the AMLX package.</param>
         /// <exception cref="IOException"></exception>
-        public static string Compress(string aml, string destination, string amlxName, string[] ressources)
+        public static string Compress(string aml, string destination, string[] ressources)
         {
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
@@ -30,11 +29,11 @@ namespace Gsd2Aml.Lib
                 var amlFileName = Path.GetFileName(aml);
                 CopyFile(aml, Path.Combine(tmpPath, amlFileName));
 
-                Zip(tmpPath, Path.Combine(destination, amlxName));
+                Zip(tmpPath, destination);
 
                 DelteFolder(tmpPath);
 
-                return Path.Combine(destination, amlxName);
+                return destination;
             }
             catch (IOException)
             {
