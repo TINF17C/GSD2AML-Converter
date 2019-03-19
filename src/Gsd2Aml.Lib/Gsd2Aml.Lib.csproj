@@ -55,6 +55,7 @@
     <Compile Include="Models\GSD.cs" />
     <Compile Include="Compressor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">
