@@ -34,6 +34,14 @@ namespace Gsd2Aml.Test
                 {
                     if (!entry.Name.Equals(amlFileName) && !res.Any(f => Path.GetFileName(f).Equals(entry.Name)))
                     {
+                        try
+                        {
+                            File.Delete(finalAmlxFile);
+                        }
+                        catch
+                        {
+                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
+                        }
                         Assert.Fail($"We found {entry.Name}, which was not expected.");
                     }
                 }
@@ -41,6 +49,14 @@ namespace Gsd2Aml.Test
                 {
                     if (!archive.Entries.Any(f => f.Name.Equals(fileName)))
                     {
+                        try
+                        {
+                            File.Delete(finalAmlxFile);
+                        }
+                        catch
+                        {
+                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
+                        }
                         Assert.Fail($"We are missing {fileName} in the ZIP-archive.");
                     }
                 }
@@ -52,7 +68,7 @@ namespace Gsd2Aml.Test
             }
             catch
             {
-                throw;
+                Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
             }
         }
     }
