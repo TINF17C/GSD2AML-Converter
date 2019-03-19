@@ -24,7 +24,7 @@ namespace Gsd2Aml.Test
             var res = Directory.GetFiles(testDir).Where(f => !Path.GetFileName(f).Equals(amlFileName)).ToArray();
             var amlFile = Directory.GetFiles(testDir).First(f => Path.GetFileName(f).Equals(amlFileName));
             
-            var finalAmlxFile = Compressor.Compress(amlFile, testDir, "myAmlx.amlx", res);
+            var finalAmlxFile = Compressor.Compress(amlFile, Path.Combine(testDir, "myAmlx.amlx"), res);
 
             using (var archive = ZipFile.OpenRead(finalAmlxFile))
             {
