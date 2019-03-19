@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gsd2Aml.Lib.Logging;
+﻿using Gsd2Aml.Lib.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Gsd2Aml.Test
 {
-    class Logger : Lib.Logging.ILoggingService
+    class Logger : ILoggingService
     {
         public void Log(LogLevel level, string message)
         {
-            Console.WriteLine(level.ToString() + message);
+            if (level.Equals(LogLevel.Error) || level.Equals(LogLevel.Fatal))
+            {
+                Assert.Fail(message);
+            }
         }
     }
 }

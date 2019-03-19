@@ -14,6 +14,8 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void TestCompressor()
         {
+            Util.Logger = new Logger();
+            
             var testDir = new Uri(Path
                 .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)
                 .AbsolutePath, @"..\..\..\..\..\tst"))
@@ -32,14 +34,14 @@ namespace Gsd2Aml.Test
                 {
                     if (!entry.Name.Equals(amlFileName) && !res.Any(f => Path.GetFileName(f).Equals(entry.Name)))
                     {
-                        throw new ArgumentException($"We found {entry.Name}, which was not expected.");
+                        Assert.Fail($"We found {entry.Name}, which was not expected.");
                     }
                 }
                 foreach (var fileName in res.Select(Path.GetFileName))
                 {
                     if (!archive.Entries.Any(f => f.Name.Equals(fileName)))
                     {
-                        throw new ArgumentException($"We are missing {fileName} in the ZIP-archive.");
+                        Assert.Fail($"We are missing {fileName} in the ZIP-archive.");
                     }
                 }
             }

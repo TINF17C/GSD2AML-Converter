@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompressorTest.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="LoggingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
