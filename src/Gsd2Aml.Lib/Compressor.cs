@@ -30,9 +30,11 @@ namespace Gsd2Aml.Lib
                 CopyFile(aml, Path.Combine(tmpPath, amlFileName));
 
                 Zip(tmpPath, destination);
+                Util.Logger?.Log(Logging.LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DelteFolder(tmpPath);
 
+                
                 return destination;
             }
             catch (IOException e)
