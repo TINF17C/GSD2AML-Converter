@@ -35,11 +35,12 @@ namespace Gsd2Aml.Lib
 
                 return destination;
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw;
-                // TODO: Wait for logger module.
+                Util.Logger?.Log(Logging.LogLevel.Error, e.Message);
             }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -54,10 +55,9 @@ namespace Gsd2Aml.Lib
             {
                 ZipFile.CreateFromDirectory(source, destination);
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw;
-                // TODO: Wait for logger module.
+                Util.Logger?.Log(Logging.LogLevel.Error, e.Message);
             }
         }
 
@@ -73,11 +73,12 @@ namespace Gsd2Aml.Lib
             {
                 return Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), folderName)).FullName;
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw;
-                // TODO: Wait for logger module.
+                Util.Logger?.Log(Logging.LogLevel.Error, e.Message);
             }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -92,10 +93,9 @@ namespace Gsd2Aml.Lib
             {
                 File.Copy(source, destination, true);
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw;
-                // TODO: Wait for logger module.
+                Util.Logger?.Log(Logging.LogLevel.Error, e.Message);
             }
         }
 
@@ -113,10 +113,9 @@ namespace Gsd2Aml.Lib
                     Directory.Delete(target, true);
                 }
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw;
-                // TODO: Wait for logger module.
+                Util.Logger?.Log(Logging.LogLevel.Error, e.Message);
             }
         }
     }
