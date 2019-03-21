@@ -34,7 +34,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>TINF17C.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\TINF17C.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,7 +61,6 @@
     <None Include="README.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TINF17C.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="gsd2aml.xml">
