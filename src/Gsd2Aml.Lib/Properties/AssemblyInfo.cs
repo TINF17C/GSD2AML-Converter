@@ -34,3 +34,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+[assembly: InternalsVisibleTo("Gsd2Aml.Test, PublicKey=0024000004800000940000000602000000240000525341310004000001000100898ccb4924f437c4f7a846af634f460dbf5b0ce2876d7045114a0f2434c9969a31927fa7ac3bf49cd7ae7e6016855db9f5b2393fb6189da8bddbf7c9387255714298c39f698e82101264760d3bb820544ac6623c36e1d13d8205f609c4092b597c18f48bc27c0cf5b192cb831a82b995e57f40ee1f33f55b97ccf1b82638c5c1")]
