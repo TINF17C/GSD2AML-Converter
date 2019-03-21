@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Gsd2Aml.Setup" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="215ee4e9-2335-468c-8a74-7f60fd5db8bb">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi ?>
+  <Product Id="*" Name="$(var.ProductMainName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.ManufacturerName)" UpgradeCode="$(var.UpgradeGuid)">
+		<Package Manufacturer="$(var.ManufacturerName)" InstallerVersion="301" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine"/>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
-
-		<Feature Id="ProductFeature" Title="Gsd2Aml.Setup" Level="1">
+		<MajorUpgrade DowngradeErrorMessage="A newer version of $(var.ProductMainName) is already installed." />
+    <Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
+		<Feature Id="ProductFeature" Title="$(var.ProductMainName)" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 	</Product>
 
 	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Gsd2Aml.Setup" />
-			</Directory>
-		</Directory>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.myProgramFilesFolder)">
+        <Directory Id="INSTALLFOLDER" Name="$(var.myProductDir)">
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="PRODUCTMENUFOLDER" Name="$(var.myProductDir)">
+        </Directory>
+      </Directory>
+    </Directory>
 	</Fragment>
 
 	<Fragment>
@@ -25,6 +30,18 @@
 			<!-- <Component Id="ProductComponent"> -->
 				<!-- TODO: Insert files, registry keys, and other resources here. -->
 			<!-- </Component> -->
+      <Component Id="Gsd2Aml.Gui.exe" Guid="*">
+        <File Id="Gsd2Aml.Gui.exe" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Gui.exe">
+          <Shortcut Id="Gsd2Aml.Gui.exe" Name="GSD2AML Converter" Icon="Gsd2Aml.Gui.exe" IconIndex="0" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Directory="PRODUCTMENUFOLDER"><Icon Id="Gsd2Aml.Gui.exe" SourceFile="$(var.SourceDir)\Gsd2Aml.Gui.exe" /></Shortcut>
+        </File>
+        <RemoveFolder Id="RemoveProductFolder" Directory="PRODUCTMENUFOLDER" On="uninstall" />
+      </Component>
+      <Component Id="Gsd2Aml.Cli.exe" Guid="*">
+        <File Id="Gsd2Aml.Cli.exe" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Cli.exe" />
+      </Component>
+      <Component Id="Gsd2Aml.Lib.dll" Guid="*">
+        <File Id="Gsd2Aml.Lib.dll" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Lib.dll" />
+      </Component>
 		</ComponentGroup>
 	</Fragment>
 </Wix>
