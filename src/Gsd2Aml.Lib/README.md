@@ -129,10 +129,6 @@ An `InlineRef` is __not__ a true reference and a derivative of a [`DirectRef`](#
 
 There are several special reference types for values that cannot be directly read from the GSD file.
 
-### <a name="special_reference_types-filenameref"></a>FileNameRef
-
-`FileNameRef` returns the file name of the generated AML file.
-
 ### <a name="special_reference_types"></a>GSDRef
 
 `GSDRef` returns a relative path to the original GSD file.

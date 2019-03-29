@@ -19,7 +19,7 @@ namespace Gsd2Aml.Test
             const string logMessage6 = "Logging 6";
             const string logMessage7 = "Logging 7";
 
-            string filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
+            var filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
             // should appear in log file
             logger.Log(Lib.Logging.LogLevel.Info, logMessage1);
             logger.Log(Lib.Logging.LogLevel.Warning, logMessage2);
@@ -32,10 +32,10 @@ namespace Gsd2Aml.Test
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
 
-            string filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
             if (File.Exists(filepath))
             {
-                string logText = File.ReadAllText(filepath);
+                var logText = File.ReadAllText(filepath);
                 if (!logText.Contains("INFO") || !logText.Contains(logMessage1))
                 {
                     throw new ArgumentException($"We are missing log message '{logMessage1}' with level 'Info'");
@@ -85,7 +85,7 @@ namespace Gsd2Aml.Test
             const string logMessage6 = "Logging 6";
             const string logMessage7 = "Logging 7";
 
-            string filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
+            var filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
             logger.Log(Lib.Logging.LogLevel.Info, logMessage1);
             logger.Log(Lib.Logging.LogLevel.Warning, logMessage2);
             logger.Log(Lib.Logging.LogLevel.Error, logMessage3);
@@ -97,10 +97,10 @@ namespace Gsd2Aml.Test
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
 
-            string filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
             if (File.Exists(filepath))
             {
-                string logText = File.ReadAllText(filepath);
+                var logText = File.ReadAllText(filepath);
                 if (!logText.Contains("INFO") || !logText.Contains(logMessage1))
                 {
                     throw new ArgumentException($"We are missing log message '{logMessage1}' with level 'Info'");
@@ -138,8 +138,4 @@ namespace Gsd2Aml.Test
 
         }
     }
-
-
 }
-
-
