@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.CLI
 {
     public class Program
     {
+        internal static Logger Log { get; } = new Logger();
+
         private const string CHelp = "--help";
         private const string CHelpShort = "-h";
 
@@ -20,8 +23,8 @@ namespace Gsd2Aml.CLI
         private const string CStringOutput = "--string";
         private const string CStringOutputShort = "-s";
 
-        private static readonly string[] Arguments = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
-        private static readonly string HelpText = $"{Environment.NewLine}GSD2AML Converter" +
+        private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
+        private static string HelpText { get; } = $"{Environment.NewLine}GSD2AML Converter" +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Converts a GSD-formatted file in an AML-formatted file." +
                                                   $"{Environment.NewLine}" +
@@ -55,7 +58,6 @@ namespace Gsd2Aml.CLI
             {
                 PrintHelpText();
             }
-
             CheckCliArguments(args);
 
             ParseCliArguments(args, parameter);
@@ -74,6 +76,7 @@ namespace Gsd2Aml.CLI
             }
             else
             {
+                Log.Log(LogLevel.Fatal, "Invalid input file. GSD-File does not exist.");
                 Console.WriteLine($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
                                   $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                 Environment.Exit(1);
@@ -110,7 +113,7 @@ namespace Gsd2Aml.CLI
         }
 
         /// <summary>
-        /// This method parsed the CLI Arguments and saves them to a dictionary.
+        /// This method parses the CLI Arguments and saves them to a dictionary.
         /// </summary>
         /// <param name="args">Arguments which are passed to the program.</param>
         /// <param name="parameter">The dictionary which will contain the arguments and the corresponding data.</param>
@@ -152,6 +155,8 @@ namespace Gsd2Aml.CLI
                 }
                 catch (Exception e)
                 {
+                    Log.Log(LogLevel.Error, e.Message);
+                    Log.Log(LogLevel.Trace, e.StackTrace);
                     Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory.");
                     Environment.Exit(1);
                 }
@@ -171,11 +176,20 @@ namespace Gsd2Aml.CLI
 
                 if (userInput.Equals("n"))
                 {
+                    Console.WriteLine("Could not convert file because the output file should not be overwritten.");
                     Environment.Exit(0);
                 }
             }
-            var converter = new Converter(inputFile, outputFile, stringOutput);
-            converter.Convert();
+
+            try
+            {
+                Converter.Convert(inputFile, outputFile, stringOutput);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Environment.Exit(1);
+            }
         }
 
         /// <summary>
@@ -190,16 +204,14 @@ namespace Gsd2Aml.CLI
         {
             if (string.IsNullOrEmpty(outputFile))
             {
-                return Path.Combine(Path.GetDirectoryName(inputFile), DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+                var inputDirectoryName = Path.GetDirectoryName(inputFile);
+                if (!string.IsNullOrEmpty(inputDirectoryName)) return Path.Combine(inputDirectoryName, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
             }
-            else if (string.IsNullOrEmpty(Path.GetExtension(outputFile)) || string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(outputFile)))
+            if (string.IsNullOrEmpty(Path.GetExtension(outputFile)) || string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(outputFile)))
             {
-                return Path.Combine(outputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+                if (outputFile != null) return Path.Combine(outputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
             }
-            else
-            {
-                return outputFile;
-            }
+            return outputFile;
         }
 
         /// <summary>
@@ -219,6 +231,7 @@ namespace Gsd2Aml.CLI
                 }
                 else
                 {
+                    Log.Log(LogLevel.Fatal, $"User used {argument} multiple times.");
                     Console.WriteLine($"{Environment.NewLine}Error: You used {argument} multiple times." +
                                       $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                     Environment.Exit(1);
@@ -233,6 +246,7 @@ namespace Gsd2Aml.CLI
         /// <param name="secondParameter">The second parameter of the long/short argument pair.</param>
         private static void PrintLongShortParameterError(string firstParameter, string secondParameter)
         {
+            Log.Log(LogLevel.Fatal, $"User used {firstParameter} and {secondParameter} together while only one of them is allowed.");
             Console.WriteLine($"{Environment.NewLine}Error: You used {firstParameter} and {secondParameter} while only one of them is allowed." +
                               $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
             Environment.Exit(1);
