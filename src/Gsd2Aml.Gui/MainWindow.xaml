@@ -32,7 +32,8 @@
                      DragEnter="TxtGsdFile_OnDragEnter"
                      PreviewDragOver="TxtGsdFile_OnPreviewDragOver"
                      Drop="TxtGsdFile_OnDrop"
-                     x:Name="TxtGsdFile" />
+                     x:Name="TxtGsdFile"
+                     TextChanged="TxtGsdFile_OnTextChanged"/>
         </DockPanel>
         <Label Content="Output file:" Grid.Column="0" Grid.Row="1" Margin="5" VerticalAlignment="Center" />
         <DockPanel Grid.Column="1" Grid.Row="1" Margin="5" VerticalAlignment="Center">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
@@ -23,7 +24,7 @@ namespace Gsd2Aml.Gui
                 CheckFileExists = true,
                 DefaultExt = ".gsd",
                 Filter = "Generic station description files (.xml)|*.xml",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                InitialDirectory = string.IsNullOrEmpty(TxtGsdFile.Text.Trim()) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : System.IO.Path.GetDirectoryName(TxtGsdFile.Text) ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Title = "GSD2AML Converter"
             };
 
@@ -41,7 +42,8 @@ namespace Gsd2Aml.Gui
                 CheckPathExists = true,
                 DefaultExt = ".amlx",
                 Filter = "AutomationML archives (.amlx)|*.amlx",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                InitialDirectory = string.IsNullOrEmpty(TxtAmlFile.Text.Trim()) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : System.IO.Path.GetDirectoryName(TxtAmlFile.Text) ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                FileName = !string.IsNullOrEmpty(TxtAmlFile.Text.Trim()) ? System.IO.Path.GetFileName(TxtAmlFile.Text) : "",
                 Title = "GSD2AML Converter",
                 ValidateNames = true
             };
@@ -111,7 +113,7 @@ namespace Gsd2Aml.Gui
             if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                 fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
             {
-                TxtGsdFile.Text = fileName;
+                TxtGsdFile.Text = ((string[])data)[0];
             }
         }
 
@@ -172,6 +174,21 @@ namespace Gsd2Aml.Gui
                 fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
             {
                 ((TextBox)sender).Text = fileName;
+            }
+        }
+
+        private void TxtGsdFile_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var senderText = ((TextBox)sender).Text;
+            if (string.IsNullOrEmpty(senderText))
+                return;
+
+            if (Regex.IsMatch(senderText, $"(.+(GSDML|gsdml).*{Regex.Escape(".xml")})"))
+            {
+                var diretoryName = System.IO.Path.GetDirectoryName(senderText) ?? "";
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(senderText).Remove(0, "GSDML-".Length) + ".amlx";
+
+                TxtAmlFile.Text = System.IO.Path.Combine(diretoryName, fileName);
             }
         }
     }
