@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi ?>
+  <Product Id="*" Name="$(var.ProductMainName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.ManufacturerName)" UpgradeCode="$(var.UpgradeGuid)">
+		<Package Manufacturer="$(var.ManufacturerName)" InstallerVersion="301" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine"/>
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of $(var.ProductMainName) is already installed." />
+    <Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
+		<Feature Id="ProductFeature" Title="$(var.ProductMainName)" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.myProgramFilesFolder)">
+        <Directory Id="INSTALLFOLDER" Name="$(var.myProductDir)">
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="PRODUCTMENUFOLDER" Name="$(var.myProductDir)">
+        </Directory>
+      </Directory>
+    </Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+      <Component Id="Gsd2Aml.Gui.exe" Guid="*">
+        <File Id="Gsd2Aml.Gui.exe" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Gui.exe">
+          <Shortcut Id="Gsd2Aml.Gui.exe" Name="GSD2AML Converter" Icon="Gsd2Aml.Gui.exe" IconIndex="0" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Directory="PRODUCTMENUFOLDER"><Icon Id="Gsd2Aml.Gui.exe" SourceFile="$(var.SourceDir)\Gsd2Aml.Gui.exe" /></Shortcut>
+        </File>
+        <RemoveFolder Id="RemoveProductFolder" Directory="PRODUCTMENUFOLDER" On="uninstall" />
+      </Component>
+      <Component Id="Gsd2Aml.Cli.exe" Guid="*">
+        <File Id="Gsd2Aml.Cli.exe" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Cli.exe" />
+      </Component>
+      <Component Id="Gsd2Aml.Lib.dll" Guid="*">
+        <File Id="Gsd2Aml.Lib.dll" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Lib.dll" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Hier nun alle Defines die durch den Präprozessor aufgelöst werden -->
+  <!-- Konfiguration -->
+
+  <?ifndef myFiles ?>
+  <?define myFiles="File" ?>
+  <?endif?>
+
+  <!-- Produkt -->
+  <?ifndef ManufacturerName ?>
+  <?define ManufacturerName="DHBW Stuttgart TINF17C" ?>
+  <?endif?>
+  <?ifndef ProductMainName ?>
+  <?define ProductMainName="GSD2AML Converter" ?>
+  <?endif?>
+  <?ifndef ProductVersion ?>
+  <?define ProductVersion="1.0.0.0" ?>
+  <?endif?>
+  <!-- nicht von "außen" überschreibbare Variablen -->
+  <?define myManufacturerDir="GSD2AML Converter" ?>
+  <?define myProductDir="GSD2AML Converter" ?>
+  <?define UpgradeGuid="215ee4e9-2335-468c-8a74-7f60fd5db8bb"?>
+
+  <!-- 
+    set our ProgrammFilesFolder depending on x64 or x86 build
+    http://www.mail-archive.com/wix-users@lists.sourceforge.net/msg01750.html
+    http://n2.nabble.com/using-a-variable-for-Component-Win64-attribute-value-still-generating-generic-warning-not-uniquely-sd-td1515820.html
+  !-->
+  <?if $(var.Platform) = "x64" ?>
+  <?define myProgramFilesFolder="ProgramFiles64Folder"?>
+  <?else?>
+  <?define myProgramFilesFolder="ProgramFilesFolder"?>
+  <?endif?>
+</Include>
