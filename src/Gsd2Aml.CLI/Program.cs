@@ -205,13 +205,18 @@ namespace Gsd2Aml.CLI
             if (string.IsNullOrEmpty(outputFile))
             {
                 var inputDirectoryName = Path.GetDirectoryName(inputFile);
-                if (!string.IsNullOrEmpty(inputDirectoryName)) return Path.Combine(inputDirectoryName, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+                if (!string.IsNullOrEmpty(inputDirectoryName))
+                {
+                    return Path.Combine(inputDirectoryName, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+                }
             }
-            if (string.IsNullOrEmpty(Path.GetExtension(outputFile)) || string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(outputFile)))
+
+            if (!string.IsNullOrEmpty(Path.GetExtension(outputFile)) && !string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(outputFile)))
             {
-                if (outputFile != null) return Path.Combine(outputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+                return outputFile;
             }
-            return outputFile;
+
+            return outputFile != null ? Path.Combine(outputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx") : null;
         }
 
         /// <summary>
