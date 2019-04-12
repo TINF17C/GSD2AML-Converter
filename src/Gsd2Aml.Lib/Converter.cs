@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +14,7 @@ namespace Gsd2Aml.Lib
     {
         private static ISO15745Profile GsdObject { get; set; }
         private static CAEXFile AmlObject { get; } = new CAEXFile();
+        private static List<XmlNode> GsdTranslationElements { get; } = new List<XmlNode>();
 
         private const string CTranslationTableFileName = "gsd2aml.xml";
 
@@ -27,6 +29,7 @@ namespace Gsd2Aml.Lib
             var serializer = new XmlSerializer(typeof(ISO15745Profile));
             var translationTable = new XmlDocument();
 
+            // Deserialize GSD-file
             using (var reader = new FileStream(inputFile, FileMode.Open))
             {
                 try
@@ -41,6 +44,7 @@ namespace Gsd2Aml.Lib
                 }
             }
 
+            // Load translation table
             translationTable.Load(CTranslationTableFileName);
 
             if (translationTable.DocumentElement == null)
@@ -49,23 +53,66 @@ namespace Gsd2Aml.Lib
                 throw new Exception("Could not load the translation table. Please contact the developers.");
             }
 
-            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
-
             foreach (XmlNode node in translationTable.DocumentElement.ChildNodes)
             {
-                ConvertElement(node);
+                GsdTranslationElements.Add(node);
             }
+
+            // Set FileName property of global CAEX-element 
+            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
+
+            GetPropertyFromString(GsdObject, "lala");
         }
 
-        private static void ConvertElement(XmlNode xmlNode)
+        /// <summary>
+        /// Searches recursivley an object down to find a property by a string.
+        /// </summary>
+        /// <param name="currentHeadObject">The reference to an object which is the current head object.</param>
+        /// <param name="propertyName">The name of the property which will be searched.</param>
+        /// <param name="currentPropertyInfo">Optional parameter which exits for array handling in this recursive function.</param>
+        /// <returns>The property info object of the found property or null if it does not exist.</returns>
+        private static PropertyInfo GetPropertyFromString(object currentHeadObject, string propertyName, PropertyInfo currentPropertyInfo = null)
         {
-            var gsdElement = FindGsdElement(xmlNode.Name);
+            if (currentHeadObject == null)
+            {
+                return null;
+            }
 
+            if (currentHeadObject.GetType().IsArray && currentPropertyInfo != null)
+            {
+                return currentPropertyInfo;
+            }
+
+            foreach (var propertyInfo in currentHeadObject.GetType().GetProperties())
+            {
+                if (propertyInfo.Name.Equals(propertyName))
+                {
+                    return propertyInfo;
+                }
+
+                if (propertyInfo.GetValue(currentHeadObject) == null || IsSimpleType(propertyInfo.GetValue(currentHeadObject).GetType())) continue;
+
+                var prop = GetPropertyFromString(propertyInfo.GetValue(currentHeadObject), propertyName, propertyInfo);
+
+                if (prop != null)
+                {
+                    return prop;
+                }
+            }
+            return null;
         }
 
-        private static PropertyInfo FindGsdElement(string elementName)
+        /// <summary>
+        /// Checks if a given Type is a simple/primitive type.
+        /// </summary>
+        /// <param name="type">The type which should be checked.</param>
+        /// <returns>A boolean which indicated if the given type is a simple type.</returns>
+        private static bool IsSimpleType(Type type)
         {
-            return GsdObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals(elementName));
+            return type.IsPrimitive ||
+                   new[] { typeof(Enum), typeof(string), typeof(decimal), typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Guid) }.Contains(type.GetTypeInfo()) ||
+                   System.Convert.GetTypeCode(type) != TypeCode.Object ||
+                   (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]));
         }
     }
 }
