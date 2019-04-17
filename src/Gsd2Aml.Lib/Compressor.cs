@@ -18,6 +18,12 @@ namespace Gsd2Aml.Lib
         /// <exception cref="IOException"></exception>
         public static void Compress(string aml, string destination, string[] ressources)
         {
+            if (aml.Equals("") || destination.Equals(""))
+            {
+                Util.Logger.Log(LogLevel.Error, "The AML or destination string cant be omitted.");
+                throw new Exception("AML or destination string was omitted.");
+            }
+
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
             try
