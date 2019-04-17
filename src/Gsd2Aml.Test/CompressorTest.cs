@@ -15,7 +15,7 @@ namespace Gsd2Aml.Test
         public void TestCompressor()
         {
             Util.Logger = new Logger();
-            
+
             var testDir = new Uri(Path
                 .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)
                 .AbsolutePath, @"..\..\..\..\..\tst"))
@@ -70,6 +70,43 @@ namespace Gsd2Aml.Test
             catch
             {
                 Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
+            }
+        }
+
+        [TestMethod]
+        public void FailOnOmittedAMLName() 
+        {
+            Boolean exceptionOccured = false;
+            try
+            {
+                Compressor.Compress("", "randomdestination", null);
+            }
+            catch
+            {
+                exceptionOccured = true;
+            }
+            if (!exceptionOccured)
+            {
+                Assert.Fail("Compress function should thrown an exception on empty AML name.");
+            }
+
+        }
+
+        [TestMethod]
+        public void FailOnOmittedDestinationPath()
+        {
+            Boolean exceptionOccured = false;
+            try
+            {
+                Compressor.Compress("myAml.xml", "", null);
+            }
+            catch
+            {
+                exceptionOccured = true;
+            }
+            if (!exceptionOccured)
+            {
+                Assert.Fail("Compress function should thrown an exception on empty destination string.");
             }
         }
     }
