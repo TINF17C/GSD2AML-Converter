@@ -53,6 +53,7 @@ namespace Gsd2Aml.Lib
                 throw new Exception("Could not load the translation table. Please contact the developers.");
             }
 
+            // Add all conversion rules to a list
             foreach (XmlNode node in translationTable.DocumentElement.ChildNodes)
             {
                 GsdTranslationElements.Add(node);
@@ -61,7 +62,36 @@ namespace Gsd2Aml.Lib
             // Set FileName property of global CAEX-element 
             AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
 
-            GetPropertyFromString(GsdObject, "lala");
+            Handle(AmlObject, GsdObject);
+        }
+
+        private static void Handle<TA, TG>(TA amlParent, TG gsdParent)
+        {
+            if (gsdParent == null)
+            {
+                return;
+            }
+
+            foreach (var propertyInfo in gsdParent.GetType().GetProperties())
+            {
+                if (propertyInfo.GetValue(gsdParent) == null)
+                {
+                    continue;
+                }
+                
+                if (GsdTranslationElements.FirstOrDefault(node => node.Name.Equals(propertyInfo.Name)) is var translationRule && translationRule != null)
+                {
+                    var gsdInstance = propertyInfo.GetValue(gsdParent);
+                    Translate(gsdInstance, translationRule);
+                }
+
+                // call handle function
+            }
+        }
+
+        private static void Translate<TG>(TG gsdObject, XmlNode translationRule)
+        {
+
         }
 
         /// <summary>
