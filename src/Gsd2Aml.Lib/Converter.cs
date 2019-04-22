@@ -29,7 +29,7 @@ namespace Gsd2Aml.Lib
             var serializer = new XmlSerializer(typeof(ISO15745Profile));
             var translationTable = new XmlDocument();
 
-            // Deserialize GSD-file.
+            // Deserialize the GSD-file.
             using (var reader = new FileStream(inputFile, FileMode.Open))
             {
                 try
@@ -59,7 +59,7 @@ namespace Gsd2Aml.Lib
                 GsdTranslationElements.Add(node);
             }
 
-            // Set FileName property of global CAEX-element.
+            // Set FileName property of CAEX-element.
             AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
 
             Handle(AmlObject, GsdObject);
@@ -107,7 +107,7 @@ namespace Gsd2Aml.Lib
         /// The actual translation of the GSD object to AML object.
         /// </summary>
         /// <typeparam name="TG">The type of the GSD object which will be translated.</typeparam>
-        /// <param name="gsdObject">The object of the GSD object which will be translated.</param>
+        /// <param name="gsdObject">The GSD object which will be translated.</param>
         /// <param name="translationRule">The translation rule which will be used to translate the GSD object to an AML object.</param>
         private static void Translate<TG>(TG gsdObject, XmlNode translationRule)
         {
@@ -143,9 +143,52 @@ namespace Gsd2Aml.Lib
                 throw new Exception("Translation table has no replacement for a rule. Please contact the developers.");
             }
 
-            Console.WriteLine(replacement + " " + replacement.Name);
+            var a = GetPropertyFromString(AmlObject, "WriterHeader");
+            Console.WriteLine(a);
+            Console.WriteLine("END");
+
+            a = SearchProperty(typeof(CAEXFile), "WriterHeader");
+            Console.WriteLine(a + "END");
+
+            a = typeof(CAEXFile).GetProperty("WriterHeader");
+            Console.WriteLine(a);
+            Console.WriteLine("END");
+
+            /*using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(AmlObject.GetType());
+                serializer.Serialize(stringwriter, AmlObject);
+                Console.WriteLine(stringwriter.ToString());
+            };*/
+
+
+            // Console.WriteLine(a);
+
+            /*Console.WriteLine(replacement + " " + replacement.Name);
             references.ForEach(n => Console.WriteLine(n + " " + n.Name));
-            Console.WriteLine("\n\n\n");
+            Console.WriteLine("\n\n\n");*/
+        }
+
+        private static PropertyInfo SearchProperty(PropertyInfo currentPropertyInfo, string propertyName)
+        {
+            foreach (var property in currentPropertyInfo.PropertyType.GetProperties())
+            {
+                if (property.Name.Equals(propertyName))
+                {
+                    return property;
+                }
+
+                if (IsSimpleType(property.PropertyType)) continue;
+
+                var prop = SearchProperty(property, propertyName);
+
+                if (prop != null)
+                {
+                    return prop;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
