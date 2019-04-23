@@ -128,7 +128,7 @@ namespace Gsd2Aml.Lib
                             Util.Logger.Log(LogLevel.Error, "Translation table has a syntactic error. A rule has more than one replacement.");
                             throw new Exception("Translation table has mutliple replacements for a rule. Please contact the developers.");
                         }
-                        replacement = xmlNode;
+                        replacement = xmlNode.FirstChild;
                         alreadyReadReplacement = true;
                         break;
                     default:
@@ -143,101 +143,37 @@ namespace Gsd2Aml.Lib
                 throw new Exception("Translation table has no replacement for a rule. Please contact the developers.");
             }
 
-            var a = GetPropertyFromString(AmlObject, "WriterHeader");
-            Console.WriteLine(a);
+            var replacementProperty = GetPropertyFromString(AmlObject.GetType(), replacement.Name);
+            Console.WriteLine(replacementProperty);
             Console.WriteLine("END");
-
-            a = SearchProperty(typeof(CAEXFile), "WriterHeader");
-            Console.WriteLine(a + "END");
-
-            a = typeof(CAEXFile).GetProperty("WriterHeader");
-            Console.WriteLine(a);
-            Console.WriteLine("END");
-
-            /*using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(AmlObject.GetType());
-                serializer.Serialize(stringwriter, AmlObject);
-                Console.WriteLine(stringwriter.ToString());
-            };*/
-
-
-            // Console.WriteLine(a);
-
-            /*Console.WriteLine(replacement + " " + replacement.Name);
-            references.ForEach(n => Console.WriteLine(n + " " + n.Name));
-            Console.WriteLine("\n\n\n");*/
-        }
-
-        private static PropertyInfo SearchProperty(PropertyInfo currentPropertyInfo, string propertyName)
-        {
-            foreach (var property in currentPropertyInfo.PropertyType.GetProperties())
-            {
-                if (property.Name.Equals(propertyName))
-                {
-                    return property;
-                }
-
-                if (IsSimpleType(property.PropertyType)) continue;
-
-                var prop = SearchProperty(property, propertyName);
-
-                if (prop != null)
-                {
-                    return prop;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
-        /// Searches recursivley an object down to find a property by a string.
+        /// Searches recursivley a class down to find a property by a string.
         /// </summary>
-        /// <param name="currentHeadObject">The reference to an object which is the current head object.</param>
+        /// <param name="type">The type object which references the current iterated class.</param>
         /// <param name="propertyName">The name of the property which will be searched.</param>
-        /// <param name="currentPropertyInfo">Optional parameter which exits for array handling in this recursive function.</param>
         /// <returns>The property info object of the found property or null if it does not exist.</returns>
-        private static PropertyInfo GetPropertyFromString(object currentHeadObject, string propertyName, PropertyInfo currentPropertyInfo = null)
+        private static PropertyInfo GetPropertyFromString(Type type, string propertyName)
         {
-            // Check if current head object is null.
-            if (currentHeadObject == null)
+            // Check if the current type is the searched type.
+            var prop = type.GetProperty(propertyName);
+
+            if (prop != null)
             {
-                return null;
+                return prop;
             }
 
-            // Check if current head object is an array. If yes, the property info is returned.
-            if (currentHeadObject.GetType().IsArray && currentPropertyInfo != null)
-            {
-                return currentPropertyInfo;
-            }
-
-            // Iterate over the proerties of the current head object.
-            foreach (var propertyInfo in currentHeadObject.GetType().GetProperties())
-            {
-                // Check if the current property info is the searched property.
-                if (propertyInfo.Name.Equals(propertyName))
-                {
-                    return propertyInfo;
-                }
-
-                // If current property is null or a simple type the recursive call will be skipped.
-                if (propertyInfo.GetValue(currentHeadObject) == null || IsSimpleType(propertyInfo.GetValue(currentHeadObject).GetType())) continue;
-
-                // Recursive call for the current property.
-                var prop = GetPropertyFromString(propertyInfo.GetValue(currentHeadObject), propertyName, propertyInfo);
-
-                // If the result of the recursive call is not null, the property is found.
-                if (prop != null)
-                {
-                    return prop;
-                }
-            }
-            return null;
+            // Iterate over all local declared public properties of the current type.
+            return (from property in type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
+                    select property.PropertyType.IsArray ? property.PropertyType.GetElementType() : property.PropertyType into propertyType
+                    where !IsSimpleType(propertyType)
+                    where type != propertyType
+                    select GetPropertyFromString(propertyType, propertyName)).FirstOrDefault(x => x != null);
         }
 
         /// <summary>
-        /// Checks if a given Type is a simple/primitive type.
+        /// Checks if a given type is a simple/primitive type.
         /// </summary>
         /// <param name="type">The type which should be checked.</param>
         /// <returns>A boolean which indicates if the given type is a simple type.</returns>
