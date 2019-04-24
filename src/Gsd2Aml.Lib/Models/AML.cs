@@ -1597,4 +1597,20 @@
         }
     }
 
+    public class Wrapper
+    {
+        public WriterHeader WriterHeader { get; set; }
+    }
+
+    public class WriterHeader
+    {
+        public string WriterName { get; set; }
+        public string WriterID { get; set; }
+        public string WriterVendor { get; set; }
+        public string WriterVersion { get; set; }
+        public string WriterRelease { get; set; }
+        public string LastWritingDateTime { get; set; }
+        public string WriterProjectTitle { get; set; }
+        public string WriterProjectID { get; set; }
+    }
 }

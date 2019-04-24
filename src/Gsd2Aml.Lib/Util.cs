@@ -1,5 +1,4 @@
-﻿
-namespace Gsd2Aml.Lib
+﻿namespace Gsd2Aml.Lib
 {
     public class Util
     {

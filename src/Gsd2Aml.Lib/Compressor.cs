@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Gsd2Aml.Lib.Logging;
+using System;
 using System.IO;
 using System.IO.Compression;
-using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Lib
 {

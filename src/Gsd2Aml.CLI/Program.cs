@@ -1,15 +1,15 @@
 using Gsd2Aml.Lib;
+using Gsd2Aml.Lib.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.CLI
 {
     public class Program
     {
-        internal static Logger Log { get; } = new Logger();
+        internal static Logger Logger { get; } = new Logger();
 
         private const string CHelp = "--help";
         private const string CHelpShort = "-h";
@@ -76,7 +76,7 @@ namespace Gsd2Aml.CLI
             }
             else
             {
-                Log.Log(LogLevel.Fatal, "Invalid input file. GSD-File does not exist.");
+                Logger.Log(LogLevel.Fatal, "Invalid input file. GSD-File does not exist.");
                 Console.WriteLine($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
                                   $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                 Environment.Exit(1);
@@ -155,8 +155,8 @@ namespace Gsd2Aml.CLI
                 }
                 catch (Exception e)
                 {
-                    Log.Log(LogLevel.Error, e.Message);
-                    Log.Log(LogLevel.Trace, e.StackTrace);
+                    Logger.Log(LogLevel.Error, e.Message);
+                    Logger.Log(LogLevel.Trace, e.StackTrace);
                     Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory.");
                     Environment.Exit(1);
                 }
@@ -183,6 +183,7 @@ namespace Gsd2Aml.CLI
 
             try
             {
+                Util.Logger = Logger;
                 Converter.Convert(inputFile, outputFile, stringOutput);
             }
             catch (Exception e)
@@ -236,7 +237,7 @@ namespace Gsd2Aml.CLI
                 }
                 else
                 {
-                    Log.Log(LogLevel.Fatal, $"User used {argument} multiple times.");
+                    Logger.Log(LogLevel.Fatal, $"User used {argument} multiple times.");
                     Console.WriteLine($"{Environment.NewLine}Error: You used {argument} multiple times." +
                                       $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                     Environment.Exit(1);
@@ -251,7 +252,7 @@ namespace Gsd2Aml.CLI
         /// <param name="secondParameter">The second parameter of the long/short argument pair.</param>
         private static void PrintLongShortParameterError(string firstParameter, string secondParameter)
         {
-            Log.Log(LogLevel.Fatal, $"User used {firstParameter} and {secondParameter} together while only one of them is allowed.");
+            Logger.Log(LogLevel.Fatal, $"User used {firstParameter} and {secondParameter} together while only one of them is allowed.");
             Console.WriteLine($"{Environment.NewLine}Error: You used {firstParameter} and {secondParameter} while only one of them is allowed." +
                               $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
             Environment.Exit(1);

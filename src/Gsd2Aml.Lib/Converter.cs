@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Gsd2Aml.Lib.Logging;
+using Gsd2Aml.Lib.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using Gsd2Aml.Lib.Models;
 using System.Xml.Serialization;
-using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Lib
 {
@@ -62,7 +62,7 @@ namespace Gsd2Aml.Lib
             // Set FileName property of CAEX-element.
             AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
 
-            Handle(AmlObject, GsdObject);
+            Handle(GsdObject, AmlObject);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Gsd2Aml.Lib
         /// <typeparam name="TG">The type of the current GSD head object.</typeparam>
         /// <param name="amlParent">The current AML head object.</param>
         /// <param name="gsdParent">The current GSD head object.</param>
-        private static void Handle<TA, TG>(TA amlParent, TG gsdParent)
+        private static void Handle<TG, TA>(TG gsdParent, TA amlParent)
         {
             // If the current GSD parent is null, it does not make any sense to iterate over its properties.
             if (gsdParent == null)
@@ -82,24 +82,32 @@ namespace Gsd2Aml.Lib
             }
 
             // Iterate over the properties of the current GSD parent.
-            foreach (var propertyInfo in gsdParent.GetType().GetProperties())
+            foreach (var gsdProperty in gsdParent.GetType().GetProperties())
             {
                 // Check if the current iterated property is null. If yes, it cannot be translated and it continues with the next property.
-                if (propertyInfo.GetValue(gsdParent) == null)
+                if (gsdProperty.GetValue(gsdParent) == null)
                 {
                     continue;
                 }
 
                 // Get the translation rule of the gsdTranslationElements list.
-                var translationRule = GsdTranslationElements.FirstOrDefault(node => node.Name.Equals(propertyInfo.Name));
+                var translationRule = GsdTranslationElements.FirstOrDefault(node => node.Name.Equals(gsdProperty.Name));
                 // If the rule does not exist, it cannot be translated. It continues with the next property.
                 if (translationRule == null) continue;
 
                 // Get the instance of the current iterated property and translate it.
-                var gsdInstance = propertyInfo.GetValue(gsdParent);
-                Translate(gsdInstance, translationRule);
+                var gsdPropertyInstance = gsdProperty.GetValue(gsdParent);
+                Translate(gsdPropertyInstance, amlParent, translationRule);
 
                 // TODO: Call Handle function
+
+                using (var stringwriter = new StringWriter())
+                {
+                    var serializer = new XmlSerializer(AmlObject.GetType());
+                    serializer.Serialize(stringwriter, AmlObject);
+                    Console.WriteLine(stringwriter.ToString());
+                };
+                Console.WriteLine("\n\n");
             }
         }
 
@@ -109,12 +117,48 @@ namespace Gsd2Aml.Lib
         /// <typeparam name="TG">The type of the GSD object which will be translated.</typeparam>
         /// <param name="gsdObject">The GSD object which will be translated.</param>
         /// <param name="translationRule">The translation rule which will be used to translate the GSD object to an AML object.</param>
-        private static void Translate<TG>(TG gsdObject, XmlNode translationRule)
+        private static void Translate<TG, TA>(TG gsdObject, TA amlObject, XmlNode translationRule)
         {
+            // Create variables for references and replacements.
             XmlNode replacement = null;
-            var alreadyReadReplacement = false;
             var references = new List<XmlNode>();
 
+            // Get information of the translation rule.
+            GetInformationFromRule(translationRule, ref replacement, references);
+
+            // Get the replacement property.
+            var replacementProperty = GetPropertyFromString(AmlObject.GetType(), replacement.Name);
+            // Local variable which describes if the replacment property is an array.
+            var isReplacementPropertyArray = replacementProperty.PropertyType.IsArray;
+            // Gets the type of the replacement property.
+            var replacementPropertyType = isReplacementPropertyArray
+                                            ? replacementProperty.PropertyType.GetElementType()
+                                            : replacementProperty.PropertyType;
+
+            if (replacementPropertyType == null) return;
+
+            // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
+            dynamic replacementInstance = isReplacementPropertyArray 
+                                        ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
+                                        : Activator.CreateInstance(replacementPropertyType);
+
+            Console.WriteLine(replacement.Name);
+
+            // Set the replacement to the aml object.
+            replacementProperty.SetValue(amlObject, isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance);
+        }
+
+        /// <summary>
+        /// This function gets the relevant information (replacement, references) of a translation rule.
+        /// </summary>
+        /// <param name="translationRule">The translation rule which will be parsed.</param>
+        /// <param name="replacement">The actual replacement.</param>
+        /// <param name="references">A list which will save all replacement.</param>
+        private static void GetInformationFromRule(XmlNode translationRule, ref XmlNode replacement, ICollection<XmlNode> references)
+        {
+            var alreadyReadReplacement = false;
+
+            // Iterate over the child nodes of the replacement.
             foreach (XmlNode xmlNode in translationRule.ChildNodes)
             {
                 switch (xmlNode.Name)
@@ -137,15 +181,11 @@ namespace Gsd2Aml.Lib
                 }
             }
 
-            if (replacement == null)
-            {
-                Util.Logger.Log(LogLevel.Error, "Translation table has a syntacitc error. There is no replacement for a rule.");
-                throw new Exception("Translation table has no replacement for a rule. Please contact the developers.");
-            }
+            // Check if replacement is null.
+            if (replacement != null) return;
 
-            var replacementProperty = GetPropertyFromString(AmlObject.GetType(), replacement.Name);
-            Console.WriteLine(replacementProperty);
-            Console.WriteLine("END");
+            Util.Logger.Log(LogLevel.Error, "Translation table has a syntacitc error. There is no replacement for a rule.");
+            throw new Exception("Translation table has no replacement for a rule. Please contact the developers.");
         }
 
         /// <summary>
@@ -166,9 +206,11 @@ namespace Gsd2Aml.Lib
 
             // Iterate over all local declared public properties of the current type.
             return (from property in type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
+                        // Get the type object of the property for comparison reasons.
                     select property.PropertyType.IsArray ? property.PropertyType.GetElementType() : property.PropertyType into propertyType
-                    where !IsSimpleType(propertyType)
-                    where type != propertyType
+                    // Check that the type is not a simple type and that the property is not the same as the current head property due to possible recurisve stackoverflow exception.
+                    where !IsSimpleType(propertyType) && type != propertyType
+                    // Recursive call of the current iterated property. If it is not null, it is the searched property.
                     select GetPropertyFromString(propertyType, propertyName)).FirstOrDefault(x => x != null);
         }
 
