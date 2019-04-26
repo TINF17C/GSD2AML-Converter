@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using Gsd2Aml.Lib.Logging;
 
-namespace Gsd2Aml.CLI
+namespace Gsd2Aml.Cli
 {
     public class Program
     {

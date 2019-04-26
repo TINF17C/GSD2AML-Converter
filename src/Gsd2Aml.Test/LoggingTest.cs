@@ -10,7 +10,7 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void TestCliLogging()
         {
-            var logger = new CLI.Logger();
+            var logger = new Cli.Logger();
             const string logMessage1 = "Logging 1";
             const string logMessage2 = "Logging 2";
             const string logMessage3 = "Logging 3";

@@ -2,7 +2,7 @@
 using NLog;
 using LogLevel = Gsd2Aml.Lib.Logging.LogLevel;
 
-namespace Gsd2Aml.CLI
+namespace Gsd2Aml.Cli
 {
     public class Logger : ILoggingService
     {
