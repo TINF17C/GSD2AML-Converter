@@ -1604,13 +1604,13 @@
 
     public class WriterHeader
     {
-        public string WriterName { get; set; }
-        public string WriterID { get; set; }
-        public string WriterVendor { get; set; }
-        public string WriterVersion { get; set; }
-        public string WriterRelease { get; set; }
-        public string LastWritingDateTime { get; set; }
-        public string WriterProjectTitle { get; set; }
-        public string WriterProjectID { get; set; }
+        public int WriterName { get; set; }
+        public int WriterID { get; set; }
+        public int WriterVendor { get; set; }
+        public int WriterVersion { get; set; }
+        public int WriterRelease { get; set; }
+        public int LastWritingDateTime { get; set; }
+        public int WriterProjectTitle { get; set; }
+        public int WriterProjectID { get; set; }
     }
 }
