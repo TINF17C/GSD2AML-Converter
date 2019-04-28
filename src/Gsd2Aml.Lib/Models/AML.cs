@@ -1,4 +1,7 @@
-﻿namespace Gsd2Aml.Lib.Models
+﻿using System;
+using System.Xml.Serialization;
+
+namespace Gsd2Aml.Lib.Models
 {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
@@ -182,6 +185,7 @@
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AttributeType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(InterfaceClassType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(InterfaceFamilyType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(WriterHeader))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1584,7 +1588,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SystemUnitClass")]
-        public SystemUnitFamilyType[] SystemUnitClass
+        public SystemUnitFamilyType[] SystemUnitClass 
         {
             get
             {
@@ -1600,17 +1604,26 @@
     public class Wrapper
     {
         public WriterHeader WriterHeader { get; set; }
-    }
 
+        public CAEXFile CAEXFile { get; set; }
+    }
+    
     public class WriterHeader
     {
-        public int WriterName { get; set; }
+        public string WriterName { get; set; }
+
         public int WriterID { get; set; }
+
         public int WriterVendor { get; set; }
+
         public int WriterVersion { get; set; }
+
         public int WriterRelease { get; set; }
+
         public int LastWritingDateTime { get; set; }
+
         public int WriterProjectTitle { get; set; }
+
         public int WriterProjectID { get; set; }
     }
 }

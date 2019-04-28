@@ -76,7 +76,6 @@ namespace Gsd2Aml.CLI
             }
             else
             {
-                Logger.Log(LogLevel.Fatal, "Invalid input file. GSD-File does not exist.");
                 Console.WriteLine($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
                                   $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                 Environment.Exit(1);
@@ -155,8 +154,6 @@ namespace Gsd2Aml.CLI
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(LogLevel.Error, e.Message);
-                    Logger.Log(LogLevel.Trace, e.StackTrace);
                     Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory.");
                     Environment.Exit(1);
                 }
@@ -188,8 +185,8 @@ namespace Gsd2Aml.CLI
             }
             catch (Exception e)
             {
+                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}{Environment.NewLine}");
                 Logger.Log(LogLevel.Error, e.ToString());
-                Console.WriteLine(e.Message);
                 Environment.Exit(1);
             }
         }
@@ -238,7 +235,6 @@ namespace Gsd2Aml.CLI
                 }
                 else
                 {
-                    Logger.Log(LogLevel.Fatal, $"User used {argument} multiple times.");
                     Console.WriteLine($"{Environment.NewLine}Error: You used {argument} multiple times." +
                                       $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                     Environment.Exit(1);
@@ -253,7 +249,6 @@ namespace Gsd2Aml.CLI
         /// <param name="secondParameter">The second parameter of the long/short argument pair.</param>
         private static void PrintLongShortParameterError(string firstParameter, string secondParameter)
         {
-            Logger.Log(LogLevel.Fatal, $"User used {firstParameter} and {secondParameter} together while only one of them is allowed.");
             Console.WriteLine($"{Environment.NewLine}Error: You used {firstParameter} and {secondParameter} while only one of them is allowed." +
                               $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
             Environment.Exit(1);
