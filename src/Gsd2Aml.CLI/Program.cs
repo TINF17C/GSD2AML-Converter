@@ -188,6 +188,7 @@ namespace Gsd2Aml.CLI
             }
             catch (Exception e)
             {
+                Logger.Log(LogLevel.Error, e.ToString());
                 Console.WriteLine(e.Message);
                 Environment.Exit(1);
             }

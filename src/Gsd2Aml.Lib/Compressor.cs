@@ -38,9 +38,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Error while compressing the AML-file and the ressources to the .amlx file.");
+                throw new Exception("Error while compressing the AML-file and the ressources to the .amlx file.", e);
             }
         }
 
@@ -58,9 +56,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create the .amlx compressed file.");
+                throw new Exception("Could not create the .amlx compressed file.", e);
             }
         }
 
@@ -78,9 +74,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create the the temporary directory which was created to compress the .amlx file.");
+                throw new Exception("Could not create the the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -98,9 +92,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.");
+                throw new Exception("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -120,9 +112,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.");
+                throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.", e);
             }
         }
     }

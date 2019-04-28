@@ -38,12 +38,10 @@ namespace Gsd2Aml.Lib
                 }
                 catch (Exception e)
                 {
-                    Util.Logger.Log(LogLevel.Error, e.Message);
-                    Util.Logger.Log(LogLevel.Trace, e.StackTrace);
                     throw new Exception("Invalid GSD-file. Failed to serialize the GSD-File.");
                 }
             }
-
+            // TODO: add CAEXFile to Wrapper and search property by typeof(Wrapper)
             // Load translation table.
             translationTable.Load(CTranslationTableFileName);
 
@@ -95,8 +93,8 @@ namespace Gsd2Aml.Lib
                 // If the rule does not exist, it cannot be translated. It continues with the next property.
                 if (translationRule == null) continue;
 
-                // Get the instance of the current iterated property and translate it.
-                Translate(currentAmlHead, translationRule);
+                // Translate the gsdProperty to AML.
+                Translate(ref currentAmlHead, ref translationRule);
 
                 // TODO: Call Handle function.
 
@@ -117,18 +115,18 @@ namespace Gsd2Aml.Lib
         /// <typeparam name="TA">The type of the AML parent object.</typeparam>
         /// <param name="currentAmlHead">The AML parent object in which the translation object will be set.</param>
         /// <param name="translationRule">The translation rule which will be used to translate the GSD object to an AML object.</param>
-        private static void Translate<TA>(TA currentAmlHead, XmlNode translationRule)
+        private static void Translate<TA>(ref TA currentAmlHead, ref XmlNode translationRule)
         {
             // Create variables for references and replacements.
             XmlNode replacement = null;
             var references = new List<XmlNode>();
 
-            // Get information of the translation rule.
-            GetInformationFromRule(translationRule, ref replacement, references);
+            // Get information of the translation rule. (replacement and references)
+            GetInformationFromRule(ref translationRule, ref replacement, references);
 
-            // Get the replacement property.
+            // Get the AML replacement property.
             var replacementProperty = GetPropertyFromString(AmlObject.GetType(), replacement.Name);
-            // Local variable which describes if the replacment property is an array.
+            // Local variable which describes if the replacement property is an array.
             var isReplacementPropertyArray = replacementProperty.PropertyType.IsArray;
             // Gets the type of the replacement property.
             var replacementPropertyType = isReplacementPropertyArray
@@ -142,16 +140,29 @@ namespace Gsd2Aml.Lib
                                             ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
                                             : Activator.CreateInstance(replacementPropertyType);
 
+            // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
-                var subProperty = TranslateSubProperties(childNode);
-            }
+                var subPropertyInformation = TranslateSubProperties(childNode);
 
-            // Set the replacement to the current aml head object
+                dynamic subPropertyInstance = subPropertyInformation.Item2
+                    ? Activator.CreateInstance(typeof(List<>).MakeGenericType(subPropertyInformation.Item3))
+                    : Activator.CreateInstance(subPropertyInformation.Item3);
+
+                if (isReplacementPropertyArray)
+                {
+                    replacementInstance.Add(subPropertyInstance);
+                }
+                else
+                {
+                    subPropertyInformation.Item1.SetValue(replacementInstance, subPropertyInstance);
+                }
+            }
+            // Set the replacementInstance to the current aml head object
             replacementProperty.SetValue(currentAmlHead, isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance);
         }
 
-        private static dynamic TranslateSubProperties(XmlNode translation)
+        private static Tuple<PropertyInfo, bool, Type> TranslateSubProperties(XmlNode translation)
         {
             var translationProperty = GetPropertyFromString(typeof(Wrapper), translation.Name);
             if (translationProperty == null) GetPropertyFromString(AmlObject.GetType(), translation.Name);
@@ -167,27 +178,28 @@ namespace Gsd2Aml.Lib
                 ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
                 : Activator.CreateInstance(translationPropertyType);
 
-            // TODO: Translate InnerText.
+            // Has only text.
             if (translation.HasChildNodes && translation.SelectNodes("./*")?.Count == 0)
             {
-                return translationInstance;
+                return Tuple.Create(translationProperty, isTranslationPropertyArray, translationPropertyType);
             }
-            // TODO: Translate Attributes.
-            // TODO: Translate Property when it does not contain any text.
 
             foreach (XmlNode childNode in translation.ChildNodes)
             {
-                var subPropertyInstance = TranslateSubProperties(childNode);
-                Tuple<PropertyInfo, dynamic> a = Lala(translationProperty, translationInstance);
-                Console.WriteLine(a);
+                var subPropertyInformation = TranslateSubProperties(childNode);
+
+                dynamic subPropertyInstance = subPropertyInformation.Item2
+                    ? Activator.CreateInstance(typeof(List<>).MakeGenericType(subPropertyInformation.Item3))
+                    : Activator.CreateInstance(subPropertyInformation.Item3);
+
+                subPropertyInformation.Item1.SetValue(translationInstance, subPropertyInstance);
+
+                // TODO: Translate InnerText.
+                // TODO: Translate Attributes.
+                // TODO: Translate Property when it does not contain any text.
             }
 
-            return null;
-        }
-
-        private static dynamic Lala(PropertyInfo prop, dynamic dyn)
-        {
-            return Tuple.Create(prop, dyn);
+            return Tuple.Create(translationProperty, isTranslationPropertyArray, translationPropertyType);
         }
 
         /// <summary>
@@ -196,7 +208,7 @@ namespace Gsd2Aml.Lib
         /// <param name="translationRule">The translation rule which will be parsed.</param>
         /// <param name="replacement">The actual replacement.</param>
         /// <param name="references">A list which will save all replacement.</param>
-        private static void GetInformationFromRule(XmlNode translationRule, ref XmlNode replacement, ICollection<XmlNode> references)
+        private static void GetInformationFromRule(ref XmlNode translationRule, ref XmlNode replacement, ICollection<XmlNode> references)
         {
             var alreadyReadReplacement = false;
 
@@ -231,7 +243,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// Searches recursivley a class down to find a property by a string.
+        /// Searches recursiveley a class down to find a property by a string.
         /// </summary>
         /// <param name="type">The type object which references the current iterated class.</param>
         /// <param name="propertyName">The name of the property which will be searched.</param>
