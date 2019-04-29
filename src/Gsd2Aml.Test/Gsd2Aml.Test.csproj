@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CliTest.cs" />
     <Compile Include="CompressorTest.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggingTest.cs" />

@@ -200,7 +200,7 @@ namespace Gsd2Aml.CLI
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
         /// <returns>A valid outputFile string.</returns>
-        private static string GetOutputFile(string inputFile, string outputFile)
+        public static string GetOutputFile(string inputFile, string outputFile)
         {
             if (string.IsNullOrEmpty(outputFile))
             {
