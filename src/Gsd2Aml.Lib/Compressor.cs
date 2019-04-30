@@ -14,7 +14,7 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="aml">The AML file which will be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in including the name of the archive.amlx.</param>
-        /// <param name="ressources">An array of paths to the ressources to be part of the AMLX package.</param>
+        /// <param name="ressources">An array of paths to the ressources to be part of the .amlx package.</param>
         /// <exception cref="IOException"></exception>
         public static void Compress(string aml, string destination, string[] ressources)
         {

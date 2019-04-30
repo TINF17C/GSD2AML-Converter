@@ -1600,30 +1600,44 @@ namespace Gsd2Aml.Lib.Models
             }
         }
     }
-
-    public class Wrapper
-    {
-        public WriterHeader WriterHeader { get; set; }
-
-        public CAEXFile CAEXFile { get; set; }
-    }
     
     public class WriterHeader
     {
         public string WriterName { get; set; }
 
-        public int WriterID { get; set; }
+        public string WriterID { get; set; }
 
-        public int WriterVendor { get; set; }
+        public string WriterVendor { get; set; }
 
-        public int WriterVersion { get; set; }
+        public string WriterVersion { get; set; }
 
-        public int WriterRelease { get; set; }
+        public string WriterRelease { get; set; }
 
-        public int LastWritingDateTime { get; set; }
+        public string LastWritingDateTime { get; set; }
 
-        public int WriterProjectTitle { get; set; }
+        public string WriterProjectTitle { get; set; }
 
-        public int WriterProjectID { get; set; }
+        public string WriterProjectID { get; set; }
+    }
+
+    public class SystemUnitClassLibWrapper
+    {
+        public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
+    }
+
+    public class SystemUnitFamilyTypeWrapper
+    {
+        public SystemUnitFamilyType SystemUnitFamilyType { get; set; }
+    }
+
+    public class Wrapper
+    {
+        public WriterHeader WriterHeader { get; set; }
+
+        public CAEXObject CAEXObject { get; set; }
+
+        public CAEXFile CAEXFile { get; set; }
+
+        public SystemUnitClassLibWrapper SystemUnitClassLibWrapper { get; set; }
     }
 }

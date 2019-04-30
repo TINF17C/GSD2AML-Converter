@@ -154,7 +154,8 @@ namespace Gsd2Aml.CLI
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory.");
+                    Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory." +
+                                      $"{Environment.NewLine}{e.Message}");
                     Environment.Exit(1);
                 }
             }
@@ -213,7 +214,7 @@ namespace Gsd2Aml.CLI
             if (!string.IsNullOrEmpty(Path.GetExtension(outputFile)) && !string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(outputFile)))
             {
                 return outputFile;
-            }
+            }   
 
             return outputFile != null ? Path.Combine(outputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx") : null;
         }
