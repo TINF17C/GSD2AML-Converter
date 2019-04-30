@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Gsd2Aml.CLI
 {
-    public class Program
+    public static class Program
     {
         internal static Logger Logger { get; } = new Logger();
 
@@ -54,7 +54,7 @@ namespace Gsd2Aml.CLI
                 { COutputFileShort, string.Empty }
             };
 
-            if (args.Length == 0)
+            if (args.Length == 0 || args.Contains("-h") || args.Contains("--help"))
             {
                 PrintHelpText();
             }

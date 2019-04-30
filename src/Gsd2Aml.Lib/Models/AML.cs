@@ -1625,9 +1625,24 @@ namespace Gsd2Aml.Lib.Models
         public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
     }
 
-    public class SystemUnitFamilyTypeWrapper
+    public class SystemUnitClassWrapper
     {
-        public SystemUnitFamilyType SystemUnitFamilyType { get; set; }
+        public SystemUnitFamilyType SystemUnitClass { get; set; }
+    }
+
+    public class SupportedRoleClassWrapper
+    {
+        public SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
+    }
+
+    public class InternalElementWrapper
+    {
+        public InternalElementType InternalElement { get; set; }
+    }
+
+    public class AttributeWrapper
+    {
+        public AttributeType Attribute { get; set; }
     }
 
     public class Wrapper
@@ -1639,5 +1654,13 @@ namespace Gsd2Aml.Lib.Models
         public CAEXFile CAEXFile { get; set; }
 
         public SystemUnitClassLibWrapper SystemUnitClassLibWrapper { get; set; }
+
+        public SystemUnitClassWrapper SystemUnitClassWrapper { get; set; }
+
+        public SupportedRoleClassWrapper SupportedRoleClassWrapper { get; set; }
+
+        public InternalElementWrapper InternalElementWrapper { get; set; }
+
+        public AttributeWrapper AttributeWrapper { get; set; }
     }
 }

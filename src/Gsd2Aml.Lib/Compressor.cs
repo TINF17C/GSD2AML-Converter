@@ -5,7 +5,7 @@ using System.IO.Compression;
 
 namespace Gsd2Aml.Lib
 {
-    public class Compressor
+    public static class Compressor
     {
         private const string Gsd2AmlName = "GSD2AML";
 

@@ -1,7 +1,6 @@
 ﻿using Gsd2Aml.Lib.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
-    public class Converter
+    public static class Converter
     {
         private static ISO15745Profile GsdObject { get; set; }
 
@@ -49,7 +48,7 @@ namespace Gsd2Aml.Lib
 
             if (translationTable.DocumentElement == null)
             {
-                throw new Exception("Could not load the translation table. Please contact the developers.");
+                throw new Exception("Could not load the translation table.");
             }
 
             // Add all conversion rules to a list.
@@ -59,7 +58,7 @@ namespace Gsd2Aml.Lib
             }
 
             // Set FileName property of CAEX-element.
-            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
+            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName")) ?.SetValue(AmlObject, new FileInfo(outputFile).Name);
 
             Handle(GsdObject, AmlObject);
         }
@@ -97,6 +96,19 @@ namespace Gsd2Aml.Lib
                 // Translate the gsdProperty to AML.
                 Translate(ref currentAmlHead, ref translationRule, out var newAmlHead);
 
+                if (newAmlHead.GetType().IsArray)
+                {
+                    foreach (var amlHeadElement in newAmlHead)
+                    {
+                        Handle(gsdProperty.GetValue(currentGsdHead), amlHeadElement);
+                    }
+                }
+                else
+                {
+                    // Call the Handle function with the current gsdProperty and the new AML head.
+                    Handle(gsdProperty.GetValue(currentGsdHead), newAmlHead);
+                }
+
                 // TODO: Remove this using block.
                 using (var stringwriter = new StringWriter())
                 {
@@ -104,8 +116,6 @@ namespace Gsd2Aml.Lib
                     serializer.Serialize(stringwriter, AmlObject);
                     Console.WriteLine(stringwriter.ToString());
                 }
-
-                Handle(gsdProperty.GetValue(currentGsdHead), newAmlHead);
             }
         }
 
@@ -124,7 +134,7 @@ namespace Gsd2Aml.Lib
             GetInformationFromRule(ref translationRule, out var replacement, out var references);
             
             // Get the AML replacement property.
-            // Local variable which describes if the replacement property is an array.
+            // A local variable which describes if the replacement property is an array.
             // Gets the type of the replacement property.
             GetTranslationInformation(ref replacement, out var replacementProperty, out var isReplacementPropertyArray, out var replacementPropertyType);
 
@@ -150,19 +160,18 @@ namespace Gsd2Aml.Lib
                 }
             }
 
-            // Set the replacementInstance to the current aml head object
-            newAmlHead = replacementInstance;
-            replacementProperty.SetValue(currentAmlHead, isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance);
+            // Set the replacementInstance to the current AML head object and set the new AML head.
+            newAmlHead = isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance;
+            replacementProperty.SetValue(currentAmlHead, newAmlHead);
         }
 
         // TODO: When migrating to .NET Core or .NET 7 use multiple return values instead of the out parameter.
-        // TODO: Refactor this method.
-        // TODO: Attribute and InnerText translation needs to be improved.
+        // TODO: InnerText translation needs to be improved.
         private static PropertyInfo TranslateSubProperties(XmlNode replacement, out dynamic translationInstance)
         {
             // Get the information of the replacement node. (PropertyInfo, isArray, Type)
             GetTranslationInformation(ref replacement, out var translationProperty, out var isTranslationPropertyArray, out var translationPropertyType);
-            if (replacement.Name.Equals("SystemUnitClassWrapper.SystemUnitClass")) Debugger.Break();
+
             // Create the translation instance.
             // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.
             if (translationPropertyType == typeof(string))
@@ -171,40 +180,21 @@ namespace Gsd2Aml.Lib
             }
             else
             {
+                Console.WriteLine(replacement.Name + " " + translationPropertyType);
                 translationInstance = isTranslationPropertyArray
-                    ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
-                    : Activator.CreateInstance(translationPropertyType);
+                                        ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
+                                        : Activator.CreateInstance(translationPropertyType);
             }
 
-            // If the current node has only a text in it or no children it returns it.
-            if (replacement.HasChildNodes && replacement.SelectNodes("./*")?.Count == 0 || !replacement.HasChildNodes)
+            // Set attribute and inner text to the translation instance.
+            if (translationInstance is string) translationInstance = replacement.InnerText;
+            SetAttributes(ref replacement, ref translationInstance);
+
+            // If the current node has only a text in it or no children it returns the translationProperty.
+            if (replacement.SelectNodes("./*")?.Count == 0 || !replacement.HasChildNodes)
             {
-                if (translationInstance is string) translationInstance = replacement.InnerText;
+                if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
 
-                if (replacement.Attributes != null)
-                {
-                    foreach (XmlAttribute attribute in replacement.Attributes)
-                    {
-                        var attributeProperty = GetPropertyFromString(typeof(Wrapper), attribute.Name);
-                        var isAttributePropertyArray = attributeProperty.PropertyType.IsArray;
-                        var attributePropertyType = isAttributePropertyArray
-                                                    ? attributeProperty.PropertyType.GetElementType()
-                                                    : attributeProperty.PropertyType;
-                        dynamic attributeInstance;
-
-                        if (attributePropertyType == typeof(string))
-                        {
-                            attributeInstance = attribute.Value;
-                        }
-                        else
-                        {
-                            attributeInstance = isAttributePropertyArray
-                                                ? Activator.CreateInstance(typeof(List<>).MakeGenericType(attributePropertyType))
-                                                : Activator.CreateInstance(attributePropertyType);
-                        }
-                        attributeProperty.SetValue(translationInstance, attributeInstance);
-                    }
-                }
                 return translationProperty;
             }
 
@@ -212,10 +202,55 @@ namespace Gsd2Aml.Lib
             {
                 var subProperty = TranslateSubProperties(childNode, out var subPropertyInstance);
 
-                subProperty.SetValue(translationInstance, subPropertyInstance);
+                if (isTranslationPropertyArray)
+                {
+                    translationInstance.Add(subPropertyInstance);
+                }
+                else
+                {
+                    subProperty.SetValue(translationInstance, subPropertyInstance);
+                }
             }
 
+            if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
+
             return translationProperty;
+        }
+
+        /// <summary>
+        /// This function sets the attributes of a replacement node to the translation instance.
+        /// This function assumes that all attributes are of type string. If not, then please contact the developers.
+        /// </summary>
+        /// <param name="replacement">The replacement node of the translation table which will be used to set those attributes to the instance.</param>
+        /// <param name="translationInstance">The instance in which the attributes will be set.</param>
+        ///  TODO: References implemention.
+        private static void SetAttributes(ref XmlNode replacement, ref dynamic translationInstance)
+        {
+            // If there are not attributes, it is not possible to translate them.
+            if (replacement.Attributes == null) return;
+
+            // Iterate over all attributes.
+            foreach (XmlAttribute attribute in replacement.Attributes)
+            {
+                // Get the property and type of the attribute.
+                var attributeProperty = GetPropertyFromString(typeof(Wrapper), attribute.Name);
+                var attributePropertyType = attributeProperty.PropertyType;
+
+                // Create the instance of the attribute and assume it is a string. If not, it throws a exception.
+                dynamic attributeInstance;
+
+                if (attributePropertyType == typeof(string))
+                {
+                    attributeInstance = attribute.Value;
+                }
+                else
+                {
+                    throw new Exception("Failed to translate attributes correctly due to incorrect typing.");
+                }
+                
+                // Set the attribute instacne to the translation instance.
+                attributeProperty.SetValue(translationInstance, attributeInstance);
+            }
         }
 
         /// <summary>
@@ -231,8 +266,11 @@ namespace Gsd2Aml.Lib
             isTranslationPropertyArray = false;
             translationPropertyType = null;
 
+            // Split strings if possible.
             var splittedStrings = replacement.Name.Split('.').ToList();
 
+            // If there is nothing to split, then it gets the property simple. But if the string was splitted, then it gets the property by iterating through the splitted strings.
+            // It then gets for a string the property and then it searches recursivly the properties of the found property with the next splitted string.
             if (splittedStrings.Count == 1)
             {
                 translationProperty = GetPropertyFromString(typeof(Wrapper), replacement.Name);
@@ -278,21 +316,21 @@ namespace Gsd2Aml.Lib
                     case "Replacement":
                         if (alreadyReadReplacement)
                         {
-                            throw new Exception("Translation table has mutliple replacements for a rule. Please contact the developers.");
+                            throw new Exception("Translation table has mutliple replacements for a rule.");
                         }
                         replacement = xmlNode.FirstChild;
                         alreadyReadReplacement = true;
                         break;
                     case "#comment": break;
                     default:
-                        throw new Exception("Translation table has unknown element. Please contact the developers.");
+                        throw new Exception("Translation table has unknown element.");
                 }
             }
 
             // Check if replacement is null.
             if (replacement != null) return;
 
-            throw new Exception("Translation table has no replacement for a rule. Please contact the developers.");
+            throw new Exception("Translation table has no replacement for a rule.");
         }
 
         /// <summary>
