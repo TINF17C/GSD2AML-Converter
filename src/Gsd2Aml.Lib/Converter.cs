@@ -115,7 +115,7 @@ namespace Gsd2Aml.Lib
             {
                 var serializer = new XmlSerializer(AmlObject.GetType());
                 serializer.Serialize(stringwriter, AmlObject);
-                Console.WriteLine(stringwriter.ToString() + "\n");
+                Console.WriteLine(stringwriter + "\n");
             }
         }
 
@@ -209,7 +209,6 @@ namespace Gsd2Aml.Lib
                 }
                 else
                 {
-                    if ((childNode.Name + replacement.Name).Equals("ExternalInterfaceWrapper.ExternalInterface.AttributeExternalInterfaceWrapper.ExternalInterface")) System.Diagnostics.Debugger.Break();
                     subProperty.SetValue(translationInstance, subPropertyInstance);
                 }
             }
