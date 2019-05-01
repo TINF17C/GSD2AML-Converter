@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib.Models
@@ -1645,6 +1646,10 @@ namespace Gsd2Aml.Lib.Models
         public AttributeType Attribute { get; set; }
     }
 
+    public class ExternalInterfaceWrapper {
+        public InterfaceClassType ExternalInterface { get; set; }
+    }
+
     public class Wrapper
     {
         public WriterHeader WriterHeader { get; set; }
@@ -1662,5 +1667,7 @@ namespace Gsd2Aml.Lib.Models
         public InternalElementWrapper InternalElementWrapper { get; set; }
 
         public AttributeWrapper AttributeWrapper { get; set; }
+
+        public ExternalInterfaceWrapper ExternalInterfaceWrapper { get; set; }
     }
 }

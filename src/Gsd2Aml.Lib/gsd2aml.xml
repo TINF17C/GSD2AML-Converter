@@ -31,75 +31,68 @@
     <Replacement>
       <SystemUnitClass>
         <SystemUnitClassWrapper.SystemUnitClass Name="$1" ID="GUID">
-          
+
           <SupportedRoleClass>
             <SupportedRoleClassWrapper.SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
           </SupportedRoleClass>
 
           <SystemUnitClassWrapper.SystemUnitClass.InternalElement>
             <InternalElementWrapper.InternalElement Name="DeviceIdentification" ID="GUID">
-              
+
               <Attribute>
                 <AttributeWrapper.Attribute Name="Manufacturer" AttributeDataType="xs:string">
                   <Value>$2</Value>
                 </AttributeWrapper.Attribute>
-              </Attribute>
 
-              <Attribute>
                 <AttributeWrapper.Attribute Name="Model" AttributeDataType="xs:string">
                   <Value>$1</Value>
                 </AttributeWrapper.Attribute>
-              </Attribute>
 
-              <Attribute>
                 <AttributeWrapper.Attribute Name="ProductCode" AttributeDataType="xs:string">
                   <Value>$1</Value>
                 </AttributeWrapper.Attribute>
-              </Attribute>
 
-              <Attribute>
                 <AttributeWrapper.Attribute Name="DeviceClass" AttributeDataType="xs:string">
                   <Value>I/O</Value>
                 </AttributeWrapper.Attribute>
-              </Attribute>
 
-              <Attribute>
                 <AttributeWrapper.Attribute Name="ShortDescription" AttributeDataType="xs:string">
                   <Value>$4</Value>
                 </AttributeWrapper.Attribute>
-              </Attribute>
 
-              <Attribute>
                 <AttributeWrapper.Attribute Name="ArticleIdentificationOfVendor" AttributeDataType="xs:string">
                   <Value>$1</Value>
                 </AttributeWrapper.Attribute>
               </Attribute>
 
             </InternalElementWrapper.InternalElement>
-          </SystemUnitClassWrapper.SystemUnitClass.InternalElement>
 
-          <InternalElement>
             <InternalElementWrapper.InternalElement Name="GSDML" ID="GUID">
-              
-              <SupportedRoleClass>
-                <SupportedRoleClassWrapper.SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription">
-                  
-                  <ExternalInterface Name="GSDML 2.35" ID="GUID" RefBase-ClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
-                    
-                    <Attribute Name="refURI" AttributeDataType="xs:anyURI">
-                      <Value>$5</Value>
-                    </Attribute>
-                    
-                    <Attribute Name="MIMEType" AttributeDataType="xs:string">
-                      <Value>application/xml</Value>
-                    </Attribute>
 
-                  </ExternalInterface>
-                </SupportedRoleClassWrapper.SupportedRoleClass>
+              <SupportedRoleClass>
+                <SupportedRoleClassWrapper.SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
               </SupportedRoleClass>
 
+              <ExternalInterface>
+                <ExternalInterfaceWrapper.ExternalInterface Name="GSDML 2.35" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+
+                  <ExternalInterfaceWrapper.ExternalInterface.Attribute>
+                    
+                    <AttributeWrapper.Attribute Name="refURI" AttributeDataType="xs:anyURI">
+                      <Value>$5</Value>
+                    </AttributeWrapper.Attribute>
+
+                    <AttributeWrapper.Attribute Name="MIMEType" AttributeDataType="xs:string">
+                      <Value>application/xml</Value>
+                    </AttributeWrapper.Attribute>
+
+                  </ExternalInterfaceWrapper.ExternalInterface.Attribute>
+
+                </ExternalInterfaceWrapper.ExternalInterface>
+              </ExternalInterface>
+
             </InternalElementWrapper.InternalElement>
-          </InternalElement>
+          </SystemUnitClassWrapper.SystemUnitClass.InternalElement>
 
         </SystemUnitClassWrapper.SystemUnitClass>
       </SystemUnitClass>
