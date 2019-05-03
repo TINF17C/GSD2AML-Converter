@@ -56,7 +56,15 @@ namespace Gsd2Aml.Gui
 
         private void Convert_OnClick(object sender, RoutedEventArgs e)
         {
-            //ToDo: Do conversion
+            try
+            {
+                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, false);
+                MessageBox.Show(this, "Conversion successfully completed!", "GSD2AML Converter");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "GSD2AML Converter: Conversion failed");
+            }
         }
 
         private void MainWindow_OnDragEnter(object sender, DragEventArgs e)
