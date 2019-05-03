@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converter="clr-namespace:Gsd2Aml.Gui.Converter"
         mc:Ignorable="d"
         Title="GSD2AML Converter"
         AllowDrop="True"
@@ -15,6 +16,9 @@
         WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal">
+    <Window.Resources>
+        <converter:PathValidator x:Key="PathValidator" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
@@ -33,13 +37,44 @@
                      PreviewDragOver="TxtGsdFile_OnPreviewDragOver"
                      Drop="TxtGsdFile_OnDrop"
                      x:Name="TxtGsdFile"
-                     TextChanged="TxtGsdFile_OnTextChanged"/>
+                     TextChanged="TxtGsdFile_OnTextChanged">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                        <Style.Resources>
+                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Label Content="Enter path to GSDML file or drop file here" Foreground="Gray" FontStyle="Italic"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="White" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
         </DockPanel>
         <Label Content="Output file:" Grid.Column="0" Grid.Row="1" Margin="5" VerticalAlignment="Center" />
         <DockPanel Grid.Column="1" Grid.Row="1" Margin="5" VerticalAlignment="Center">
             <Button Content="..." Click="BrowseAmlFile_OnClick" DockPanel.Dock="Right" Padding="5,0" />
             <TextBox x:Name="TxtAmlFile" />
         </DockPanel>
-        <Button Content="Convert" Click="Convert_OnClick" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Height="Auto" HorizontalAlignment="Center" Padding="5" VerticalAlignment="Center"  Width="Auto" />
+        <Button Content="Convert" Click="Convert_OnClick" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                Height="Auto" HorizontalAlignment="Center" Padding="5" VerticalAlignment="Center"  Width="Auto">
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource PathValidator}">
+                    <Binding ElementName="TxtGsdFile" Path="Text" Mode="OneWay" />
+                    <Binding ElementName="TxtAmlFile" Path="Text" Mode="OneWay" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
     </Grid>
 </Window>
