@@ -35,7 +35,7 @@ namespace Gsd2Aml.Lib
             {
                 try
                 {
-                    GsdObject = (ISO15745Profile)serializer.Deserialize(reader);
+                    GsdObject = (ISO15745Profile) serializer.Deserialize(reader);
                 }
                 catch (Exception e)
                 {
@@ -58,7 +58,8 @@ namespace Gsd2Aml.Lib
             }
 
             // Set FileName property of CAEX-element.
-            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName")) ?.SetValue(AmlObject, new FileInfo(outputFile).Name);
+            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))
+                ?.SetValue(AmlObject, new FileInfo(outputFile).Name);
 
             Handle(GsdObject, AmlObject);
         }
@@ -110,6 +111,7 @@ namespace Gsd2Aml.Lib
                     Handle(gsdProperty.GetValue(currentGsdHead), newAmlHead);
                 }
             }
+
             // TODO: Remove this using block.
             using (var stringwriter = new StringWriter())
             {
@@ -131,25 +133,25 @@ namespace Gsd2Aml.Lib
             newAmlHead = null;
 
             // Get information of the translation rule. (replacement and references)
-            GetInformationFromRule(ref translationRule, out var replacement, out var references);
-            
+            Util.GetInformationFromRule(ref translationRule, out var replacement, out var references);
+
             // Get the AML replacement property.
             // A local variable which describes if the replacement property is an array.
             // Gets the type of the replacement property.
-            GetTranslationInformation(ref replacement, out var replacementProperty, out var isReplacementPropertyArray, out var replacementPropertyType);
+            Util.GetProperty(replacement.Name, out var replacementProperty, out var replacementPropertyType, out var isReplacementPropertyArray);
 
             if (replacementPropertyType == null) return;
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
             dynamic replacementInstance = isReplacementPropertyArray
-                                            ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
-                                            : Activator.CreateInstance(replacementPropertyType);
+                ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
+                : Activator.CreateInstance(replacementPropertyType);
 
             // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
                 var subProperty = TranslateSubProperties(childNode, out var subPropertyInstance);
-                
+
                 if (isReplacementPropertyArray)
                 {
                     replacementInstance.Add(subPropertyInstance);
@@ -169,7 +171,7 @@ namespace Gsd2Aml.Lib
         private static PropertyInfo TranslateSubProperties(XmlNode replacement, out dynamic translationInstance)
         {
             // Get the information of the replacement node. (PropertyInfo, isArray, Type)
-            GetTranslationInformation(ref replacement, out var translationProperty, out var isTranslationPropertyArray, out var translationPropertyType);
+            Util.GetProperty(replacement.Name, out var translationProperty, out var translationPropertyType, out var isTranslationPropertyArray);
 
             // Create the translation instance.
             // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.
@@ -180,8 +182,8 @@ namespace Gsd2Aml.Lib
             else
             {
                 translationInstance = isTranslationPropertyArray
-                                        ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
-                                        : Activator.CreateInstance(translationPropertyType);
+                    ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
+                    : Activator.CreateInstance(translationPropertyType);
             }
 
             // Set attribute and inner text to the translation instance.
@@ -234,8 +236,7 @@ namespace Gsd2Aml.Lib
             foreach (XmlAttribute attribute in replacement.Attributes)
             {
                 // Get the property and type of the attribute.
-                var attributeProperty = GetPropertyFromString(typeof(Wrapper), attribute.Name);
-                var attributePropertyType = attributeProperty.PropertyType;
+                Util.GetProperty(attribute.Name, out var attributeProperty, out var attributePropertyType, out var isAttributePropertyArray);
 
                 // Create the instance of the attribute and assume it is a string. If not, it throws a exception.
                 dynamic attributeInstance;
@@ -248,128 +249,10 @@ namespace Gsd2Aml.Lib
                 {
                     throw new Exception("Failed to translate attributes correctly due to incorrect typing.");
                 }
+
                 // Set the attribute instacne to the translation instance.
                 attributeProperty.SetValue(translationInstance, attributeInstance);
             }
-        }
-
-        /// <summary>
-        /// This function sets the property information of a replacement node.
-        /// </summary>
-        /// <param name="replacement">The replacement node to a specific rule.</param>
-        /// <param name="translationProperty">The translation property which will be set.</param>
-        /// <param name="isTranslationPropertyArray">Boolean which will be set. It describes if the property is an array.</param>
-        /// <param name="translationPropertyType">The translation property type which will be set.</param>
-        private static void GetTranslationInformation(ref XmlNode replacement, out PropertyInfo translationProperty, out bool isTranslationPropertyArray, out Type translationPropertyType)
-        {
-            translationProperty = null;
-            isTranslationPropertyArray = false;
-            translationPropertyType = null;
-
-            // Split strings if possible.
-            var splittedStrings = replacement.Name.Split('.').ToList();
-
-            // If there is nothing to split, then it gets the property simple. But if the string was splitted, then it gets the property by iterating through the splitted strings.
-            // It then gets for a string the property and then it searches recursivly the properties of the found property with the next splitted string.
-            if (splittedStrings.Count == 1)
-            {
-                translationProperty = GetPropertyFromString(typeof(Wrapper), replacement.Name);
-            }
-            else
-            {
-                foreach (var splittedString in splittedStrings)
-                {
-                    translationProperty = GetPropertyFromString(translationProperty == null ? typeof(Wrapper) : translationProperty.PropertyType, splittedString);
-
-                    if (translationProperty == null) return;
-                }
-            }
-
-            if (translationProperty == null) return;
-
-            isTranslationPropertyArray = translationProperty.PropertyType.IsArray;
-            translationPropertyType = isTranslationPropertyArray
-                                        ? translationProperty.PropertyType.GetElementType()
-                                        : translationProperty.PropertyType;
-        }
-
-        /// <summary>
-        /// This function gets the relevant information (replacement, references) from a translation rule.
-        /// </summary>
-        /// <param name="translationRule">The translation rule which will be parsed.</param>
-        /// <param name="replacement">The actual replacement.</param>
-        /// <param name="references">A list which will save all replacement.</param>
-        private static void GetInformationFromRule(ref XmlNode translationRule, out XmlNode replacement, out ICollection<XmlNode> references)
-        {
-            var alreadyReadReplacement = false;
-            references = new List<XmlNode>();
-            replacement = null;
-
-            // Iterate over the child nodes of the replacement.
-            foreach (XmlNode xmlNode in translationRule.ChildNodes)
-            {
-                switch (xmlNode.Name)
-                {
-                    case "Reference":
-                        references.Add(xmlNode);
-                        break;
-                    case "Replacement":
-                        if (alreadyReadReplacement)
-                        {
-                            throw new Exception("Translation table has mutliple replacements for a rule.");
-                        }
-                        replacement = xmlNode.FirstChild;
-                        alreadyReadReplacement = true;
-                        break;
-                    case "#comment": break;
-                    default:
-                        throw new Exception("Translation table has unknown element.");
-                }
-            }
-
-            // Check if replacement is null.
-            if (replacement != null) return;
-
-            throw new Exception("Translation table has no replacement for a rule.");
-        }
-
-        /// <summary>
-        /// Searches recursiveley a class down to find a property by a string.
-        /// </summary>
-        /// <param name="type">The type object which references the current iterated class.</param>
-        /// <param name="propertyName">The name of the property which will be searched.</param>
-        /// <returns>The property info object of the found property or null if it does not exist.</returns>
-        private static PropertyInfo GetPropertyFromString(Type type, string propertyName)
-        {
-            // Check if the current type is the searched type.
-            var prop = type.GetProperty(propertyName);
-
-            if (prop != null)
-            {
-                return prop;
-            }
-
-            // Iterate over all local declared public properties of the current type.
-            return (from property in type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
-                    // Get the type object of the property for comparison reasons.
-                    select property.PropertyType.IsArray ? property.PropertyType.GetElementType() : property.PropertyType into propertyType
-                    // Check that the type is not a simple type and that the property is not the same as the current head property due to possible recurisve stackoverflow exception.
-                    where !IsSimpleType(propertyType) && type != propertyType
-                    // Recursive call of the current iterated property. If it is not null, it is the searched property.
-                    select GetPropertyFromString(propertyType, propertyName)).FirstOrDefault(x => x != null);
-        }
-
-        /// <summary>
-        /// Checks if a given type is a simple/primitive type.
-        /// </summary>
-        /// <param name="type">The type which should be checked.</param>
-        /// <returns>A boolean which indicates if the given type is a simple type.</returns>
-        private static bool IsSimpleType(Type type)
-        {
-            return type.IsPrimitive ||
-                   new[] { typeof(Enum), typeof(string), typeof(decimal), typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Guid) }.Contains(type.GetTypeInfo()) ||
-                   System.Convert.GetTypeCode(type) != TypeCode.Object ||
-                   (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]));
         }
     }
 }

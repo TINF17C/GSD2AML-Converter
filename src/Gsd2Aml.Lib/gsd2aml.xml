@@ -97,7 +97,7 @@
         </SystemUnitClassWrapper.SystemUnitClass>
       </SystemUnitClass>
     </Replacement>
-    <!-- Caution! There can be multiple DeviceAccessPointItems in a DeviceAccessPointList. Just take the first one, it shouldn't matter which one you choose regardless. -->
+
     <Reference Ref="$1" Type="SingleTextRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
@@ -128,7 +128,6 @@
       </ISO15745Profile>
     </Reference>
 
-    <!-- Again, just choose the first one. -->
     <Reference Ref="$4" Type="SingleTextRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
@@ -163,8 +162,6 @@
     </Reference>
   </DeviceAccessPointItem>
 
-  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of SubslotItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon. -->
-  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original SubslotItem! -->
   <SubslotList.SubslotItem>
     <Replacement>
       <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/SubSlot">
@@ -181,8 +178,6 @@
     </Reference>
   </SubslotList.SubslotItem>
 
-  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of InterfaceSubmoduleItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon. -->
-  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original InterfaceSubmoduleItem! -->
   <SystemDefinedSubmoduleList.InterfaceSubmoduleItem>
     <Replacement>
       <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
@@ -343,8 +338,6 @@
     </Reference>
   </MediaRedundancy>
 
-  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of PortSubmoduleItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon.  -->
-  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original PortSubmoduleItem! -->
   <PortSubmoduleItem>
     <Replacement>
       <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/Port">
