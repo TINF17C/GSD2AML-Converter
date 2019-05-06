@@ -41,7 +41,7 @@ namespace Gsd2Aml.Test
                         }
                         catch
                         {
-                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
+                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
                         }
                         Assert.Fail($"We found {entry.Name}, which was not expected.");
                     }
@@ -56,7 +56,7 @@ namespace Gsd2Aml.Test
                         }
                         catch
                         {
-                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
+                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
                         }
                         Assert.Fail($"We are missing {fileName} in the ZIP-archive.");
                     }
@@ -69,7 +69,7 @@ namespace Gsd2Aml.Test
             }
             catch
             {
-                Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand!");
+                Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
             }
         }
 
