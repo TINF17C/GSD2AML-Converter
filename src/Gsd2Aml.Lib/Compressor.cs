@@ -20,11 +20,17 @@ namespace Gsd2Aml.Lib
         {
             if (aml.Equals("") || destination.Equals(""))
             {
-                Util.Logger.Log(LogLevel.Error, "The AML or destination string cant be omitted.");
+                Util.Logger?.Log(LogLevel.Error, "The AML or destination string cant be omitted.");
                 throw new Exception("AML or destination string was omitted.");
             }
 
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
+
+            if (String.IsNullOrEmpty(tmpPath))
+            {
+                Util.Logger?.Log(LogLevel.Error, "Path to Temp folder is unexpectedly null.");
+                throw new Exception("Path to Temp folder is unexpectedly null.");
+            }
 
             try
             {
@@ -38,14 +44,14 @@ namespace Gsd2Aml.Lib
                 if (amlFileName != null) CopyFile(aml, Path.Combine(tmpPath, amlFileName));
 
                 Zip(tmpPath, destination);
-                Util.Logger.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
+                Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                Util.Logger?.Log(LogLevel.Error, e.Message);
+                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
                 throw new Exception("Error while compressing the AML-file and the ressources to the .amlx file.");
             }
         }
@@ -60,13 +66,12 @@ namespace Gsd2Aml.Lib
         {
             try
             {
-                CreateDirectories(destination);
                 ZipFile.CreateFromDirectory(source, destination);
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                Util.Logger?.Log(LogLevel.Error, e.Message);
+                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
                 throw new Exception("Could not create the .amlx compressed file.");
             }
         }
@@ -81,12 +86,13 @@ namespace Gsd2Aml.Lib
         {
             try
             {
-                return Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), folderName)).FullName;
+                var path = Path.Combine(Path.GetTempPath(), folderName);
+                return CreateDirectory(path);
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                Util.Logger?.Log(LogLevel.Error, e.Message);
+                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
                 throw new Exception("Could not create the the temporary directory which was created to compress the .amlx file.");
             }
         }
@@ -105,8 +111,8 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                Util.Logger?.Log(LogLevel.Error, e.Message);
+                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
                 throw new Exception("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.");
             }
         }
@@ -127,29 +133,35 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                Util.Logger?.Log(LogLevel.Error, e.Message);
+                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
                 throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.");
             }
         }
 
-        private static void CreateDirectories(string destination)
+        /// <summary>
+        /// Creates a directory path.
+        /// </summary>
+        /// <param name="destination">The directory path.</param>
+        /// <exception cref="Exception"></exception>
+        private static string CreateDirectory(string destination)
         {
-            var output = new FileInfo(destination);
+            var output = new DirectoryInfo(destination);
 
-            if (output.Directory == null || string.IsNullOrEmpty(output.DirectoryName) || output.Directory.Exists)
+            if (output == null || output.Exists)
             {
-                return;
+                if (output.Exists) return output.FullName;
+                return null;
             }
 
             try
             {
-                Directory.CreateDirectory(output.DirectoryName);
+                return Directory.CreateDirectory(output.FullName).FullName;
             }
             catch (Exception e)
             {
-                Util.Logger.Log(LogLevel.Error, e.Message);
-                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                Util.Logger?.Log(LogLevel.Error, e.Message);
+                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
                 throw new Exception("Could not create output directory for destination");
             }
         }
