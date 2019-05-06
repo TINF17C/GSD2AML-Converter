@@ -7,7 +7,8 @@
 		<MajorUpgrade DowngradeErrorMessage="A newer version of $(var.ProductMainName) is already installed." />
     <Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
 		<Feature Id="ProductFeature" Title="$(var.ProductMainName)" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="Components" />
+      <ComponentGroupRef Id="Environment" />
 		</Feature>
 	</Product>
 
@@ -24,24 +25,12 @@
     </Directory>
 	</Fragment>
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-      <Component Id="Gsd2Aml.Gui.exe" Guid="*">
-        <File Id="Gsd2Aml.Gui.exe" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Gui.exe">
-          <Shortcut Id="Gsd2Aml.Gui.exe" Name="GSD2AML Converter" Icon="Gsd2Aml.Gui.exe" IconIndex="0" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Directory="PRODUCTMENUFOLDER"><Icon Id="Gsd2Aml.Gui.exe" SourceFile="$(var.SourceDir)\Gsd2Aml.Gui.exe" /></Shortcut>
-        </File>
-        <RemoveFolder Id="RemoveProductFolder" Directory="PRODUCTMENUFOLDER" On="uninstall" />
+  <Fragment>
+    <ComponentGroup Id="Environment" Directory="INSTALLFOLDER">
+      <Component Id="PathForCli" Guid="6C529FE1-87B0-43E4-B626-CFD054AD5919">
+        <Environment Id="CmdPath" Name="PATH" Value="[INSTALLFOLDER]" Permanent="no" Part="last" Action="set" System="yes" />
+        <CreateFolder/>
       </Component>
-      <Component Id="Gsd2Aml.Cli.exe" Guid="*">
-        <File Id="Gsd2Aml.Cli.exe" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Cli.exe" />
-      </Component>
-      <Component Id="Gsd2Aml.Lib.dll" Guid="*">
-        <File Id="Gsd2Aml.Lib.dll" KeyPath="yes" Source="$(var.SourceDir)\Gsd2Aml.Lib.dll" />
-      </Component>
-		</ComponentGroup>
-	</Fragment>
+    </ComponentGroup>
+  </Fragment>
 </Wix>

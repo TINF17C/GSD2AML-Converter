@@ -15,7 +15,7 @@
   <?define ProductMainName="GSD2AML Converter" ?>
   <?endif?>
   <?ifndef ProductVersion ?>
-  <?define ProductVersion="1.0.0.0" ?>
+  <?define ProductVersion="0.9.0.0" ?>
   <?endif?>
   <!-- nicht von "außen" überschreibbare Variablen -->
   <?define myManufacturerDir="GSD2AML Converter" ?>
