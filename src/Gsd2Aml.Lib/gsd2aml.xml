@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <body>
-
+  
   <ProfileHeader>
     <Replacement>
       <AdditionalInformation>
@@ -21,16 +21,16 @@
 
   <ProfileBody>
     <Replacement>
-      <SystemUnitClassLib>
-        <SystemUnitClassLibWrapper.SystemUnitClassLib Name="ComponentSystemUnitClassLib" />
-      </SystemUnitClassLib>
+      <CAEXFile.SystemUnitClassLib>
+        <SystemUnitClassLib CAEXObject.Name="ComponentSystemUnitClassLib" />
+      </CAEXFile.SystemUnitClassLib>
     </Replacement>
   </ProfileBody>
 
   <DeviceIdentity>
     <Replacement>
-      <SystemUnitClass>
-        <SystemUnitClassWrapper.SystemUnitClass Name="$1" ID="GUID">
+      <CAEXFile.SystemUnitClass>
+        <SystemUnitClass CAEXObject.Name="$1" CAEXObject.ID="GUID">
 
           <SupportedRoleClass>
             <SupportedRoleClassWrapper.SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
@@ -94,8 +94,8 @@
             </InternalElementWrapper.InternalElement>
           </SystemUnitClassWrapper.SystemUnitClass.InternalElement>
 
-        </SystemUnitClassWrapper.SystemUnitClass>
-      </SystemUnitClass>
+        </SystemUnitClass>
+      </CAEXFile.SystemUnitClass>
     </Replacement>
 
     <Reference Ref="$1" Type="SingleTextRef" Internal="false">

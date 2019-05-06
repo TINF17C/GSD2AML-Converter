@@ -1,4 +1,5 @@
-﻿using Gsd2Aml.Lib.Models;
+﻿using Gsd2Aml.Lib.Logging;
+using Gsd2Aml.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,108 +10,96 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
+    // TODO: When migrating to .NET Core or .NET 7 use multiple return values instead of the out parameter.
     public static class Converter
     {
-        private static ISO15745Profile GsdObject { get; set; }
-
         private static CAEXFile AmlObject { get; } = new CAEXFile();
 
-        private static List<XmlNode> GsdTranslationElements { get; } = new List<XmlNode>();
-
-        private const string CTranslationTableFileName = "gsd2aml.xml";
+        private static List<XmlNode> TranslationRules { get; } = new List<XmlNode>();
 
         /// <summary>
-        /// Deserializes the translation table and the GSD-file and then starts the conversion process.
+        /// Deserializes the translation table and the input file. Then it checks the input file if it is valid.
+        /// After that it starts the conversion process.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
         /// <param name="stringOutput">A boolean whether a file output or a string output should be returned.</param>
         public static void Convert(string inputFile, string outputFile, bool stringOutput)
         {
-            var serializer = new XmlSerializer(typeof(ISO15745Profile));
-            var translationTable = new XmlDocument();
+            Util.CheckGsdFileForCorrectness(inputFile);
 
-            // Deserialize the GSD-file.
-            using (var reader = new FileStream(inputFile, FileMode.Open))
-            {
-                try
-                {
-                    GsdObject = (ISO15745Profile) serializer.Deserialize(reader);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Invalid GSD-file. Failed to serialize the GSD-File.", e);
-                }
-            }
-
-            // Load translation table.
-            translationTable.Load(CTranslationTableFileName);
+            // Initialize the GSD XML documents and translation table. Then load these documents.
+            var gsdDocument = Util.LoadXmlDocument(inputFile);
+            var translationTable = Util.LoadTranslationsTable();
 
             if (translationTable.DocumentElement == null)
             {
-                throw new Exception("Could not load the translation table.");
+                throw new XmlException("Could not load a XML file.");
             }
 
             // Add all conversion rules to a list.
             foreach (XmlNode node in translationTable.DocumentElement.ChildNodes)
             {
-                GsdTranslationElements.Add(node);
+                TranslationRules.Add(node);
             }
 
             // Set FileName property of CAEX-element.
-            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))
-                ?.SetValue(AmlObject, new FileInfo(outputFile).Name);
+            AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
+            Util.Logger.Log(LogLevel.Info, "Added the FileName attribute to the CAEXFile element.");
 
-            Handle(GsdObject, AmlObject);
+            Util.Logger.Log(LogLevel.Info, "Start the Handle function.");
+            Handle(gsdDocument.DocumentElement, AmlObject);
+            Util.Logger.Log(LogLevel.Info, "Successfully ended the Hanlde function.");
         }
 
         /// <summary>
         /// Starts the real conversion process. It iterates over the GSD properties and translates it to AML.
         /// Then it recursiveley starts a new Handle call with the translated property.
         /// </summary>
-        /// <typeparam name="TG">The type of the current GSD head object.</typeparam>
         /// <typeparam name="TA">The type of the current AML head object.</typeparam>
         /// <param name="currentAmlHead">The current AML head object.</param>
-        /// <param name="currentGsdHead">The current GSD head object.</param>
-        private static void Handle<TG, TA>(TG currentGsdHead, TA currentAmlHead)
+        /// <param name="currentGsdHead">The current GSD head object as a XmlElement.</param>
+        private static void Handle<TA>(XmlNode currentGsdHead, TA currentAmlHead)
         {
-            // If the current GSD parent is null, it does not make any sense to iterate over its properties.
-            if (currentGsdHead == null)
-            {
-                return;
-            }
-
+            Util.Logger.Log(LogLevel.Info, $"Started the Handle function with these heads. AML: {currentAmlHead.GetType().Name} GSD: {currentGsdHead.Name}");
+            
             // Iterate over the properties of the current GSD parent.
-            foreach (var gsdProperty in currentGsdHead.GetType().GetProperties())
+            foreach (XmlNode gsdChildNode in currentGsdHead.ChildNodes)
             {
-                // Check if the current iterated property is null. If yes, it cannot be translated and it continues with the next property.
-                if (gsdProperty.GetValue(currentGsdHead) == null)
+                Util.Logger.Log(LogLevel.Info, $"Current iterated GSD child node {gsdChildNode.Name}.");
+
+                // Try to get a translation rule of the gsdTranslationElements list.
+                var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(gsdChildNode.Name));
+                // If the rule does not exist, it cannot be translated. It continues with the next property.
+                if (translationRule == null)
                 {
+                    Util.Logger.Log(LogLevel.Info, "Translation rule was not found. Skip the node.");
                     continue;
                 }
+                Util.Logger.Log(LogLevel.Info, $"Translation rule was found. GsdHead: {currentGsdHead.Name} Translation rule: {translationRule.Name}" +
+                                               "Now we are trying to translate it.");
 
-                // Get the translation rule of the gsdTranslationElements list.
-                var translationRule = GsdTranslationElements.FirstOrDefault(node => node.Name.Equals(gsdProperty.Name));
-                // If the rule does not exist, it cannot be translated. It continues with the next property.
-                if (translationRule == null) continue;
-
-                // Translate the gsdProperty to AML.
+                // Translate the gsdChildNode to AML.
                 Translate(ref currentAmlHead, ref translationRule, out var newAmlHead);
+                Util.Logger.Log(LogLevel.Info, $"Translated successfully {gsdChildNode.Name} to {translationRule["Replacement"]?.FirstChild.Name}.");
 
-                // If the new aml head is an array, it calls for every element in the array the Handle function.
+                // If the new AML head is an array, it calls for every element in the array the Handle function.
                 if (newAmlHead.GetType().IsArray)
                 {
+                    Util.Logger.Log(LogLevel.Info, "The translated AML head is an array. Therefore for every element it calls the Handle function.");
                     foreach (var amlHeadElement in newAmlHead)
                     {
-                        Handle(gsdProperty.GetValue(currentGsdHead), amlHeadElement);
+                        Handle(gsdChildNode, amlHeadElement);
                     }
                 }
                 else
                 {
-                    // Call the Handle function with the current gsdProperty and the new AML head.
-                    Handle(gsdProperty.GetValue(currentGsdHead), newAmlHead);
+                    // Call the Handle function with the current gsdChildNode and the new AML head.
+                    Util.Logger.Log(LogLevel.Info, "The translated AML is not an array. Therefore the Handle function will be directly called.");
+                    Handle(gsdChildNode, newAmlHead);
                 }
             }
+            Util.Logger.Log(LogLevel.Info, $"The Handle function ended for these heads. AML: {currentAmlHead.GetType().Name} GSD: {currentGsdHead.Name}");
 
             // TODO: Remove this using block.
             using (var stringwriter = new StringWriter())
@@ -124,33 +113,40 @@ namespace Gsd2Aml.Lib
         /// <summary>
         /// The actual translation of the GSD object to AML object.
         /// </summary>
-        /// <typeparam name="TA">The type of the AML parent object.</typeparam>
-        /// <param name="currentAmlHead">The AML parent object in which the translation object will be set.</param>
+        /// <typeparam name="TA">The type of the AML head object.</typeparam>
+        /// <param name="currentAmlHead">The AML head object in which the translation object will be set.</param>
         /// <param name="translationRule">The translation rule which will be used to translate the GSD object to an AML object.</param>
-        /// <param name="newAmlHead">An output parameter which will be set. It is at the end the new aml head object.</param>
+        /// <param name="newAmlHead">An output parameter which will be set. It is at the end the new AML head object.</param>
         private static void Translate<TA>(ref TA currentAmlHead, ref XmlNode translationRule, out dynamic newAmlHead)
         {
-            newAmlHead = null;
-
             // Get information of the translation rule. (replacement and references)
+            Util.Logger.Log(LogLevel.Info, $"Trying to get information out of the translation rule {translationRule.Name}.");
             Util.GetInformationFromRule(ref translationRule, out var replacement, out var references);
+            Util.Logger.Log(LogLevel.Info, "Successfully got the information out of the translation rule.");
 
             // Get the AML replacement property.
-            // A local variable which describes if the replacement property is an array.
             // Gets the type of the replacement property.
+            // Gets variable which describes if the replacement property is an array.
+            Util.Logger.Log(LogLevel.Info, $"Trying to get the property for {replacement.Name}.");
             Util.GetProperty(replacement.Name, out var replacementProperty, out var replacementPropertyType, out var isReplacementPropertyArray);
-
-            if (replacementPropertyType == null) return;
+            Util.Logger.Log(LogLevel.Info, $"Successfully got the property for {replacement.Name}. " +
+                                           $"Property: {replacementProperty} " +
+                                           $"Type: {replacementPropertyType} " +
+                                           $"Declaring type: {replacementProperty.DeclaringType} " +
+                                           $"Is array: {isReplacementPropertyArray}");
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
             dynamic replacementInstance = isReplacementPropertyArray
-                ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
-                : Activator.CreateInstance(replacementPropertyType);
+                                            ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
+                                            : Activator.CreateInstance(replacementPropertyType);
 
             // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
+                Util.Logger.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
                 var subProperty = TranslateSubProperties(childNode, out var subPropertyInstance);
+                Util.Logger.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
+                                               $"Type: {subPropertyInstance.GetType()}");
 
                 if (isReplacementPropertyArray)
                 {
@@ -160,6 +156,7 @@ namespace Gsd2Aml.Lib
                 {
                     subProperty.SetValue(replacementInstance, subPropertyInstance);
                 }
+                Util.Logger.Log(LogLevel.Info, $"Successfully set or added {childNode.Name} to {replacement.Name}.");
             }
 
             // Set the replacementInstance to the current AML head object and set the new AML head.
@@ -167,11 +164,22 @@ namespace Gsd2Aml.Lib
             replacementProperty.SetValue(currentAmlHead, newAmlHead);
         }
 
-        // TODO: When migrating to .NET Core or .NET 7 use multiple return values instead of the out parameter.
+        /// <summary>
+        /// The translation of the sub properties of a translation rule.
+        /// </summary>
+        /// <param name="replacement">The XmlNode replacement rule.</param>
+        /// <param name="translationInstance">The translation instance in which the sub property instances will be set.</param>
+        /// <returns>The property info which describes the translationInstance.</returns>
         private static PropertyInfo TranslateSubProperties(XmlNode replacement, out dynamic translationInstance)
         {
             // Get the information of the replacement node. (PropertyInfo, isArray, Type)
             Util.GetProperty(replacement.Name, out var translationProperty, out var translationPropertyType, out var isTranslationPropertyArray);
+
+            Util.Logger.Log(LogLevel.Info, $"Found valid property for {replacement.Name}. " +
+                                           $"Property: {translationProperty} " +
+                                           $"Type: {translationPropertyType} " +
+                                           $"Declaring Type: {translationProperty.DeclaringType} " +
+                                           $"Is array: {isTranslationPropertyArray}");
 
             // Create the translation instance.
             // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.
@@ -182,17 +190,19 @@ namespace Gsd2Aml.Lib
             else
             {
                 translationInstance = isTranslationPropertyArray
-                    ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
-                    : Activator.CreateInstance(translationPropertyType);
+                                        ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
+                                        : Activator.CreateInstance(translationPropertyType);
             }
 
             // Set attribute and inner text to the translation instance.
             if (translationInstance is string) translationInstance = replacement.InnerText;
             SetAttributes(ref replacement, ref translationInstance);
+            Util.Logger.Log(LogLevel.Info, $"Successfully set attributes to {replacement.Name}.");
 
             // If the current node has only a text in it or no children it returns the translationProperty.
             if (replacement.SelectNodes("./*")?.Count == 0 || !replacement.HasChildNodes)
             {
+                Util.Logger.Log(LogLevel.Info, $"The replacement {replacement.Name} does not have a children. Because of that the translation ends here.");
                 if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
 
                 return translationProperty;
@@ -201,8 +211,11 @@ namespace Gsd2Aml.Lib
             // Iterate over all child nodes of the current replacement rule.
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
+                Util.Logger.Log(LogLevel.Info, $"Translate sub property {childNode.Name}");
                 // Get the property info and the instance of the current child node.
                 var subProperty = TranslateSubProperties(childNode, out var subPropertyInstance);
+                Util.Logger.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
+                                               $"Type: {subPropertyInstance.GetType()}");
 
                 // Set or add the subPropertyInstance to the translationInstance.
                 if (isTranslationPropertyArray)
@@ -213,10 +226,10 @@ namespace Gsd2Aml.Lib
                 {
                     subProperty.SetValue(translationInstance, subPropertyInstance);
                 }
+                Util.Logger.Log(LogLevel.Info, $"Successfully set or added {childNode.Name} to {replacement.Name}.");
             }
 
             if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
-
             return translationProperty;
         }
 

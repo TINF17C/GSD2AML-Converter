@@ -1621,53 +1621,24 @@ namespace Gsd2Aml.Lib.Models
         public string WriterProjectID { get; set; }
     }
 
-    public class SystemUnitClassLibWrapper
-    {
-        public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
-    }
-
-    public class SystemUnitClassWrapper
-    {
-        public SystemUnitFamilyType SystemUnitClass { get; set; }
-    }
-
-    public class SupportedRoleClassWrapper
-    {
-        public SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
-    }
-
-    public class InternalElementWrapper
-    {
-        public InternalElementType InternalElement { get; set; }
-    }
-
-    public class AttributeWrapper
-    {
-        public AttributeType Attribute { get; set; }
-    }
-
-    public class ExternalInterfaceWrapper {
-        public InterfaceClassType ExternalInterface { get; set; }
-    }
-
     public class Wrapper
     {
+        public CAEXFile CAEXFile { get; set; }
+
         public WriterHeader WriterHeader { get; set; }
+
+        public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
 
         public CAEXObject CAEXObject { get; set; }
 
-        public CAEXFile CAEXFile { get; set; }
+        public SystemUnitFamilyType SystemUnitClass { get; set; }
 
-        public SystemUnitClassLibWrapper SystemUnitClassLibWrapper { get; set; }
+        public SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
 
-        public SystemUnitClassWrapper SystemUnitClassWrapper { get; set; }
+        public InternalElementType InternalElement { get; set; }
 
-        public SupportedRoleClassWrapper SupportedRoleClassWrapper { get; set; }
+        public AttributeType Attribute { get; set; }
 
-        public InternalElementWrapper InternalElementWrapper { get; set; }
-
-        public AttributeWrapper AttributeWrapper { get; set; }
-
-        public ExternalInterfaceWrapper ExternalInterfaceWrapper { get; set; }
+        public InterfaceClassType ExternalInterface { get; set; }
     }
 }

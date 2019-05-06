@@ -9,7 +9,7 @@ namespace Gsd2Aml.CLI
 {
     public static class Program
     {
-        internal static Logger Logger { get; } = new Logger();
+        private static Logger Logger { get; } = new Logger();
 
         private const string CHelp = "--help";
         private const string CHelpShort = "-h";
@@ -24,6 +24,7 @@ namespace Gsd2Aml.CLI
         private const string CStringOutputShort = "-s";
 
         private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
+
         private static string HelpText { get; } = $"{Environment.NewLine}GSD2AML Converter" +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Converts a GSD-formatted file in an AML-formatted file." +
@@ -43,7 +44,7 @@ namespace Gsd2Aml.CLI
         /// <summary>
         /// Starting point for the CLI Program. 
         /// </summary>
-        /// <param name="args">Arguments which are passed to the program.</param>
+        /// <param name="args">Arguments which were passed to the program.</param>
         private static void Main(string[] args)
         {
             var parameter = new Dictionary<string, string>
@@ -56,26 +57,30 @@ namespace Gsd2Aml.CLI
 
             if (args.Length == 0 || args.Contains("-h") || args.Contains("--help"))
             {
+                Logger.Log(LogLevel.Info, "Arguments array is empty or contains a -h/--help flag.");
                 PrintHelpText();
             }
             CheckCliArguments(args);
 
             ParseCliArguments(args, parameter);
 
-            var inputFile = string.IsNullOrEmpty(parameter[CInputFile]) ? parameter[CInputFileShort] : parameter[CInputFile];
-            var outputFile = string.IsNullOrEmpty(parameter[COutputFile]) ? parameter[COutputFileShort] : parameter[COutputFile];
+            var inputFile = parameter[CInputFileShort] ?? parameter[CInputFile];
+            var outputFile = parameter[COutputFileShort] ?? parameter[COutputFile];
             var stringOutput = Array.IndexOf(args, CStringOutputShort) >= 0 || Array.IndexOf(args, CStringOutput) >= 0;
 
             if (File.Exists(inputFile))
             {
+                Logger.Log(LogLevel.Info, $"Input file exists: {inputFile}");
                 CheckOutputAndRunConverter(inputFile, outputFile, stringOutput);
             }
             else if (File.Exists(args[0]))
             {
+                Logger.Log(LogLevel.Info, $"Input file exists: {args[0]}");
                 CheckOutputAndRunConverter(args[0], outputFile, stringOutput);
             }
             else
             {
+                Logger.Log(LogLevel.Error, "Input file does not exist.");
                 Console.WriteLine($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
                                   $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                 Environment.Exit(1);
@@ -86,35 +91,35 @@ namespace Gsd2Aml.CLI
         /// <summary>
         /// This method checks three things:
         /// 1) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
-        /// 2) If the user passed multiple times the corresponding long/short argument to a argument. E.g. gsd2aml -i --input
+        /// 2) If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
         /// 3) If the user passed --output and --string at the same time.
         /// </summary>
-        /// <param name="args">Arguments which are passed to the program.</param>
+        /// <param name="args">Arguments which were passed to the program.</param>
         private static void CheckCliArguments(IList<string> args)
         {
-            for (var i = 0; i < Arguments.Length - 1; i++)
+            for (var i = 0; i < Arguments.Length - 1; i += 2)
             {
-                if (args.IndexOf(Arguments[i]) >= 0 && args.IndexOf(Arguments[i + 1]) >= 0)
-                {
-                    PrintLongShortParameterError(Arguments[i], Arguments[i + 1]);
-                }
-                i++;
+                if (args.IndexOf(Arguments[i]) < 0 || args.IndexOf(Arguments[i + 1]) < 0) continue;
+
+                Logger.Log(LogLevel.Error, $"User passed {Arguments[i]} and {Arguments[i + 1]} but only of them is allowed.");
+                PrintLongShortParameterError(Arguments[i], Arguments[i + 1]);
             }
 
             if (args.Count != args.Distinct().Count())
             {
                 PrintMultipleParameterError(args);
             }
-            if ((args.IndexOf(COutputFile) >= 0 || args.IndexOf(COutputFileShort) >= 0) && (args.IndexOf(CStringOutput) >= 0 || args.IndexOf(CStringOutputShort) >= 0))
-            {
-                PrintLongShortParameterError(COutputFile, CStringOutput);
-            }
+
+            if (args.IndexOf(COutputFile) < 0 && args.IndexOf(COutputFileShort) < 0 || args.IndexOf(CStringOutput) < 0 && args.IndexOf(CStringOutputShort) < 0) return;
+
+            Logger.Log(LogLevel.Error, "User passed -o/--output and -s/--string at the same time.");
+            PrintLongShortParameterError(COutputFile, CStringOutput);
         }
 
         /// <summary>
         /// This method parses the CLI Arguments and saves them to a dictionary.
         /// </summary>
-        /// <param name="args">Arguments which are passed to the program.</param>
+        /// <param name="args">Arguments which were passed to the program.</param>
         /// <param name="parameter">The dictionary which will contain the arguments and the corresponding data.</param>
         private static void ParseCliArguments(IList<string> args, IDictionary<string, string> parameter)
         {
@@ -143,8 +148,10 @@ namespace Gsd2Aml.CLI
         private static void CheckOutputAndRunConverter(string inputFile, string outputFile, bool stringOutput)
         {
             outputFile = GetOutputFile(inputFile, outputFile);
+            Logger.Log(LogLevel.Info, $"Set output path to: {outputFile}");
             var finfo = new FileInfo(outputFile);
 
+            // TODO: Remove the directory check, if the compressor already creates the output path.
             // Directory check. If it does not exist, it tries to create the output directory.
             if (finfo.Directory != null && !string.IsNullOrEmpty(finfo.DirectoryName) && !finfo.Directory.Exists)
             {
@@ -154,8 +161,10 @@ namespace Gsd2Aml.CLI
                 }
                 catch (Exception e)
                 {
+                    Logger.Log(LogLevel.Error, "Could not create the output directory." +
+                                               $"{Environment.NewLine}{e}");
                     Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory." +
-                                      $"{Environment.NewLine}{e.Message}");
+                                      $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                     Environment.Exit(1);
                 }
             }
@@ -163,6 +172,7 @@ namespace Gsd2Aml.CLI
             // File check. If the output file exists, it asks if the user wants to overwrite the file.
             if (finfo.Exists)
             {
+                Logger.Log(LogLevel.Info, "The output file exists already. The user has to decide whether the file should be overwritten.");
                 string userInput;
 
                 do
@@ -174,20 +184,24 @@ namespace Gsd2Aml.CLI
 
                 if (userInput.Equals("n"))
                 {
+                    Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
                     Console.WriteLine("Could not convert file because the output file should not be overwritten.");
                     Environment.Exit(0);
                 }
+                Logger.Log(LogLevel.Info, "The user accepted an overwrite of the file.");
             }
 
             try
             {
                 Util.Logger = Logger;
+                Logger.Log(LogLevel.Info, "The conversion process starts.");
                 Converter.Convert(inputFile, outputFile, stringOutput);
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}{Environment.NewLine}");
-                Logger.Log(LogLevel.Error, e.ToString());
+                Logger.Log(LogLevel.Error, "Conversion failed." +
+                                           $"{Environment.NewLine}{e}");
+                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
                 Environment.Exit(1);
             }
         }
@@ -220,9 +234,9 @@ namespace Gsd2Aml.CLI
         }
 
         /// <summary>
-        /// Prints an error message if the same parameter is used mutliple times.
+        /// Prints an error message if the same parameter was used mutliple times.
         /// </summary>
-        /// <param name="args">Arguments which are passed to the program.</param>
+        /// <param name="args">Arguments which were passed to the program.</param>
         private static void PrintMultipleParameterError(IEnumerable<string> args)
         {
             var iteratedArguments = new HashSet<string>();
@@ -236,6 +250,7 @@ namespace Gsd2Aml.CLI
                 }
                 else
                 {
+                    Logger.Log(LogLevel.Error, $"User passed {argument} multiple times.");
                     Console.WriteLine($"{Environment.NewLine}Error: You used {argument} multiple times." +
                                       $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
                     Environment.Exit(1);

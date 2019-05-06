@@ -63,9 +63,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="gsd2aml.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="gsd2aml.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
