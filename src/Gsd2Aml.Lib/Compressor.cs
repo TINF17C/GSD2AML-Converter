@@ -60,6 +60,7 @@ namespace Gsd2Aml.Lib
         {
             try
             {
+                CreateDirectories(destination);
                 ZipFile.CreateFromDirectory(source, destination);
             }
             catch (IOException e)
@@ -131,5 +132,27 @@ namespace Gsd2Aml.Lib
                 throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.");
             }
         }
+
+        private static void CreateDirectories(string destination)
+        {
+            var output = new FileInfo(destination);
+
+            if (output.Directory == null || string.IsNullOrEmpty(output.DirectoryName) || output.Directory.Exists)
+            {
+                return;
+            }
+
+            try
+            {
+                Directory.CreateDirectory(output.DirectoryName);
+            }
+            catch (Exception e)
+            {
+                Util.Logger.Log(LogLevel.Error, e.Message);
+                Util.Logger.Log(LogLevel.Trace, e.StackTrace);
+                throw new Exception("Could not create output directory for destination");
+            }
+        }
+
     }
 }

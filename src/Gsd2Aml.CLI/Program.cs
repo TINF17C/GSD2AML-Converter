@@ -1,4 +1,5 @@
 using System;
+using System.IO.Compression;
 using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Cli
@@ -14,6 +15,7 @@ namespace Gsd2Aml.Cli
         /// <param name="args">Arguments which are passed to the program.</param>
         private static void Main(string[] args)
         {
+            Lib.Util.Logger = Log;
             if (args.Length == 0)
             {
                 Util.PrintHelpText();
@@ -28,8 +30,7 @@ namespace Gsd2Aml.Cli
             }
             catch (Exception e)
             {
-                // TODO: change fatal
-                Log.Log(LogLevel.Fatal, e.Message);
+                Log.Log(LogLevel.Error, e.Message);
                 Environment.Exit(1);
             }
             Environment.Exit(0);
