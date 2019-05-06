@@ -7,5 +7,9 @@ namespace Gsd2Aml.Gui
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            NLog.LogManager.Shutdown();
+        }
     }
 }

@@ -1,39 +1,58 @@
-﻿using Gsd2Aml.Lib.Logging;
+﻿using System;
 using NLog;
-using LogLevel = Gsd2Aml.Lib.Logging.LogLevel;
+using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Cli
 {
     public class Logger : ILoggingService
     {
-        private NLog.Logger NlogLogger { get; } = LogManager.GetCurrentClassLogger();
+        private NLog.Logger NlogLogger { get; } = GetLogger();
         
-        public void Log(LogLevel level, string message)
+        private static NLog.Logger GetLogger()
+        {
+            var config = new NLog.Config.LoggingConfiguration();
+
+            var logfile = new NLog.Targets.FileTarget("logfile")
+            { FileName = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                $@"GSD2AML\Logs\{DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}.log")
+            };
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+
+            config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);
+            config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logfile);
+
+            LogManager.Configuration = config;
+
+            return LogManager.GetLogger("GSD2AML");
+        }
+
+        public void Log(Lib.Logging.LogLevel level, string message)
         {
             NLog.LogLevel logLevel;
             switch (level)
             {
-                case LogLevel.Error:
+                case Lib.Logging.LogLevel.Error:
                     logLevel = NLog.LogLevel.Error;
                     break;
 
-                case LogLevel.Info:
+                case Lib.Logging.LogLevel.Info:
                     logLevel = NLog.LogLevel.Info;
                     break;
 
-                case LogLevel.Trace:
+                case Lib.Logging.LogLevel.Trace:
                     logLevel = NLog.LogLevel.Trace;
                     break;
 
-                case LogLevel.Warning:
+                case Lib.Logging.LogLevel.Warning:
                     logLevel = NLog.LogLevel.Warn;
                     break;
 
-                case LogLevel.Debug:
+                case Lib.Logging.LogLevel.Debug:
                     logLevel = NLog.LogLevel.Debug;
                     break;
 
-                case LogLevel.Fatal:
+                case Lib.Logging.LogLevel.Fatal:
                     logLevel = NLog.LogLevel.Fatal;
                     break;
                     

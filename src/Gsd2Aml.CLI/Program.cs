@@ -33,6 +33,10 @@ namespace Gsd2Aml.Cli
                 Log.Log(LogLevel.Error, e.Message);
                 Environment.Exit(1);
             }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
             Environment.Exit(0);
         }
     }

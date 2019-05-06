@@ -18,7 +18,7 @@ namespace Gsd2Aml.Test
 
             var testDir = new Uri(Path
                 .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)
-                .AbsolutePath, @"..\..\..\..\..\tst"))
+                .LocalPath, @"..\..\..\..\..\..\tst"))
                 .LocalPath;
 
             const string amlFileName = "aml.xml";
