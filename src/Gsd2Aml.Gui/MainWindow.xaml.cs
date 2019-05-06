@@ -8,7 +8,7 @@ using Microsoft.Win32;
 namespace Gsd2Aml.Gui
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -191,7 +191,7 @@ namespace Gsd2Aml.Gui
             if (string.IsNullOrEmpty(senderText))
                 return;
 
-            if (Regex.IsMatch(senderText, $"(.+(GSDML|gsdml).*{Regex.Escape(".xml")})"))
+            if (Regex.IsMatch(senderText, $"(.+(GSDML|gsdml)-.+{Regex.Escape(".xml")})"))
             {
                 var diretoryName = System.IO.Path.GetDirectoryName(senderText) ?? "";
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(senderText).Remove(0, "GSDML-".Length) + ".amlx";
