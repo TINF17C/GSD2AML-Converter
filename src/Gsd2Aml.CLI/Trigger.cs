@@ -8,6 +8,10 @@ namespace Gsd2Aml.Cli
     {
         public Settings Settings { get; }
         private FileInfo FInfo { get; }
+        /// <summary>
+        /// Constructor for Trigger.
+        /// </summary>
+        /// <param name="settings">Cli Settings.</param>
         public Trigger(Settings settings)
         {
             Settings = settings;
@@ -15,15 +19,27 @@ namespace Gsd2Aml.Cli
             FInfo = new FileInfo(Settings.OutputFile);
         }
 
+        /// <summary>
+        /// Trigger the conversion process of the GSD2AML.Lib.
+        /// </summary>
         public void Convert()
         {
-            CreateDirectories();
             CheckOutput();
 
-            Converter.Convert(Settings.InputFile, Settings.OutputFile, Settings.AsString);
-            
+            if (Settings.AsString)
+            {
+                Converter.Convert(Settings.InputFile, Settings.OutputFile, Settings.AsString);
+            }
+            else
+            {
+                Converter.Convert(Settings.InputFile, Settings.OutputFile, Settings.AsString);
+            }
         }
 
+        /// <summary>
+        /// Checks if the output file already exists.
+        /// Asks the user whether to overwrite the file or stop the conversion.
+        /// </summary>
         private void CheckOutput()
         {
             if (FInfo.Exists)
@@ -42,24 +58,6 @@ namespace Gsd2Aml.Cli
                     Console.WriteLine("Could not convert file because the output file should not be overwritten.");
                     Environment.Exit(0);
                 }
-            }
-        }
-
-        private void CreateDirectories()
-        {
-            if (FInfo.Directory == null || string.IsNullOrEmpty(FInfo.DirectoryName) || FInfo.Directory.Exists)
-            {
-                return;
-            }
-
-            try
-            {
-                Directory.CreateDirectory(FInfo.DirectoryName);
-            }
-            catch
-            {
-                Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory.");
-                throw;
             }
         }
 
