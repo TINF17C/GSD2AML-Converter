@@ -25,8 +25,15 @@ namespace Gsd2Aml.Cli
         private const string CStringOutputShort = "-s";
         private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
 
+        /// <summary>
+        /// Empty constructor for testing purposes.
+        /// </summary>
         internal Settings() { }
 
+        /// <summary>
+        /// Constructor for Settings.
+        /// </summary>
+        /// <param name="args">Command line arguments</param>
         public Settings(IList<string> args)
         {
             Args = args;
@@ -35,6 +42,14 @@ namespace Gsd2Aml.Cli
             CheckGsdmlExistence();
         }
 
+        /// <summary>
+        /// This method checks three things:
+        /// 1. Does the user use the long and the short version of a flag?
+        /// 2. Does the user use a flag multiple times?
+        /// 3. Does the user use the -o (--output) and the -s (--string) flag at the same time?
+        /// If one of the above happen, an error is thrown.
+        /// </summary>
+        /// <exception cref="ArgumentException">The argument list is invalid.</exception>
         internal void CheckCliArguments()
         {
             for (var i = 0; i < Arguments.Length - 1; i+=2)
@@ -60,8 +75,9 @@ namespace Gsd2Aml.Cli
         }
 
         /// <summary>
-        /// Prints an error message if the same parameter is used mutliple times.
+        /// Prints an error message if the same argument is used multiple times.
         /// </summary>
+        /// <exception cref="ArgumentException">An argument was used multiple times.</exception>
         internal void PrintMultipleParameterError()
         {
             var iteratedArguments = new HashSet<string>();
@@ -84,10 +100,8 @@ namespace Gsd2Aml.Cli
         }
 
         /// <summary>
-        /// This method parses the CLI Arguments and saves them to a dictionary.
+        /// This method parses the CLI Arguments and maps them to the Settings properties.
         /// </summary>
-        /// <param name="args">Arguments which are passed to the program.</param>
-        /// <param name="parameter">The dictionary which will contain the arguments and the corresponding data.</param>
         internal void ParseCliArguments()
         {
             var parameter = new Dictionary<string, string>
@@ -120,6 +134,10 @@ namespace Gsd2Aml.Cli
             AsString = Array.IndexOf(Args.ToArray(), CStringOutputShort) >= 0 || Array.IndexOf(Args.ToArray(), CStringOutput) >= 0;
         }
 
+        /// <summary>
+        /// Checks for the GDSML existence.
+        /// </summary>
+        /// <exception cref="FileNotFoundException">The GSDML file could not be found.</exception>
         private void CheckGsdmlExistence()
         {
             if (File.Exists(InputFile)) return;
