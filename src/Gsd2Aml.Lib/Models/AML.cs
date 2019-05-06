@@ -1623,15 +1623,19 @@ namespace Gsd2Aml.Lib.Models
 
     public class Wrapper
     {
+        // Default search property
         public CAEXFile CAEXFile { get; set; }
 
+        // First rule
         public WriterHeader WriterHeader { get; set; }
 
+        // Second rule
         public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
 
-        public CAEXObject CAEXObject { get; set; }
-
+        // Third rule
         public SystemUnitFamilyType SystemUnitClass { get; set; }
+
+        public SystemUnitClassType SystemUnitClassType { get; set; }
 
         public SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
 
@@ -1640,5 +1644,8 @@ namespace Gsd2Aml.Lib.Models
         public AttributeType Attribute { get; set; }
 
         public InterfaceClassType ExternalInterface { get; set; }
+
+        // Attributes (ID, Name)
+        public CAEXObject CAEXObject { get; set; }
     }
 }

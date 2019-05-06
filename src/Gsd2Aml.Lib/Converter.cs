@@ -249,7 +249,7 @@ namespace Gsd2Aml.Lib
             foreach (XmlAttribute attribute in replacement.Attributes)
             {
                 // Get the property and type of the attribute.
-                Util.GetProperty(attribute.Name, out var attributeProperty, out var attributePropertyType, out var isAttributePropertyArray);
+                Util.GetProperty(attribute.Name, out var attributeProperty, out var attributePropertyType, out _);
 
                 // Create the instance of the attribute and assume it is a string. If not, it throws a exception.
                 dynamic attributeInstance;
@@ -260,7 +260,7 @@ namespace Gsd2Aml.Lib
                 }
                 else
                 {
-                    throw new Exception("Failed to translate attributes correctly due to incorrect typing.");
+                    throw new InvalidDataException("Failed to translate attributes correctly due to incorrect typing.");
                 }
 
                 // Set the attribute instacne to the translation instance.

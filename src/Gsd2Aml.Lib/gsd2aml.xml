@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <body>
-  
+
   <ProfileHeader>
     <Replacement>
       <AdditionalInformation>
@@ -32,67 +32,59 @@
       <CAEXFile.SystemUnitClass>
         <SystemUnitClass CAEXObject.Name="$1" CAEXObject.ID="GUID">
 
-          <SupportedRoleClass>
-            <SupportedRoleClassWrapper.SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
-          </SupportedRoleClass>
+          <SystemUnitClassType.SupportedRoleClass>
+            <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
+          </SystemUnitClassType.SupportedRoleClass>
 
-          <SystemUnitClassWrapper.SystemUnitClass.InternalElement>
-            <InternalElementWrapper.InternalElement Name="DeviceIdentification" ID="GUID">
+          <SystemUnitClassType.InternalElement>
+            <InternalElement CAEXObject.Name="DeviceIdentification" CAEXObject.ID="GUID">
+              <SystemUnitClassType.Attribute>
+                <Attribute CAEXObject.Name="Manufacturer" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$2</Attribute.Value>
+                </Attribute>
 
-              <Attribute>
-                <AttributeWrapper.Attribute Name="Manufacturer" AttributeDataType="xs:string">
-                  <Value>$2</Value>
-                </AttributeWrapper.Attribute>
+                <Attribute CAEXObject.Name="Model" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$1</Attribute.Value>
+                </Attribute>
+                
+                <Attribute CAEXObject.Name="ProductCode" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$1</Attribute.Value>
+                </Attribute>
+                
+                <Attribute CAEXObject.Name="DeviceClass" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>I/O</Attribute.Value>
+                </Attribute>
+                
+                <Attribute CAEXObject.Name="ShortDescription" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$4</Attribute.Value>
+                </Attribute>
+                
+                <Attribute CAEXObject.Name="ArticleIdentificationOfVendor" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$1</Attribute.Value>
+                </Attribute>
+              </SystemUnitClassType.Attribute>
+            </InternalElement>
+            <InternalElement CAEXObject.Name="GSDML" CAEXObject.ID="GUID">
 
-                <AttributeWrapper.Attribute Name="Model" AttributeDataType="xs:string">
-                  <Value>$1</Value>
-                </AttributeWrapper.Attribute>
+              <SystemUnitClassType.SupportedRoleClass>
+                <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
+              </SystemUnitClassType.SupportedRoleClass>
 
-                <AttributeWrapper.Attribute Name="ProductCode" AttributeDataType="xs:string">
-                  <Value>$1</Value>
-                </AttributeWrapper.Attribute>
-
-                <AttributeWrapper.Attribute Name="DeviceClass" AttributeDataType="xs:string">
-                  <Value>I/O</Value>
-                </AttributeWrapper.Attribute>
-
-                <AttributeWrapper.Attribute Name="ShortDescription" AttributeDataType="xs:string">
-                  <Value>$4</Value>
-                </AttributeWrapper.Attribute>
-
-                <AttributeWrapper.Attribute Name="ArticleIdentificationOfVendor" AttributeDataType="xs:string">
-                  <Value>$1</Value>
-                </AttributeWrapper.Attribute>
-              </Attribute>
-
-            </InternalElementWrapper.InternalElement>
-
-            <InternalElementWrapper.InternalElement Name="GSDML" ID="GUID">
-
-              <SupportedRoleClass>
-                <SupportedRoleClassWrapper.SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
-              </SupportedRoleClass>
-
-              <ExternalInterface>
-                <ExternalInterfaceWrapper.ExternalInterface Name="GSDML 2.35" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
-
-                  <ExternalInterfaceWrapper.ExternalInterface.Attribute>
-                    
-                    <AttributeWrapper.Attribute Name="refURI" AttributeDataType="xs:anyURI">
+              <SystemUnitClassType.ExternalInterface>
+                <ExternalInterface CAEXObject.Name="GSDML 2.35" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+                  <ExternalInterface.Attribute>
+                    <Attribute CAEXObject.Name="refURI" Attribute.AttributeDataType="xs:anyURI">
                       <Value>$5</Value>
-                    </AttributeWrapper.Attribute>
-
-                    <AttributeWrapper.Attribute Name="MIMEType" AttributeDataType="xs:string">
+                    </Attribute>
+                    <Attribute CAEXObject.Name="MIMEType" Attribute.AttributeDataType="xs:string">
                       <Value>application/xml</Value>
-                    </AttributeWrapper.Attribute>
+                    </Attribute>
+                  </ExternalInterface.Attribute>
+                </ExternalInterface>
+              </SystemUnitClassType.ExternalInterface>
 
-                  </ExternalInterfaceWrapper.ExternalInterface.Attribute>
-
-                </ExternalInterfaceWrapper.ExternalInterface>
-              </ExternalInterface>
-
-            </InternalElementWrapper.InternalElement>
-          </SystemUnitClassWrapper.SystemUnitClass.InternalElement>
+            </InternalElement>
+          </SystemUnitClassType.InternalElement>
 
         </SystemUnitClass>
       </CAEXFile.SystemUnitClass>
@@ -113,11 +105,13 @@
         </ProfileBody>
       </ISO15745Profile>
     </Reference>
+
     <Reference Ref="$2" Type="DirectRef" Internal="true">
       <DeviceIdentity>
         <VendorName Value="" />
       </DeviceIdentity>
     </Reference>
+
     <Reference Ref="$3" Type="DirectRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
@@ -127,7 +121,7 @@
         </ProfileBody>
       </ISO15745Profile>
     </Reference>
-
+    
     <Reference Ref="$4" Type="SingleTextRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
