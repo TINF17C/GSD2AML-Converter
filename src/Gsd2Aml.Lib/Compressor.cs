@@ -12,11 +12,12 @@ namespace Gsd2Aml.Lib
         /// <summary>
         /// Creates a zip archive from a directory and the relevant GSD ressources.
         /// </summary>
-        /// <param name="aml">The AML file which will be zipped.</param>
+        /// <param name="amlFilePath">The path to the AML file which will be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in including the name of the archive.amlx.</param>
         /// <param name="ressources">An array of paths to the ressources to be part of the .amlx package.</param>
+        /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
-        public static void Compress(string aml, string destination, string[] ressources)
+        public static void Compress(string amlFilePath, string destination, string[] ressources, bool overwriteFile = false)
         {
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
@@ -28,10 +29,10 @@ namespace Gsd2Aml.Lib
                     if (fileName != null) CopyFile(ressource, Path.Combine(tmpPath, fileName));
                 }
 
-                var amlFileName = Path.GetFileName(aml);
-                if (amlFileName != null) CopyFile(aml, Path.Combine(tmpPath, amlFileName));
+                var amlFileName = Path.GetFileName(amlFilePath);
+                if (amlFileName != null) CopyFile(amlFilePath, Path.Combine(tmpPath, amlFileName));
 
-                Zip(tmpPath, destination);
+                Zip(tmpPath, destination, overwriteFile);
                 Util.Logger.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
@@ -47,9 +48,15 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="source">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the zip archive in.</param>
+        /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
-        private static void Zip(string source, string destination)
+        private static void Zip(string source, string destination, bool overwriteFile)
         {
+            if (overwriteFile)
+            {
+                File.Delete(destination);
+            }
+
             try
             {
                 ZipFile.CreateFromDirectory(source, destination);
@@ -99,15 +106,15 @@ namespace Gsd2Aml.Lib
         /// <summary>
         /// Deletes a folder if it exists.
         /// </summary>
-        /// <param name="target">The target path.</param>
+        /// <param name="destination">The destination path.</param>
         /// <exception cref="IOException"></exception>
-        private static void DeleteFolder(string target)
+        private static void DeleteFolder(string destination)
         {
             try
             {
-                if (Directory.Exists(target))
+                if (Directory.Exists(destination))
                 {
-                    Directory.Delete(target, true);
+                    Directory.Delete(destination, true);
                 }
             }
             catch (IOException e)

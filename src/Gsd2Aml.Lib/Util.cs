@@ -221,5 +221,33 @@ namespace Gsd2Aml.Lib
 
             return translationTable;
         }
+
+        /// <summary>
+        /// This function generates the correct output file name for the string conversion method.
+        /// </summary>
+        /// <param name="inputFile">The path to the input file.</param>
+        /// <returns>The correctly generated output file name.</returns>
+        internal static string GetOutputFileName(string inputFile)
+        {
+            if (string.IsNullOrEmpty(inputFile))
+            {
+                Logger.Log(LogLevel.Error, "Input file is invalid.");
+                throw new ArgumentException("Input file ");
+            }
+
+            var fileName = Path.GetFileNameWithoutExtension(inputFile);
+
+            fileName = fileName.StartsWith("GSDML-", StringComparison.InvariantCultureIgnoreCase)
+                        ? fileName.Remove(0, "GSDML-".Length)
+                        : fileName;
+            fileName += ".aml";
+
+            var directoryName = Path.GetDirectoryName(inputFile);
+
+            if (!string.IsNullOrEmpty(directoryName)) return Path.Combine(directoryName, fileName);
+
+            Logger.Log(LogLevel.Error, $"Input file describes no valid directory {inputFile}");
+            throw new NullReferenceException("Directory name of the input file is invalid.");
+        }
     }
 }

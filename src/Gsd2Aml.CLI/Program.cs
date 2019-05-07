@@ -64,8 +64,8 @@ namespace Gsd2Aml.CLI
 
             ParseCliArguments(args, parameter);
 
-            var inputFile = parameter[CInputFileShort] ?? parameter[CInputFile];
-            var outputFile = parameter[COutputFileShort] ?? parameter[COutputFile];
+            var inputFile = string.IsNullOrEmpty(parameter[CInputFile]) ? parameter[CInputFileShort] : parameter[CInputFile];
+            var outputFile = string.IsNullOrEmpty(parameter[COutputFile]) ? parameter[COutputFileShort] : parameter[COutputFile];
             var stringOutput = Array.IndexOf(args, CStringOutputShort) >= 0 || Array.IndexOf(args, CStringOutput) >= 0;
 
             if (File.Exists(inputFile))
@@ -147,55 +147,70 @@ namespace Gsd2Aml.CLI
         /// <param name="stringOutput">A boolean whether a file output or a string output is needed.</param>
         private static void CheckOutputAndRunConverter(string inputFile, string outputFile, bool stringOutput)
         {
-            outputFile = GetOutputFile(inputFile, outputFile);
-            Logger.Log(LogLevel.Info, $"Set output path to: {outputFile}");
-            var finfo = new FileInfo(outputFile);
-
-            // TODO: Remove the directory check, if the compressor already creates the output path.
-            // Directory check. If it does not exist, it tries to create the output directory.
-            if (finfo.Directory != null && !string.IsNullOrEmpty(finfo.DirectoryName) && !finfo.Directory.Exists)
+            if (!stringOutput)
             {
-                try
-                {
-                    Directory.CreateDirectory(finfo.DirectoryName);
-                }
-                catch (Exception e)
-                {
-                    Logger.Log(LogLevel.Error, "Could not create the output directory." +
-                                               $"{Environment.NewLine}{e}");
-                    Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory." +
-                                      $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
-                    Environment.Exit(1);
-                }
-            }
+                outputFile = GetOutputFile(inputFile, outputFile);
+                Logger.Log(LogLevel.Info, $"Set output path to: {outputFile}");
+                var finfo = new FileInfo(outputFile);
 
-            // File check. If the output file exists, it asks if the user wants to overwrite the file.
-            if (finfo.Exists)
-            {
-                Logger.Log(LogLevel.Info, "The output file exists already. The user has to decide whether the file should be overwritten.");
-                string userInput;
-
-                do
+                // TODO: Remove the directory check, if the compressor already creates the output path.
+                // Directory check. If it does not exist, it tries to create the output directory.
+                if (finfo.Directory != null && !string.IsNullOrEmpty(finfo.DirectoryName) && !finfo.Directory.Exists)
                 {
-                    Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
-                    userInput = Console.ReadKey().KeyChar.ToString().ToLower();
-                    Console.WriteLine(Environment.NewLine);
-                } while (!userInput.Equals("y") && !userInput.Equals("n"));
-
-                if (userInput.Equals("n"))
-                {
-                    Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
-                    Console.WriteLine("Could not convert file because the output file should not be overwritten.");
-                    Environment.Exit(0);
+                    try
+                    {
+                        Directory.CreateDirectory(finfo.DirectoryName);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Log(LogLevel.Error, "Could not create the output directory." +
+                                                   $"{Environment.NewLine}{e}");
+                        Console.WriteLine($"{Environment.NewLine}Error: Could not create output directory." +
+                                          $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
+                        Environment.Exit(1);
+                    }
                 }
-                Logger.Log(LogLevel.Info, "The user accepted an overwrite of the file.");
+
+                // File check. If the output file exists, it asks if the user wants to overwrite the file.
+                if (finfo.Exists)
+                {
+                    Logger.Log(LogLevel.Info, "The output file exists already. The user has to decide whether the file should be overwritten.");
+                    string userInput;
+
+                    do
+                    {
+                        Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
+                        userInput = Console.ReadKey().KeyChar.ToString().ToLower();
+                        Console.WriteLine(Environment.NewLine);
+                    } while (!userInput.Equals("y") && !userInput.Equals("n"));
+
+                    if (userInput.Equals("n"))
+                    {
+                        Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
+                        Console.WriteLine("Could not convert file because the output file should not be overwritten.");
+                        Environment.Exit(0);
+                    }
+                    Logger.Log(LogLevel.Info, "The user accepted an overwrite of the file.");
+                }
             }
 
             try
             {
                 Util.Logger = Logger;
                 Logger.Log(LogLevel.Info, "The conversion process starts.");
-                Converter.Convert(inputFile, outputFile, stringOutput);
+                Console.WriteLine("Started conversion process.");
+
+                if (stringOutput)
+                {
+                    var amlString = Converter.Convert(inputFile);
+                    Console.WriteLine($"Successfully converted the GSD file to an AML string. {Environment.NewLine}");
+                    Console.WriteLine(amlString);
+                }
+                else
+                {
+                    Converter.Convert(inputFile, outputFile, true);
+                    Console.WriteLine($"Successfully converted the GSD file to a .amlx package and saved it to {outputFile}");
+                }
             }
             catch (Exception e)
             {

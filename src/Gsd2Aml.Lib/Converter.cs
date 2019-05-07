@@ -18,13 +18,53 @@ namespace Gsd2Aml.Lib
         private static List<XmlNode> TranslationRules { get; } = new List<XmlNode>();
 
         /// <summary>
+        /// The convert function which returns the AML file as string.
+        /// </summary>
+        /// <param name="inputFile">The path to the input file.</param>
+        /// <returns>The AML object serailzed to a XML string.</returns>
+        public static string Convert(string inputFile)
+        {
+            Util.Logger.Log(LogLevel.Info, "Conversion to string started.");
+            StartConversion(inputFile, Util.GetOutputFileName(inputFile));
+
+            using (var stringwriter = new StringWriter())
+            {
+                var serializer = new XmlSerializer(AmlObject.GetType());
+                serializer.Serialize(stringwriter, AmlObject);
+                return stringwriter.ToString();
+            }
+        }
+
+        // TODO: get ressources
+        /// <summary>
+        /// The convert function which will create a .amlx file.
+        /// </summary>
+        /// <param name="inputFile">The path to the input file.</param>
+        /// <param name="outputFile">The path to the output file.</param>
+        /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
+        public static void Convert(string inputFile, string outputFile, bool overwriteFile)
+        {
+            Util.Logger.Log(LogLevel.Info, "Conversion to file started.");
+            StartConversion(inputFile, outputFile);
+
+            var serializer = new XmlSerializer(AmlObject.GetType());
+            var temporaryPath = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(outputFile) + ".aml");
+            using (var textWriter = new StreamWriter(temporaryPath))
+            {
+                serializer.Serialize(textWriter, AmlObject);
+            }
+            Compressor.Compress(temporaryPath, outputFile, new string[0], overwriteFile);
+
+            File.Delete(temporaryPath);
+        }
+
+        /// <summary>
         /// Deserializes the translation table and the input file. Then it checks the input file if it is valid.
         /// After that it starts the conversion process.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
-        /// <param name="stringOutput">A boolean whether a file output or a string output should be returned.</param>
-        public static void Convert(string inputFile, string outputFile, bool stringOutput)
+        private static void StartConversion(string inputFile, string outputFile)
         {
             Util.CheckGsdFileForCorrectness(inputFile);
 
@@ -100,14 +140,6 @@ namespace Gsd2Aml.Lib
                 }
             }
             Util.Logger.Log(LogLevel.Info, $"The Handle function ended for these heads. AML: {currentAmlHead.GetType().Name} GSD: {currentGsdHead.Name}");
-
-            // TODO: Remove this using block.
-            using (var stringwriter = new StringWriter())
-            {
-                var serializer = new XmlSerializer(AmlObject.GetType());
-                serializer.Serialize(stringwriter, AmlObject);
-                Console.WriteLine(stringwriter + "\n");
-            }
         }
 
         /// <summary>
@@ -174,7 +206,6 @@ namespace Gsd2Aml.Lib
         {
             // Get the information of the replacement node. (PropertyInfo, isArray, Type)
             Util.GetProperty(replacement.Name, out var translationProperty, out var translationPropertyType, out var isTranslationPropertyArray);
-
             Util.Logger.Log(LogLevel.Info, $"Found valid property for {replacement.Name}. " +
                                            $"Property: {translationProperty} " +
                                            $"Type: {translationPropertyType} " +
