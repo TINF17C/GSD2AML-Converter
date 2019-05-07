@@ -1,32 +1,12 @@
-﻿using System;
-using NLog;
+﻿using NLog;
 using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Cli
 {
     public class Logger : ILoggingService
     {
-        private NLog.Logger NlogLogger { get; } = GetLogger();
+        private NLog.Logger NlogLogger { get; } = LogManager.GetLogger("GSD2AML");
         
-        private static NLog.Logger GetLogger()
-        {
-            var config = new NLog.Config.LoggingConfiguration();
-
-            var logfile = new NLog.Targets.FileTarget("logfile")
-            { FileName = System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                $@"GSD2AML\Logs\{DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}.log")
-            };
-            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
-
-            config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);
-            config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logfile);
-
-            LogManager.Configuration = config;
-
-            return LogManager.GetLogger("GSD2AML");
-        }
-
         public void Log(Lib.Logging.LogLevel level, string message)
         {
             NLog.LogLevel logLevel;
