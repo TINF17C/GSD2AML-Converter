@@ -33,7 +33,7 @@ namespace Gsd2Aml.Test
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
 
-            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", "CLI", filename);
             if (File.Exists(filepath))
             {
                 var logText = File.ReadAllText(filepath);
@@ -69,7 +69,7 @@ namespace Gsd2Aml.Test
             }
             else
             {
-                throw new ArgumentException($"We are missing file {filename}");
+                throw new ArgumentException($"We are missing file {filepa}");
             }
 
         }
@@ -98,7 +98,7 @@ namespace Gsd2Aml.Test
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
 
-            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", "GUI", filename);
             if (File.Exists(filepath))
             {
                 var logText = File.ReadAllText(filepath);
@@ -134,7 +134,7 @@ namespace Gsd2Aml.Test
             }
             else
             {
-                throw new ArgumentException($"We are missing file {filename}");
+                throw new ArgumentException($"We are missing file {filepath}");
             }
         }
     }

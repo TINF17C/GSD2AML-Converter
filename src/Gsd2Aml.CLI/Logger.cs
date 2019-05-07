@@ -5,7 +5,7 @@ namespace Gsd2Aml.Cli
 {
     public class Logger : ILoggingService
     {
-        private NLog.Logger NlogLogger { get; } = LogManager.GetLogger("GSD2AML");
+        private NLog.Logger NlogLogger { get; } = LogManager.GetLogger("cli_logger");
         
         public void Log(Lib.Logging.LogLevel level, string message)
         {
