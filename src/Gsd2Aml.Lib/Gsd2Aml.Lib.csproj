@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net4.7</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -9,8 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)"/>
-    <EmbeddedResource Include="gsd2aml.xml" Pack="true"/>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
+    <EmbeddedResource Include="gsd2aml.xml" Pack="true" />
+    <Reference Include="Microsoft.CSharp" />
     <None Update="README.md" Pack="true">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

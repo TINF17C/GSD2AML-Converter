@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net4.7</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -10,9 +10,8 @@
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Gsd2Aml.CLI\Gsd2Aml.Cli.csproj" />
+    <ProjectReference Include="..\Gsd2Aml.Cli\Gsd2Aml.Cli.csproj" />
     <ProjectReference Include="..\Gsd2Aml.Gui\Gsd2Aml.Gui.csproj" />
     <ProjectReference Include="..\Gsd2Aml.Lib\Gsd2Aml.Lib.csproj" />
   </ItemGroup>
