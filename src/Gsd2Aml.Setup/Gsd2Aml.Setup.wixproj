@@ -65,8 +65,8 @@
   <PropertyGroup>
     <PreBuildEvent>mkdir "$(ProjectDir)bin\$(Configuration)\publish"
 
-xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Cli\bin\$(Configuration)\net4.7\publish" "$(ProjectDir)bin\$(Configuration)\publish"
-xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Gui\bin\$(Configuration)\net4.7\publish" "$(ProjectDir)bin\$(Configuration)\publish"
+xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Cli\bin\$(Configuration)" "$(ProjectDir)bin\$(Configuration)\publish"
+xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Gui\bin\$(Configuration)" "$(ProjectDir)bin\$(Configuration)\publish"
 
 "$(WixToolPath)heat" dir "$(ProjectDir)bin\$(Configuration)\publish" -dr INSTALLFOLDER -cg Components -gg -g1 -sfrag -sreg -suid -srd -t "$(ProjectDir)Filter.xslt" -var var.SourceDir -out "$(ProjectDir)Components.wxs"</PreBuildEvent>
   </PropertyGroup>
