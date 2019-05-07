@@ -1,4 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLog;
+using NLog.Targets;
+using NLog.Targets.Wrappers;
 using System;
 using System.IO;
 
@@ -19,21 +22,21 @@ namespace Gsd2Aml.Test
             const string logMessage6 = "Logging 6";
             const string logMessage7 = "Logging 7";
 
-            var filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
-            
+            var filename = GetLogFileName("cli_logfile");
+
             // should appear in log file
             logger.Log(Lib.Logging.LogLevel.Info, logMessage1);
             logger.Log(Lib.Logging.LogLevel.Warning, logMessage2);
             logger.Log(Lib.Logging.LogLevel.Error, logMessage3);
             logger.Log(Lib.Logging.LogLevel.Fatal, logMessage4);
 
-
             // should not be written in log file
             logger.Log(Lib.Logging.LogLevel.Off, logMessage5);
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
+            LogManager.Flush();
 
-            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", "CLI", filename);
             if (File.Exists(filepath))
             {
                 var logText = File.ReadAllText(filepath);
@@ -69,7 +72,7 @@ namespace Gsd2Aml.Test
             }
             else
             {
-                throw new ArgumentException($"We are missing file {filename}");
+                throw new ArgumentException($"We are missing file {filepath}");
             }
 
         }
@@ -86,19 +89,19 @@ namespace Gsd2Aml.Test
             const string logMessage6 = "Logging 6";
             const string logMessage7 = "Logging 7";
 
-            var filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
+            var filename = GetLogFileName("gui_logfile");
             logger.Log(Lib.Logging.LogLevel.Info, logMessage1);
             logger.Log(Lib.Logging.LogLevel.Warning, logMessage2);
             logger.Log(Lib.Logging.LogLevel.Error, logMessage3);
             logger.Log(Lib.Logging.LogLevel.Fatal, logMessage4);
 
-
             // should not be logged
             logger.Log(Lib.Logging.LogLevel.Off, logMessage5);
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
+            LogManager.Flush();
 
-            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", filename);
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GSD2AML", "Logs", "GUI", filename);
             if (File.Exists(filepath))
             {
                 var logText = File.ReadAllText(filepath);
@@ -134,8 +137,18 @@ namespace Gsd2Aml.Test
             }
             else
             {
-                throw new ArgumentException($"We are missing file {filename}");
+                throw new ArgumentException($"We are missing file {filepath}");
             }
+        }
+
+        private static string GetLogFileName(string searchedTarget)
+        {
+            var wrapperTarget = LogManager.Configuration.FindTargetByName(searchedTarget) as WrapperTargetBase;
+            var fileTarget = wrapperTarget?.WrappedTarget as FileTarget;
+
+            var logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now };
+            var filePath = fileTarget?.FileName.Render(logEventInfo);
+            return Path.GetFileName(filePath);
         }
     }
 }
