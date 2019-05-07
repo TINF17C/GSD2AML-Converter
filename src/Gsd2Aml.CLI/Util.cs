@@ -2,8 +2,10 @@
 
 namespace Gsd2Aml.Cli
 {
-    internal class Util
+    internal static class Util
     {
+        internal static Logger Logger { get; } = new Logger();
+
         private static string HelpText { get; } = $"{Environment.NewLine}GSD2AML Converter" +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Converts a GSD-formatted file in an AML-formatted file." +
@@ -23,7 +25,7 @@ namespace Gsd2Aml.Cli
         /// <summary>
         /// Prints the help text and exits the program.
         /// </summary>
-        public static void PrintHelpText()
+        internal static void PrintHelpText()
         {
             Console.WriteLine(HelpText);
             Environment.Exit(0);

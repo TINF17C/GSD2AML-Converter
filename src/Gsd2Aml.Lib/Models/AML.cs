@@ -1,4 +1,8 @@
-﻿namespace Gsd2Aml.Lib.Models
+﻿using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Xml.Serialization;
+
+namespace Gsd2Aml.Lib.Models
 {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
@@ -182,6 +186,7 @@
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AttributeType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(InterfaceClassType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(InterfaceFamilyType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(WriterHeader))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1584,7 +1589,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SystemUnitClass")]
-        public SystemUnitFamilyType[] SystemUnitClass
+        public SystemUnitFamilyType[] SystemUnitClass 
         {
             get
             {
@@ -1596,5 +1601,51 @@
             }
         }
     }
+    
+    public class WriterHeader
+    {
+        public string WriterName { get; set; }
 
+        public string WriterID { get; set; }
+
+        public string WriterVendor { get; set; }
+
+        public string WriterVersion { get; set; }
+
+        public string WriterRelease { get; set; }
+
+        public string LastWritingDateTime { get; set; }
+
+        public string WriterProjectTitle { get; set; }
+
+        public string WriterProjectID { get; set; }
+    }
+
+    public class Wrapper
+    {
+        // Default search property
+        public CAEXFile CAEXFile { get; set; }
+
+        // First rule
+        public WriterHeader WriterHeader { get; set; }
+
+        // Second rule
+        public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
+
+        // Third rule
+        public SystemUnitFamilyType SystemUnitClass { get; set; }
+
+        public SystemUnitClassType SystemUnitClassType { get; set; }
+
+        public SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
+
+        public InternalElementType InternalElement { get; set; }
+
+        public AttributeType Attribute { get; set; }
+
+        public InterfaceClassType ExternalInterface { get; set; }
+
+        // Attributes (ID, Name)
+        public CAEXObject CAEXObject { get; set; }
+    }
 }

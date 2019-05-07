@@ -30,6 +30,7 @@ namespace Gsd2Aml.Cli
         public void Log(Lib.Logging.LogLevel level, string message)
         {
             NLog.LogLevel logLevel;
+
             switch (level)
             {
                 case Lib.Logging.LogLevel.Error:

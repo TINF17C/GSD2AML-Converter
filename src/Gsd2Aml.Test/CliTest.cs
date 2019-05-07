@@ -120,7 +120,7 @@ namespace Gsd2Aml.Test
             settings.ParseCliArguments();
 
             Assert.AreEqual(inputPath, settings.InputFile);
-            Assert.AreEqual(true, settings.AsString);
+            Assert.AreEqual(true, settings.StringOutput);
         }
     }
 }

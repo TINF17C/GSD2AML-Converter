@@ -1,36 +1,34 @@
-using System;
-using System.IO.Compression;
 using Gsd2Aml.Lib.Logging;
+using System;
+using System.Linq;
 
 namespace Gsd2Aml.Cli
 {
-
-    public class Program
+    public static class Program
     {
-        internal static Logger Log { get; } = new Logger();
-
         /// <summary>
         /// Starting point for the CLI Program. 
         /// </summary>
-        /// <param name="args">Arguments which are passed to the program.</param>
+        /// <param name="args">Arguments which were passed to the program.</param>
         private static void Main(string[] args)
         {
-            Lib.Util.Logger = Log;
-            if (args.Length == 0)
+            if (args.Length == 0 || args.Contains("-h") || args.Contains("--help"))
             {
+                Util.Logger.Log(LogLevel.Info, "Arguments array is empty or contains a -h/--help flag.");
                 Util.PrintHelpText();
             }
 
             try
             {
-                var settings = new Settings(args);
+                var settings = new Settings(args.ToList());
                 var trigger = new Trigger(settings);
 
                 trigger.Convert();
             }
             catch (Exception e)
             {
-                Log.Log(LogLevel.Error, e.Message);
+                Console.WriteLine(e.Message);
+                Util.Logger.Log(LogLevel.Error, e.ToString());
                 Environment.Exit(1);
             }
             finally

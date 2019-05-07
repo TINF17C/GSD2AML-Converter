@@ -20,6 +20,7 @@ namespace Gsd2Aml.Test
             const string logMessage7 = "Logging 7";
 
             var filename = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".log";
+            
             // should appear in log file
             logger.Log(Lib.Logging.LogLevel.Info, logMessage1);
             logger.Log(Lib.Logging.LogLevel.Warning, logMessage2);
@@ -27,7 +28,7 @@ namespace Gsd2Aml.Test
             logger.Log(Lib.Logging.LogLevel.Fatal, logMessage4);
 
 
-            //should not be written in log file
+            // should not be written in log file
             logger.Log(Lib.Logging.LogLevel.Off, logMessage5);
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
@@ -92,7 +93,7 @@ namespace Gsd2Aml.Test
             logger.Log(Lib.Logging.LogLevel.Fatal, logMessage4);
 
 
-            //should not be logged
+            // should not be logged
             logger.Log(Lib.Logging.LogLevel.Off, logMessage5);
             logger.Log(Lib.Logging.LogLevel.Debug, logMessage6);
             logger.Log(Lib.Logging.LogLevel.Trace, logMessage7);
@@ -135,7 +136,6 @@ namespace Gsd2Aml.Test
             {
                 throw new ArgumentException($"We are missing file {filename}");
             }
-
         }
     }
 }

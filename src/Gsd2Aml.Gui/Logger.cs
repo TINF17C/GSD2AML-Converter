@@ -54,7 +54,7 @@ namespace Gsd2Aml.Gui
                 case Lib.Logging.LogLevel.Fatal:
                     logLevel = NLog.LogLevel.Fatal;
                     break;
-
+                    
                 default:
                     logLevel = NLog.LogLevel.Off;
                     break;

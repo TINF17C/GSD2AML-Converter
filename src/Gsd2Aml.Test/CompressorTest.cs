@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Gsd2Aml.Lib;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using Gsd2Aml.Lib;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Gsd2Aml.Test
 {
@@ -27,7 +27,7 @@ namespace Gsd2Aml.Test
             var amlFile = Directory.GetFiles(testDir).First(f => Path.GetFileName(f).Equals(amlFileName));
 
             var finalAmlxFile = Path.Combine(testDir, "myAmlx.amlx");
-            Compressor.Compress(amlFile, Path.Combine(testDir, "myAmlx.amlx"), res);
+            Compressor.Compress(amlFile, Path.Combine(testDir, "myAmlx.amlx"), res, true);
 
             using (var archive = ZipFile.OpenRead(finalAmlxFile))
             {

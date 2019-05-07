@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gsd2Aml.Lib.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,11 +8,6 @@ namespace Gsd2Aml.Cli
 {
     internal class Settings
     {
-        public string InputFile { get; set; }
-        public string OutputFile { get; set; }
-        public bool AsString { get; set; }
-        public IList<string> Args { get; set; }
-
         private const string CHelp = "--help";
         private const string CHelpShort = "-h";
 
@@ -23,7 +19,16 @@ namespace Gsd2Aml.Cli
 
         private const string CStringOutput = "--string";
         private const string CStringOutputShort = "-s";
+        
         private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
+
+        internal string InputFile { get; set; }
+
+        internal string OutputFile { get; set; }
+
+        internal bool StringOutput { get; set; }
+
+        internal List<string> Args { get; set; }
 
         /// <summary>
         /// Empty constructor for testing purposes.
@@ -33,8 +38,8 @@ namespace Gsd2Aml.Cli
         /// <summary>
         /// Constructor for Settings.
         /// </summary>
-        /// <param name="args">Command line arguments</param>
-        public Settings(IList<string> args)
+        /// <param name="args">Arguments which were passed to the program.</param>
+        internal Settings(List<string> args)
         {
             Args = args;
             CheckCliArguments();
@@ -44,22 +49,21 @@ namespace Gsd2Aml.Cli
 
         /// <summary>
         /// This method checks three things:
-        /// 1. Does the user use the long and the short version of a flag?
-        /// 2. Does the user use a flag multiple times?
-        /// 3. Does the user use the -o (--output) and the -s (--string) flag at the same time?
-        /// If one of the above happen, an error is thrown.
+        /// 1) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
+        /// 2. If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
+        /// 3) If the user passed --output and --string at the same time.
+        /// If one of the above happens, an error will be thrown.
         /// </summary>
         /// <exception cref="ArgumentException">The argument list is invalid.</exception>
         internal void CheckCliArguments()
         {
-            for (var i = 0; i < Arguments.Length - 1; i+=2)
+            for (var i = 0; i < Arguments.Length - 1; i += 2)
             {
-                if (Args.IndexOf(Arguments[i]) >= 0 && Args.IndexOf(Arguments[i + 1]) >= 0)
-                {
-                    Console.WriteLine($"{Environment.NewLine}Error: You used {Arguments[i]} and {Arguments[i + 1]} while only one of them is allowed." +
-                                      $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
-                    throw new ArgumentException($"User used {Arguments[i]} and {Arguments[i + 1]} together while only one of them is allowed.");
-                }
+                if (Args.IndexOf(Arguments[i]) < 0 || Args.IndexOf(Arguments[i + 1]) < 0) continue;
+
+                Util.Logger.Log(LogLevel.Error, $"User passed {Arguments[i]} and {Arguments[i + 1]} but only of them is allowed.");
+                throw new ArgumentException($"{Environment.NewLine}Error: You used {Arguments[i]} and {Arguments[i + 1]} while only one of them is allowed." +
+                                            $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
             }
 
             if (Args.Count != Args.Distinct().Count())
@@ -67,36 +71,12 @@ namespace Gsd2Aml.Cli
                 PrintMultipleParameterError();
             }
 
-            if ((Args.IndexOf(COutputFile) >= 0 || Args.IndexOf(COutputFileShort) >= 0) && (Args.IndexOf(CStringOutput) >= 0 || Args.IndexOf(CStringOutputShort) >= 0))
-            {
-                throw new ArgumentException($"User used {COutputFile} and {CStringOutput} together while only one of them is allowed.");
-            }
+            if (Args.IndexOf(COutputFile) < 0 && Args.IndexOf(COutputFileShort) < 0 ||
+                Args.IndexOf(CStringOutput) < 0 && Args.IndexOf(CStringOutputShort) < 0) return;
 
-        }
-
-        /// <summary>
-        /// Prints an error message if the same argument is used multiple times.
-        /// </summary>
-        /// <exception cref="ArgumentException">An argument was used multiple times.</exception>
-        internal void PrintMultipleParameterError()
-        {
-            var iteratedArguments = new HashSet<string>();
-
-            foreach (var argument in Args)
-            {
-                if (!Arguments.Contains(argument)) continue;
-                if (!iteratedArguments.Contains(argument))
-                {
-                    iteratedArguments.Add(argument);
-                }
-                else
-                {
-                    Console.WriteLine($"{Environment.NewLine}Error: You used {argument} multiple times." +
-                    $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
-
-                    throw new ArgumentException($"User used {argument} multiple times.");
-                }
-            }
+            Util.Logger.Log(LogLevel.Error, "User passed -o/--output and -s/--string at the same time.");
+            throw new ArgumentException($"{Environment.NewLine}Error: You used {COutputFile} and {CStringOutput} while only one of them is allowed." +
+                                        $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
         }
 
         /// <summary>
@@ -118,8 +98,7 @@ namespace Gsd2Aml.Cli
                 {
                     Util.PrintHelpText();
                 }
-
-                if (parameter.ContainsKey(Args[i]))
+                else if (parameter.ContainsKey(Args[i]))
                 {
                     if (i + 1 < Args.Count)
                     {
@@ -128,29 +107,56 @@ namespace Gsd2Aml.Cli
                 }
             }
 
-            InputFile = parameter[CInputFile] ?? parameter[CInputFileShort];
-            OutputFile = parameter[COutputFile] ?? parameter[COutputFileShort];
-
-            AsString = Array.IndexOf(Args.ToArray(), CStringOutputShort) >= 0 || Array.IndexOf(Args.ToArray(), CStringOutput) >= 0;
+            InputFile = parameter[CInputFileShort] ?? parameter[CInputFile];
+            OutputFile = parameter[COutputFileShort] ?? parameter[COutputFile];
+            StringOutput = Args.FindIndex(arg => arg.Equals(CStringOutputShort)) >= 0 ||
+                           Args.FindIndex(arg => arg.Equals(CStringOutput)) >= 0;
         }
 
         /// <summary>
-        /// Checks for the GDSML existence.
+        /// Checks for the existence of the GSD file.
         /// </summary>
-        /// <exception cref="FileNotFoundException">The GSDML file could not be found.</exception>
+        /// <exception cref="FileNotFoundException">The GSD file could not be found.</exception>
         private void CheckGsdmlExistence()
         {
-            if (File.Exists(InputFile)) return;
-            if (File.Exists(Args[0]))
+            if (File.Exists(InputFile))
             {
+                Util.Logger.Log(LogLevel.Info, $"Input file exists: {InputFile}");
+            }
+            else if (File.Exists(Args[0]))
+            {
+                Util.Logger.Log(LogLevel.Info, $"Input file exists: {Args[0]}");
                 InputFile = Args[0];
             }
             else
             {
-                Console.WriteLine($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
-                                  $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
+                Util.Logger.Log(LogLevel.Error, "Input file does not exist.");
+                throw new FileNotFoundException($"{Environment.NewLine}Error: Input file not found. Please enter a valid path to a GSD-formatted file." +
+                                                $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
+            }
+        }
 
-                throw new FileNotFoundException("Invalid input file. GSD-File does not exist.");
+        /// <summary>
+        /// Prints an error message if the same argument was used multiple times.
+        /// </summary>
+        /// <exception cref="ArgumentException">An argument was used multiple times.</exception>
+        internal void PrintMultipleParameterError()
+        {
+            var iteratedArguments = new HashSet<string>();
+
+            foreach (var argument in Args)
+            {
+                if (!Arguments.Contains(argument)) continue;
+                if (!iteratedArguments.Contains(argument))
+                {
+                    iteratedArguments.Add(argument);
+                }
+                else
+                {
+                    Util.Logger.Log(LogLevel.Error, $"User passed {argument} multiple times.");
+                    throw new ArgumentException($"{Environment.NewLine}Error: You used {argument} multiple times." +
+                                                $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
+                }
             }
         }
     }

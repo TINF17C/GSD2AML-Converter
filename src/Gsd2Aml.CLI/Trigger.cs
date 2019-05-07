@@ -1,38 +1,59 @@
 ﻿using System;
 using System.IO;
 using Gsd2Aml.Lib;
+using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Cli
 {
     internal class Trigger
     {
-        public Settings Settings { get; }
-        private FileInfo FInfo { get; }
+        internal Settings Settings { get; }
+
         /// <summary>
         /// Constructor for Trigger.
         /// </summary>
-        /// <param name="settings">Cli Settings.</param>
-        public Trigger(Settings settings)
+        /// <param name="settings">The Settings object which contains all argument information.</param>
+        internal Trigger(Settings settings)
         {
             Settings = settings;
             GetOutputFile();
-            FInfo = new FileInfo(Settings.OutputFile);
         }
 
         /// <summary>
-        /// Trigger the conversion process of the GSD2AML.Lib.
+        /// This method checks the output directory and file. Then it runs the converter.
         /// </summary>
-        public void Convert()
+        internal void Convert()
         {
-            CheckOutput();
-
-            if (Settings.AsString)
+            if (!Settings.StringOutput)
             {
-                Converter.Convert(Settings.InputFile, Settings.OutputFile, Settings.AsString);
+                Util.Logger.Log(LogLevel.Info, $"Set output path to: {Settings.OutputFile}");
+                CheckOutput();
             }
-            else
+
+            Util.Logger.Log(LogLevel.Info, "The conversion process starts.");
+            Console.WriteLine("Started conversion process.");
+
+            try
             {
-                Converter.Convert(Settings.InputFile, Settings.OutputFile, Settings.AsString);
+                Lib.Util.Logger = Util.Logger;
+                if (Settings.StringOutput)
+                {
+                    var amlString = Converter.Convert(Settings.InputFile);
+                    Console.WriteLine($"Successfully converted the GSD file to an AML string. {Environment.NewLine}");
+                    Console.WriteLine(amlString);
+                }
+                else
+                {
+                    Converter.Convert(Settings.InputFile, Settings.OutputFile, true);
+                    Console.WriteLine($"Successfully converted the GSD file to a .amlx package and saved it to {Settings.OutputFile}");
+                }
+            }
+            catch (Exception e)
+            {
+                Util.Logger.Log(LogLevel.Error, "Conversion failed." +
+                                                $"{Environment.NewLine}{e}");
+                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
+                Environment.Exit(1);
             }
         }
 
@@ -42,23 +63,23 @@ namespace Gsd2Aml.Cli
         /// </summary>
         private void CheckOutput()
         {
-            if (FInfo.Exists)
+            var finfo = new FileInfo(Settings.OutputFile);
+            if (!finfo.Exists) return;
+
+            string userInput;
+
+            do
             {
-                string userInput;
+                Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
+                userInput = Console.ReadKey().KeyChar.ToString().ToLower();
+                Console.WriteLine(Environment.NewLine);
+            } while (!userInput.Equals("y") && !userInput.Equals("n"));
 
-                do
-                {
-                    Console.Write($"{FInfo.FullName} exists already. Overwrite file? (y/n): ");
-                    userInput = Console.ReadKey().KeyChar.ToString().ToLower();
-                    Console.WriteLine(Environment.NewLine);
-                } while (!userInput.Equals("y") && !userInput.Equals("n"));
+            if (!userInput.Equals("n")) return;
 
-                if (userInput.Equals("n"))
-                {
-                    Console.WriteLine("Could not convert file because the output file should not be overwritten.");
-                    Environment.Exit(0);
-                }
-            }
+            Util.Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
+            Console.WriteLine("Could not convert file because the output file should not be overwritten.");
+            Environment.Exit(0);
         }
 
         /// <summary>
@@ -80,6 +101,7 @@ namespace Gsd2Aml.Cli
 
             if (!string.IsNullOrEmpty(Path.GetExtension(Settings.OutputFile)) &&
                 !string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(Settings.OutputFile))) return;
+
             if (Settings.OutputFile != null)
             {
                 Settings.OutputFile = Path.Combine(Settings.OutputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");

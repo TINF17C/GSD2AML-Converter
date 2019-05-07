@@ -1,24 +1,25 @@
-﻿using System;
+﻿using Gsd2Aml.Lib.Logging;
+using System;
 using System.IO;
 using System.IO.Compression;
-using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Lib
 {
-    public class Compressor
+    public static class Compressor
     {
         private const string Gsd2AmlName = "GSD2AML";
 
         /// <summary>
         /// Creates a zip archive from a directory and the relevant GSD ressources.
         /// </summary>
-        /// <param name="aml">The AML file which will be zipped.</param>
+        /// <param name="amlFilePath">The path to the AML file which will be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in including the name of the archive.amlx.</param>
-        /// <param name="ressources">An array of paths to the ressources to be part of the AMLX package.</param>
+        /// <param name="ressources">An array of paths to the ressources to be part of the .amlx package.</param>
+        /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
-        public static void Compress(string aml, string destination, string[] ressources)
+        public static void Compress(string amlFilePath, string destination, string[] ressources, bool overwriteFile = false)
         {
-            if (aml.Equals("") || destination.Equals(""))
+            if (amlFilePath.Equals("") || destination.Equals(""))
             {
                 Util.Logger?.Log(LogLevel.Error, "The AML or destination string cant be omitted.");
                 throw new Exception("AML or destination string was omitted.");
@@ -40,10 +41,10 @@ namespace Gsd2Aml.Lib
                     if (fileName != null) CopyFile(ressource, Path.Combine(tmpPath, fileName));
                 }
 
-                var amlFileName = Path.GetFileName(aml);
-                if (amlFileName != null) CopyFile(aml, Path.Combine(tmpPath, amlFileName));
+                var amlFileName = Path.GetFileName(amlFilePath);
+                if (amlFileName != null) CopyFile(amlFilePath, Path.Combine(tmpPath, amlFileName));
 
-                Zip(tmpPath, destination);
+                Zip(tmpPath, destination, overwriteFile);
                 Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
@@ -52,7 +53,7 @@ namespace Gsd2Aml.Lib
             {
                 Util.Logger?.Log(LogLevel.Error, e.Message);
                 Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Error while compressing the AML-file and the ressources to the .amlx file.");
+                throw new Exception("Error while compressing the AML-file and the ressources to the .amlx file.", e);
             }
         }
 
@@ -61,9 +62,15 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="source">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the zip archive in.</param>
+        /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
-        private static void Zip(string source, string destination)
+        private static void Zip(string source, string destination, bool overwriteFile)
         {
+            if (overwriteFile)
+            {
+                File.Delete(destination);
+            }
+
             try
             {
                 ZipFile.CreateFromDirectory(source, destination);
@@ -72,7 +79,7 @@ namespace Gsd2Aml.Lib
             {
                 Util.Logger?.Log(LogLevel.Error, e.Message);
                 Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create the .amlx compressed file.");
+                throw new Exception("Could not create the .amlx compressed file.", e);
             }
         }
 
@@ -93,7 +100,7 @@ namespace Gsd2Aml.Lib
             {
                 Util.Logger?.Log(LogLevel.Error, e.Message);
                 Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create the the temporary directory which was created to compress the .amlx file.");
+                throw new Exception("Could not create the the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -113,29 +120,29 @@ namespace Gsd2Aml.Lib
             {
                 Util.Logger?.Log(LogLevel.Error, e.Message);
                 Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.");
+                throw new Exception("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
         /// <summary>
         /// Deletes a folder if it exists.
         /// </summary>
-        /// <param name="target">The target path.</param>
+        /// <param name="destination">The destination path.</param>
         /// <exception cref="IOException"></exception>
-        private static void DeleteFolder(string target)
+        private static void DeleteFolder(string destination)
         {
             try
             {
-                if (Directory.Exists(target))
+                if (Directory.Exists(destination))
                 {
-                    Directory.Delete(target, true);
+                    Directory.Delete(destination, true);
                 }
             }
             catch (IOException e)
             {
                 Util.Logger?.Log(LogLevel.Error, e.Message);
                 Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.");
+                throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -165,6 +172,5 @@ namespace Gsd2Aml.Lib
                 throw new Exception("Could not create output directory for destination");
             }
         }
-
     }
 }
