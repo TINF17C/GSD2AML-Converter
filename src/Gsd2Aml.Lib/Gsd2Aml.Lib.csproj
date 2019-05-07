@@ -3,11 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
-  
+
   <ItemGroup>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)"/>
     <None Update="gsd2aml.xml" Pack="true">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
