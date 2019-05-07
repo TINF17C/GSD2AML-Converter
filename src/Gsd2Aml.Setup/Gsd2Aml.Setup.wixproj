@@ -12,23 +12,23 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;SourceDir="$(ProjectDir)bin\$(Configuration)\publish\win-x64"</DefineConstants>
+    <DefineConstants>Debug;SourceDir="$(ProjectDir)bin\$(Configuration)\publish"</DefineConstants>
     <SuppressPdbOutput>True</SuppressPdbOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>SourceDir=$(ProjectDir)bin\$(Configuration)\publish\win-x64</DefineConstants>
+    <DefineConstants>SourceDir=$(ProjectDir)bin\$(Configuration)\publish</DefineConstants>
     <SuppressPdbOutput>True</SuppressPdbOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DefineConstants>Debug;SourceDir="$(ProjectDir)bin\$(Configuration)\publish\win-x64"</DefineConstants>
+    <DefineConstants>Debug;SourceDir="$(ProjectDir)bin\$(Configuration)\publish"</DefineConstants>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <DefineConstants>SourceDir=$(ProjectDir)bin\$(Configuration)\publish\win-x64</DefineConstants>
+    <DefineConstants>SourceDir=$(ProjectDir)bin\$(Configuration)\publish</DefineConstants>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
@@ -63,12 +63,12 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>mkdir "$(ProjectDir)bin\$(Configuration)\publish\win-x64"
+    <PreBuildEvent>mkdir "$(ProjectDir)bin\$(Configuration)\publish"
 
-xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Cli\bin\$(Configuration)\netcoreapp3.0\publish\win-x64" "$(ProjectDir)bin\$(Configuration)\publish\win-x64"
-xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Gui\bin\$(Configuration)\netcoreapp3.0\publish\win-x64" "$(ProjectDir)bin\$(Configuration)\publish\win-x64"
+xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Cli\bin\$(Configuration)\net4.7\publish" "$(ProjectDir)bin\$(Configuration)\publish"
+xcopy /s /y "$(ProjectDir)..\Gsd2Aml.Gui\bin\$(Configuration)\net4.7\publish" "$(ProjectDir)bin\$(Configuration)\publish"
 
-"$(WixToolPath)heat" dir "$(ProjectDir)bin\$(Configuration)\publish\win-x64" -dr INSTALLFOLDER -cg Components -gg -g1 -sfrag -sreg -suid -srd -t "$(ProjectDir)Filter.xslt" -var var.SourceDir -out "$(ProjectDir)Components.wxs"</PreBuildEvent>
+"$(WixToolPath)heat" dir "$(ProjectDir)bin\$(Configuration)\publish" -dr INSTALLFOLDER -cg Components -gg -g1 -sfrag -sreg -suid -srd -t "$(ProjectDir)Filter.xslt" -var var.SourceDir -out "$(ProjectDir)Components.wxs"</PreBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
