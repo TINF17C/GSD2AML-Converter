@@ -1,4 +1,5 @@
-﻿using Gsd2Aml.Lib.Models;
+﻿using Gsd2Aml.Lib.Logging;
+using Gsd2Aml.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
-using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Lib
 {
@@ -26,7 +26,7 @@ namespace Gsd2Aml.Lib
         /// <param name="isPropertyArray">The boolean which indicates if the property is an array.</param>
         internal static void GetProperty(string searchedProperty, out PropertyInfo propertyInfo, out Type propertyType, out bool isPropertyArray)
         {
-            Logger.Log(LogLevel.Info, $"Search following property {searchedProperty}");
+            Logger?.Log(LogLevel.Info, $"Search following property {searchedProperty}");
 
             // Set default values for the out parameters.
             propertyInfo = null;
@@ -40,18 +40,18 @@ namespace Gsd2Aml.Lib
                 var currentType = propertyInfo == null ? typeof(Wrapper) : propertyInfo.PropertyType;
                 propertyInfo = SearchPropertyByString(currentType, splittedString);
 
-                Logger.Log(LogLevel.Info, $"Found the property {propertyInfo?.Name} with this declaring type {propertyInfo?.DeclaringType}.");
+                Logger?.Log(LogLevel.Info, $"Found the property {propertyInfo?.Name} with this declaring type {propertyInfo?.DeclaringType}.");
 
                 if (propertyInfo == null) break;
             }
 
             if (propertyInfo == null)
             {
-                Logger.Log(LogLevel.Info, $"Property was not found {searchedProperty}");
+                Logger?.Log(LogLevel.Info, $"Property was not found {searchedProperty}");
                 throw new NullReferenceException("A property was not found.");
             }
 
-            Logger.Log(LogLevel.Info, $"The property {propertyInfo.Name} with this declaring type {propertyInfo.DeclaringType} was found.");
+            Logger?.Log(LogLevel.Info, $"The property {propertyInfo.Name} with this declaring type {propertyInfo.DeclaringType} was found.");
 
             // Set the other out parameters.
             isPropertyArray = propertyInfo.PropertyType.IsArray;
@@ -107,7 +107,7 @@ namespace Gsd2Aml.Lib
         /// <param name="references">A list which will save all replacements.</param>
         internal static void GetInformationFromRule(ref XmlNode translationRule, out XmlNode replacement, out ICollection<XmlNode> references)
         {
-            Logger.Log(LogLevel.Info, $"Parsing the rule for {translationRule.Name}.");
+            Logger?.Log(LogLevel.Info, $"Parsing the rule for {translationRule.Name}.");
 
             // Initialize all out parameters with default values.
             references = new List<XmlNode>();
@@ -117,7 +117,7 @@ namespace Gsd2Aml.Lib
             var alreadyReadReplacement = false;
             foreach (XmlNode xmlNode in translationRule.ChildNodes)
             {
-                Logger.Log(LogLevel.Info, $"Reading following XmlNode: {xmlNode.Name}");
+                Logger?.Log(LogLevel.Info, $"Reading following XmlNode: {xmlNode.Name}");
                 switch (xmlNode.Name)
                 {
                     case "Reference":
@@ -126,7 +126,7 @@ namespace Gsd2Aml.Lib
                     case "Replacement":
                         if (alreadyReadReplacement)
                         {
-                            Logger.Log(LogLevel.Error, "Translation table has mutliple replacements for a rule." +
+                            Logger?.Log(LogLevel.Error, "Translation table has mutliple replacements for a rule." +
                                                       $"First replacement: {replacement.FirstChild.Name}" +
                                                       $"Second replacement: {xmlNode.FirstChild.Name}");
                             throw new XmlException("Translation table has mutliple replacements for a rule.");
@@ -135,7 +135,7 @@ namespace Gsd2Aml.Lib
                         alreadyReadReplacement = true;
                         break;
                     default:
-                        Logger.Log(LogLevel.Error, $"Translation table has an unknown element. The name of the node: {xmlNode.Name}");
+                        Logger?.Log(LogLevel.Error, $"Translation table has an unknown element. The name of the node: {xmlNode.Name}");
                         throw new XmlException("Translation table has an unknown element.");
                 }
             }
@@ -143,7 +143,7 @@ namespace Gsd2Aml.Lib
             // Check if replacement is null.
             if (replacement != null) return;
             
-            Logger.Log(LogLevel.Error, $"Rule {translationRule.Name} does not have any replacement for a rule.");
+            Logger?.Log(LogLevel.Error, $"Rule {translationRule.Name} does not have any replacement for a rule.");
             throw new XmlException("Translation table has no replacement for a rule.");
         }
 
@@ -162,11 +162,11 @@ namespace Gsd2Aml.Lib
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}");
+                    Logger?.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}");
                     throw new XmlException($"Invalid GSD-file. Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}", e);
                 }
             }
-            Logger.Log(LogLevel.Info, $"GSD file was deserialized correctly. Path to the GSD file: {inputFile}");
+            Logger?.Log(LogLevel.Info, $"GSD file was deserialized correctly. Path to the GSD file: {inputFile}");
         }
 
         /// <summary>
@@ -181,10 +181,10 @@ namespace Gsd2Aml.Lib
 
             if (xmlDocument.DocumentElement == null)
             {
-                Logger.Log(LogLevel.Error, $"XmlDocument could not be load. Input file path: {filePath}");
+                Logger?.Log(LogLevel.Error, $"XmlDocument could not be load. Input file path: {filePath}");
                 throw new XmlException("Could not load a XML file.");
             }
-            Logger.Log(LogLevel.Info, $"XmlDocument was loaded. Input file path: {filePath}");
+            Logger?.Log(LogLevel.Info, $"XmlDocument was loaded. Input file path: {filePath}");
             return xmlDocument;
         }
 
@@ -210,7 +210,7 @@ namespace Gsd2Aml.Lib
 
             if (translationTableResourceStream == null)
             {
-                Logger.Log(LogLevel.Error, "The translation table resource stream is null.");
+                Logger?.Log(LogLevel.Error, "The translation table resource stream is null.");
                 throw new NullReferenceException("The translation table resource stream is null.");
             }
 
@@ -231,7 +231,7 @@ namespace Gsd2Aml.Lib
         {
             if (string.IsNullOrEmpty(inputFile))
             {
-                Logger.Log(LogLevel.Error, "Input file is invalid.");
+                Logger?.Log(LogLevel.Error, "Input file is invalid.");
                 throw new ArgumentException("Input file ");
             }
 
@@ -246,7 +246,7 @@ namespace Gsd2Aml.Lib
 
             if (!string.IsNullOrEmpty(directoryName)) return Path.Combine(directoryName, fileName);
 
-            Logger.Log(LogLevel.Error, $"Input file describes no valid directory {inputFile}");
+            Logger?.Log(LogLevel.Error, $"Input file describes no valid directory {inputFile}");
             throw new NullReferenceException("Directory name of the input file is invalid.");
         }
     }

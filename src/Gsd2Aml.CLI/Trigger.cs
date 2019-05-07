@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
-using Gsd2Aml.Lib;
+﻿using Gsd2Aml.Lib;
 using Gsd2Aml.Lib.Logging;
+using System;
+using System.IO;
 
 namespace Gsd2Aml.Cli
 {
@@ -30,8 +30,8 @@ namespace Gsd2Aml.Cli
                 CheckOutput();
             }
 
-            Util.Logger.Log(LogLevel.Info, "The conversion process starts.");
             Console.WriteLine("Started conversion process.");
+            Util.Logger.Log(LogLevel.Info, "The conversion process starts.");
 
             try
             {
@@ -50,9 +50,9 @@ namespace Gsd2Aml.Cli
             }
             catch (Exception e)
             {
+                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
                 Util.Logger.Log(LogLevel.Error, "Conversion failed." +
                                                 $"{Environment.NewLine}{e}");
-                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
                 Environment.Exit(1);
             }
         }
@@ -77,8 +77,8 @@ namespace Gsd2Aml.Cli
 
             if (!userInput.Equals("n")) return;
 
-            Util.Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
             Console.WriteLine("Could not convert file because the output file should not be overwritten.");
+            Util.Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
             Environment.Exit(0);
         }
 

@@ -1,5 +1,5 @@
-﻿using NLog;
 using Gsd2Aml.Lib.Logging;
+using NLog;
 
 namespace Gsd2Aml.Cli
 {

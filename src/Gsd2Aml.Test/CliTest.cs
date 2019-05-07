@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Gsd2Aml.Cli;
+﻿using Gsd2Aml.Cli;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace Gsd2Aml.Test
 {
