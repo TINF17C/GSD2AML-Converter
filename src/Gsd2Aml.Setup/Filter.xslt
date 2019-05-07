@@ -15,10 +15,13 @@
   </xsl:template>
 
   <xsl:key name="pdb-search" match="wix:Component[contains(wix:File/@Source, '.pdb')]" use="@Id"/>
+  <xsl:key name="doc-search" match="wix:Component[contains(wix:File/@Source, '.Lib.xml')]" use="@Id"/>
 
   <!-- Override copy (do nothing) for elements with this Id, so they are omitted from the output. -->
   <xsl:template match="wix:Component[key('pdb-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('pdb-search', @Id)]" />
+  <xsl:template match="wix:Component[key('doc-search', @Id)]" />
+  <xsl:template match="wix:ComponentRef[key('doc-search', @Id)]" />
   
   <xsl:template match="wix:Component[wix:File/@Id='Gsd2Aml.Gui.exe']">
     <xsl:copy>
