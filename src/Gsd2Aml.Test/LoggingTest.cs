@@ -69,7 +69,7 @@ namespace Gsd2Aml.Test
             }
             else
             {
-                throw new ArgumentException($"We are missing file {filepa}");
+                throw new ArgumentException($"We are missing file {filepath}");
             }
 
         }
