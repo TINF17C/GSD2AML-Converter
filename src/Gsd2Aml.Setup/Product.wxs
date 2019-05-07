@@ -10,7 +10,19 @@
       <ComponentGroupRef Id="Components" />
       <ComponentGroupRef Id="Environment" />
 		</Feature>
-	</Product>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="Resources\LICENSE.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="Resources\Banner.bmp"/>
+    <WixVariable Id="WixUIDialogBmp" Value="Resources\Dialog.bmp"/>
+
+    <Icon Id="Converter.ico" SourceFile="..\Converter.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Converter.ico" />
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+    </UI>
+  </Product>
 
 	<Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
