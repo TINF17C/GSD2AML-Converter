@@ -17,13 +17,14 @@ namespace Gsd2Aml.Gui
             InitializeComponent();
         }
 
+        #region Dialogs
         private void BrowseGsdFile_OnClick(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog
             {
                 CheckFileExists = true,
-                DefaultExt = ".gsd",
-                Filter = "Generic station description files (.xml)|*.xml",
+                DefaultExt = ".xml",
+                Filter = "Generic station description markup language files (.xml)|*.xml",
                 InitialDirectory = string.IsNullOrEmpty(TxtGsdFile.Text.Trim()) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : System.IO.Path.GetDirectoryName(TxtGsdFile.Text) ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Title = "GSD2AML Converter"
             };
@@ -31,6 +32,7 @@ namespace Gsd2Aml.Gui
             if (dialog.ShowDialog(this).Value)
             {
                 TxtGsdFile.Text = dialog.FileName;
+                App.Logger.Log(Lib.Logging.LogLevel.Info, "Open file \"" + TxtGsdFile.Text + "\"");
             }
         }
 
@@ -51,35 +53,47 @@ namespace Gsd2Aml.Gui
             if (dialog.ShowDialog(this).Value)
             {
                 TxtAmlFile.Text = dialog.FileName;
+                App.Logger.Log(Lib.Logging.LogLevel.Info, "Save file to \"" + TxtGsdFile.Text + "\"");
             }
         }
+        #endregion
 
         private void Convert_OnClick(object sender, RoutedEventArgs e)
         {
             try
             {
+                App.Logger.Log(Lib.Logging.LogLevel.Info, "Start conversion of file \"" + TxtGsdFile.Text + "\"");
                 Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, false);
+                App.Logger.Log(Lib.Logging.LogLevel.Info, "Conversion successfully completed!");
                 MessageBox.Show(this, "Conversion successfully completed!", "GSD2AML Converter");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "GSD2AML Converter: Conversion failed");
+                App.Logger.Log(Lib.Logging.LogLevel.Error, ex.Message);
+                MessageBox.Show(this, ex.Message, "GSD2AML Converter: Conversion failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        #region Drag&Drop
+
+        #region Window
         private void MainWindow_OnDragEnter(object sender, DragEventArgs e)
         {
+            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Drag entered window");
             var data = e.Data.GetData(DataFormats.FileDrop);
             if ((data as string[])?.FirstOrDefault() != null)
             {
                 var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "File \"" + fileName + "\" drag onto window");
                 if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                     fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
                 {
+                    App.Logger.Log(Lib.Logging.LogLevel.Debug, "File is legal");
                     e.Effects = DragDropEffects.All | DragDropEffects.Copy | DragDropEffects.Link | DragDropEffects.Move;
                 }
                 else
                 {
+                    App.Logger.Log(Lib.Logging.LogLevel.Debug, "File is not legal");
                     e.Effects = DragDropEffects.None;
                 }
             }
@@ -95,6 +109,7 @@ namespace Gsd2Aml.Gui
             if ((data as string[])?.FirstOrDefault() != null)
             {
                 var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "File \"" + fileName + "\" draged over window");
                 if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                     fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -113,32 +128,40 @@ namespace Gsd2Aml.Gui
 
         private void MainWindow_OnDrop(object sender, DragEventArgs e)
         {
+            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Dropped file onto window");
             var data = e.Data.GetData(DataFormats.FileDrop);
 
             if ((data as string[])?.FirstOrDefault() == null) return;
 
             var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Dropped file \"" + fileName + "\"");
             if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                 fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
             {
                 TxtGsdFile.Text = ((string[])data)[0];
             }
         }
+        #endregion
 
+        #region Textbox
         private void TxtGsdFile_OnDragEnter(object sender, DragEventArgs e)
         {
+            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Drag entered gsd textbox");
             var data = e.Data.GetData(DataFormats.FileDrop);
             if ((data as string[])?.FirstOrDefault() != null)
             {
                 var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "File \"" + fileName + "\" drag onto gsd textbox");
                 if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                     fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
                 {
+                    App.Logger.Log(Lib.Logging.LogLevel.Debug, "File is legal");
                     e.Effects = DragDropEffects.All | DragDropEffects.Copy | DragDropEffects.Link | DragDropEffects.Move;
                     e.Handled = true;
                 }
                 else
                 {
+                    App.Logger.Log(Lib.Logging.LogLevel.Debug, "File is not legal");
                     e.Effects = DragDropEffects.None;
                 }
             }
@@ -154,6 +177,7 @@ namespace Gsd2Aml.Gui
             if ((data as string[])?.FirstOrDefault() != null)
             {
                 var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "File \"" + fileName + "\" draged over gsd textbox");
                 if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                     fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -173,17 +197,22 @@ namespace Gsd2Aml.Gui
 
         private void TxtGsdFile_OnDrop(object sender, DragEventArgs e)
         {
+            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Dropped file onto gsd textbox");
             var data = e.Data.GetData(DataFormats.FileDrop);
 
             if ((data as string[])?.FirstOrDefault() == null) return;
 
             var fileName = System.IO.Path.GetFileName(((string[])data)[0]);
+            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Dropped file \"" + fileName + "\"");
             if (!string.IsNullOrEmpty(fileName) && fileName.StartsWith("GSDML", StringComparison.InvariantCultureIgnoreCase) &&
                 fileName.EndsWith(".xml", StringComparison.InvariantCultureIgnoreCase))
             {
                 ((TextBox)sender).Text = fileName;
             }
         }
+        #endregion
+
+        #endregion
 
         private void TxtGsdFile_OnTextChanged(object sender, TextChangedEventArgs e)
         {
