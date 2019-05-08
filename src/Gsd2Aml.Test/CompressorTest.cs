@@ -14,6 +14,9 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void TestCompressor()
         {
+            Boolean failed = false;
+            string errorMsg = null;
+
             Util.Logger = new Logger();
 
             var testDir = new Uri(Path
@@ -35,42 +38,28 @@ namespace Gsd2Aml.Test
                 {
                     if (!entry.Name.Equals(amlFileName) && !res.Any(f => Path.GetFileName(f).Equals(entry.Name)))
                     {
-                        try
-                        {
-                            File.Delete(finalAmlxFile);
-                        }
-                        catch
-                        {
-                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
-                        }
-                        Assert.Fail($"We found {entry.Name}, which was not expected.");
+                        failed = true;
+                        errorMsg = $"We found {entry.Name}, which was not expected.";
                     }
                 }
                 foreach (var fileName in res.Select(Path.GetFileName))
                 {
                     if (!archive.Entries.Any(f => f.Name.Equals(fileName)))
                     {
-                        try
-                        {
-                            File.Delete(finalAmlxFile);
-                        }
-                        catch
-                        {
-                            Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
-                        }
-                        Assert.Fail($"We are missing {fileName} in the ZIP-archive.");
+                        failed = true;
+                        errorMsg = $"We are missing {fileName} in the ZIP-archive.";
                     }
                 }
             }
-
             try
             {
-                // File.Delete(finalAmlxFile);
+                File.Delete(finalAmlxFile);
             }
             catch
             {
                 Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
             }
+            if (failed) Assert.Fail(errorMsg);
         }
 
         [TestMethod]
