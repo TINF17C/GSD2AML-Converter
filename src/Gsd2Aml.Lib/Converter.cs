@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
-    // TODO: When migrating to .NET Core or .NET 7 use multiple return values instead of the out parameter.
+    // TODO: Use multiple return values
     public static class Converter
     {
         private static CAEXFile AmlObject { get; } = new CAEXFile();
@@ -35,7 +35,6 @@ namespace Gsd2Aml.Lib
             }
         }
 
-        // TODO: get ressources
         /// <summary>
         /// The convert function which will create a .amlx file.
         /// </summary>
@@ -53,6 +52,7 @@ namespace Gsd2Aml.Lib
             {
                 serializer.Serialize(textWriter, AmlObject);
             }
+            // TODO: get ressources
             Compressor.Compress(temporaryPath, outputFile, new string[0], overwriteFile);
 
             File.Delete(temporaryPath);
@@ -109,6 +109,7 @@ namespace Gsd2Aml.Lib
                 Util.Logger?.Log(LogLevel.Info, $"Current iterated GSD child node {gsdChildNode.Name}.");
 
                 // Try to get a translation rule of the gsdTranslationElements list.
+                // TODO: translation table string dot handling
                 var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(gsdChildNode.Name));
                 // If the rule does not exist, it cannot be translated. It continues with the next property.
                 if (translationRule == null)
@@ -152,25 +153,13 @@ namespace Gsd2Aml.Lib
         private static void Translate<TA>(ref TA currentAmlHead, ref XmlNode translationRule, out dynamic newAmlHead)
         {
             // Get information of the translation rule. (replacement and references)
-            Util.Logger?.Log(LogLevel.Info, $"Trying to get information out of the translation rule {translationRule.Name}.");
             Util.GetInformationFromRule(ref translationRule, out var replacement, out var references);
-            Util.Logger?.Log(LogLevel.Info, "Successfully got the information out of the translation rule.");
 
-            // Get the AML replacement property.
-            // Gets the type of the replacement property.
-            // Gets variable which describes if the replacement property is an array.
-            Util.Logger?.Log(LogLevel.Info, $"Trying to get the property for {replacement.Name}.");
+            // Get the information fo the replacement node. (PropertyInfo, Type, isArray)
             Util.GetProperty(replacement.Name, out var replacementProperty, out var replacementPropertyType, out var isReplacementPropertyArray);
-            Util.Logger?.Log(LogLevel.Info, $"Successfully got the property for {replacement.Name}. " +
-                                           $"Property: {replacementProperty} " +
-                                           $"Type: {replacementPropertyType} " +
-                                           $"Declaring type: {replacementProperty.DeclaringType} " +
-                                           $"Is array: {isReplacementPropertyArray}");
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
-            dynamic replacementInstance = isReplacementPropertyArray
-                                            ? Activator.CreateInstance(typeof(List<>).MakeGenericType(replacementPropertyType))
-                                            : Activator.CreateInstance(replacementPropertyType);
+            var replacementInstance = Util.CreateInstance(replacementPropertyType, isReplacementPropertyArray);
 
             // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
             foreach (XmlNode childNode in replacement.ChildNodes)
@@ -204,27 +193,12 @@ namespace Gsd2Aml.Lib
         /// <returns>The property info which describes the translationInstance.</returns>
         private static PropertyInfo TranslateSubProperties(XmlNode replacement, out dynamic translationInstance)
         {
-            // Get the information of the replacement node. (PropertyInfo, isArray, Type)
+            // Get the information of the replacement node. (PropertyInfo, Type, isArray)
             Util.GetProperty(replacement.Name, out var translationProperty, out var translationPropertyType, out var isTranslationPropertyArray);
-            Util.Logger?.Log(LogLevel.Info, $"Found valid property for {replacement.Name}. " +
-                                           $"Property: {translationProperty} " +
-                                           $"Type: {translationPropertyType} " +
-                                           $"Declaring Type: {translationProperty.DeclaringType} " +
-                                           $"Is array: {isTranslationPropertyArray}");
 
-            // Create the translation instance.
-            // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.
-            if (translationPropertyType == typeof(string))
-            {
-                translationInstance = string.Empty;
-            }
-            else
-            {
-                translationInstance = isTranslationPropertyArray
-                                        ? Activator.CreateInstance(typeof(List<>).MakeGenericType(translationPropertyType))
-                                        : Activator.CreateInstance(translationPropertyType);
-            }
-
+            // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
+            translationInstance = Util.CreateInstance(translationPropertyType, isTranslationPropertyArray);
+            
             // Set attribute and inner text to the translation instance.
             if (translationInstance is string) translationInstance = replacement.InnerText;
             SetAttributes(ref replacement, ref translationInstance);

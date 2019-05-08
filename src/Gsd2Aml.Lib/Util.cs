@@ -30,6 +30,8 @@ namespace Gsd2Aml.Lib
 
             // Set default values for the out parameters.
             propertyInfo = null;
+            propertyType = null;
+            isPropertyArray = false;
 
             // Split strings by the letter dot.
             var splittedStrings = searchedProperty.Split('.').ToList();
@@ -51,7 +53,11 @@ namespace Gsd2Aml.Lib
                 throw new NullReferenceException("A property was not found.");
             }
 
-            Logger?.Log(LogLevel.Info, $"The property {propertyInfo.Name} with this declaring type {propertyInfo.DeclaringType} was found.");
+            Logger?.Log(LogLevel.Info, $"Found valid property for {searchedProperty}. " +
+                                            $"Property: {propertyInfo} " +
+                                            $"Type: {propertyType} " +
+                                            $"Declaring Type: {propertyInfo.DeclaringType} " +
+                                            $"Is array: {isPropertyArray}");
 
             // Set the other out parameters.
             isPropertyArray = propertyInfo.PropertyType.IsArray;
@@ -139,6 +145,8 @@ namespace Gsd2Aml.Lib
                         throw new XmlException("Translation table has an unknown element.");
                 }
             }
+
+            Logger?.Log(LogLevel.Info, "Successfully got the information out of the translation rule.");
 
             // Check if replacement is null.
             if (replacement != null) return;
@@ -248,6 +256,24 @@ namespace Gsd2Aml.Lib
 
             Logger?.Log(LogLevel.Error, $"Input file describes no valid directory {inputFile}");
             throw new NullReferenceException("Directory name of the input file is invalid.");
+        }
+
+        /// <summary>
+        /// This function creates the an instance out of a type and a flag whether an array needs to be created.
+        /// </summary>
+        /// <param name="propertyType">The type object which describes the type of the instance.</param>
+        /// <param name="isPropertyArray">Flag which indicates whether an array is needed.</param>
+        /// <returns></returns>
+        internal static dynamic CreateInstance(Type propertyType, bool isPropertyArray)
+        {
+            // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.
+            if (propertyType == typeof(string))
+            {
+                return string.Empty;
+            }
+            return isPropertyArray
+                    ? Activator.CreateInstance(typeof(List<>).MakeGenericType(propertyType))
+                    : Activator.CreateInstance(propertyType);
         }
     }
 }
