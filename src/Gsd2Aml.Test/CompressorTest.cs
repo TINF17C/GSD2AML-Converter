@@ -14,7 +14,7 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void TestCompressor()
         {
-            bool failed = false;
+            var failed = false;
             string errorMsg = null;
 
             Util.Logger = new Logger();
@@ -36,11 +36,9 @@ namespace Gsd2Aml.Test
             {               
                 foreach (var fileName in res.Select(Path.GetFileName))
                 {
-                    if (!archive.Entries.Any(f => f.Name.Equals(fileName)))
-                    {
-                        failed = true;
-                        errorMsg = $"We are missing {fileName} in the ZIP-archive.";
-                    }
+                    if (archive.Entries.Any(f => f.Name.Equals(fileName))) continue;
+                    failed = true;
+                    errorMsg = $"We are missing {fileName} in the ZIP-archive.";
                 }
             }
             try
@@ -55,12 +53,12 @@ namespace Gsd2Aml.Test
         }
 
         [TestMethod]
-        public void FailOnOmittedAMLName() 
+        public void FailOnOmittedAmlName() 
         {
-            bool exceptionOccured = false;
+            var exceptionOccured = false;
             try
             {
-                Compressor.Compress("", "randomdestination", null);
+                Compressor.Compress("", "randomDestination", null);
             }
             catch
             {
@@ -76,7 +74,7 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void FailOnOmittedDestinationPath()
         {
-            bool exceptionOccured = false;
+            var exceptionOccured = false;
             try
             {
                 Compressor.Compress("myAml.xml", "", null);
@@ -92,9 +90,9 @@ namespace Gsd2Aml.Test
         }
 
         [TestMethod]
-        public void TestEmptyRessources()
+        public void TestEmptyResources()
         {
-            bool exceptionOccured = false;
+            var exceptionOccured = false;
 
             var testDir = new Uri(Path
                 .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)
@@ -103,7 +101,7 @@ namespace Gsd2Aml.Test
 
             const string amlFileName = "aml.xml";
 
-            var res = new String[0];
+            var res = new string[0];
             var amlFile = Directory.GetFiles(testDir).First(f => Path.GetFileName(f).Equals(amlFileName));
 
             var finalAmlxFile = Path.Combine(testDir, "myAmlx.amlx");
@@ -123,18 +121,17 @@ namespace Gsd2Aml.Test
             {
                 exceptionOccured = true;
             }
-            if (exceptionOccured)
+            try
             {
-                try
-                {
-                    File.Delete(finalAmlxFile);
-                }
-                catch
-                {
-                    Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
-                }
-                Assert.Fail("Compress function should work without ressources.");
+                File.Delete(finalAmlxFile);
             }
+            catch
+            {
+                Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
+            }
+
+            if (!exceptionOccured) return;
+            Assert.Fail("Compress function should work without resources.");
         }
     }
 }

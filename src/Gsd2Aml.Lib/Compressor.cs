@@ -1,5 +1,6 @@
 ﻿using Gsd2Aml.Lib.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Gsd2Aml.Lib
@@ -9,14 +10,14 @@ namespace Gsd2Aml.Lib
         private const string Gsd2AmlName = "GSD2AML";
 
         /// <summary>
-        /// Creates a zip archive from a directory and the relevant GSD ressources.
+        /// Creates a zip archive from a directory and the relevant GSD resources.
         /// </summary>
         /// <param name="amlFilePath">The path to the AML file which will be zipped.</param>
         /// <param name="destination">The directory you want to store the archive in including the name of the archive.amlx.</param>
-        /// <param name="ressources">An array of paths to the ressources to be part of the .amlx package.</param>
+        /// <param name="resources">An array of paths to the resources to be part of the .amlx package.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
-        public static void Compress(string amlFilePath, string destination, string[] ressources, bool overwriteFile = false)
+        public static void Compress(string amlFilePath, string destination, string[] resources, bool overwriteFile = false)
         {
             if (amlFilePath.Equals("") || destination.Equals(""))
             {
@@ -32,18 +33,18 @@ namespace Gsd2Aml.Lib
 
             try
             {
-                foreach (var ressource in ressources)
+                foreach (var resource in resources)
                 {
-                    var fileName = Path.GetFileName(ressource);
-                    if (fileName != null) CopyFile(ressource, Path.Combine(tmpPath, fileName));
+                    var fileName = Path.GetFileName(resource);
+                    if (fileName != null) CopyFile(resource, Path.Combine(tmpPath, fileName));
                 }
 
                 var amlFileName = Path.GetFileName(amlFilePath);
                 var amlFileTmpPath = Path.Combine(tmpPath, amlFileName);
 
-                if (amlFileName != null) CopyFile(amlFilePath, amlFileTmpPath);
+                if (!string.IsNullOrEmpty(amlFileName)) CopyFile(amlFilePath, amlFileTmpPath);
 
-                Zip(amlFileTmpPath, destination, ressources, overwriteFile);
+                Zip(amlFileTmpPath, destination, resources, overwriteFile);
 
                 Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
@@ -51,19 +52,19 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                throw new IOException("Error while compressing the AML-file and the ressources to the .amlx file.", e);
+                throw new IOException("Error while compressing the AML-file and the resources to the .amlx file.", e);
             }
         }
 
         /// <summary>
         /// Creates a zip archive from a directory.
         /// </summary>
-        /// <param name="source">The directory you want to be zipped.</param>
+        /// <param name="sourceAml">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the zip archive in.</param>
-        /// <param name="ressources">An array of paths to the ressources to be part of the .amlx package.</param>
+        /// <param name="resources">An array of paths to the resources to be part of the .amlx package.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
-        private static void Zip(string sourceAML, string destination, string[] ressources, bool overwriteFile)
+        private static void Zip(string sourceAml, string destination, IEnumerable<string> resources, bool overwriteFile)
         {
             if (overwriteFile)
             {
@@ -72,16 +73,18 @@ namespace Gsd2Aml.Lib
 
             try
             {
-                using (Aml.Engine.AmlObjects.AutomationMLContainer ac = new Aml.Engine.AmlObjects.AutomationMLContainer(destination))
+                using (var ac = new Aml.Engine.AmlObjects.AutomationMLContainer(destination))
                 {
-                    var root = ac.AddRoot(sourceAML, new Uri("/" + Path.GetFileName(sourceAML), UriKind.Relative));
+                    var root = ac.AddRoot(sourceAml, new Uri("/" + Path.GetFileName(sourceAml), UriKind.Relative));
 
-                    foreach (var ressource in ressources)
+                    foreach (var resource in resources)
                     {
-                        var fileName = Path.GetFileName(ressource);
+                        var fileName = Path.GetFileName(resource);
+                        if (string.IsNullOrEmpty(fileName)) continue;
                         var fileTmpPath = Path.Combine(Path.GetTempPath(), Gsd2AmlName, fileName);
                         var fileUri = new Uri("/" + fileName, UriKind.Relative);
-                        if (fileName != null) ac.AddAnyContent(root, fileTmpPath, fileUri);                       
+                        ac.AddAnyContent(root, fileTmpPath, fileUri);
+
                     }
 
                     ac.Save();
@@ -161,10 +164,9 @@ namespace Gsd2Aml.Lib
         {
             var output = new DirectoryInfo(destination);
 
-            if (output == null || output.Exists)
+            if (string.IsNullOrEmpty(output.FullName) || output.Exists)
             {
-                if (output.Exists) return output.FullName;
-                return null;
+                return output.Exists ? output.FullName : null;
             }
 
             try
