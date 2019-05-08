@@ -31,8 +31,6 @@
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="PRODUCTMENUFOLDER" Name="$(var.myProductDir)">
-        </Directory>
       </Directory>
     </Directory>
 	</Fragment>

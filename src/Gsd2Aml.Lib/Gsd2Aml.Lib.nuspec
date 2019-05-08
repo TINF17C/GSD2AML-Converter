@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Gsd2Aml.Lib</id>
+    <title>GSD2AML Converter Library</title>
+    <version>$version$</version>
+    <authors>Nico Dietz, Steffen Gerdes, Jonas Komarek, Constantin Ruhdorfer, Phuc Quang Vu, Michael Weidmann</authors>
+    <owners>DHBW Stuttgart TINF17C</owners>
+    <projectUrl>https://github.com/TINF17C/GSD2AML-Converter</projectUrl>
+    <license type="file">LICENSE.md</license>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <!--<iconUrl>https://github.com/TINF17C/GSD2AML-Converter/nuget_icon.png</iconUrl>-->
+    <releaseNotes>First public release</releaseNotes>
+    <description>Library to perform a conversion from gsd to aml/amlx files</description>
+    <copyright>Copyright ©2019 DHBW Stuttgart TINF17C</copyright>
+    <tags>aml amlx automationml gsd</tags>
+	<!--<repository type="git" url="https://github.com/TINF17C/GSD2AML-Converter/gsd2aml-converter.git" />--><!-- TODO: Add correct repo path -->
+  </metadata>
+  <files>
+    <file src="gsd2aml.xml" target="content" />
+    <file src="README.md" target="content" />
+    <file src="README.md" target="" />
+    <file src="..\..\LICENSE.md" target="" />
+    <file src="bin\Release\Gsd2Aml.Lib.xml" target="lib\net47" />
+  </files>
+</package>

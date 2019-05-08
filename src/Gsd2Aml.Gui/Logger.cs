@@ -1,12 +1,11 @@
-﻿using System;
-using NLog;
+﻿using NLog;
 using Gsd2Aml.Lib.Logging;
 
 namespace Gsd2Aml.Gui
 {
     public class Logger : ILoggingService
     {
-        private NLog.Logger NlogLogger { get; } = LogManager.GetLogger("GSD2AML");
+        private NLog.Logger NlogLogger { get; } = LogManager.GetLogger("gui_logger");
         
         public void Log(Lib.Logging.LogLevel level, string message)
         {
