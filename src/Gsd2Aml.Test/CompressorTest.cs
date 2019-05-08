@@ -14,7 +14,7 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void TestCompressor()
         {
-            Boolean failed = false;
+            bool failed = false;
             string errorMsg = null;
 
             Util.Logger = new Logger();
@@ -57,7 +57,7 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void FailOnOmittedAMLName() 
         {
-            Boolean exceptionOccured = false;
+            bool exceptionOccured = false;
             try
             {
                 Compressor.Compress("", "randomdestination", null);
@@ -76,7 +76,7 @@ namespace Gsd2Aml.Test
         [TestMethod]
         public void FailOnOmittedDestinationPath()
         {
-            Boolean exceptionOccured = false;
+            bool exceptionOccured = false;
             try
             {
                 Compressor.Compress("myAml.xml", "", null);
@@ -88,6 +88,52 @@ namespace Gsd2Aml.Test
             if (!exceptionOccured)
             {
                 Assert.Fail("Compress function should thrown an exception on empty destination string.");
+            }
+        }
+
+        [TestMethod]
+        public void TestEmptyRessources()
+        {
+            bool exceptionOccured = false;
+
+            var testDir = new Uri(Path
+                .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)
+                .LocalPath, @"..\..\..\..\..\tst"))
+                .LocalPath;
+
+            const string amlFileName = "aml.xml";
+
+            var res = new String[0];
+            var amlFile = Directory.GetFiles(testDir).First(f => Path.GetFileName(f).Equals(amlFileName));
+
+            var finalAmlxFile = Path.Combine(testDir, "myAmlx.amlx");
+            try
+            {
+                Compressor.Compress(amlFile, Path.Combine(testDir, "myAmlx.amlx"), res, true);
+                try
+                {
+                    File.Delete(finalAmlxFile);
+                }
+                catch
+                {
+                    Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
+                }
+            }
+            catch
+            {
+                exceptionOccured = true;
+            }
+            if (exceptionOccured)
+            {
+                try
+                {
+                    File.Delete(finalAmlxFile);
+                }
+                catch
+                {
+                    Assert.Fail("Failed to delete the test AMLX File. You might need to delete it by hand under ./tst/ .");
+                }
+                Assert.Fail("Compress function should work without ressources.");
             }
         }
     }
