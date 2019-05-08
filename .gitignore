@@ -6,3 +6,4 @@ src/.vs
 .vs/
 *.user
 obj
+tst/*.amlx

@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using Aml.Engine;
 
 namespace Gsd2Aml.Lib
 {
@@ -30,7 +31,7 @@ namespace Gsd2Aml.Lib
             if (String.IsNullOrEmpty(tmpPath))
             {
                 Util.Logger?.Log(LogLevel.Error, "Path to Temp folder is unexpectedly null.");
-                throw new Exception("Path to Temp folder is unexpectedly null.");
+                throw new Exception("Path to Temp folder unexpectedly null.");
             }
 
             try
@@ -44,7 +45,7 @@ namespace Gsd2Aml.Lib
                 var amlFileName = Path.GetFileName(amlFilePath);
                 if (amlFileName != null) CopyFile(amlFilePath, Path.Combine(tmpPath, amlFileName));
 
-                Zip(tmpPath, destination, overwriteFile);
+                Zip(Path.Combine(tmpPath, amlFileName), destination, overwriteFile);
                 Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
@@ -63,7 +64,7 @@ namespace Gsd2Aml.Lib
         /// <param name="source">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the zip archive in.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
-        /// <exception cref="IOException"></exception>
+        /// <exception cref="Exception"></exception>
         private static void Zip(string source, string destination, bool overwriteFile)
         {
             if (overwriteFile)
@@ -73,9 +74,14 @@ namespace Gsd2Aml.Lib
 
             try
             {
-                ZipFile.CreateFromDirectory(source, destination);
+                using (Aml.Engine.AmlObjects.AutomationMLContainer ac = new Aml.Engine.AmlObjects.AutomationMLContainer(destination))
+                {
+                    var root = ac.AddRoot(source, new Uri("/" + Path.GetFileName(source), UriKind.Relative));
+                    ac.Save();
+                    ac.Close();
+                }
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 Util.Logger?.Log(LogLevel.Error, e.Message);
                 Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
