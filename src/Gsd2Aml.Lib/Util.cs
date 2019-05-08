@@ -2,6 +2,7 @@
 using Gsd2Aml.Lib.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,13 +28,13 @@ namespace Gsd2Aml.Lib
             PropertyInfo propertyInfo = null;
 
             // Split strings by the letter dot.
-            var splittedStrings = searchedProperty.Split('.').ToList();
+            var splitStrings = searchedProperty.Split('.').ToList();
 
-            // Iterate over the splittedStrings array and find step by step the searched property.
-            foreach (var splittedString in splittedStrings)
+            // Iterate over the splitStrings array and find step by step the searched property.
+            foreach (var splitString in splitStrings)
             {
                 var currentType = propertyInfo == null ? typeof(Wrapper) : propertyInfo.PropertyType;
-                propertyInfo = SearchPropertyByString(currentType, splittedString);
+                propertyInfo = SearchPropertyByString(currentType, splitString);
 
                 Converter.Logger?.Log(LogLevel.Info, $"Found the property {propertyInfo?.Name} with this declaring type {propertyInfo?.DeclaringType}.");
 
@@ -62,7 +63,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// Searches recursiveley a class down to find a property by string.
+        /// Searches recursively a class down to find a property by string.
         /// </summary>
         /// <param name="type">The type object, which represents the currently iterated class.</param>
         /// <param name="propertyName">The name of the property being searched for.</param>
@@ -144,7 +145,7 @@ namespace Gsd2Aml.Lib
 
             // Check if replacement is null.
             if (replacement != null) return (replacement, references);
-            
+
             Converter.Logger?.Log(LogLevel.Error, $"Rule {translationRule.Name} does not have any replacement for a rule.");
             throw new XmlException("Translation table has no replacement for a rule.");
         }
@@ -192,20 +193,27 @@ namespace Gsd2Aml.Lib
 
         /// <summary>
         /// This method loads the translation table. There are two different cases for loading the table.
-        /// The translation table is in the installtion folder loacated and named like 'gsd2aml.xml'.
-        /// If the translation table is not in the installtion folder, it will be loaded from resources.
+        /// The translation table is in the installation folder located and named like 'gsd2aml.xml'.
+        /// If the translation table is not in the installation folder, it will be loaded from resources.
         /// </summary>
         /// <returns>Returns the translation table XmlDocument object.</returns>
         internal static XmlDocument LoadTranslationsTable()
         {
             var translationTable = new XmlDocument();
 
-            if (File.Exists(CTranslationTableFileName))
+            var assembly = Assembly.GetExecutingAssembly();
+
+            var assemblyFolder = Path.GetDirectoryName(assembly.Location);
+
+            if (null != assemblyFolder)
             {
-                return LoadXmlDocument(CTranslationTableFileName);
+                var translationTableLocation = Path.Combine(assemblyFolder, CTranslationTableFileName);
+                if (File.Exists(translationTableLocation))
+                {
+                    return LoadXmlDocument(translationTableLocation);
+                }
             }
 
-            var assembly = Assembly.GetExecutingAssembly();
             var translationTableResource = assembly.GetManifestResourceNames().First(x => x.EndsWith(CTranslationTableFileName));
 
             var translationTableResourceStream = assembly.GetManifestResourceStream(translationTableResource);
@@ -260,7 +268,7 @@ namespace Gsd2Aml.Lib
         /// <returns>An instance of the type which the propertyType parameter describes. If an array is needed, it creates a list.</returns>
         internal static dynamic CreateInstance(Type propertyType, bool isPropertyArray)
         {
-            // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.
+            // If the translation Property is a string, it has to be handled manually because it does not have a constructor with no parameters.
             if (propertyType == typeof(string))
             {
                 return string.Empty;

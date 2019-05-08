@@ -25,7 +25,7 @@ namespace Gsd2Aml.Lib
         /// The convert function which returns the AML file as string.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
-        /// <returns>The AML object serailzed to a XML string.</returns>
+        /// <returns>The AML object serialized to a XML string.</returns>
         public static string Convert(string inputFile)
         {
             Logger?.Log(LogLevel.Info, "Conversion to string started.");
@@ -99,7 +99,7 @@ namespace Gsd2Aml.Lib
 
         /// <summary>
         /// Starts the real conversion process. It iterates over the GSD properties and translates it to AML.
-        /// Then it recursiveley starts a new Handle call with the translated property.
+        /// Then it recursively starts a new Handle call with the translated property.
         /// </summary>
         /// <typeparam name="TA">The type of the current AML head object.</typeparam>
         /// <param name="currentAmlHead">The current AML head object.</param>
@@ -238,7 +238,7 @@ namespace Gsd2Aml.Lib
                     throw new InvalidDataException("Failed to translate attributes correctly due to incorrect typing.");
                 }
 
-                // Set the attribute instacne to the translation instance.
+                // Set the attribute instance to the translation instance.
                 attributeProperty.SetValue(translationInstance, attributeInstance);
             }
         }
