@@ -17,7 +17,7 @@ namespace Gsd2Aml.Test
             var failed = false;
             string errorMsg = null;
 
-            Util.Logger = new Logger();
+            Converter.Logger = new Logger();
 
             var testDir = new Uri(Path
                 .Combine(new Uri(Assembly.GetExecutingAssembly().CodeBase)

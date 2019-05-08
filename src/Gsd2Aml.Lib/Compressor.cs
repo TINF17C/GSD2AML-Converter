@@ -46,7 +46,7 @@ namespace Gsd2Aml.Lib
 
                 Zip(amlFileTmpPath, destination, resources, overwriteFile);
 
-                Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
+                Converter.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
             }
@@ -87,7 +87,6 @@ namespace Gsd2Aml.Lib
 
                     }
 
-                    ac.Save();
                     ac.Close();
                 }
             }

@@ -35,7 +35,7 @@ namespace Gsd2Aml.Cli
 
             try
             {
-                Lib.Util.Logger = Util.Logger;
+                Converter.Logger = Util.Logger;
                 if (Settings.StringOutput)
                 {
                     var amlString = Converter.Convert(Settings.InputFile);

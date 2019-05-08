@@ -11,7 +11,7 @@ namespace Gsd2Aml.Gui
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Lib.Util.Logger = Logger;
+            Lib.Converter.Logger = Logger;
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
