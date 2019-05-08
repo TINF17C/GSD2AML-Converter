@@ -28,6 +28,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.myProgramFilesFolder)">
         <Directory Id="INSTALLFOLDER" Name="$(var.myProductDir)">
+          <Directory Id="CMDFOLDER" Name="Cmd" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -36,10 +37,13 @@
 	</Fragment>
 
   <Fragment>
-    <ComponentGroup Id="Environment" Directory="INSTALLFOLDER">
+    <ComponentGroup Id="Environment" Directory="CMDFOLDER">
       <Component Id="PathForCli" Guid="6C529FE1-87B0-43E4-B626-CFD054AD5919">
-        <Environment Id="CmdPath" Name="PATH" Value="[INSTALLFOLDER]" Permanent="no" Part="last" Action="set" System="yes" />
+        <Environment Id="CmdPath" Name="PATH" Value="[CMDFOLDER]" Permanent="no" Part="last" Action="set" System="yes" />
         <CreateFolder/>
+      </Component>
+      <Component Id="BatForCli" Guid="EBF043BB-F332-463D-AED2-10C6C14E832B">
+        <File Id="BatForCli" KeyPath="yes" Source="..\..\dpl\gsd2aml.bat"/>
       </Component>
     </ComponentGroup>
   </Fragment>
