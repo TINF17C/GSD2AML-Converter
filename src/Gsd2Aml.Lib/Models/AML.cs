@@ -11,7 +11,7 @@ namespace Gsd2Aml.Lib.Models
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    internal partial class CAEXFile : CAEXBasicObject
+    public partial class CAEXFile : CAEXBasicObject
     {
 
         private CAEXFileExternalReference[] externalReferenceField;
@@ -28,14 +28,14 @@ namespace Gsd2Aml.Lib.Models
 
         private string schemaVersionField;
 
-        internal CAEXFile()
+        public CAEXFile()
         {
             this.schemaVersionField = "2.15";
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ExternalReference")]
-        internal CAEXFileExternalReference[] ExternalReference
+        public CAEXFileExternalReference[] ExternalReference
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InstanceHierarchy")]
-        internal CAEXFileInstanceHierarchy[] InstanceHierarchy
+        public CAEXFileInstanceHierarchy[] InstanceHierarchy
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InterfaceClassLib")]
-        internal CAEXFileInterfaceClassLib[] InterfaceClassLib
+        public CAEXFileInterfaceClassLib[] InterfaceClassLib
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RoleClassLib")]
-        internal CAEXFileRoleClassLib[] RoleClassLib
+        public CAEXFileRoleClassLib[] RoleClassLib
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SystemUnitClassLib")]
-        internal CAEXFileSystemUnitClassLib[] SystemUnitClassLib
+        public CAEXFileSystemUnitClassLib[] SystemUnitClassLib
         {
             get
             {
@@ -105,7 +105,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string FileName
+        public string FileName
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string SchemaVersion
+        public string SchemaVersion
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXFileExternalReference : CAEXBasicObject
+    public partial class CAEXFileExternalReference : CAEXBasicObject
     {
 
         private string pathField;
@@ -147,7 +147,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string Path
+        public string Path
         {
             get
             {
@@ -161,7 +161,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string Alias
+        public string Alias
         {
             get
             {
@@ -191,7 +191,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class CAEXBasicObject
+    public partial class CAEXBasicObject
     {
 
         private CAEXBasicObjectDescription descriptionField;
@@ -206,13 +206,13 @@ namespace Gsd2Aml.Lib.Models
 
         private ChangeMode changeModeField;
 
-        internal CAEXBasicObject()
+        public CAEXBasicObject()
         {
             this.changeModeField = ChangeMode.state;
         }
 
         /// <remarks/>
-        internal CAEXBasicObjectDescription Description
+        public CAEXBasicObjectDescription Description
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal CAEXBasicObjectVersion Version
+        public CAEXBasicObjectVersion Version
         {
             get
             {
@@ -239,7 +239,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Revision")]
-        internal CAEXBasicObjectRevision[] Revision
+        public CAEXBasicObjectRevision[] Revision
         {
             get
             {
@@ -252,7 +252,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal CAEXBasicObjectCopyright Copyright
+        public CAEXBasicObjectCopyright Copyright
         {
             get
             {
@@ -266,7 +266,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AdditionalInformation")]
-        internal object[] AdditionalInformation
+        public object[] AdditionalInformation
         {
             get
             {
@@ -281,7 +281,7 @@ namespace Gsd2Aml.Lib.Models
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(ChangeMode.state)]
-        internal ChangeMode ChangeMode
+        public ChangeMode ChangeMode
         {
             get
             {
@@ -300,14 +300,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXBasicObjectDescription
+    public partial class CAEXBasicObjectDescription
     {
 
         private ChangeMode changeModeField;
 
         private string valueField;
 
-        internal CAEXBasicObjectDescription()
+        public CAEXBasicObjectDescription()
         {
             this.changeModeField = ChangeMode.state;
         }
@@ -315,7 +315,7 @@ namespace Gsd2Aml.Lib.Models
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(ChangeMode.state)]
-        internal ChangeMode ChangeMode
+        public ChangeMode ChangeMode
         {
             get
             {
@@ -329,7 +329,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        internal string Value
+        public string Value
         {
             get
             {
@@ -345,7 +345,7 @@ namespace Gsd2Aml.Lib.Models
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
-    internal enum ChangeMode
+    public enum ChangeMode
     {
 
         /// <remarks/>
@@ -367,14 +367,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXBasicObjectVersion
+    public partial class CAEXBasicObjectVersion
     {
 
         private ChangeMode changeModeField;
 
         private string valueField;
 
-        internal CAEXBasicObjectVersion()
+        public CAEXBasicObjectVersion()
         {
             this.changeModeField = ChangeMode.state;
         }
@@ -382,7 +382,7 @@ namespace Gsd2Aml.Lib.Models
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(ChangeMode.state)]
-        internal ChangeMode ChangeMode
+        public ChangeMode ChangeMode
         {
             get
             {
@@ -396,7 +396,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        internal string Value
+        public string Value
         {
             get
             {
@@ -415,7 +415,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXBasicObjectRevision : CAEXBasicObject
+    public partial class CAEXBasicObjectRevision : CAEXBasicObject
     {
 
         private System.DateTime revisionDateField;
@@ -429,7 +429,7 @@ namespace Gsd2Aml.Lib.Models
         private string commentField;
 
         /// <remarks/>
-        internal System.DateTime RevisionDate
+        public System.DateTime RevisionDate
         {
             get
             {
@@ -442,7 +442,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal string OldVersion
+        public string OldVersion
         {
             get
             {
@@ -455,7 +455,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal string NewVersion
+        public string NewVersion
         {
             get
             {
@@ -468,7 +468,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal string AuthorName
+        public string AuthorName
         {
             get
             {
@@ -481,7 +481,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal string Comment
+        public string Comment
         {
             get
             {
@@ -500,14 +500,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXBasicObjectCopyright
+    public partial class CAEXBasicObjectCopyright
     {
 
         private ChangeMode changeModeField;
 
         private string valueField;
 
-        internal CAEXBasicObjectCopyright()
+        public CAEXBasicObjectCopyright()
         {
             this.changeModeField = ChangeMode.state;
         }
@@ -515,7 +515,7 @@ namespace Gsd2Aml.Lib.Models
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(ChangeMode.state)]
-        internal ChangeMode ChangeMode
+        public ChangeMode ChangeMode
         {
             get
             {
@@ -529,7 +529,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        internal string Value
+        public string Value
         {
             get
             {
@@ -547,7 +547,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class MappingType : CAEXBasicObject
+    public partial class MappingType : CAEXBasicObject
     {
 
         private MappingTypeAttributeNameMapping[] attributeNameMappingField;
@@ -556,7 +556,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AttributeNameMapping")]
-        internal MappingTypeAttributeNameMapping[] AttributeNameMapping
+        public MappingTypeAttributeNameMapping[] AttributeNameMapping
         {
             get
             {
@@ -570,7 +570,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InterfaceNameMapping")]
-        internal MappingTypeInterfaceNameMapping[] InterfaceNameMapping
+        public MappingTypeInterfaceNameMapping[] InterfaceNameMapping
         {
             get
             {
@@ -589,7 +589,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class MappingTypeAttributeNameMapping : CAEXBasicObject
+    public partial class MappingTypeAttributeNameMapping : CAEXBasicObject
     {
 
         private string systemUnitAttributeNameField;
@@ -598,7 +598,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string SystemUnitAttributeName
+        public string SystemUnitAttributeName
         {
             get
             {
@@ -612,7 +612,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RoleAttributeName
+        public string RoleAttributeName
         {
             get
             {
@@ -631,7 +631,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class MappingTypeInterfaceNameMapping : CAEXBasicObject
+    public partial class MappingTypeInterfaceNameMapping : CAEXBasicObject
     {
 
         private string systemUnitInterfaceNameField;
@@ -640,7 +640,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string SystemUnitInterfaceName
+        public string SystemUnitInterfaceName
         {
             get
             {
@@ -654,7 +654,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RoleInterfaceName
+        public string RoleInterfaceName
         {
             get
             {
@@ -672,7 +672,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class AttributeValueRequirementType : CAEXBasicObject
+    public partial class AttributeValueRequirementType : CAEXBasicObject
     {
 
         private object itemField;
@@ -683,7 +683,7 @@ namespace Gsd2Aml.Lib.Models
         [System.Xml.Serialization.XmlElementAttribute("NominalScaledType", typeof(AttributeValueRequirementTypeNominalScaledType))]
         [System.Xml.Serialization.XmlElementAttribute("OrdinalScaledType", typeof(AttributeValueRequirementTypeOrdinalScaledType))]
         [System.Xml.Serialization.XmlElementAttribute("UnknownType", typeof(AttributeValueRequirementTypeUnknownType))]
-        internal object Item
+        public object Item
         {
             get
             {
@@ -697,7 +697,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string Name
+        public string Name
         {
             get
             {
@@ -716,14 +716,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class AttributeValueRequirementTypeNominalScaledType
+    public partial class AttributeValueRequirementTypeNominalScaledType
     {
 
         private object[] requiredValueField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RequiredValue")]
-        internal object[] RequiredValue
+        public object[] RequiredValue
         {
             get
             {
@@ -742,7 +742,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class AttributeValueRequirementTypeOrdinalScaledType
+    public partial class AttributeValueRequirementTypeOrdinalScaledType
     {
 
         private object requiredMaxValueField;
@@ -752,7 +752,7 @@ namespace Gsd2Aml.Lib.Models
         private object requiredMinValueField;
 
         /// <remarks/>
-        internal object RequiredMaxValue
+        public object RequiredMaxValue
         {
             get
             {
@@ -765,7 +765,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal object RequiredValue
+        public object RequiredValue
         {
             get
             {
@@ -778,7 +778,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal object RequiredMinValue
+        public object RequiredMinValue
         {
             get
             {
@@ -797,13 +797,13 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class AttributeValueRequirementTypeUnknownType
+    public partial class AttributeValueRequirementTypeUnknownType
     {
 
         private string requirementsField;
 
         /// <remarks/>
-        internal string Requirements
+        public string Requirements
         {
             get
             {
@@ -829,7 +829,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class CAEXObject : CAEXBasicObject
+    public partial class CAEXObject : CAEXBasicObject
     {
 
         private string idField;
@@ -838,7 +838,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string ID
+        public string ID
         {
             get
             {
@@ -852,7 +852,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string Name
+        public string Name
         {
             get
             {
@@ -872,7 +872,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class SystemUnitClassType : CAEXObject
+    public partial class SystemUnitClassType : CAEXObject
     {
 
         private AttributeType[] attributeField;
@@ -887,7 +887,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Attribute")]
-        internal AttributeType[] Attribute
+        public AttributeType[] Attribute
         {
             get
             {
@@ -901,7 +901,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ExternalInterface")]
-        internal InterfaceClassType[] ExternalInterface
+        public InterfaceClassType[] ExternalInterface
         {
             get
             {
@@ -915,7 +915,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InternalElement")]
-        internal InternalElementType[] InternalElement
+        public InternalElementType[] InternalElement
         {
             get
             {
@@ -929,7 +929,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SupportedRoleClass")]
-        internal SystemUnitClassTypeSupportedRoleClass[] SupportedRoleClass
+        public SystemUnitClassTypeSupportedRoleClass[] SupportedRoleClass
         {
             get
             {
@@ -943,7 +943,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InternalLink")]
-        internal SystemUnitClassTypeInternalLink[] InternalLink
+        public SystemUnitClassTypeInternalLink[] InternalLink
         {
             get
             {
@@ -961,7 +961,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class AttributeType : CAEXObject
+    public partial class AttributeType : CAEXObject
     {
 
         private object defaultValueField;
@@ -979,7 +979,7 @@ namespace Gsd2Aml.Lib.Models
         private string attributeDataTypeField;
 
         /// <remarks/>
-        internal object DefaultValue
+        public object DefaultValue
         {
             get
             {
@@ -992,7 +992,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal object Value
+        public object Value
         {
             get
             {
@@ -1006,7 +1006,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RefSemantic")]
-        internal AttributeTypeRefSemantic[] RefSemantic
+        public AttributeTypeRefSemantic[] RefSemantic
         {
             get
             {
@@ -1020,7 +1020,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Constraint")]
-        internal AttributeValueRequirementType[] Constraint
+        public AttributeValueRequirementType[] Constraint
         {
             get
             {
@@ -1034,7 +1034,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Attribute")]
-        internal AttributeType[] Attribute
+        public AttributeType[] Attribute
         {
             get
             {
@@ -1048,7 +1048,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string Unit
+        public string Unit
         {
             get
             {
@@ -1062,7 +1062,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string AttributeDataType
+        public string AttributeDataType
         {
             get
             {
@@ -1081,14 +1081,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class AttributeTypeRefSemantic : CAEXBasicObject
+    public partial class AttributeTypeRefSemantic : CAEXBasicObject
     {
 
         private string correspondingAttributePathField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string CorrespondingAttributePath
+        public string CorrespondingAttributePath
         {
             get
             {
@@ -1107,7 +1107,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class InterfaceClassType : CAEXObject
+    public partial class InterfaceClassType : CAEXObject
     {
 
         private AttributeType[] attributeField;
@@ -1116,7 +1116,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Attribute")]
-        internal AttributeType[] Attribute
+        public AttributeType[] Attribute
         {
             get
             {
@@ -1130,7 +1130,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefBaseClassPath
+        public string RefBaseClassPath
         {
             get
             {
@@ -1148,14 +1148,14 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class InterfaceFamilyType : InterfaceClassType
+    public partial class InterfaceFamilyType : InterfaceClassType
     {
 
         private InterfaceFamilyType[] interfaceClassField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InterfaceClass")]
-        internal InterfaceFamilyType[] InterfaceClass
+        public InterfaceFamilyType[] InterfaceClass
         {
             get
             {
@@ -1173,7 +1173,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class InternalElementType : SystemUnitClassType
+    public partial class InternalElementType : SystemUnitClassType
     {
 
         private InternalElementTypeRoleRequirements roleRequirementsField;
@@ -1183,7 +1183,7 @@ namespace Gsd2Aml.Lib.Models
         private string refBaseSystemUnitPathField;
 
         /// <remarks/>
-        internal InternalElementTypeRoleRequirements RoleRequirements
+        public InternalElementTypeRoleRequirements RoleRequirements
         {
             get
             {
@@ -1196,7 +1196,7 @@ namespace Gsd2Aml.Lib.Models
         }
 
         /// <remarks/>
-        internal MappingType MappingObject
+        public MappingType MappingObject
         {
             get
             {
@@ -1210,7 +1210,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefBaseSystemUnitPath
+        public string RefBaseSystemUnitPath
         {
             get
             {
@@ -1229,7 +1229,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class InternalElementTypeRoleRequirements : CAEXBasicObject
+    public partial class InternalElementTypeRoleRequirements : CAEXBasicObject
     {
 
         private AttributeType[] attributeField;
@@ -1240,7 +1240,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Attribute")]
-        internal AttributeType[] Attribute
+        public AttributeType[] Attribute
         {
             get
             {
@@ -1254,7 +1254,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ExternalInterface")]
-        internal InterfaceClassType[] ExternalInterface
+        public InterfaceClassType[] ExternalInterface
         {
             get
             {
@@ -1268,7 +1268,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefBaseRoleClassPath
+        public string RefBaseRoleClassPath
         {
             get
             {
@@ -1287,7 +1287,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class SystemUnitClassTypeSupportedRoleClass : CAEXBasicObject
+    public partial class SystemUnitClassTypeSupportedRoleClass : CAEXBasicObject
     {
 
         private MappingType mappingObjectField;
@@ -1295,7 +1295,7 @@ namespace Gsd2Aml.Lib.Models
         private string refRoleClassPathField;
 
         /// <remarks/>
-        internal MappingType MappingObject
+        public MappingType MappingObject
         {
             get
             {
@@ -1309,7 +1309,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefRoleClassPath
+        public string RefRoleClassPath
         {
             get
             {
@@ -1328,7 +1328,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class SystemUnitClassTypeInternalLink : CAEXObject
+    public partial class SystemUnitClassTypeInternalLink : CAEXObject
     {
 
         private string refPartnerSideAField;
@@ -1337,7 +1337,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefPartnerSideA
+        public string RefPartnerSideA
         {
             get
             {
@@ -1351,7 +1351,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefPartnerSideB
+        public string RefPartnerSideB
         {
             get
             {
@@ -1369,7 +1369,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class SystemUnitFamilyType : SystemUnitClassType
+    public partial class SystemUnitFamilyType : SystemUnitClassType
     {
 
         private SystemUnitFamilyType[] systemUnitClassField;
@@ -1378,7 +1378,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SystemUnitClass")]
-        internal SystemUnitFamilyType[] SystemUnitClass
+        public SystemUnitFamilyType[] SystemUnitClass
         {
             get
             {
@@ -1392,7 +1392,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefBaseClassPath
+        public string RefBaseClassPath
         {
             get
             {
@@ -1411,7 +1411,7 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class RoleClassType : CAEXObject
+    public partial class RoleClassType : CAEXObject
     {
 
         private AttributeType[] attributeField;
@@ -1422,7 +1422,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Attribute")]
-        internal AttributeType[] Attribute
+        public AttributeType[] Attribute
         {
             get
             {
@@ -1436,7 +1436,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ExternalInterface")]
-        internal RoleClassTypeExternalInterface[] ExternalInterface
+        public RoleClassTypeExternalInterface[] ExternalInterface
         {
             get
             {
@@ -1450,7 +1450,7 @@ namespace Gsd2Aml.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        internal string RefBaseClassPath
+        public string RefBaseClassPath
         {
             get
             {
@@ -1469,7 +1469,7 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class RoleClassTypeExternalInterface : InterfaceClassType
+    public partial class RoleClassTypeExternalInterface : InterfaceClassType
     {
     }
 
@@ -1478,14 +1478,14 @@ namespace Gsd2Aml.Lib.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    internal partial class RoleFamilyType : RoleClassType
+    public partial class RoleFamilyType : RoleClassType
     {
 
         private RoleFamilyType[] roleClassField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RoleClass")]
-        internal RoleFamilyType[] RoleClass
+        public RoleFamilyType[] RoleClass
         {
             get
             {
@@ -1504,14 +1504,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXFileInstanceHierarchy : CAEXObject
+    public partial class CAEXFileInstanceHierarchy : CAEXObject
     {
 
         private InternalElementType[] internalElementField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InternalElement")]
-        internal InternalElementType[] InternalElement
+        public InternalElementType[] InternalElement
         {
             get
             {
@@ -1530,14 +1530,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXFileInterfaceClassLib : CAEXObject
+    public partial class CAEXFileInterfaceClassLib : CAEXObject
     {
 
         private InterfaceFamilyType[] interfaceClassField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("InterfaceClass")]
-        internal InterfaceFamilyType[] InterfaceClass
+        public InterfaceFamilyType[] InterfaceClass
         {
             get
             {
@@ -1556,14 +1556,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXFileRoleClassLib : CAEXObject
+    public partial class CAEXFileRoleClassLib : CAEXObject
     {
 
         private RoleFamilyType[] roleClassField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RoleClass")]
-        internal RoleFamilyType[] RoleClass
+        public RoleFamilyType[] RoleClass
         {
             get
             {
@@ -1582,14 +1582,14 @@ namespace Gsd2Aml.Lib.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    internal partial class CAEXFileSystemUnitClassLib : CAEXObject
+    public partial class CAEXFileSystemUnitClassLib : CAEXObject
     {
 
         private SystemUnitFamilyType[] systemUnitClassField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SystemUnitClass")]
-        internal SystemUnitFamilyType[] SystemUnitClass 
+        public SystemUnitFamilyType[] SystemUnitClass 
         {
             get
             {
@@ -1602,50 +1602,50 @@ namespace Gsd2Aml.Lib.Models
         }
     }
     
-    internal class WriterHeader
+    public class WriterHeader
     {
-        internal string WriterName { get; set; }
+        public string WriterName { get; set; }
 
-        internal string WriterID { get; set; }
+        public string WriterID { get; set; }
 
-        internal string WriterVendor { get; set; }
+        public string WriterVendor { get; set; }
 
-        internal string WriterVersion { get; set; }
+        public string WriterVersion { get; set; }
 
-        internal string WriterRelease { get; set; }
+        public string WriterRelease { get; set; }
 
-        internal string LastWritingDateTime { get; set; }
+        public string LastWritingDateTime { get; set; }
 
-        internal string WriterProjectTitle { get; set; }
+        public string WriterProjectTitle { get; set; }
 
-        internal string WriterProjectID { get; set; }
+        public string WriterProjectID { get; set; }
     }
 
-    internal class Wrapper
+    public class Wrapper
     {
         // Default search property
-        internal CAEXFile CAEXFile { get; set; }
+        public CAEXFile CAEXFile { get; set; }
 
         // First rule
-        internal WriterHeader WriterHeader { get; set; }
+        public WriterHeader WriterHeader { get; set; }
 
         // Second rule
-        internal CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
+        public CAEXFileSystemUnitClassLib SystemUnitClassLib { get; set; }
 
         // Third rule
-        internal SystemUnitFamilyType SystemUnitClass { get; set; }
+        public SystemUnitFamilyType SystemUnitClass { get; set; }
 
-        internal SystemUnitClassType SystemUnitClassType { get; set; }
+        public SystemUnitClassType SystemUnitClassType { get; set; }
 
-        internal SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
+        public SystemUnitClassTypeSupportedRoleClass SupportedRoleClass { get; set; }
 
-        internal InternalElementType InternalElement { get; set; }
+        public InternalElementType InternalElement { get; set; }
 
-        internal AttributeType Attribute { get; set; }
+        public AttributeType Attribute { get; set; }
 
-        internal InterfaceClassType ExternalInterface { get; set; }
+        public InterfaceClassType ExternalInterface { get; set; }
 
         // Attributes (ID, Name)
-        internal CAEXObject CAEXObject { get; set; }
+        public CAEXObject CAEXObject { get; set; }
     }
 }
