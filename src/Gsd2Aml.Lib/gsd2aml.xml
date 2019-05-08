@@ -6,14 +6,14 @@
     <Replacement>
       <AdditionalInformation>
         <WriterHeader>
-          <WriterName>GSD2AML</WriterName>
-          <WriterID>GUID</WriterID>
-          <WriterVendor>TINF17C</WriterVendor>
+          <WriterName>DHBW Stuttgart TINF17C</WriterName>
+          <WriterID>D331B5B6-C3FA-4D3C-8F6D-93F6F0215EF4</WriterID>
+          <WriterVendor>GSD2AML TINF17C</WriterVendor>
           <WriterVersion>1.0.0</WriterVersion>
           <WriterRelease>1.0.0</WriterRelease>
           <LastWritingDateTime>2000-01-01T00:00:00.0000000+00:00</LastWritingDateTime>
-          <WriterProjectTitle>unspecified</WriterProjectTitle>
-          <WriterProjectID>unspecified</WriterProjectID>
+          <WriterProjectTitle>GSD2AML Converter</WriterProjectTitle>
+          <WriterProjectID>GSD2AML Converter</WriterProjectID>
         </WriterHeader>
       </AdditionalInformation>
     </Replacement>
