@@ -21,17 +21,12 @@ namespace Gsd2Aml.Lib
         /// The string indicates a way through the properties. The different "stations" are separated by dots.
         /// </summary>
         /// <param name="searchedProperty">The by dots separated string.</param>
-        /// <param name="propertyInfo">The searched property which will be set.</param>
-        /// <param name="propertyType">The searched type which will be set.</param>
-        /// <param name="isPropertyArray">The boolean which indicates if the property is an array.</param>
-        internal static void GetProperty(string searchedProperty, out PropertyInfo propertyInfo, out Type propertyType, out bool isPropertyArray)
+        /// <returns>The property info, the type of the found property and if the type is an array.</returns>
+        internal static (PropertyInfo, Type, bool) GetProperty(string searchedProperty)
         {
             Logger?.Log(LogLevel.Info, $"Search following property {searchedProperty}");
 
-            // Set default values for the out parameters.
-            propertyInfo = null;
-            propertyType = null;
-            isPropertyArray = false;
+            PropertyInfo propertyInfo = null;
 
             // Split strings by the letter dot.
             var splittedStrings = searchedProperty.Split('.').ToList();
@@ -53,17 +48,19 @@ namespace Gsd2Aml.Lib
                 throw new NullReferenceException("A property was not found.");
             }
 
-            Logger?.Log(LogLevel.Info, $"Found valid property for {searchedProperty}. " +
-                                            $"Property: {propertyInfo} " +
-                                            $"Type: {propertyType} " +
-                                            $"Declaring Type: {propertyInfo.DeclaringType} " +
-                                            $"Is array: {isPropertyArray}");
-
             // Set the other out parameters.
-            isPropertyArray = propertyInfo.PropertyType.IsArray;
-            propertyType = isPropertyArray
-                            ? propertyInfo.PropertyType.GetElementType()
-                            : propertyInfo.PropertyType;
+            var isPropertyArray = propertyInfo.PropertyType.IsArray;
+            var propertyType = isPropertyArray
+                                ? propertyInfo.PropertyType.GetElementType()
+                                : propertyInfo.PropertyType;
+
+            Logger?.Log(LogLevel.Info, $"Found valid property for {searchedProperty}. " +
+                                       $"Property: {propertyInfo} " +
+                                       $"Type: {propertyType} " +
+                                       $"Declaring Type: {propertyInfo.DeclaringType} " +
+                                       $"Is array: {isPropertyArray}");
+
+            return (propertyInfo, propertyType, isPropertyArray);
         }
 
         /// <summary>
@@ -109,15 +106,14 @@ namespace Gsd2Aml.Lib
         /// This function gets the relevant information (replacement, references) from a translation rule.
         /// </summary>
         /// <param name="translationRule">The translation rule that is parsed.</param>
-        /// <param name="replacement">The actual replacement.</param>
-        /// <param name="references">A list which will save all replacements.</param>
-        internal static void GetInformationFromRule(ref XmlNode translationRule, out XmlNode replacement, out ICollection<XmlNode> references)
+        /// <returns>The replacement node and a list which contains all references.</returns>
+        internal static (XmlNode, ICollection<XmlNode>) GetInformationFromRule(XmlNode translationRule)
         {
             Logger?.Log(LogLevel.Info, $"Parsing the rule for {translationRule.Name}.");
 
             // Initialize all out parameters with default values.
-            references = new List<XmlNode>();
-            replacement = null;
+            var references = new List<XmlNode>();
+            XmlNode replacement = null;
 
             // Iterate over the child nodes of the replacement and save these correctly.
             var alreadyReadReplacement = false;
@@ -149,7 +145,7 @@ namespace Gsd2Aml.Lib
             Logger?.Log(LogLevel.Info, "Successfully got the information out of the translation rule.");
 
             // Check if replacement is null.
-            if (replacement != null) return;
+            if (replacement != null) return (replacement, references);
             
             Logger?.Log(LogLevel.Error, $"Rule {translationRule.Name} does not have any replacement for a rule.");
             throw new XmlException("Translation table has no replacement for a rule.");
@@ -263,7 +259,7 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="propertyType">The type object which describes the type of the instance.</param>
         /// <param name="isPropertyArray">Flag which indicates whether an array is needed.</param>
-        /// <returns></returns>
+        /// <returns>An instance of the type which the propertyType parameter describes. If an array is needed, it creates a list.</returns>
         internal static dynamic CreateInstance(Type propertyType, bool isPropertyArray)
         {
             // If the translation Property is a string, it has to be handeled manually because it does not have a constructor with no parameters.

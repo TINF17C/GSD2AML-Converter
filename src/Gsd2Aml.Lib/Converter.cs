@@ -1,6 +1,5 @@
 ﻿using Gsd2Aml.Lib.Logging;
 using Gsd2Aml.Lib.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +9,10 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
-    // TODO: Use multiple return values
+    // TODO: References implemention.
+    // TODO: translation table string dot handling
+    // TODO: get ressources
+    // TODO: timestamp
     public static class Converter
     {
         private static CAEXFile AmlObject { get; } = new CAEXFile();
@@ -48,11 +50,12 @@ namespace Gsd2Aml.Lib
 
             var serializer = new XmlSerializer(AmlObject.GetType());
             var temporaryPath = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(outputFile) + ".aml");
+
             using (var textWriter = new StreamWriter(temporaryPath))
             {
                 serializer.Serialize(textWriter, AmlObject);
             }
-            // TODO: get ressources
+            
             Compressor.Compress(temporaryPath, outputFile, new string[0], overwriteFile);
 
             File.Delete(temporaryPath);
@@ -109,7 +112,6 @@ namespace Gsd2Aml.Lib
                 Util.Logger?.Log(LogLevel.Info, $"Current iterated GSD child node {gsdChildNode.Name}.");
 
                 // Try to get a translation rule of the gsdTranslationElements list.
-                // TODO: translation table string dot handling
                 var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(gsdChildNode.Name));
                 // If the rule does not exist, it cannot be translated. It continues with the next property.
                 if (translationRule == null)
@@ -121,7 +123,7 @@ namespace Gsd2Aml.Lib
                                                "Now we are trying to translate it.");
 
                 // Translate the gsdChildNode to AML.
-                Translate(ref currentAmlHead, ref translationRule, out var newAmlHead);
+                var newAmlHead = Translate(ref currentAmlHead, translationRule);
                 Util.Logger?.Log(LogLevel.Info, $"Translated successfully {gsdChildNode.Name} to {translationRule["Replacement"]?.FirstChild.Name}.");
 
                 // If the new AML head is an array, it calls for every element in the array the Handle function.
@@ -149,59 +151,43 @@ namespace Gsd2Aml.Lib
         /// <typeparam name="TA">The type of the AML head object.</typeparam>
         /// <param name="currentAmlHead">The AML head object in which the translation object will be set.</param>
         /// <param name="translationRule">The translation rule which will be used to translate the GSD object to an AML object.</param>
-        /// <param name="newAmlHead">An output parameter which will be set. It is at the end the new AML head object.</param>
-        private static void Translate<TA>(ref TA currentAmlHead, ref XmlNode translationRule, out dynamic newAmlHead)
+        /// <returns>Return value is the new AML head object.</returns>
+        private static dynamic Translate<TA>(ref TA currentAmlHead, XmlNode translationRule)
         {
             // Get information of the translation rule. (replacement and references)
-            Util.GetInformationFromRule(ref translationRule, out var replacement, out var references);
+            var (replacement, references) = Util.GetInformationFromRule(translationRule);
 
             // Get the information fo the replacement node. (PropertyInfo, Type, isArray)
-            Util.GetProperty(replacement.Name, out var replacementProperty, out var replacementPropertyType, out var isReplacementPropertyArray);
+            var (replacementProperty, replacementPropertyType, isReplacementPropertyArray) = Util.GetProperty(replacement.Name);
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
             var replacementInstance = Util.CreateInstance(replacementPropertyType, isReplacementPropertyArray);
 
-            // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
-            foreach (XmlNode childNode in replacement.ChildNodes)
-            {
-                Util.Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
-                var subProperty = TranslateSubProperties(childNode, out var subPropertyInstance);
-                Util.Logger?.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
-                                               $"Type: {subPropertyInstance.GetType()}");
-
-                if (isReplacementPropertyArray)
-                {
-                    replacementInstance.Add(subPropertyInstance);
-                }
-                else
-                {
-                    subProperty.SetValue(replacementInstance, subPropertyInstance);
-                }
-                Util.Logger?.Log(LogLevel.Info, $"Successfully set or added {childNode.Name} to {replacement.Name}.");
-            }
+            AddSubInstancesToInstance(replacement, replacementInstance, isReplacementPropertyArray);
 
             // Set the replacementInstance to the current AML head object and set the new AML head.
-            newAmlHead = isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance;
+            var newAmlHead = isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance;
             replacementProperty.SetValue(currentAmlHead, newAmlHead);
+
+            return newAmlHead;
         }
 
         /// <summary>
         /// The translation of the sub properties of a translation rule.
         /// </summary>
         /// <param name="replacement">The XmlNode replacement rule.</param>
-        /// <param name="translationInstance">The translation instance in which the sub property instances will be set.</param>
-        /// <returns>The property info which describes the translationInstance.</returns>
-        private static PropertyInfo TranslateSubProperties(XmlNode replacement, out dynamic translationInstance)
+        /// <returns>The property info which describes the translationInstance and the translation instance in which the sub property instances will be set.</returns>
+        private static (PropertyInfo, dynamic) TranslateSubProperties(XmlNode replacement)
         {
             // Get the information of the replacement node. (PropertyInfo, Type, isArray)
-            Util.GetProperty(replacement.Name, out var translationProperty, out var translationPropertyType, out var isTranslationPropertyArray);
+            var (translationProperty, translationPropertyType, isTranslationPropertyArray) = Util.GetProperty(replacement.Name);
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
-            translationInstance = Util.CreateInstance(translationPropertyType, isTranslationPropertyArray);
+            var translationInstance = Util.CreateInstance(translationPropertyType, isTranslationPropertyArray);
             
             // Set attribute and inner text to the translation instance.
             if (translationInstance is string) translationInstance = replacement.InnerText;
-            SetAttributes(ref replacement, ref translationInstance);
+            SetAttributes(replacement, translationInstance);
             Util.Logger?.Log(LogLevel.Info, $"Successfully set attributes to {replacement.Name}.");
 
             // If the current node has only a text in it or no children it returns the translationProperty.
@@ -210,32 +196,14 @@ namespace Gsd2Aml.Lib
                 Util.Logger?.Log(LogLevel.Info, $"The replacement {replacement.Name} does not have a children. Because of that the translation ends here.");
                 if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
 
-                return translationProperty;
+                return (translationProperty, translationInstance);
             }
 
-            // Iterate over all child nodes of the current replacement rule.
-            foreach (XmlNode childNode in replacement.ChildNodes)
-            {
-                Util.Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}");
-                // Get the property info and the instance of the current child node.
-                var subProperty = TranslateSubProperties(childNode, out var subPropertyInstance);
-                Util.Logger?.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
-                                               $"Type: {subPropertyInstance.GetType()}");
-
-                // Set or add the subPropertyInstance to the translationInstance.
-                if (isTranslationPropertyArray)
-                {
-                    translationInstance.Add(subPropertyInstance);
-                }
-                else
-                {
-                    subProperty.SetValue(translationInstance, subPropertyInstance);
-                }
-                Util.Logger?.Log(LogLevel.Info, $"Successfully set or added {childNode.Name} to {replacement.Name}.");
-            }
+            // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
+            AddSubInstancesToInstance(replacement, translationInstance, isTranslationPropertyArray);
 
             if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
-            return translationProperty;
+            return (translationProperty, translationInstance);
         }
 
         /// <summary>
@@ -244,8 +212,7 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="replacement">The replacement node of the translation table which will be used to set those attributes to the instance.</param>
         /// <param name="translationInstance">The instance in which the attributes will be set.</param>
-        ///  TODO: References implemention.
-        private static void SetAttributes(ref XmlNode replacement, ref dynamic translationInstance)
+        private static void SetAttributes(XmlNode replacement, dynamic translationInstance)
         {
             // If there are not attributes, it is not possible to translate them.
             if (replacement.Attributes == null) return;
@@ -254,7 +221,8 @@ namespace Gsd2Aml.Lib
             foreach (XmlAttribute attribute in replacement.Attributes)
             {
                 // Get the property and type of the attribute.
-                Util.GetProperty(attribute.Name, out var attributeProperty, out var attributePropertyType, out _);
+                var (attributeProperty, attributePropertyType, _) = Util.GetProperty(attribute.Name);
+                
 
                 // Create the instance of the attribute and assume it is a string. If not, it throws a exception.
                 dynamic attributeInstance;
@@ -270,6 +238,34 @@ namespace Gsd2Aml.Lib
 
                 // Set the attribute instacne to the translation instance.
                 attributeProperty.SetValue(translationInstance, attributeInstance);
+            }
+        }
+
+        /// <summary>
+        /// This function iterates over all sub properties of the replacement to translate these and set it into the replacementInstance.
+        /// </summary>
+        /// <param name="replacement">The replacement rule.</param>
+        /// <param name="replacementInstance">The replacement instance in which the sub properties will be set.</param>
+        /// <param name="isReplacementPropertyArray">A flag which indicates whether the current instance is an array or not.</param>
+        private static void AddSubInstancesToInstance(XmlNode replacement, dynamic replacementInstance, bool isReplacementPropertyArray)
+        {
+            // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
+            foreach (XmlNode childNode in replacement.ChildNodes)
+            {
+                Util.Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
+                var (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);
+                Util.Logger?.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
+                                                $"Type: {subPropertyInstance.GetType()}");
+
+                if (isReplacementPropertyArray)
+                {
+                    replacementInstance.Add(subPropertyInstance);
+                }
+                else
+                {
+                    subProperty.SetValue(replacementInstance, subPropertyInstance);
+                }
+                Util.Logger?.Log(LogLevel.Info, $"Successfully set or added {childNode.Name} to {replacement.Name}.");
             }
         }
     }
