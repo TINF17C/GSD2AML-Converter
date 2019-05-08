@@ -65,7 +65,7 @@ namespace Gsd2Aml.Test
 
             try
             {
-                File.Delete(finalAmlxFile);
+                // File.Delete(finalAmlxFile);
             }
             catch
             {

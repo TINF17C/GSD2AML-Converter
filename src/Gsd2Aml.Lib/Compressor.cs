@@ -43,9 +43,11 @@ namespace Gsd2Aml.Lib
                 }
 
                 var amlFileName = Path.GetFileName(amlFilePath);
-                if (amlFileName != null) CopyFile(amlFilePath, Path.Combine(tmpPath, amlFileName));
+                var amlFileTmpPath = Path.Combine(tmpPath, amlFileName);
 
-                Zip(Path.Combine(tmpPath, amlFileName), destination, overwriteFile);
+                if (amlFileName != null) CopyFile(amlFilePath, amlFileTmpPath);
+
+                Zip(amlFileTmpPath, destination, ressources, overwriteFile);
                 Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
@@ -65,7 +67,7 @@ namespace Gsd2Aml.Lib
         /// <param name="destination">The directory you want to store the zip archive in.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="Exception"></exception>
-        private static void Zip(string source, string destination, bool overwriteFile)
+        private static void Zip(string sourceAML, string destination, string[] ressources, bool overwriteFile)
         {
             if (overwriteFile)
             {
@@ -76,7 +78,20 @@ namespace Gsd2Aml.Lib
             {
                 using (Aml.Engine.AmlObjects.AutomationMLContainer ac = new Aml.Engine.AmlObjects.AutomationMLContainer(destination))
                 {
-                    var root = ac.AddRoot(source, new Uri("/" + Path.GetFileName(source), UriKind.Relative));
+                    var root = ac.AddRoot(sourceAML, new Uri("/" + Path.GetFileName(sourceAML), UriKind.Relative));
+
+                    foreach (var ressource in ressources)
+                    {
+                        var fileName = Path.GetFileName(ressource);
+                        if (fileName != null)
+                        {
+                            ac.AddAnyContent(
+                                root,
+                                Path.Combine(Path.GetTempPath(), Gsd2AmlName, fileName),
+                                new Uri("/" + fileName, UriKind.Relative));
+                        }
+                    }
+
                     ac.Save();
                     ac.Close();
                 }
