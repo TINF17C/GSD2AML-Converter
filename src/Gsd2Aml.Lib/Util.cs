@@ -10,8 +10,14 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
+    /// <summary>
+    /// Contains utility functions which provide helping functionalities for the conversion process.
+    /// </summary>
     public static class Util
     {
+        /// <summary>
+        /// The logger instance which logs the message to a log file.
+        /// </summary>
         public static ILoggingService Logger { get; set; }
 
         private const string CTranslationTableFileName = "gsd2aml.xml";

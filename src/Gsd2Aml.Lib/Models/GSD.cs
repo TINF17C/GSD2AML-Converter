@@ -7,7 +7,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile", IsNullable = false)]
-    public partial class ISO15745Profile
+    internal partial class ISO15745Profile
     {
 
         private ProfileHeaderT profileHeaderField;
@@ -17,7 +17,7 @@
         private SignatureType signatureField;
 
         /// <remarks/>
-        public ProfileHeaderT ProfileHeader
+        internal ProfileHeaderT ProfileHeader
         {
             get
             {
@@ -30,7 +30,7 @@
         }
 
         /// <remarks/>
-        public ProfileBodyT ProfileBody
+        internal ProfileBodyT ProfileBody
         {
             get
             {
@@ -44,7 +44,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-        public SignatureType Signature
+        internal SignatureType Signature
         {
             get
             {
@@ -63,7 +63,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileHeaderT
+    internal partial class ProfileHeaderT
     {
 
         private string profileIdentificationField;
@@ -87,7 +87,7 @@
         private string[] iASInterfaceTypeField;
 
         /// <remarks/>
-        public string ProfileIdentification
+        internal string ProfileIdentification
         {
             get
             {
@@ -100,7 +100,7 @@
         }
 
         /// <remarks/>
-        public string ProfileRevision
+        internal string ProfileRevision
         {
             get
             {
@@ -113,7 +113,7 @@
         }
 
         /// <remarks/>
-        public string ProfileName
+        internal string ProfileName
         {
             get
             {
@@ -126,7 +126,7 @@
         }
 
         /// <remarks/>
-        public string ProfileSource
+        internal string ProfileSource
         {
             get
             {
@@ -139,7 +139,7 @@
         }
 
         /// <remarks/>
-        public ProfileClassID_EnumT ProfileClassID
+        internal ProfileClassID_EnumT ProfileClassID
         {
             get
             {
@@ -153,7 +153,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date")]
-        public System.DateTime ProfileDate
+        internal System.DateTime ProfileDate
         {
             get
             {
@@ -167,7 +167,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ProfileDateSpecified
+        internal bool ProfileDateSpecified
         {
             get
             {
@@ -181,7 +181,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "anyURI")]
-        public string AdditionalInformation
+        internal string AdditionalInformation
         {
             get
             {
@@ -194,7 +194,7 @@
         }
 
         /// <remarks/>
-        public ISO15745ReferenceT ISO15745Reference
+        internal ISO15745ReferenceT ISO15745Reference
         {
             get
             {
@@ -208,7 +208,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("IASInterfaceType")]
-        public string[] IASInterfaceType
+        internal string[] IASInterfaceType
         {
             get
             {
@@ -225,7 +225,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum ProfileClassID_EnumT
+    internal enum ProfileClassID_EnumT
     {
 
         /// <remarks/>
@@ -262,7 +262,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ISO15745ReferenceT
+    internal partial class ISO15745ReferenceT
     {
 
         private string iSO15745PartField;
@@ -273,7 +273,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "positiveInteger")]
-        public string ISO15745Part
+        internal string ISO15745Part
         {
             get
             {
@@ -287,7 +287,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "positiveInteger")]
-        public string ISO15745Edition
+        internal string ISO15745Edition
         {
             get
             {
@@ -300,7 +300,7 @@
         }
 
         /// <remarks/>
-        public string ProfileTechnology
+        internal string ProfileTechnology
         {
             get
             {
@@ -320,7 +320,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("SignatureProperty", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignaturePropertyType
+    internal partial class SignaturePropertyType
     {
 
         private System.Xml.XmlElement[] itemsField;
@@ -333,7 +333,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement[] Items
+        internal System.Xml.XmlElement[] Items
         {
             get
             {
@@ -347,7 +347,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text
+        internal string[] Text
         {
             get
             {
@@ -361,7 +361,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Target
+        internal string Target
         {
             get
             {
@@ -375,7 +375,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -395,7 +395,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("SignatureProperties", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignaturePropertiesType
+    internal partial class SignaturePropertiesType
     {
 
         private SignaturePropertyType[] signaturePropertyField;
@@ -404,7 +404,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SignatureProperty")]
-        public SignaturePropertyType[] SignatureProperty
+        internal SignaturePropertyType[] SignatureProperty
         {
             get
             {
@@ -418,7 +418,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -438,7 +438,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("Manifest", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class ManifestType
+    internal partial class ManifestType
     {
 
         private ReferenceType[] referenceField;
@@ -447,7 +447,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Reference")]
-        public ReferenceType[] Reference
+        internal ReferenceType[] Reference
         {
             get
             {
@@ -461,7 +461,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -481,7 +481,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("Reference", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class ReferenceType
+    internal partial class ReferenceType
     {
 
         private TransformType[] transformsField;
@@ -498,7 +498,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Transform", IsNullable = false)]
-        public TransformType[] Transforms
+        internal TransformType[] Transforms
         {
             get
             {
@@ -511,7 +511,7 @@
         }
 
         /// <remarks/>
-        public DigestMethodType DigestMethod
+        internal DigestMethodType DigestMethod
         {
             get
             {
@@ -525,7 +525,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] DigestValue
+        internal byte[] DigestValue
         {
             get
             {
@@ -539,7 +539,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -553,7 +553,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string URI
+        internal string URI
         {
             get
             {
@@ -567,7 +567,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Type
+        internal string Type
         {
             get
             {
@@ -587,7 +587,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("Transform", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class TransformType
+    internal partial class TransformType
     {
 
         private object[] itemsField;
@@ -599,7 +599,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAnyElementAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("XPath", typeof(string))]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -613,7 +613,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text
+        internal string[] Text
         {
             get
             {
@@ -627,7 +627,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
+        internal string Algorithm
         {
             get
             {
@@ -647,7 +647,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("DigestMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class DigestMethodType
+    internal partial class DigestMethodType
     {
 
         private System.Xml.XmlNode[] anyField;
@@ -657,7 +657,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
         [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlNode[] Any
+        internal System.Xml.XmlNode[] Any
         {
             get
             {
@@ -671,7 +671,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
+        internal string Algorithm
         {
             get
             {
@@ -691,7 +691,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("Object", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class ObjectType
+    internal partial class ObjectType
     {
 
         private System.Xml.XmlNode[] anyField;
@@ -705,7 +705,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
         [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlNode[] Any
+        internal System.Xml.XmlNode[] Any
         {
             get
             {
@@ -719,7 +719,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -733,7 +733,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string MimeType
+        internal string MimeType
         {
             get
             {
@@ -747,7 +747,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Encoding
+        internal string Encoding
         {
             get
             {
@@ -767,7 +767,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("SPKIData", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SPKIDataType
+    internal partial class SPKIDataType
     {
 
         private byte[][] sPKISexpField;
@@ -776,7 +776,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SPKISexp", DataType = "base64Binary")]
-        public byte[][] SPKISexp
+        internal byte[][] SPKISexp
         {
             get
             {
@@ -790,7 +790,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement Any
+        internal System.Xml.XmlElement Any
         {
             get
             {
@@ -810,7 +810,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("PGPData", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class PGPDataType
+    internal partial class PGPDataType
     {
 
         private object[] itemsField;
@@ -822,7 +822,7 @@
         [System.Xml.Serialization.XmlElementAttribute("PGPKeyID", typeof(byte[]), DataType = "base64Binary")]
         [System.Xml.Serialization.XmlElementAttribute("PGPKeyPacket", typeof(byte[]), DataType = "base64Binary")]
         [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -837,7 +837,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType1[] ItemsElementName
+        internal ItemsChoiceType1[] ItemsElementName
         {
             get
             {
@@ -854,7 +854,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
-    public enum ItemsChoiceType1
+    internal enum ItemsChoiceType1
     {
 
         /// <remarks/>
@@ -874,7 +874,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    public partial class X509IssuerSerialType
+    internal partial class X509IssuerSerialType
     {
 
         private string x509IssuerNameField;
@@ -882,7 +882,7 @@
         private string x509SerialNumberField;
 
         /// <remarks/>
-        public string X509IssuerName
+        internal string X509IssuerName
         {
             get
             {
@@ -896,7 +896,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer")]
-        public string X509SerialNumber
+        internal string X509SerialNumber
         {
             get
             {
@@ -916,7 +916,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("X509Data", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class X509DataType
+    internal partial class X509DataType
     {
 
         private object[] itemsField;
@@ -931,7 +931,7 @@
         [System.Xml.Serialization.XmlElementAttribute("X509SKI", typeof(byte[]), DataType = "base64Binary")]
         [System.Xml.Serialization.XmlElementAttribute("X509SubjectName", typeof(string))]
         [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -946,7 +946,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType[] ItemsElementName
+        internal ItemsChoiceType[] ItemsElementName
         {
             get
             {
@@ -963,7 +963,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
-    public enum ItemsChoiceType
+    internal enum ItemsChoiceType
     {
 
         /// <remarks/>
@@ -993,7 +993,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("RetrievalMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class RetrievalMethodType
+    internal partial class RetrievalMethodType
     {
 
         private TransformType[] transformsField;
@@ -1004,7 +1004,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Transform", IsNullable = false)]
-        public TransformType[] Transforms
+        internal TransformType[] Transforms
         {
             get
             {
@@ -1018,7 +1018,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string URI
+        internal string URI
         {
             get
             {
@@ -1032,7 +1032,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Type
+        internal string Type
         {
             get
             {
@@ -1052,7 +1052,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("RSAKeyValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class RSAKeyValueType
+    internal partial class RSAKeyValueType
     {
 
         private byte[] modulusField;
@@ -1061,7 +1061,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Modulus
+        internal byte[] Modulus
         {
             get
             {
@@ -1075,7 +1075,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Exponent
+        internal byte[] Exponent
         {
             get
             {
@@ -1095,7 +1095,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("DSAKeyValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class DSAKeyValueType
+    internal partial class DSAKeyValueType
     {
 
         private byte[] pField;
@@ -1114,7 +1114,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] P
+        internal byte[] P
         {
             get
             {
@@ -1128,7 +1128,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Q
+        internal byte[] Q
         {
             get
             {
@@ -1142,7 +1142,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] G
+        internal byte[] G
         {
             get
             {
@@ -1156,7 +1156,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Y
+        internal byte[] Y
         {
             get
             {
@@ -1170,7 +1170,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] J
+        internal byte[] J
         {
             get
             {
@@ -1184,7 +1184,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Seed
+        internal byte[] Seed
         {
             get
             {
@@ -1198,7 +1198,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] PgenCounter
+        internal byte[] PgenCounter
         {
             get
             {
@@ -1218,7 +1218,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("KeyValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class KeyValueType
+    internal partial class KeyValueType
     {
 
         private object itemField;
@@ -1229,7 +1229,7 @@
         [System.Xml.Serialization.XmlAnyElementAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("DSAKeyValue", typeof(DSAKeyValueType))]
         [System.Xml.Serialization.XmlElementAttribute("RSAKeyValue", typeof(RSAKeyValueType))]
-        public object Item
+        internal object Item
         {
             get
             {
@@ -1243,7 +1243,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text
+        internal string[] Text
         {
             get
             {
@@ -1263,7 +1263,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("KeyInfo", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class KeyInfoType
+    internal partial class KeyInfoType
     {
 
         private object[] itemsField;
@@ -1284,7 +1284,7 @@
         [System.Xml.Serialization.XmlElementAttribute("SPKIData", typeof(SPKIDataType))]
         [System.Xml.Serialization.XmlElementAttribute("X509Data", typeof(X509DataType))]
         [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -1299,7 +1299,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType2[] ItemsElementName
+        internal ItemsChoiceType2[] ItemsElementName
         {
             get
             {
@@ -1313,7 +1313,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text
+        internal string[] Text
         {
             get
             {
@@ -1327,7 +1327,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -1344,7 +1344,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
-    public enum ItemsChoiceType2
+    internal enum ItemsChoiceType2
     {
 
         /// <remarks/>
@@ -1380,7 +1380,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("SignatureValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignatureValueType
+    internal partial class SignatureValueType
     {
 
         private string idField;
@@ -1389,7 +1389,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -1403,7 +1403,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute(DataType = "base64Binary")]
-        public byte[] Value
+        internal byte[] Value
         {
             get
             {
@@ -1423,7 +1423,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("SignatureMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignatureMethodType
+    internal partial class SignatureMethodType
     {
 
         private string hMACOutputLengthField;
@@ -1434,7 +1434,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer")]
-        public string HMACOutputLength
+        internal string HMACOutputLength
         {
             get
             {
@@ -1449,7 +1449,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
         [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlNode[] Any
+        internal System.Xml.XmlNode[] Any
         {
             get
             {
@@ -1463,7 +1463,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
+        internal string Algorithm
         {
             get
             {
@@ -1483,7 +1483,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("CanonicalizationMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class CanonicalizationMethodType
+    internal partial class CanonicalizationMethodType
     {
 
         private System.Xml.XmlNode[] anyField;
@@ -1493,7 +1493,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
         [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlNode[] Any
+        internal System.Xml.XmlNode[] Any
         {
             get
             {
@@ -1507,7 +1507,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
+        internal string Algorithm
         {
             get
             {
@@ -1527,7 +1527,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("SignedInfo", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignedInfoType
+    internal partial class SignedInfoType
     {
 
         private CanonicalizationMethodType canonicalizationMethodField;
@@ -1539,7 +1539,7 @@
         private string idField;
 
         /// <remarks/>
-        public CanonicalizationMethodType CanonicalizationMethod
+        internal CanonicalizationMethodType CanonicalizationMethod
         {
             get
             {
@@ -1552,7 +1552,7 @@
         }
 
         /// <remarks/>
-        public SignatureMethodType SignatureMethod
+        internal SignatureMethodType SignatureMethod
         {
             get
             {
@@ -1566,7 +1566,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Reference")]
-        public ReferenceType[] Reference
+        internal ReferenceType[] Reference
         {
             get
             {
@@ -1580,7 +1580,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -1600,7 +1600,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignatureType
+    internal partial class SignatureType
     {
 
         private SignedInfoType signedInfoField;
@@ -1614,7 +1614,7 @@
         private string idField;
 
         /// <remarks/>
-        public SignedInfoType SignedInfo
+        internal SignedInfoType SignedInfo
         {
             get
             {
@@ -1627,7 +1627,7 @@
         }
 
         /// <remarks/>
-        public SignatureValueType SignatureValue
+        internal SignatureValueType SignatureValue
         {
             get
             {
@@ -1640,7 +1640,7 @@
         }
 
         /// <remarks/>
-        public KeyInfoType KeyInfo
+        internal KeyInfoType KeyInfo
         {
             get
             {
@@ -1654,7 +1654,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Object")]
-        public ObjectType[] Object
+        internal ObjectType[] Object
         {
             get
             {
@@ -1668,7 +1668,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
-        public string Id
+        internal string Id
         {
             get
             {
@@ -1688,7 +1688,7 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
     [System.Xml.Serialization.XmlRootAttribute("ExternalTextDocument", Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives", IsNullable = false)]
-    public partial class ExternalTextDocumentT
+    internal partial class ExternalTextDocumentT
     {
 
         private ExternalTextT[] textField;
@@ -1697,7 +1697,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Text")]
-        public ExternalTextT[] Text
+        internal ExternalTextT[] Text
         {
             get
             {
@@ -1711,7 +1711,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
-        public string lang
+        internal string lang
         {
             get
             {
@@ -1730,7 +1730,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public partial class ExternalTextT
+    internal partial class ExternalTextT
     {
 
         private string textIdField;
@@ -1739,7 +1739,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -1753,7 +1753,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Value
+        internal string Value
         {
             get
             {
@@ -1772,7 +1772,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class LanguageT
+    internal partial class LanguageT
     {
 
         private ExternalTextT[] textField;
@@ -1781,7 +1781,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Text")]
-        public ExternalTextT[] Text
+        internal ExternalTextT[] Text
         {
             get
             {
@@ -1795,7 +1795,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
-        public string lang
+        internal string lang
         {
             get
             {
@@ -1815,7 +1815,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ErrorCode2T
+    internal partial class ErrorCode2T
     {
 
         private ExternalTextRefT nameField;
@@ -1823,7 +1823,7 @@
         private ExternalTextRefT helpField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -1836,7 +1836,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -1855,14 +1855,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public partial class ExternalTextRefT
+    internal partial class ExternalTextRefT
     {
 
         private string textIdField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -1881,14 +1881,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ErrorCode2ItemT : ErrorCode2T
+    internal partial class ErrorCode2ItemT : ErrorCode2T
     {
 
         private byte errorCode2Field;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte ErrorCode2
+        internal byte ErrorCode2
         {
             get
             {
@@ -1907,7 +1907,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class LogBookEntryItemT
+    internal partial class LogBookEntryItemT
     {
 
         private object itemField;
@@ -1917,7 +1917,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ErrorCode2List", typeof(LogBookEntryItemTErrorCode2List))]
         [System.Xml.Serialization.XmlElementAttribute("ErrorCode2Value", typeof(ErrorCode2T))]
-        public object Item
+        internal object Item
         {
             get
             {
@@ -1931,7 +1931,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint Status
+        internal uint Status
         {
             get
             {
@@ -1950,14 +1950,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class LogBookEntryItemTErrorCode2List
+    internal partial class LogBookEntryItemTErrorCode2List
     {
 
         private ErrorCode2ItemT[] errorCode2ItemField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ErrorCode2Item")]
-        public ErrorCode2ItemT[] ErrorCode2Item
+        internal ErrorCode2ItemT[] ErrorCode2Item
         {
             get
             {
@@ -1976,7 +1976,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileUnitDiagTypeItemT
+    internal partial class ProfileUnitDiagTypeItemT
     {
 
         private ExternalTextRefT nameField;
@@ -1990,7 +1990,7 @@
         private ushort userStructureIdentifierField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -2003,7 +2003,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -2017,7 +2017,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Ref")]
-        public ProfileUnitDiagTypeItemTRef[] Ref
+        internal ProfileUnitDiagTypeItemTRef[] Ref
         {
             get
             {
@@ -2031,7 +2031,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -2045,7 +2045,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort UserStructureIdentifier
+        internal ushort UserStructureIdentifier
         {
             get
             {
@@ -2064,7 +2064,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileUnitDiagTypeItemTRef : ValueItemReferenceT
+    internal partial class ProfileUnitDiagTypeItemTRef : ValueItemReferenceT
     {
 
         private UnitDiagRefTypeEnumT dataTypeField;
@@ -2073,7 +2073,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public UnitDiagRefTypeEnumT DataType
+        internal UnitDiagRefTypeEnumT DataType
         {
             get
             {
@@ -2087,7 +2087,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string DefaultValue
+        internal string DefaultValue
         {
             get
             {
@@ -2104,7 +2104,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum UnitDiagRefTypeEnumT
+    internal enum UnitDiagRefTypeEnumT
     {
 
         /// <remarks/>
@@ -2157,7 +2157,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ValueItemReferenceT
+    internal partial class ValueItemReferenceT
     {
 
         private string valueItemTargetField;
@@ -2174,7 +2174,7 @@
 
         private bool lengthFieldSpecified;
 
-        public ValueItemReferenceT()
+        internal ValueItemReferenceT()
         {
             this.bitOffsetField = ((byte)(0));
             this.bitLengthField = "1";
@@ -2182,7 +2182,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string ValueItemTarget
+        internal string ValueItemTarget
         {
             get
             {
@@ -2196,7 +2196,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint ByteOffset
+        internal uint ByteOffset
         {
             get
             {
@@ -2211,7 +2211,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(byte), "0")]
-        public byte BitOffset
+        internal byte BitOffset
         {
             get
             {
@@ -2226,7 +2226,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
         [System.ComponentModel.DefaultValueAttribute("1")]
-        public string BitLength
+        internal string BitLength
         {
             get
             {
@@ -2240,7 +2240,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -2254,7 +2254,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Length
+        internal ushort Length
         {
             get
             {
@@ -2268,7 +2268,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool LengthSpecified
+        internal bool LengthSpecified
         {
             get
             {
@@ -2287,7 +2287,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class RecordDataRefT : ValueItemReferenceT
+    internal partial class RecordDataRefT : ValueItemReferenceT
     {
 
         private string idField;
@@ -2302,7 +2302,7 @@
 
         private bool visibleField;
 
-        public RecordDataRefT()
+        internal RecordDataRefT()
         {
             this.changeableField = true;
             this.visibleField = true;
@@ -2310,7 +2310,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string ID
+        internal string ID
         {
             get
             {
@@ -2324,7 +2324,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public RecordDataRefTypeEnumT DataType
+        internal RecordDataRefTypeEnumT DataType
         {
             get
             {
@@ -2338,7 +2338,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string DefaultValue
+        internal string DefaultValue
         {
             get
             {
@@ -2352,7 +2352,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -2367,7 +2367,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(true)]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -2382,7 +2382,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(true)]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -2399,7 +2399,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum RecordDataRefTypeEnumT
+    internal enum RecordDataRefTypeEnumT
     {
 
         /// <remarks/>
@@ -2563,7 +2563,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class UnitDiagTypeItemT
+    internal partial class UnitDiagTypeItemT
     {
 
         private ExternalTextRefT nameField;
@@ -2575,7 +2575,7 @@
         private ushort userStructureIdentifierField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -2588,7 +2588,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -2602,7 +2602,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Ref")]
-        public UnitDiagTypeItemTRef[] Ref
+        internal UnitDiagTypeItemTRef[] Ref
         {
             get
             {
@@ -2616,7 +2616,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort UserStructureIdentifier
+        internal ushort UserStructureIdentifier
         {
             get
             {
@@ -2635,7 +2635,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class UnitDiagTypeItemTRef : ValueItemReferenceT
+    internal partial class UnitDiagTypeItemTRef : ValueItemReferenceT
     {
 
         private UnitDiagRefTypeEnumT dataTypeField;
@@ -2644,7 +2644,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public UnitDiagRefTypeEnumT DataType
+        internal UnitDiagRefTypeEnumT DataType
         {
             get
             {
@@ -2658,7 +2658,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string DefaultValue
+        internal string DefaultValue
         {
             get
             {
@@ -2677,7 +2677,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileChannelProcessAlarmItemT
+    internal partial class ProfileChannelProcessAlarmItemT
     {
 
         private ExternalTextRefT nameField;
@@ -2691,7 +2691,7 @@
         private ushort reasonField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -2704,7 +2704,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -2719,7 +2719,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ExtChannelProcessAlarmItem", typeof(ExtChannelProcessAlarmItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileExtChannelProcessAlarmItem", typeof(ProfileExtChannelProcessAlarmItemT), IsNullable = false)]
-        public object[] ExtChannelProcessAlarmList
+        internal object[] ExtChannelProcessAlarmList
         {
             get
             {
@@ -2733,7 +2733,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -2747,7 +2747,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Reason
+        internal ushort Reason
         {
             get
             {
@@ -2766,7 +2766,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ExtChannelProcessAlarmItemT
+    internal partial class ExtChannelProcessAlarmItemT
     {
 
         private ExternalTextRefT nameField;
@@ -2778,7 +2778,7 @@
         private ushort reasonField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -2791,7 +2791,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -2805,7 +2805,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DataItem", IsNullable = false)]
-        public ProcessAlarmReasonAddValueItemT[] ProcessAlarmReasonAddValue
+        internal ProcessAlarmReasonAddValueItemT[] ProcessAlarmReasonAddValue
         {
             get
             {
@@ -2819,7 +2819,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Reason
+        internal ushort Reason
         {
             get
             {
@@ -2838,7 +2838,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProcessAlarmReasonAddValueItemT
+    internal partial class ProcessAlarmReasonAddValueItemT
     {
 
         private byte idField;
@@ -2847,7 +2847,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte Id
+        internal byte Id
         {
             get
             {
@@ -2861,7 +2861,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ProcessAlarmReasonAddValueDataItemTypeEnumT DataType
+        internal ProcessAlarmReasonAddValueDataItemTypeEnumT DataType
         {
             get
             {
@@ -2878,7 +2878,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum ProcessAlarmReasonAddValueDataItemTypeEnumT
+    internal enum ProcessAlarmReasonAddValueDataItemTypeEnumT
     {
 
         /// <remarks/>
@@ -2918,7 +2918,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileExtChannelProcessAlarmItemT
+    internal partial class ProfileExtChannelProcessAlarmItemT
     {
 
         private ExternalTextRefT nameField;
@@ -2930,7 +2930,7 @@
         private ushort reasonField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -2943,7 +2943,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -2957,7 +2957,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DataItem", IsNullable = false)]
-        public ProcessAlarmReasonAddValueItemT[] ProcessAlarmReasonAddValue
+        internal ProcessAlarmReasonAddValueItemT[] ProcessAlarmReasonAddValue
         {
             get
             {
@@ -2971,7 +2971,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Reason
+        internal ushort Reason
         {
             get
             {
@@ -2990,7 +2990,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SystemDefinedChannelProcessAlarmItemT
+    internal partial class SystemDefinedChannelProcessAlarmItemT
     {
 
         private object[] extChannelProcessAlarmListField;
@@ -3000,7 +3000,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ExtChannelProcessAlarmItem", typeof(ExtChannelProcessAlarmItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileExtChannelProcessAlarmItem", typeof(SystemDefinedChannelProcessAlarmItemTProfileExtChannelProcessAlarmItem), IsNullable = false)]
-        public object[] ExtChannelProcessAlarmList
+        internal object[] ExtChannelProcessAlarmList
         {
             get
             {
@@ -3014,7 +3014,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Reason
+        internal string Reason
         {
             get
             {
@@ -3033,14 +3033,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SystemDefinedChannelProcessAlarmItemTProfileExtChannelProcessAlarmItem : ProfileExtChannelProcessAlarmItemT
+    internal partial class SystemDefinedChannelProcessAlarmItemTProfileExtChannelProcessAlarmItem : ProfileExtChannelProcessAlarmItemT
     {
 
         private uint aPIField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -3059,7 +3059,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ChannelProcessAlarmItemT
+    internal partial class ChannelProcessAlarmItemT
     {
 
         private ExternalTextRefT nameField;
@@ -3071,7 +3071,7 @@
         private ushort reasonField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -3084,7 +3084,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -3098,7 +3098,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ExtChannelProcessAlarmItem", IsNullable = false)]
-        public ExtChannelProcessAlarmItemT[] ExtChannelProcessAlarmList
+        internal ExtChannelProcessAlarmItemT[] ExtChannelProcessAlarmList
         {
             get
             {
@@ -3112,7 +3112,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Reason
+        internal ushort Reason
         {
             get
             {
@@ -3131,7 +3131,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileChannelDiagItemT
+    internal partial class ProfileChannelDiagItemT
     {
 
         private ExternalTextRefT nameField;
@@ -3146,13 +3146,13 @@
 
         private string maintenanceAlarmStateField;
 
-        public ProfileChannelDiagItemT()
+        internal ProfileChannelDiagItemT()
         {
             this.maintenanceAlarmStateField = "D";
         }
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -3165,7 +3165,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -3180,7 +3180,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ExtChannelDiagItem", typeof(ExtChannelDiagItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileExtChannelDiagItem", typeof(ProfileExtChannelDiagItemT), IsNullable = false)]
-        public object[] ExtChannelDiagList
+        internal object[] ExtChannelDiagList
         {
             get
             {
@@ -3194,7 +3194,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -3208,7 +3208,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort ErrorType
+        internal ushort ErrorType
         {
             get
             {
@@ -3223,7 +3223,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("D")]
-        public string MaintenanceAlarmState
+        internal string MaintenanceAlarmState
         {
             get
             {
@@ -3242,7 +3242,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ExtChannelDiagItemT
+    internal partial class ExtChannelDiagItemT
     {
 
         private ExternalTextRefT nameField;
@@ -3255,13 +3255,13 @@
 
         private string maintenanceAlarmStateField;
 
-        public ExtChannelDiagItemT()
+        internal ExtChannelDiagItemT()
         {
             this.maintenanceAlarmStateField = "D";
         }
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -3274,7 +3274,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -3288,7 +3288,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DataItem", IsNullable = false)]
-        public ExtChannelAddValueItemT[] ExtChannelAddValue
+        internal ExtChannelAddValueItemT[] ExtChannelAddValue
         {
             get
             {
@@ -3302,7 +3302,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort ErrorType
+        internal ushort ErrorType
         {
             get
             {
@@ -3317,7 +3317,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("D")]
-        public string MaintenanceAlarmState
+        internal string MaintenanceAlarmState
         {
             get
             {
@@ -3336,7 +3336,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ExtChannelAddValueItemT
+    internal partial class ExtChannelAddValueItemT
     {
 
         private byte idField;
@@ -3345,7 +3345,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte Id
+        internal byte Id
         {
             get
             {
@@ -3359,7 +3359,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ExtChannelAddValueDataItemTypeEnumT DataType
+        internal ExtChannelAddValueDataItemTypeEnumT DataType
         {
             get
             {
@@ -3376,7 +3376,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum ExtChannelAddValueDataItemTypeEnumT
+    internal enum ExtChannelAddValueDataItemTypeEnumT
     {
 
         /// <remarks/>
@@ -3407,7 +3407,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileExtChannelDiagItemT
+    internal partial class ProfileExtChannelDiagItemT
     {
 
         private ExternalTextRefT nameField;
@@ -3420,13 +3420,13 @@
 
         private string maintenanceAlarmStateField;
 
-        public ProfileExtChannelDiagItemT()
+        internal ProfileExtChannelDiagItemT()
         {
             this.maintenanceAlarmStateField = "D";
         }
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -3439,7 +3439,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -3453,7 +3453,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DataItem", IsNullable = false)]
-        public ExtChannelAddValueItemT[] ExtChannelAddValue
+        internal ExtChannelAddValueItemT[] ExtChannelAddValue
         {
             get
             {
@@ -3467,7 +3467,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort ErrorType
+        internal ushort ErrorType
         {
             get
             {
@@ -3482,7 +3482,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("D")]
-        public string MaintenanceAlarmState
+        internal string MaintenanceAlarmState
         {
             get
             {
@@ -3501,7 +3501,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SystemDefinedChannelDiagItemT
+    internal partial class SystemDefinedChannelDiagItemT
     {
 
         private object[] extChannelDiagListField;
@@ -3511,7 +3511,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ExtChannelDiagItem", typeof(ExtChannelDiagItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileExtChannelDiagItem", typeof(SystemDefinedChannelDiagItemTProfileExtChannelDiagItem), IsNullable = false)]
-        public object[] ExtChannelDiagList
+        internal object[] ExtChannelDiagList
         {
             get
             {
@@ -3525,7 +3525,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ErrorType
+        internal string ErrorType
         {
             get
             {
@@ -3544,14 +3544,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SystemDefinedChannelDiagItemTProfileExtChannelDiagItem : ProfileExtChannelDiagItemT
+    internal partial class SystemDefinedChannelDiagItemTProfileExtChannelDiagItem : ProfileExtChannelDiagItemT
     {
 
         private uint aPIField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -3570,7 +3570,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ChannelDiagItemT
+    internal partial class ChannelDiagItemT
     {
 
         private ExternalTextRefT nameField;
@@ -3583,13 +3583,13 @@
 
         private string maintenanceAlarmStateField;
 
-        public ChannelDiagItemT()
+        internal ChannelDiagItemT()
         {
             this.maintenanceAlarmStateField = "D";
         }
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -3602,7 +3602,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -3616,7 +3616,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ExtChannelDiagItem", IsNullable = false)]
-        public ExtChannelDiagItemT[] ExtChannelDiagList
+        internal ExtChannelDiagItemT[] ExtChannelDiagList
         {
             get
             {
@@ -3630,7 +3630,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort ErrorType
+        internal ushort ErrorType
         {
             get
             {
@@ -3645,7 +3645,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("D")]
-        public string MaintenanceAlarmState
+        internal string MaintenanceAlarmState
         {
             get
             {
@@ -3664,7 +3664,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SystemRedundancyT
+    internal partial class SystemRedundancyT
     {
 
         private SRDeviceTypeEnumT deviceTypeField;
@@ -3693,7 +3693,7 @@
 
         private bool r2MaxInputOnBackupDelayFieldSpecified;
 
-        public SystemRedundancyT()
+        internal SystemRedundancyT()
         {
             this.rT_InputOnBackupAR_SupportedField = false;
             this.numberOfAR_SetsField = ((byte)(1));
@@ -3702,7 +3702,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public SRDeviceTypeEnumT DeviceType
+        internal SRDeviceTypeEnumT DeviceType
         {
             get
             {
@@ -3716,7 +3716,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxSwitchOverTime
+        internal ushort MaxSwitchOverTime
         {
             get
             {
@@ -3730,7 +3730,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool PrimaryAR_OnBothNAPsSupported
+        internal bool PrimaryAR_OnBothNAPsSupported
         {
             get
             {
@@ -3744,7 +3744,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PrimaryAR_OnBothNAPsSupportedSpecified
+        internal bool PrimaryAR_OnBothNAPsSupportedSpecified
         {
             get
             {
@@ -3759,7 +3759,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool RT_InputOnBackupAR_Supported
+        internal bool RT_InputOnBackupAR_Supported
         {
             get
             {
@@ -3774,7 +3774,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(byte), "1")]
-        public byte NumberOfAR_Sets
+        internal byte NumberOfAR_Sets
         {
             get
             {
@@ -3788,7 +3788,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MinRDHT
+        internal ushort MinRDHT
         {
             get
             {
@@ -3802,7 +3802,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MinRDHTSpecified
+        internal bool MinRDHTSpecified
         {
             get
             {
@@ -3817,7 +3817,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DataInvalidOnBackupAR_Supported
+        internal bool DataInvalidOnBackupAR_Supported
         {
             get
             {
@@ -3831,7 +3831,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort S2MaxInputOnBackupDelay
+        internal ushort S2MaxInputOnBackupDelay
         {
             get
             {
@@ -3845,7 +3845,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool S2MaxInputOnBackupDelaySpecified
+        internal bool S2MaxInputOnBackupDelaySpecified
         {
             get
             {
@@ -3859,7 +3859,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort R2MaxInputOnBackupDelay
+        internal ushort R2MaxInputOnBackupDelay
         {
             get
             {
@@ -3873,7 +3873,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool R2MaxInputOnBackupDelaySpecified
+        internal bool R2MaxInputOnBackupDelaySpecified
         {
             get
             {
@@ -3890,7 +3890,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum SRDeviceTypeEnumT
+    internal enum SRDeviceTypeEnumT
     {
 
         /// <remarks/>
@@ -3909,7 +3909,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationRelationsObsoleteT
+    internal partial class ApplicationRelationsObsoleteT
     {
 
         private ApplicationRelationsObsoleteTTimingProperties timingPropertiesField;
@@ -3923,7 +3923,7 @@
         private ushort submoduleDataBlockVersionField;
 
         /// <remarks/>
-        public ApplicationRelationsObsoleteTTimingProperties TimingProperties
+        internal ApplicationRelationsObsoleteTTimingProperties TimingProperties
         {
             get
             {
@@ -3937,7 +3937,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort AR_BlockVersion
+        internal ushort AR_BlockVersion
         {
             get
             {
@@ -3951,7 +3951,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort IOCR_BlockVersion
+        internal ushort IOCR_BlockVersion
         {
             get
             {
@@ -3965,7 +3965,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort AlarmCR_BlockVersion
+        internal ushort AlarmCR_BlockVersion
         {
             get
             {
@@ -3979,7 +3979,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort SubmoduleDataBlockVersion
+        internal ushort SubmoduleDataBlockVersion
         {
             get
             {
@@ -3998,14 +3998,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationRelationsObsoleteTTimingProperties
+    internal partial class ApplicationRelationsObsoleteTTimingProperties
     {
 
         private string sendClockField;
 
         private string reductionRatioField;
 
-        public ApplicationRelationsObsoleteTTimingProperties()
+        internal ApplicationRelationsObsoleteTTimingProperties()
         {
             this.sendClockField = "32";
         }
@@ -4013,7 +4013,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("32")]
-        public string SendClock
+        internal string SendClock
         {
             get
             {
@@ -4027,7 +4027,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ReductionRatio
+        internal string ReductionRatio
         {
             get
             {
@@ -4046,7 +4046,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class MAUTypeItemT
+    internal partial class MAUTypeItemT
     {
 
         private ushort valueField;
@@ -4055,7 +4055,7 @@
 
         private bool adjustSupportedField;
 
-        public MAUTypeItemT()
+        internal MAUTypeItemT()
         {
             this.extensionField = ((ushort)(0));
             this.adjustSupportedField = false;
@@ -4063,7 +4063,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Value
+        internal ushort Value
         {
             get
             {
@@ -4078,7 +4078,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort Extension
+        internal ushort Extension
         {
             get
             {
@@ -4093,7 +4093,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool AdjustSupported
+        internal bool AdjustSupported
         {
             get
             {
@@ -4112,7 +4112,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationRelationsT
+    internal partial class ApplicationRelationsT
     {
 
         private ApplicationRelationsTTimingProperties timingPropertiesField;
@@ -4133,7 +4133,7 @@
 
         private ushort numberOfARField;
 
-        public ApplicationRelationsT()
+        internal ApplicationRelationsT()
         {
             this.startupModeField = "Legacy";
             this.numberOfAdditionalInputCRField = ((ushort)(0));
@@ -4145,7 +4145,7 @@
         }
 
         /// <remarks/>
-        public ApplicationRelationsTTimingProperties TimingProperties
+        internal ApplicationRelationsTTimingProperties TimingProperties
         {
             get
             {
@@ -4158,7 +4158,7 @@
         }
 
         /// <remarks/>
-        public ApplicationRelationsTRT_Class3TimingProperties RT_Class3TimingProperties
+        internal ApplicationRelationsTRT_Class3TimingProperties RT_Class3TimingProperties
         {
             get
             {
@@ -4173,7 +4173,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("Legacy")]
-        public string StartupMode
+        internal string StartupMode
         {
             get
             {
@@ -4188,7 +4188,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort NumberOfAdditionalInputCR
+        internal ushort NumberOfAdditionalInputCR
         {
             get
             {
@@ -4203,7 +4203,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort NumberOfAdditionalOutputCR
+        internal ushort NumberOfAdditionalOutputCR
         {
             get
             {
@@ -4218,7 +4218,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort NumberOfAdditionalMulticastProviderCR
+        internal ushort NumberOfAdditionalMulticastProviderCR
         {
             get
             {
@@ -4233,7 +4233,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort NumberOfMulticastConsumerCR
+        internal ushort NumberOfMulticastConsumerCR
         {
             get
             {
@@ -4248,7 +4248,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PullModuleAlarmSupported
+        internal bool PullModuleAlarmSupported
         {
             get
             {
@@ -4263,7 +4263,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1")]
-        public ushort NumberOfAR
+        internal ushort NumberOfAR
         {
             get
             {
@@ -4282,7 +4282,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationRelationsTTimingProperties
+    internal partial class ApplicationRelationsTTimingProperties
     {
 
         private string sendClockField;
@@ -4295,7 +4295,7 @@
 
         private bool preferredSendClockFieldSpecified;
 
-        public ApplicationRelationsTTimingProperties()
+        internal ApplicationRelationsTTimingProperties()
         {
             this.sendClockField = "32";
         }
@@ -4303,7 +4303,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("32")]
-        public string SendClock
+        internal string SendClock
         {
             get
             {
@@ -4317,7 +4317,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ReductionRatio
+        internal string ReductionRatio
         {
             get
             {
@@ -4331,7 +4331,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ReductionRatioPow2
+        internal string ReductionRatioPow2
         {
             get
             {
@@ -4345,7 +4345,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort PreferredSendClock
+        internal ushort PreferredSendClock
         {
             get
             {
@@ -4359,7 +4359,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PreferredSendClockSpecified
+        internal bool PreferredSendClockSpecified
         {
             get
             {
@@ -4378,7 +4378,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationRelationsTRT_Class3TimingProperties
+    internal partial class ApplicationRelationsTRT_Class3TimingProperties
     {
 
         private string sendClockField;
@@ -4395,7 +4395,7 @@
 
         private bool preferredSendClockFieldSpecified;
 
-        public ApplicationRelationsTRT_Class3TimingProperties()
+        internal ApplicationRelationsTRT_Class3TimingProperties()
         {
             this.sendClockField = "32";
         }
@@ -4403,7 +4403,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("32")]
-        public string SendClock
+        internal string SendClock
         {
             get
             {
@@ -4417,7 +4417,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ReductionRatio
+        internal string ReductionRatio
         {
             get
             {
@@ -4431,7 +4431,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ReductionRatioPow2
+        internal string ReductionRatioPow2
         {
             get
             {
@@ -4445,7 +4445,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxReductionRatioIsochroneMode
+        internal ushort MaxReductionRatioIsochroneMode
         {
             get
             {
@@ -4459,7 +4459,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxReductionRatioIsochroneModeSpecified
+        internal bool MaxReductionRatioIsochroneModeSpecified
         {
             get
             {
@@ -4473,7 +4473,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort PreferredSendClock
+        internal ushort PreferredSendClock
         {
             get
             {
@@ -4487,7 +4487,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PreferredSendClockSpecified
+        internal bool PreferredSendClockSpecified
         {
             get
             {
@@ -4506,7 +4506,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class RT_Class3PropertiesT
+    internal partial class RT_Class3PropertiesT
     {
 
         private string startupModeField;
@@ -4553,7 +4553,7 @@
 
         private bool maxRetentionTimeFieldSpecified;
 
-        public RT_Class3PropertiesT()
+        internal RT_Class3PropertiesT()
         {
             this.startupModeField = "Legacy";
             this.maxDFP_FramesField = ((ushort)(0));
@@ -4571,7 +4571,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("Legacy")]
-        public string StartupMode
+        internal string StartupMode
         {
             get
             {
@@ -4585,7 +4585,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ForwardingMode
+        internal string ForwardingMode
         {
             get
             {
@@ -4599,7 +4599,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxBridgeDelay
+        internal ushort MaxBridgeDelay
         {
             get
             {
@@ -4613,7 +4613,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxBridgeDelayFFW
+        internal ushort MaxBridgeDelayFFW
         {
             get
             {
@@ -4627,7 +4627,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxBridgeDelayFFWSpecified
+        internal bool MaxBridgeDelayFFWSpecified
         {
             get
             {
@@ -4641,7 +4641,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxDFP_Feed
+        internal ushort MaxDFP_Feed
         {
             get
             {
@@ -4655,7 +4655,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxDFP_FeedSpecified
+        internal bool MaxDFP_FeedSpecified
         {
             get
             {
@@ -4670,7 +4670,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort MaxDFP_Frames
+        internal ushort MaxDFP_Frames
         {
             get
             {
@@ -4685,7 +4685,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool AlignDFP_Subframes
+        internal bool AlignDFP_Subframes
         {
             get
             {
@@ -4700,7 +4700,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DFP_OutboundTruncationSupported
+        internal bool DFP_OutboundTruncationSupported
         {
             get
             {
@@ -4715,7 +4715,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DFP_RedundantPathLayoutSupported
+        internal bool DFP_RedundantPathLayoutSupported
         {
             get
             {
@@ -4729,7 +4729,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxNumberIR_FrameData
+        internal ushort MaxNumberIR_FrameData
         {
             get
             {
@@ -4744,7 +4744,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1024")]
-        public ushort MaxRangeIR_FrameID
+        internal ushort MaxRangeIR_FrameID
         {
             get
             {
@@ -4758,7 +4758,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public FragmentationTypeEnumT FragmentationType
+        internal FragmentationTypeEnumT FragmentationType
         {
             get
             {
@@ -4772,7 +4772,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool FragmentationTypeSpecified
+        internal bool FragmentationTypeSpecified
         {
             get
             {
@@ -4787,7 +4787,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "3875")]
-        public ushort MaxRedPeriodLength
+        internal ushort MaxRedPeriodLength
         {
             get
             {
@@ -4802,7 +4802,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "5000")]
-        public ushort MinFSO
+        internal ushort MinFSO
         {
             get
             {
@@ -4817,7 +4817,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1120")]
-        public ushort MinRTC3_Gap
+        internal ushort MinRTC3_Gap
         {
             get
             {
@@ -4832,7 +4832,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "9600")]
-        public uint MinYellowTime
+        internal uint MinYellowTime
         {
             get
             {
@@ -4847,7 +4847,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "160")]
-        public ushort YellowSafetyMargin
+        internal ushort YellowSafetyMargin
         {
             get
             {
@@ -4861,7 +4861,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint MaxRetentionTime
+        internal uint MaxRetentionTime
         {
             get
             {
@@ -4875,7 +4875,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxRetentionTimeSpecified
+        internal bool MaxRetentionTimeSpecified
         {
             get
             {
@@ -4892,7 +4892,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum FragmentationTypeEnumT
+    internal enum FragmentationTypeEnumT
     {
 
         /// <remarks/>
@@ -4908,7 +4908,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PROFIenergyT
+    internal partial class PROFIenergyT
     {
 
         private PROFIenergyTEnergySavingModeItem[] energySavingModeListField;
@@ -4929,7 +4929,7 @@
 
         private bool pESAP_uses_PROFIenergyASEField;
 
-        public PROFIenergyT()
+        internal PROFIenergyT()
         {
             this.dynamicTimeAndEnergyValuesField = false;
             this.pESAP_uses_PROFIenergyASEField = false;
@@ -4937,7 +4937,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("EnergySavingModeItem", IsNullable = false)]
-        public PROFIenergyTEnergySavingModeItem[] EnergySavingModeList
+        internal PROFIenergyTEnergySavingModeItem[] EnergySavingModeList
         {
             get
             {
@@ -4951,7 +4951,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MeasurementItem", IsNullable = false)]
-        public PROFIenergyTMeasurementItem[] MeasurementList
+        internal PROFIenergyTMeasurementItem[] MeasurementList
         {
             get
             {
@@ -4965,7 +4965,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ProfileVersion
+        internal string ProfileVersion
         {
             get
             {
@@ -4979,7 +4979,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public PE_EntityClassEnumT EntityClass
+        internal PE_EntityClassEnumT EntityClass
         {
             get
             {
@@ -4993,7 +4993,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool EntityClassSpecified
+        internal bool EntityClassSpecified
         {
             get
             {
@@ -5007,7 +5007,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public PE_EntitySubclassEnumT EntitySubclass
+        internal PE_EntitySubclassEnumT EntitySubclass
         {
             get
             {
@@ -5021,7 +5021,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool EntitySubclassSpecified
+        internal bool EntitySubclassSpecified
         {
             get
             {
@@ -5036,7 +5036,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DynamicTimeAndEnergyValues
+        internal bool DynamicTimeAndEnergyValues
         {
             get
             {
@@ -5051,7 +5051,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PESAP_uses_PROFIenergyASE
+        internal bool PESAP_uses_PROFIenergyASE
         {
             get
             {
@@ -5070,7 +5070,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PROFIenergyTEnergySavingModeItem
+    internal partial class PROFIenergyTEnergySavingModeItem
     {
 
         private byte idField;
@@ -5087,7 +5087,7 @@
 
         private float energyConsumptionToOperationField;
 
-        public PROFIenergyTEnergySavingModeItem()
+        internal PROFIenergyTEnergySavingModeItem()
         {
             this.powerConsumptionField = ((float)(0F));
             this.energyConsumptionToDestinationField = ((float)(0F));
@@ -5096,7 +5096,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte ID
+        internal byte ID
         {
             get
             {
@@ -5110,7 +5110,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint TimeToPause
+        internal uint TimeToPause
         {
             get
             {
@@ -5124,7 +5124,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint RTTO
+        internal uint RTTO
         {
             get
             {
@@ -5138,7 +5138,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint TimeMinLengthOfStay
+        internal uint TimeMinLengthOfStay
         {
             get
             {
@@ -5153,7 +5153,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(float), "0")]
-        public float PowerConsumption
+        internal float PowerConsumption
         {
             get
             {
@@ -5168,7 +5168,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(float), "0")]
-        public float EnergyConsumptionToDestination
+        internal float EnergyConsumptionToDestination
         {
             get
             {
@@ -5183,7 +5183,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(float), "0")]
-        public float EnergyConsumptionToOperation
+        internal float EnergyConsumptionToOperation
         {
             get
             {
@@ -5202,7 +5202,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PROFIenergyTMeasurementItem
+    internal partial class PROFIenergyTMeasurementItem
     {
 
         private PROFIenergyTMeasurementItemMeasurementValue[] measurementValueField;
@@ -5213,7 +5213,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MeasurementValue")]
-        public PROFIenergyTMeasurementItemMeasurementValue[] MeasurementValue
+        internal PROFIenergyTMeasurementItemMeasurementValue[] MeasurementValue
         {
             get
             {
@@ -5227,7 +5227,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Number
+        internal ushort Number
         {
             get
             {
@@ -5241,7 +5241,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool NumberSpecified
+        internal bool NumberSpecified
         {
             get
             {
@@ -5260,7 +5260,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PROFIenergyTMeasurementItemMeasurementValue
+    internal partial class PROFIenergyTMeasurementItemMeasurementValue
     {
 
         private ushort idField;
@@ -5271,7 +5271,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort ID
+        internal ushort ID
         {
             get
             {
@@ -5285,7 +5285,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte AccuracyDomain
+        internal byte AccuracyDomain
         {
             get
             {
@@ -5299,7 +5299,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte AccuracyClass
+        internal byte AccuracyClass
         {
             get
             {
@@ -5316,7 +5316,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum PE_EntityClassEnumT
+    internal enum PE_EntityClassEnumT
     {
 
         /// <remarks/>
@@ -5333,7 +5333,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum PE_EntitySubclassEnumT
+    internal enum PE_EntitySubclassEnumT
     {
 
         /// <remarks/>
@@ -5349,7 +5349,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataT
+    internal partial class F_ParameterRecordDataT
     {
 
         private F_ParameterRecordDataTF_Check_iPar f_Check_iParField;
@@ -5386,14 +5386,14 @@
 
         private bool changeableWithBumpField;
 
-        public F_ParameterRecordDataT()
+        internal F_ParameterRecordDataT()
         {
             this.transferSequenceField = ((ushort)(0));
             this.changeableWithBumpField = false;
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Check_iPar F_Check_iPar
+        internal F_ParameterRecordDataTF_Check_iPar F_Check_iPar
         {
             get
             {
@@ -5406,7 +5406,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_SIL F_SIL
+        internal F_ParameterRecordDataTF_SIL F_SIL
         {
             get
             {
@@ -5419,7 +5419,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_CRC_Length F_CRC_Length
+        internal F_ParameterRecordDataTF_CRC_Length F_CRC_Length
         {
             get
             {
@@ -5432,7 +5432,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_CRC_Seed F_CRC_Seed
+        internal F_ParameterRecordDataTF_CRC_Seed F_CRC_Seed
         {
             get
             {
@@ -5445,7 +5445,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Passivation F_Passivation
+        internal F_ParameterRecordDataTF_Passivation F_Passivation
         {
             get
             {
@@ -5458,7 +5458,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Block_ID F_Block_ID
+        internal F_ParameterRecordDataTF_Block_ID F_Block_ID
         {
             get
             {
@@ -5471,7 +5471,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Par_Version F_Par_Version
+        internal F_ParameterRecordDataTF_Par_Version F_Par_Version
         {
             get
             {
@@ -5484,7 +5484,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Source_Add F_Source_Add
+        internal F_ParameterRecordDataTF_Source_Add F_Source_Add
         {
             get
             {
@@ -5497,7 +5497,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Dest_Add F_Dest_Add
+        internal F_ParameterRecordDataTF_Dest_Add F_Dest_Add
         {
             get
             {
@@ -5510,7 +5510,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_WD_Time F_WD_Time
+        internal F_ParameterRecordDataTF_WD_Time F_WD_Time
         {
             get
             {
@@ -5523,7 +5523,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_Par_CRC F_Par_CRC
+        internal F_ParameterRecordDataTF_Par_CRC F_Par_CRC
         {
             get
             {
@@ -5536,7 +5536,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataTF_iPar_CRC F_iPar_CRC
+        internal F_ParameterRecordDataTF_iPar_CRC F_iPar_CRC
         {
             get
             {
@@ -5550,7 +5550,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort F_ParamDescCRC
+        internal ushort F_ParamDescCRC
         {
             get
             {
@@ -5564,7 +5564,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string F_SupportedParameters
+        internal string F_SupportedParameters
         {
             get
             {
@@ -5578,7 +5578,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Index
+        internal ushort Index
         {
             get
             {
@@ -5593,7 +5593,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort TransferSequence
+        internal ushort TransferSequence
         {
             get
             {
@@ -5608,7 +5608,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ChangeableWithBump
+        internal bool ChangeableWithBump
         {
             get
             {
@@ -5627,7 +5627,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Check_iPar
+    internal partial class F_ParameterRecordDataTF_Check_iPar
     {
 
         private F_Check_iParEnumT defaultValueField;
@@ -5638,7 +5638,7 @@
 
         private bool visibleField;
 
-        public F_ParameterRecordDataTF_Check_iPar()
+        internal F_ParameterRecordDataTF_Check_iPar()
         {
             this.defaultValueField = F_Check_iParEnumT.NoCheck;
             this.allowedValuesField = "Check NoCheck";
@@ -5649,7 +5649,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(F_Check_iParEnumT.NoCheck)]
-        public F_Check_iParEnumT DefaultValue
+        internal F_Check_iParEnumT DefaultValue
         {
             get
             {
@@ -5664,7 +5664,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("Check NoCheck")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -5679,7 +5679,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -5694,7 +5694,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -5711,7 +5711,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum F_Check_iParEnumT
+    internal enum F_Check_iParEnumT
     {
 
         /// <remarks/>
@@ -5727,7 +5727,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_SIL
+    internal partial class F_ParameterRecordDataTF_SIL
     {
 
         private F_SIL_EnumT defaultValueField;
@@ -5740,7 +5740,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_SIL()
+        internal F_ParameterRecordDataTF_SIL()
         {
             this.defaultValueField = F_SIL_EnumT.SIL3;
             this.allowedValuesField = "SIL1 SIL2 SIL3 NoSIL";
@@ -5751,7 +5751,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(F_SIL_EnumT.SIL3)]
-        public F_SIL_EnumT DefaultValue
+        internal F_SIL_EnumT DefaultValue
         {
             get
             {
@@ -5766,7 +5766,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("SIL1 SIL2 SIL3 NoSIL")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -5781,7 +5781,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(true)]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -5795,7 +5795,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -5809,7 +5809,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -5826,7 +5826,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum F_SIL_EnumT
+    internal enum F_SIL_EnumT
     {
 
         /// <remarks/>
@@ -5848,7 +5848,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_CRC_Length
+    internal partial class F_ParameterRecordDataTF_CRC_Length
     {
 
         private F_CRC_LengthEnumT defaultValueField;
@@ -5861,7 +5861,7 @@
 
         private bool visibleField;
 
-        public F_ParameterRecordDataTF_CRC_Length()
+        internal F_ParameterRecordDataTF_CRC_Length()
         {
             this.defaultValueField = F_CRC_LengthEnumT.Item3ByteCRC;
             this.allowedValuesField = "3-Byte-CRC";
@@ -5872,7 +5872,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(F_CRC_LengthEnumT.Item3ByteCRC)]
-        public F_CRC_LengthEnumT DefaultValue
+        internal F_CRC_LengthEnumT DefaultValue
         {
             get
             {
@@ -5887,7 +5887,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("3-Byte-CRC")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -5901,7 +5901,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -5915,7 +5915,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -5930,7 +5930,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -5947,7 +5947,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum F_CRC_LengthEnumT
+    internal enum F_CRC_LengthEnumT
     {
 
         /// <remarks/>
@@ -5965,7 +5965,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_CRC_Seed
+    internal partial class F_ParameterRecordDataTF_CRC_Seed
     {
 
         private F_CRC_SeedEnumT defaultValueField;
@@ -5982,7 +5982,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_CRC_Seed()
+        internal F_ParameterRecordDataTF_CRC_Seed()
         {
             this.defaultValueField = F_CRC_SeedEnumT.CRCSeed2432;
             this.allowedValuesField = "CRC-Seed24/32";
@@ -5992,7 +5992,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public F_CRC_SeedEnumT DefaultValue
+        internal F_CRC_SeedEnumT DefaultValue
         {
             get
             {
@@ -6006,7 +6006,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool DefaultValueSpecified
+        internal bool DefaultValueSpecified
         {
             get
             {
@@ -6020,7 +6020,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6034,7 +6034,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6048,7 +6048,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6062,7 +6062,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6076,7 +6076,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6093,7 +6093,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum F_CRC_SeedEnumT
+    internal enum F_CRC_SeedEnumT
     {
 
         /// <remarks/>
@@ -6107,7 +6107,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Passivation
+    internal partial class F_ParameterRecordDataTF_Passivation
     {
 
         private F_PassivationEnumT defaultValueField;
@@ -6122,7 +6122,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_Passivation()
+        internal F_ParameterRecordDataTF_Passivation()
         {
             this.defaultValueField = F_PassivationEnumT.DeviceModule;
             this.allowedValuesField = "Device/Module";
@@ -6133,7 +6133,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(F_PassivationEnumT.DeviceModule)]
-        public F_PassivationEnumT DefaultValue
+        internal F_PassivationEnumT DefaultValue
         {
             get
             {
@@ -6148,7 +6148,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("Device/Module")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6162,7 +6162,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6176,7 +6176,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6190,7 +6190,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6204,7 +6204,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6221,7 +6221,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum F_PassivationEnumT
+    internal enum F_PassivationEnumT
     {
 
         /// <remarks/>
@@ -6238,7 +6238,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Block_ID
+    internal partial class F_ParameterRecordDataTF_Block_ID
     {
 
         private byte defaultValueField;
@@ -6249,7 +6249,7 @@
 
         private bool visibleField;
 
-        public F_ParameterRecordDataTF_Block_ID()
+        internal F_ParameterRecordDataTF_Block_ID()
         {
             this.defaultValueField = ((byte)(0));
             this.allowedValuesField = "0..7";
@@ -6260,7 +6260,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(byte), "0")]
-        public byte DefaultValue
+        internal byte DefaultValue
         {
             get
             {
@@ -6275,7 +6275,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("0..7")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6290,7 +6290,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6305,7 +6305,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(true)]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6324,7 +6324,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Par_Version
+    internal partial class F_ParameterRecordDataTF_Par_Version
     {
 
         private byte defaultValueField;
@@ -6341,7 +6341,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_Par_Version()
+        internal F_ParameterRecordDataTF_Par_Version()
         {
             this.defaultValueField = ((byte)(1));
             this.allowedValuesField = "1";
@@ -6351,7 +6351,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte DefaultValue
+        internal byte DefaultValue
         {
             get
             {
@@ -6365,7 +6365,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool DefaultValueSpecified
+        internal bool DefaultValueSpecified
         {
             get
             {
@@ -6379,7 +6379,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6393,7 +6393,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6407,7 +6407,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6421,7 +6421,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6435,7 +6435,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6454,7 +6454,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Source_Add
+    internal partial class F_ParameterRecordDataTF_Source_Add
     {
 
         private ushort defaultValueField;
@@ -6469,7 +6469,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_Source_Add()
+        internal F_ParameterRecordDataTF_Source_Add()
         {
             this.defaultValueField = ((ushort)(1));
             this.allowedValuesField = "1..65534";
@@ -6480,7 +6480,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1")]
-        public ushort DefaultValue
+        internal ushort DefaultValue
         {
             get
             {
@@ -6495,7 +6495,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("1..65534")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6509,7 +6509,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6523,7 +6523,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6537,7 +6537,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6551,7 +6551,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6570,7 +6570,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Dest_Add
+    internal partial class F_ParameterRecordDataTF_Dest_Add
     {
 
         private ushort defaultValueField;
@@ -6585,7 +6585,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_Dest_Add()
+        internal F_ParameterRecordDataTF_Dest_Add()
         {
             this.defaultValueField = ((ushort)(1));
             this.allowedValuesField = "1..65534";
@@ -6596,7 +6596,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1")]
-        public ushort DefaultValue
+        internal ushort DefaultValue
         {
             get
             {
@@ -6611,7 +6611,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("1..65534")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6625,7 +6625,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6639,7 +6639,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6653,7 +6653,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6667,7 +6667,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6686,7 +6686,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_WD_Time
+    internal partial class F_ParameterRecordDataTF_WD_Time
     {
 
         private ushort defaultValueField;
@@ -6701,7 +6701,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_WD_Time()
+        internal F_ParameterRecordDataTF_WD_Time()
         {
             this.defaultValueField = ((ushort)(150));
             this.allowedValuesField = "1..65535";
@@ -6712,7 +6712,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "150")]
-        public ushort DefaultValue
+        internal ushort DefaultValue
         {
             get
             {
@@ -6727,7 +6727,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("1..65535")]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6741,7 +6741,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6755,7 +6755,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6769,7 +6769,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6783,7 +6783,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6802,7 +6802,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_Par_CRC
+    internal partial class F_ParameterRecordDataTF_Par_CRC
     {
 
         private ushort defaultValueField;
@@ -6817,7 +6817,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_Par_CRC()
+        internal F_ParameterRecordDataTF_Par_CRC()
         {
             this.defaultValueField = ((ushort)(53356));
             this.allowedValuesField = "0..65535";
@@ -6828,7 +6828,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "53356")]
-        public ushort DefaultValue
+        internal ushort DefaultValue
         {
             get
             {
@@ -6842,7 +6842,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6856,7 +6856,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6870,7 +6870,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6884,7 +6884,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -6898,7 +6898,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -6917,7 +6917,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class F_ParameterRecordDataTF_iPar_CRC
+    internal partial class F_ParameterRecordDataTF_iPar_CRC
     {
 
         private uint defaultValueField;
@@ -6932,7 +6932,7 @@
 
         private bool visibleFieldSpecified;
 
-        public F_ParameterRecordDataTF_iPar_CRC()
+        internal F_ParameterRecordDataTF_iPar_CRC()
         {
             this.defaultValueField = ((uint)(0));
             this.allowedValuesField = "0..4294967295";
@@ -6943,7 +6943,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
-        public uint DefaultValue
+        internal uint DefaultValue
         {
             get
             {
@@ -6957,7 +6957,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedValues
+        internal string AllowedValues
         {
             get
             {
@@ -6971,7 +6971,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Changeable
+        internal bool Changeable
         {
             get
             {
@@ -6985,7 +6985,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ChangeableSpecified
+        internal bool ChangeableSpecified
         {
             get
             {
@@ -6999,7 +6999,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool Visible
+        internal bool Visible
         {
             get
             {
@@ -7013,7 +7013,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool VisibleSpecified
+        internal bool VisibleSpecified
         {
             get
             {
@@ -7032,7 +7032,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ParameterRecordDataT
+    internal partial class ParameterRecordDataT
     {
 
         private ExternalTextRefT nameField;
@@ -7049,14 +7049,14 @@
 
         private bool changeableWithBumpField;
 
-        public ParameterRecordDataT()
+        internal ParameterRecordDataT()
         {
             this.transferSequenceField = ((ushort)(0));
             this.changeableWithBumpField = false;
         }
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -7071,7 +7071,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Const", typeof(RecordDataConstT))]
         [System.Xml.Serialization.XmlElementAttribute("Ref", typeof(RecordDataRefT))]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -7085,7 +7085,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MenuItem", IsNullable = false)]
-        public MenuItemT[] MenuList
+        internal MenuItemT[] MenuList
         {
             get
             {
@@ -7099,7 +7099,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Index
+        internal string Index
         {
             get
             {
@@ -7113,7 +7113,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint Length
+        internal uint Length
         {
             get
             {
@@ -7128,7 +7128,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "0")]
-        public ushort TransferSequence
+        internal ushort TransferSequence
         {
             get
             {
@@ -7143,7 +7143,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ChangeableWithBump
+        internal bool ChangeableWithBump
         {
             get
             {
@@ -7162,14 +7162,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class RecordDataConstT
+    internal partial class RecordDataConstT
     {
 
         private uint byteOffsetField;
 
         private string dataField;
 
-        public RecordDataConstT()
+        internal RecordDataConstT()
         {
             this.byteOffsetField = ((uint)(0));
         }
@@ -7177,7 +7177,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
-        public uint ByteOffset
+        internal uint ByteOffset
         {
             get
             {
@@ -7191,7 +7191,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Data
+        internal string Data
         {
             get
             {
@@ -7210,7 +7210,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class MenuItemT : ObjectT
+    internal partial class MenuItemT : ObjectT
     {
 
         private ExternalTextRefT nameField;
@@ -7218,7 +7218,7 @@
         private object[] itemsField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -7233,7 +7233,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MenuRef", typeof(MenuRefT))]
         [System.Xml.Serialization.XmlElementAttribute("ParameterRef", typeof(ParameterRefT))]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -7252,14 +7252,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class MenuRefT
+    internal partial class MenuRefT
     {
 
         private string menuTargetField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string MenuTarget
+        internal string MenuTarget
         {
             get
             {
@@ -7278,14 +7278,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ParameterRefT
+    internal partial class ParameterRefT
     {
 
         private string parameterTargetField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string ParameterTarget
+        internal string ParameterTarget
         {
             get
             {
@@ -7317,14 +7317,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public partial class ObjectT
+    internal partial class ObjectT
     {
 
         private string idField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string ID
+        internal string ID
         {
             get
             {
@@ -7343,7 +7343,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class CategoryItemT : ObjectT
+    internal partial class CategoryItemT : ObjectT
     {
 
         private ExternalTextRefT infoTextField;
@@ -7351,7 +7351,7 @@
         private string textIdField;
 
         /// <remarks/>
-        public ExternalTextRefT InfoText
+        internal ExternalTextRefT InfoText
         {
             get
             {
@@ -7365,7 +7365,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -7384,7 +7384,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class GraphicItemT : ObjectT
+    internal partial class GraphicItemT : ObjectT
     {
 
         private GraphicItemTEmbedded embeddedField;
@@ -7392,7 +7392,7 @@
         private string graphicFileField;
 
         /// <remarks/>
-        public GraphicItemTEmbedded Embedded
+        internal GraphicItemTEmbedded Embedded
         {
             get
             {
@@ -7406,7 +7406,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string GraphicFile
+        internal string GraphicFile
         {
             get
             {
@@ -7425,14 +7425,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class GraphicItemTEmbedded
+    internal partial class GraphicItemTEmbedded
     {
 
         private string[] textField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text
+        internal string[] Text
         {
             get
             {
@@ -7451,7 +7451,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ValueItemT : ObjectT
+    internal partial class ValueItemT : ObjectT
     {
 
         private ExternalTextRefT helpField;
@@ -7459,7 +7459,7 @@
         private ValueAssignmentsTAssign[] assignmentsField;
 
         /// <remarks/>
-        public ExternalTextRefT Help
+        internal ExternalTextRefT Help
         {
             get
             {
@@ -7473,7 +7473,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Assign", IsNullable = false)]
-        public ValueAssignmentsTAssign[] Assignments
+        internal ValueAssignmentsTAssign[] Assignments
         {
             get
             {
@@ -7492,7 +7492,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ValueAssignmentsTAssign
+    internal partial class ValueAssignmentsTAssign
     {
 
         private string textIdField;
@@ -7501,7 +7501,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -7515,7 +7515,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Content
+        internal string Content
         {
             get
             {
@@ -7534,7 +7534,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ModuleItemT : ObjectT
+    internal partial class ModuleItemT : ObjectT
     {
 
         private ModuleInfoT moduleInfoField;
@@ -7559,13 +7559,13 @@
 
         private bool fieldbusTypeFieldSpecified;
 
-        public ModuleItemT()
+        internal ModuleItemT()
         {
             this.requiredSchemaVersionField = "V1.0";
         }
 
         /// <remarks/>
-        public ModuleInfoT ModuleInfo
+        internal ModuleInfoT ModuleInfo
         {
             get
             {
@@ -7579,7 +7579,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SubslotItem", IsNullable = false)]
-        public SubslotListTSubslotItem[] SubslotList
+        internal SubslotListTSubslotItem[] SubslotList
         {
             get
             {
@@ -7593,7 +7593,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("VirtualSubmoduleItem", IsNullable = false)]
-        public BuiltInSubmoduleItemT[] VirtualSubmoduleList
+        internal BuiltInSubmoduleItemT[] VirtualSubmoduleList
         {
             get
             {
@@ -7607,7 +7607,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("PortSubmoduleItem", IsNullable = false)]
-        public BuiltInPortSubmoduleItemT[] SystemDefinedSubmoduleList
+        internal BuiltInPortSubmoduleItemT[] SystemDefinedSubmoduleList
         {
             get
             {
@@ -7621,7 +7621,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SubmoduleItemRef", IsNullable = false)]
-        public UseableSubmodulesTSubmoduleItemRef[] UseableSubmodules
+        internal UseableSubmodulesTSubmoduleItemRef[] UseableSubmodules
         {
             get
             {
@@ -7635,7 +7635,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("GraphicItemRef", IsNullable = false)]
-        public GraphicsReferenceTGraphicItemRef[] Graphics
+        internal GraphicsReferenceTGraphicItemRef[] Graphics
         {
             get
             {
@@ -7649,7 +7649,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ModuleIdentNumber
+        internal string ModuleIdentNumber
         {
             get
             {
@@ -7664,7 +7664,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("V1.0")]
-        public string RequiredSchemaVersion
+        internal string RequiredSchemaVersion
         {
             get
             {
@@ -7678,7 +7678,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PhysicalSubslots
+        internal string PhysicalSubslots
         {
             get
             {
@@ -7692,7 +7692,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort FieldbusType
+        internal ushort FieldbusType
         {
             get
             {
@@ -7706,7 +7706,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool FieldbusTypeSpecified
+        internal bool FieldbusTypeSpecified
         {
             get
             {
@@ -7725,7 +7725,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ModuleInfoT
+    internal partial class ModuleInfoT
     {
 
         private ExternalTextRefT nameField;
@@ -7747,7 +7747,7 @@
         private string subCategory1RefField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -7760,7 +7760,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT InfoText
+        internal ExternalTextRefT InfoText
         {
             get
             {
@@ -7773,7 +7773,7 @@
         }
 
         /// <remarks/>
-        public FamilyT Family
+        internal FamilyT Family
         {
             get
             {
@@ -7786,7 +7786,7 @@
         }
 
         /// <remarks/>
-        public TokenParameterT VendorName
+        internal TokenParameterT VendorName
         {
             get
             {
@@ -7799,7 +7799,7 @@
         }
 
         /// <remarks/>
-        public TokenParameterT OrderNumber
+        internal TokenParameterT OrderNumber
         {
             get
             {
@@ -7812,7 +7812,7 @@
         }
 
         /// <remarks/>
-        public TokenParameterT HardwareRelease
+        internal TokenParameterT HardwareRelease
         {
             get
             {
@@ -7825,7 +7825,7 @@
         }
 
         /// <remarks/>
-        public TokenParameterT SoftwareRelease
+        internal TokenParameterT SoftwareRelease
         {
             get
             {
@@ -7839,7 +7839,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string CategoryRef
+        internal string CategoryRef
         {
             get
             {
@@ -7853,7 +7853,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string SubCategory1Ref
+        internal string SubCategory1Ref
         {
             get
             {
@@ -7872,7 +7872,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class FamilyT
+    internal partial class FamilyT
     {
 
         private FamilyEnumT mainFamilyField;
@@ -7881,7 +7881,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public FamilyEnumT MainFamily
+        internal FamilyEnumT MainFamily
         {
             get
             {
@@ -7895,7 +7895,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "normalizedString")]
-        public string ProductFamily
+        internal string ProductFamily
         {
             get
             {
@@ -7912,7 +7912,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum FamilyEnumT
+    internal enum FamilyEnumT
     {
 
         /// <remarks/>
@@ -7973,14 +7973,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public partial class TokenParameterT
+    internal partial class TokenParameterT
     {
 
         private string valueField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string Value
+        internal string Value
         {
             get
             {
@@ -7999,7 +7999,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubslotListTSubslotItem
+    internal partial class SubslotListTSubslotItem
     {
 
         private ushort subslotNumberField;
@@ -8008,7 +8008,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort SubslotNumber
+        internal ushort SubslotNumber
         {
             get
             {
@@ -8022,7 +8022,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -8041,14 +8041,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class BuiltInSubmoduleItemT : SubmoduleItemBaseT
+    internal partial class BuiltInSubmoduleItemT : SubmoduleItemBaseT
     {
 
         private string fixedInSubslotsField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FixedInSubslots
+        internal string FixedInSubslots
         {
             get
             {
@@ -8069,7 +8069,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubmoduleItemBaseT : ObjectT
+    internal partial class SubmoduleItemBaseT : ObjectT
     {
 
         private SubmoduleItemBaseTIOData iODataField;
@@ -8108,7 +8108,7 @@
 
         private bool mayIssueProcessAlarmField;
 
-        public SubmoduleItemBaseT()
+        internal SubmoduleItemBaseT()
         {
             this.aPIField = ((uint)(0));
             this.pROFIsafeSupportedField = false;
@@ -8117,7 +8117,7 @@
         }
 
         /// <remarks/>
-        public SubmoduleItemBaseTIOData IOData
+        internal SubmoduleItemBaseTIOData IOData
         {
             get
             {
@@ -8130,7 +8130,7 @@
         }
 
         /// <remarks/>
-        public SubmoduleItemBaseTRecordDataList RecordDataList
+        internal SubmoduleItemBaseTRecordDataList RecordDataList
         {
             get
             {
@@ -8143,7 +8143,7 @@
         }
 
         /// <remarks/>
-        public ModuleInfoT ModuleInfo
+        internal ModuleInfoT ModuleInfo
         {
             get
             {
@@ -8157,7 +8157,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("GraphicItemRef", IsNullable = false)]
-        public GraphicsReferenceTGraphicItemRef[] Graphics
+        internal GraphicsReferenceTGraphicItemRef[] Graphics
         {
             get
             {
@@ -8170,7 +8170,7 @@
         }
 
         /// <remarks/>
-        public SubmoduleItemBaseTIsochroneMode IsochroneMode
+        internal SubmoduleItemBaseTIsochroneMode IsochroneMode
         {
             get
             {
@@ -8183,7 +8183,7 @@
         }
 
         /// <remarks/>
-        public SubmoduleItemBaseTSlotCluster SlotCluster
+        internal SubmoduleItemBaseTSlotCluster SlotCluster
         {
             get
             {
@@ -8196,7 +8196,7 @@
         }
 
         /// <remarks/>
-        public PROFIenergyT PROFIenergy
+        internal PROFIenergyT PROFIenergy
         {
             get
             {
@@ -8210,7 +8210,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Observer", IsNullable = false)]
-        public ReportingSystemEventsTObserver[] ReportingSystemEvents
+        internal ReportingSystemEventsTObserver[] ReportingSystemEvents
         {
             get
             {
@@ -8224,7 +8224,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SubmoduleIdentNumber
+        internal string SubmoduleIdentNumber
         {
             get
             {
@@ -8239,7 +8239,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -8254,7 +8254,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PROFIsafeSupported
+        internal bool PROFIsafeSupported
         {
             get
             {
@@ -8268,7 +8268,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Writeable_IM_Records
+        internal string Writeable_IM_Records
         {
             get
             {
@@ -8283,7 +8283,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IM5_Supported
+        internal bool IM5_Supported
         {
             get
             {
@@ -8298,7 +8298,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
-        public uint Max_iParameterSize
+        internal uint Max_iParameterSize
         {
             get
             {
@@ -8312,7 +8312,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort SubsysModuleDirIndex
+        internal ushort SubsysModuleDirIndex
         {
             get
             {
@@ -8326,7 +8326,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool SubsysModuleDirIndexSpecified
+        internal bool SubsysModuleDirIndexSpecified
         {
             get
             {
@@ -8340,7 +8340,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SupportedSubstitutionModes
+        internal string SupportedSubstitutionModes
         {
             get
             {
@@ -8354,7 +8354,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool MayIssueProcessAlarm
+        internal bool MayIssueProcessAlarm
         {
             get
             {
@@ -8373,7 +8373,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubmoduleItemBaseTIOData
+    internal partial class SubmoduleItemBaseTIOData
     {
 
         private IODataT inputField;
@@ -8386,13 +8386,13 @@
 
         private bool f_IO_StructureDescCRCFieldSpecified;
 
-        public SubmoduleItemBaseTIOData()
+        internal SubmoduleItemBaseTIOData()
         {
             this.f_IO_StructureDescVersionField = ((byte)(1));
         }
 
         /// <remarks/>
-        public IODataT Input
+        internal IODataT Input
         {
             get
             {
@@ -8405,7 +8405,7 @@
         }
 
         /// <remarks/>
-        public IODataT Output
+        internal IODataT Output
         {
             get
             {
@@ -8420,7 +8420,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(byte), "1")]
-        public byte F_IO_StructureDescVersion
+        internal byte F_IO_StructureDescVersion
         {
             get
             {
@@ -8434,7 +8434,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint F_IO_StructureDescCRC
+        internal uint F_IO_StructureDescCRC
         {
             get
             {
@@ -8448,7 +8448,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool F_IO_StructureDescCRCSpecified
+        internal bool F_IO_StructureDescCRCSpecified
         {
             get
             {
@@ -8467,7 +8467,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class IODataT
+    internal partial class IODataT
     {
 
         private IODataTDataItem[] dataItemField;
@@ -8476,14 +8476,14 @@
 
         private IODataConsistencyEnumT consistencyField;
 
-        public IODataT()
+        internal IODataT()
         {
             this.consistencyField = IODataConsistencyEnumT.Itemconsistency;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("DataItem")]
-        public IODataTDataItem[] DataItem
+        internal IODataTDataItem[] DataItem
         {
             get
             {
@@ -8497,7 +8497,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Channel")]
-        public IODataTChannel[] Channel
+        internal IODataTChannel[] Channel
         {
             get
             {
@@ -8512,7 +8512,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(IODataConsistencyEnumT.Itemconsistency)]
-        public IODataConsistencyEnumT Consistency
+        internal IODataConsistencyEnumT Consistency
         {
             get
             {
@@ -8531,7 +8531,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class IODataTDataItem
+    internal partial class IODataTDataItem
     {
 
         private IODataTDataItemBitDataItem[] bitDataItemField;
@@ -8548,7 +8548,7 @@
 
         private string textIdField;
 
-        public IODataTDataItem()
+        internal IODataTDataItem()
         {
             this.useAsBitsField = false;
             this.subordinateField = false;
@@ -8556,7 +8556,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BitDataItem")]
-        public IODataTDataItemBitDataItem[] BitDataItem
+        internal IODataTDataItemBitDataItem[] BitDataItem
         {
             get
             {
@@ -8570,7 +8570,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public DataItemTypeEnumT DataType
+        internal DataItemTypeEnumT DataType
         {
             get
             {
@@ -8584,7 +8584,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Length
+        internal ushort Length
         {
             get
             {
@@ -8598,7 +8598,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool LengthSpecified
+        internal bool LengthSpecified
         {
             get
             {
@@ -8613,7 +8613,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool UseAsBits
+        internal bool UseAsBits
         {
             get
             {
@@ -8628,7 +8628,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool Subordinate
+        internal bool Subordinate
         {
             get
             {
@@ -8642,7 +8642,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -8661,7 +8661,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class IODataTDataItemBitDataItem
+    internal partial class IODataTDataItemBitDataItem
     {
 
         private byte bitOffsetField;
@@ -8670,7 +8670,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte BitOffset
+        internal byte BitOffset
         {
             get
             {
@@ -8684,7 +8684,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -8701,7 +8701,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum DataItemTypeEnumT
+    internal enum DataItemTypeEnumT
     {
 
         /// <remarks/>
@@ -8869,7 +8869,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class IODataTChannel
+    internal partial class IODataTChannel
     {
 
         private IODataTChannelData dataField;
@@ -8879,7 +8879,7 @@
         private ushort numberField;
 
         /// <remarks/>
-        public IODataTChannelData Data
+        internal IODataTChannelData Data
         {
             get
             {
@@ -8892,7 +8892,7 @@
         }
 
         /// <remarks/>
-        public IODataTChannelQuality Quality
+        internal IODataTChannelQuality Quality
         {
             get
             {
@@ -8906,7 +8906,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Number
+        internal ushort Number
         {
             get
             {
@@ -8925,7 +8925,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class IODataTChannelData
+    internal partial class IODataTChannelData
     {
 
         private ushort bitOffsetField;
@@ -8934,7 +8934,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort BitOffset
+        internal ushort BitOffset
         {
             get
             {
@@ -8948,7 +8948,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort BitLength
+        internal ushort BitLength
         {
             get
             {
@@ -8967,7 +8967,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class IODataTChannelQuality
+    internal partial class IODataTChannelQuality
     {
 
         private ushort bitOffsetField;
@@ -8976,14 +8976,14 @@
 
         private bool oppositeDirectionField;
 
-        public IODataTChannelQuality()
+        internal IODataTChannelQuality()
         {
             this.oppositeDirectionField = false;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort BitOffset
+        internal ushort BitOffset
         {
             get
             {
@@ -8997,7 +8997,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public QualityFormat_EnumT Format
+        internal QualityFormat_EnumT Format
         {
             get
             {
@@ -9012,7 +9012,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool OppositeDirection
+        internal bool OppositeDirection
         {
             get
             {
@@ -9029,7 +9029,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum QualityFormat_EnumT
+    internal enum QualityFormat_EnumT
     {
 
         /// <remarks/>
@@ -9047,7 +9047,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum IODataConsistencyEnumT
+    internal enum IODataConsistencyEnumT
     {
 
         /// <remarks/>
@@ -9065,7 +9065,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubmoduleItemBaseTRecordDataList
+    internal partial class SubmoduleItemBaseTRecordDataList
     {
 
         private ParameterRecordDataT[] parameterRecordDataItemField;
@@ -9074,7 +9074,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ParameterRecordDataItem")]
-        public ParameterRecordDataT[] ParameterRecordDataItem
+        internal ParameterRecordDataT[] ParameterRecordDataItem
         {
             get
             {
@@ -9087,7 +9087,7 @@
         }
 
         /// <remarks/>
-        public F_ParameterRecordDataT F_ParameterRecordDataItem
+        internal F_ParameterRecordDataT F_ParameterRecordDataItem
         {
             get
             {
@@ -9106,7 +9106,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class GraphicsReferenceTGraphicItemRef
+    internal partial class GraphicsReferenceTGraphicItemRef
     {
 
         private GraphicsTypeEnumT typeField;
@@ -9115,7 +9115,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public GraphicsTypeEnumT Type
+        internal GraphicsTypeEnumT Type
         {
             get
             {
@@ -9129,7 +9129,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string GraphicItemTarget
+        internal string GraphicItemTarget
         {
             get
             {
@@ -9146,7 +9146,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum GraphicsTypeEnumT
+    internal enum GraphicsTypeEnumT
     {
 
         /// <remarks/>
@@ -9162,7 +9162,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubmoduleItemBaseTIsochroneMode
+    internal partial class SubmoduleItemBaseTIsochroneMode
     {
 
         private ushort t_DC_BaseField;
@@ -9179,14 +9179,14 @@
 
         private bool isochroneModeRequiredField;
 
-        public SubmoduleItemBaseTIsochroneMode()
+        internal SubmoduleItemBaseTIsochroneMode()
         {
             this.isochroneModeRequiredField = false;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort T_DC_Base
+        internal ushort T_DC_Base
         {
             get
             {
@@ -9200,7 +9200,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort T_DC_Min
+        internal ushort T_DC_Min
         {
             get
             {
@@ -9214,7 +9214,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort T_DC_Max
+        internal ushort T_DC_Max
         {
             get
             {
@@ -9228,7 +9228,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint T_IO_Base
+        internal uint T_IO_Base
         {
             get
             {
@@ -9242,7 +9242,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint T_IO_InputMin
+        internal uint T_IO_InputMin
         {
             get
             {
@@ -9256,7 +9256,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint T_IO_OutputMin
+        internal uint T_IO_OutputMin
         {
             get
             {
@@ -9271,7 +9271,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IsochroneModeRequired
+        internal bool IsochroneModeRequired
         {
             get
             {
@@ -9290,7 +9290,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubmoduleItemBaseTSlotCluster
+    internal partial class SubmoduleItemBaseTSlotCluster
     {
 
         private ushort countField;
@@ -9299,7 +9299,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort Count
+        internal ushort Count
         {
             get
             {
@@ -9313,7 +9313,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort FieldbusType
+        internal ushort FieldbusType
         {
             get
             {
@@ -9332,14 +9332,14 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ReportingSystemEventsTObserver
+    internal partial class ReportingSystemEventsTObserver
     {
 
         private string typeField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Type
+        internal string Type
         {
             get
             {
@@ -9358,12 +9358,12 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SubmoduleItemT : SubmoduleItemBaseT
+    internal partial class SubmoduleItemT : SubmoduleItemBaseT
     {
 
         private string requiredSchemaVersionField;
 
-        public SubmoduleItemT()
+        internal SubmoduleItemT()
         {
             this.requiredSchemaVersionField = "V2.1";
         }
@@ -9371,7 +9371,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("V2.1")]
-        public string RequiredSchemaVersion
+        internal string RequiredSchemaVersion
         {
             get
             {
@@ -9390,7 +9390,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class BuiltInPortSubmoduleItemT : PortSubmoduleItemBaseT
+    internal partial class BuiltInPortSubmoduleItemT : PortSubmoduleItemBaseT
     {
 
         private ushort subslotNumberField;
@@ -9399,7 +9399,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort SubslotNumber
+        internal ushort SubslotNumber
         {
             get
             {
@@ -9413,7 +9413,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -9434,7 +9434,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PortSubmoduleItemBaseT : ObjectT
+    internal partial class PortSubmoduleItemBaseT : ObjectT
     {
 
         private ParameterRecordDataT[] recordDataListField;
@@ -9489,7 +9489,7 @@
 
         private bool shortPreamble100MBitSupportedFieldSpecified;
 
-        public PortSubmoduleItemBaseT()
+        internal PortSubmoduleItemBaseT()
         {
             this.mAUTypeField = MAUTypeEnumT.Item100BASETXFD;
             this.portDeactivationSupportedField = false;
@@ -9503,7 +9503,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterRecordDataItem", IsNullable = false)]
-        public ParameterRecordDataT[] RecordDataList
+        internal ParameterRecordDataT[] RecordDataList
         {
             get
             {
@@ -9516,7 +9516,7 @@
         }
 
         /// <remarks/>
-        public PortSubmoduleItemBaseTMAUTypeList MAUTypeList
+        internal PortSubmoduleItemBaseTMAUTypeList MAUTypeList
         {
             get
             {
@@ -9530,7 +9530,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SubmoduleIdentNumber
+        internal string SubmoduleIdentNumber
         {
             get
             {
@@ -9545,7 +9545,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(MAUTypeEnumT.Item100BASETXFD)]
-        public MAUTypeEnumT MAUType
+        internal MAUTypeEnumT MAUType
         {
             get
             {
@@ -9559,7 +9559,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string MAUTypes
+        internal string MAUTypes
         {
             get
             {
@@ -9573,7 +9573,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FiberOpticTypes
+        internal string FiberOpticTypes
         {
             get
             {
@@ -9587,7 +9587,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxPortTxDelay
+        internal ushort MaxPortTxDelay
         {
             get
             {
@@ -9601,7 +9601,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxPortTxDelaySpecified
+        internal bool MaxPortTxDelaySpecified
         {
             get
             {
@@ -9615,7 +9615,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxPortRxDelay
+        internal ushort MaxPortRxDelay
         {
             get
             {
@@ -9629,7 +9629,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxPortRxDelaySpecified
+        internal bool MaxPortRxDelaySpecified
         {
             get
             {
@@ -9644,7 +9644,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PortDeactivationSupported
+        internal bool PortDeactivationSupported
         {
             get
             {
@@ -9658,7 +9658,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public LinkStateDiagnosisEnumT LinkStateDiagnosisCapability
+        internal LinkStateDiagnosisEnumT LinkStateDiagnosisCapability
         {
             get
             {
@@ -9672,7 +9672,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool LinkStateDiagnosisCapabilitySpecified
+        internal bool LinkStateDiagnosisCapabilitySpecified
         {
             get
             {
@@ -9687,7 +9687,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PowerBudgetControlSupported
+        internal bool PowerBudgetControlSupported
         {
             get
             {
@@ -9702,7 +9702,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool SupportsRingportConfig
+        internal bool SupportsRingportConfig
         {
             get
             {
@@ -9717,7 +9717,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IsDefaultRingport
+        internal bool IsDefaultRingport
         {
             get
             {
@@ -9732,7 +9732,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool SupportsMRP_InterconnPortConfig
+        internal bool SupportsMRP_InterconnPortConfig
         {
             get
             {
@@ -9747,7 +9747,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ParameterizationDisallowed
+        internal bool ParameterizationDisallowed
         {
             get
             {
@@ -9761,7 +9761,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Writeable_IM_Records
+        internal string Writeable_IM_Records
         {
             get
             {
@@ -9776,7 +9776,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IM5_Supported
+        internal bool IM5_Supported
         {
             get
             {
@@ -9790,7 +9790,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool CheckMAUTypeSupported
+        internal bool CheckMAUTypeSupported
         {
             get
             {
@@ -9804,7 +9804,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool CheckMAUTypeSupportedSpecified
+        internal bool CheckMAUTypeSupportedSpecified
         {
             get
             {
@@ -9818,7 +9818,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool CheckMAUTypeDifferenceSupported
+        internal bool CheckMAUTypeDifferenceSupported
         {
             get
             {
@@ -9832,7 +9832,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool CheckMAUTypeDifferenceSupportedSpecified
+        internal bool CheckMAUTypeDifferenceSupportedSpecified
         {
             get
             {
@@ -9846,7 +9846,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool ShortPreamble100MBitSupported
+        internal bool ShortPreamble100MBitSupported
         {
             get
             {
@@ -9860,7 +9860,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ShortPreamble100MBitSupportedSpecified
+        internal bool ShortPreamble100MBitSupportedSpecified
         {
             get
             {
@@ -9879,21 +9879,21 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PortSubmoduleItemBaseTMAUTypeList
+    internal partial class PortSubmoduleItemBaseTMAUTypeList
     {
 
         private MAUTypeItemT[] mAUTypeItemField;
 
         private bool extensionSupportedField;
 
-        public PortSubmoduleItemBaseTMAUTypeList()
+        internal PortSubmoduleItemBaseTMAUTypeList()
         {
             this.extensionSupportedField = false;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MAUTypeItem")]
-        public MAUTypeItemT[] MAUTypeItem
+        internal MAUTypeItemT[] MAUTypeItem
         {
             get
             {
@@ -9908,7 +9908,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ExtensionSupported
+        internal bool ExtensionSupported
         {
             get
             {
@@ -9925,7 +9925,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum MAUTypeEnumT
+    internal enum MAUTypeEnumT
     {
 
         /// <remarks/>
@@ -9961,7 +9961,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum LinkStateDiagnosisEnumT
+    internal enum LinkStateDiagnosisEnumT
     {
 
         /// <remarks/>
@@ -9981,7 +9981,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class PortSubmoduleItemT : PortSubmoduleItemBaseT
+    internal partial class PortSubmoduleItemT : PortSubmoduleItemBaseT
     {
 
         private ModuleInfoT moduleInfoField;
@@ -9990,13 +9990,13 @@
 
         private string requiredSchemaVersionField;
 
-        public PortSubmoduleItemT()
+        internal PortSubmoduleItemT()
         {
             this.requiredSchemaVersionField = "V2.25";
         }
 
         /// <remarks/>
-        public ModuleInfoT ModuleInfo
+        internal ModuleInfoT ModuleInfo
         {
             get
             {
@@ -10010,7 +10010,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("GraphicItemRef", IsNullable = false)]
-        public GraphicsReferenceTGraphicItemRef[] Graphics
+        internal GraphicsReferenceTGraphicItemRef[] Graphics
         {
             get
             {
@@ -10025,7 +10025,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("V2.25")]
-        public string RequiredSchemaVersion
+        internal string RequiredSchemaVersion
         {
             get
             {
@@ -10044,7 +10044,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class UseableSubmodulesTSubmoduleItemRef
+    internal partial class UseableSubmodulesTSubmoduleItemRef
     {
 
         private string submoduleItemTargetField;
@@ -10057,7 +10057,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string SubmoduleItemTarget
+        internal string SubmoduleItemTarget
         {
             get
             {
@@ -10071,7 +10071,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedInSubslots
+        internal string AllowedInSubslots
         {
             get
             {
@@ -10085,7 +10085,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string UsedInSubslots
+        internal string UsedInSubslots
         {
             get
             {
@@ -10099,7 +10099,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FixedInSubslots
+        internal string FixedInSubslots
         {
             get
             {
@@ -10118,7 +10118,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemT : ObjectT
+    internal partial class InterfaceSubmoduleItemT : ObjectT
     {
 
         private InterfaceSubmoduleItemTGeneral generalField;
@@ -10179,7 +10179,7 @@
 
         private bool usesStaticARP_CacheEntriesField;
 
-        public InterfaceSubmoduleItemT()
+        internal InterfaceSubmoduleItemT()
         {
             this.subslotNumberField = ((ushort)(32768));
             this.supportedRT_ClassField = RT_ClassEnumT.Class1;
@@ -10200,7 +10200,7 @@
         }
 
         /// <remarks/>
-        public InterfaceSubmoduleItemTGeneral General
+        internal InterfaceSubmoduleItemTGeneral General
         {
             get
             {
@@ -10214,7 +10214,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterRecordDataItem", IsNullable = false)]
-        public ParameterRecordDataT[] RecordDataList
+        internal ParameterRecordDataT[] RecordDataList
         {
             get
             {
@@ -10227,7 +10227,7 @@
         }
 
         /// <remarks/>
-        public RT_Class3PropertiesT RT_Class3Properties
+        internal RT_Class3PropertiesT RT_Class3Properties
         {
             get
             {
@@ -10240,7 +10240,7 @@
         }
 
         /// <remarks/>
-        public InterfaceSubmoduleItemTSynchronisationMode SynchronisationMode
+        internal InterfaceSubmoduleItemTSynchronisationMode SynchronisationMode
         {
             get
             {
@@ -10253,7 +10253,7 @@
         }
 
         /// <remarks/>
-        public InterfaceSubmoduleItemTTimeSynchronisation TimeSynchronisation
+        internal InterfaceSubmoduleItemTTimeSynchronisation TimeSynchronisation
         {
             get
             {
@@ -10266,7 +10266,7 @@
         }
 
         /// <remarks/>
-        public InterfaceSubmoduleItemTReportingSystem ReportingSystem
+        internal InterfaceSubmoduleItemTReportingSystem ReportingSystem
         {
             get
             {
@@ -10279,7 +10279,7 @@
         }
 
         /// <remarks/>
-        public ApplicationRelationsT ApplicationRelations
+        internal ApplicationRelationsT ApplicationRelations
         {
             get
             {
@@ -10292,7 +10292,7 @@
         }
 
         /// <remarks/>
-        public InterfaceSubmoduleItemTMediaRedundancy MediaRedundancy
+        internal InterfaceSubmoduleItemTMediaRedundancy MediaRedundancy
         {
             get
             {
@@ -10306,7 +10306,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SubmoduleIdentNumber
+        internal string SubmoduleIdentNumber
         {
             get
             {
@@ -10320,7 +10320,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -10335,7 +10335,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "32768")]
-        public ushort SubslotNumber
+        internal ushort SubslotNumber
         {
             get
             {
@@ -10350,7 +10350,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(RT_ClassEnumT.Class1)]
-        public RT_ClassEnumT SupportedRT_Class
+        internal RT_ClassEnumT SupportedRT_Class
         {
             get
             {
@@ -10364,7 +10364,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SupportedRT_Classes
+        internal string SupportedRT_Classes
         {
             get
             {
@@ -10379,7 +10379,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IsochroneModeSupported
+        internal bool IsochroneModeSupported
         {
             get
             {
@@ -10394,7 +10394,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("")]
-        public string IsochroneModeInRT_Classes
+        internal string IsochroneModeInRT_Classes
         {
             get
             {
@@ -10408,7 +10408,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SupportedProtocols
+        internal string SupportedProtocols
         {
             get
             {
@@ -10423,7 +10423,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool NetworkComponentDiagnosisSupported
+        internal bool NetworkComponentDiagnosisSupported
         {
             get
             {
@@ -10438,7 +10438,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DCP_HelloSupported
+        internal bool DCP_HelloSupported
         {
             get
             {
@@ -10453,7 +10453,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PTP_BoundarySupported
+        internal bool PTP_BoundarySupported
         {
             get
             {
@@ -10468,7 +10468,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DCP_BoundarySupported
+        internal bool DCP_BoundarySupported
         {
             get
             {
@@ -10483,7 +10483,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool MulticastBoundarySupported
+        internal bool MulticastBoundarySupported
         {
             get
             {
@@ -10498,7 +10498,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ParameterizationDisallowed
+        internal bool ParameterizationDisallowed
         {
             get
             {
@@ -10513,7 +10513,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool DelayMeasurementSupported
+        internal bool DelayMeasurementSupported
         {
             get
             {
@@ -10527,7 +10527,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Writeable_IM_Records
+        internal string Writeable_IM_Records
         {
             get
             {
@@ -10542,7 +10542,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IM5_Supported
+        internal bool IM5_Supported
         {
             get
             {
@@ -10557,7 +10557,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1600")]
-        public ushort MaxFrameStartTime
+        internal ushort MaxFrameStartTime
         {
             get
             {
@@ -10572,7 +10572,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "960")]
-        public ushort MinNRT_Gap
+        internal ushort MinNRT_Gap
         {
             get
             {
@@ -10587,7 +10587,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PDEV_CombinedObjectSupported
+        internal bool PDEV_CombinedObjectSupported
         {
             get
             {
@@ -10602,7 +10602,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool UsesStaticARP_CacheEntries
+        internal bool UsesStaticARP_CacheEntries
         {
             get
             {
@@ -10621,13 +10621,13 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemTGeneral
+    internal partial class InterfaceSubmoduleItemTGeneral
     {
 
         private ExternalTextRefT dCP_FlashOnceSignalUnitField;
 
         /// <remarks/>
-        public ExternalTextRefT DCP_FlashOnceSignalUnit
+        internal ExternalTextRefT DCP_FlashOnceSignalUnit
         {
             get
             {
@@ -10646,7 +10646,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemTSynchronisationMode
+    internal partial class InterfaceSubmoduleItemTSynchronisationMode
     {
 
         private SyncRoleEnumT supportedRoleField;
@@ -10663,7 +10663,7 @@
 
         private string supportedSyncProtocolsField;
 
-        public InterfaceSubmoduleItemTSynchronisationMode()
+        internal InterfaceSubmoduleItemTSynchronisationMode()
         {
             this.supportedRoleField = SyncRoleEnumT.SyncSlave;
             this.t_PLL_MAXField = ((ushort)(1000));
@@ -10673,7 +10673,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(SyncRoleEnumT.SyncSlave)]
-        public SyncRoleEnumT SupportedRole
+        internal SyncRoleEnumT SupportedRole
         {
             get
             {
@@ -10687,7 +10687,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxLocalJitter
+        internal ushort MaxLocalJitter
         {
             get
             {
@@ -10701,7 +10701,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxLocalJitterSpecified
+        internal bool MaxLocalJitterSpecified
         {
             get
             {
@@ -10716,7 +10716,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "1000")]
-        public ushort T_PLL_MAX
+        internal ushort T_PLL_MAX
         {
             get
             {
@@ -10730,7 +10730,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort PeerToPeerJitter
+        internal ushort PeerToPeerJitter
         {
             get
             {
@@ -10744,7 +10744,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PeerToPeerJitterSpecified
+        internal bool PeerToPeerJitterSpecified
         {
             get
             {
@@ -10759,7 +10759,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("")]
-        public string SupportedSyncProtocols
+        internal string SupportedSyncProtocols
         {
             get
             {
@@ -10776,7 +10776,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum SyncRoleEnumT
+    internal enum SyncRoleEnumT
     {
 
         /// <remarks/>
@@ -10803,7 +10803,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemTTimeSynchronisation
+    internal partial class InterfaceSubmoduleItemTTimeSynchronisation
     {
     }
 
@@ -10813,7 +10813,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemTReportingSystem
+    internal partial class InterfaceSubmoduleItemTReportingSystem
     {
     }
 
@@ -10823,7 +10823,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemTMediaRedundancy
+    internal partial class InterfaceSubmoduleItemTMediaRedundancy
     {
 
         private InterfaceSubmoduleItemTMediaRedundancyInterconnection interconnectionField;
@@ -10844,7 +10844,7 @@
 
         private bool additionalForwardingRulesSupportedField;
 
-        public InterfaceSubmoduleItemTMediaRedundancy()
+        internal InterfaceSubmoduleItemTMediaRedundancy()
         {
             this.supportedRoleField = "Client";
             this.supportedMultipleRoleField = "Client";
@@ -10855,7 +10855,7 @@
         }
 
         /// <remarks/>
-        public InterfaceSubmoduleItemTMediaRedundancyInterconnection Interconnection
+        internal InterfaceSubmoduleItemTMediaRedundancyInterconnection Interconnection
         {
             get
             {
@@ -10870,7 +10870,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("Client")]
-        public string SupportedRole
+        internal string SupportedRole
         {
             get
             {
@@ -10885,7 +10885,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("Client")]
-        public string SupportedMultipleRole
+        internal string SupportedMultipleRole
         {
             get
             {
@@ -10899,7 +10899,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte MaxMRP_Instances
+        internal byte MaxMRP_Instances
         {
             get
             {
@@ -10913,7 +10913,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxMRP_InstancesSpecified
+        internal bool MaxMRP_InstancesSpecified
         {
             get
             {
@@ -10928,7 +10928,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool MRPD_Supported
+        internal bool MRPD_Supported
         {
             get
             {
@@ -10943,7 +10943,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool MRT_Supported
+        internal bool MRT_Supported
         {
             get
             {
@@ -10958,7 +10958,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool AdditionalProtocolsSupported
+        internal bool AdditionalProtocolsSupported
         {
             get
             {
@@ -10973,7 +10973,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool AdditionalForwardingRulesSupported
+        internal bool AdditionalForwardingRulesSupported
         {
             get
             {
@@ -10992,7 +10992,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class InterfaceSubmoduleItemTMediaRedundancyInterconnection
+    internal partial class InterfaceSubmoduleItemTMediaRedundancyInterconnection
     {
 
         private string supportedMRP_InterconnRoleField;
@@ -11003,7 +11003,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SupportedMRP_InterconnRole
+        internal string SupportedMRP_InterconnRole
         {
             get
             {
@@ -11017,7 +11017,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte MaxMRP_InterconnInstances
+        internal byte MaxMRP_InterconnInstances
         {
             get
             {
@@ -11031,7 +11031,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxMRP_InterconnInstancesSpecified
+        internal bool MaxMRP_InterconnInstancesSpecified
         {
             get
             {
@@ -11048,7 +11048,7 @@
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/Primitives")]
-    public enum RT_ClassEnumT
+    internal enum RT_ClassEnumT
     {
 
         /// <remarks/>
@@ -11067,7 +11067,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceAccessPointItemT : ObjectT
+    internal partial class DeviceAccessPointItemT : ObjectT
     {
 
         private ModuleInfoT moduleInfoField;
@@ -11176,7 +11176,7 @@
 
         private bool numberOfSubmodulesFieldSpecified;
 
-        public DeviceAccessPointItemT()
+        internal DeviceAccessPointItemT()
         {
             this.requiredSchemaVersionField = "V1.0";
             this.multipleWriteSupportedField = false;
@@ -11199,7 +11199,7 @@
         }
 
         /// <remarks/>
-        public ModuleInfoT ModuleInfo
+        internal ModuleInfoT ModuleInfo
         {
             get
             {
@@ -11212,7 +11212,7 @@
         }
 
         /// <remarks/>
-        public CertificationInfoT CertificationInfo
+        internal CertificationInfoT CertificationInfo
         {
             get
             {
@@ -11226,7 +11226,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SubslotItem", IsNullable = false)]
-        public SubslotListTSubslotItem[] SubslotList
+        internal SubslotListTSubslotItem[] SubslotList
         {
             get
             {
@@ -11239,7 +11239,7 @@
         }
 
         /// <remarks/>
-        public DeviceAccessPointItemTIOConfigData IOConfigData
+        internal DeviceAccessPointItemTIOConfigData IOConfigData
         {
             get
             {
@@ -11253,7 +11253,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ModuleItemRef", IsNullable = false)]
-        public UseableModulesTModuleItemRef[] UseableModules
+        internal UseableModulesTModuleItemRef[] UseableModules
         {
             get
             {
@@ -11267,7 +11267,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Request", IsNullable = false)]
-        public ARVendorBlockRequestT[] ARVendorBlock
+        internal ARVendorBlockRequestT[] ARVendorBlock
         {
             get
             {
@@ -11281,7 +11281,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("VirtualSubmoduleItem", IsNullable = false)]
-        public BuiltInSubmoduleItemT[] VirtualSubmoduleList
+        internal BuiltInSubmoduleItemT[] VirtualSubmoduleList
         {
             get
             {
@@ -11294,7 +11294,7 @@
         }
 
         /// <remarks/>
-        public DeviceAccessPointItemTSystemDefinedSubmoduleList SystemDefinedSubmoduleList
+        internal DeviceAccessPointItemTSystemDefinedSubmoduleList SystemDefinedSubmoduleList
         {
             get
             {
@@ -11308,7 +11308,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("GraphicItemRef", IsNullable = false)]
-        public GraphicsReferenceTGraphicItemRef[] Graphics
+        internal GraphicsReferenceTGraphicItemRef[] Graphics
         {
             get
             {
@@ -11321,7 +11321,7 @@
         }
 
         /// <remarks/>
-        public DeviceAccessPointItemTAssetManagement AssetManagement
+        internal DeviceAccessPointItemTAssetManagement AssetManagement
         {
             get
             {
@@ -11334,7 +11334,7 @@
         }
 
         /// <remarks/>
-        public ApplicationRelationsObsoleteT ApplicationRelations
+        internal ApplicationRelationsObsoleteT ApplicationRelations
         {
             get
             {
@@ -11347,7 +11347,7 @@
         }
 
         /// <remarks/>
-        public SystemRedundancyT SystemRedundancy
+        internal SystemRedundancyT SystemRedundancy
         {
             get
             {
@@ -11361,7 +11361,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SubmoduleItemRef", IsNullable = false)]
-        public UseableSubmodulesTSubmoduleItemRef[] UseableSubmodules
+        internal UseableSubmodulesTSubmoduleItemRef[] UseableSubmodules
         {
             get
             {
@@ -11375,7 +11375,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SlotItem", IsNullable = false)]
-        public SlotListTSlotItem[] SlotList
+        internal SlotListTSlotItem[] SlotList
         {
             get
             {
@@ -11389,7 +11389,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SlotGroup", IsNullable = false)]
-        public SlotGroupsTSlotGroup[] SlotGroups
+        internal SlotGroupsTSlotGroup[] SlotGroups
         {
             get
             {
@@ -11402,7 +11402,7 @@
         }
 
         /// <remarks/>
-        public DeviceAccessPointItemTFieldbusIntegrationSlots FieldbusIntegrationSlots
+        internal DeviceAccessPointItemTFieldbusIntegrationSlots FieldbusIntegrationSlots
         {
             get
             {
@@ -11416,7 +11416,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ModuleIdentNumber
+        internal string ModuleIdentNumber
         {
             get
             {
@@ -11430,7 +11430,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PNIO_Version
+        internal string PNIO_Version
         {
             get
             {
@@ -11444,7 +11444,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PhysicalSlots
+        internal string PhysicalSlots
         {
             get
             {
@@ -11458,7 +11458,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MinDeviceInterval
+        internal ushort MinDeviceInterval
         {
             get
             {
@@ -11472,7 +11472,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "normalizedString")]
-        public string ImplementationType
+        internal string ImplementationType
         {
             get
             {
@@ -11486,7 +11486,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string DNS_CompatibleName
+        internal string DNS_CompatibleName
         {
             get
             {
@@ -11500,7 +11500,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedInSlots
+        internal string AllowedInSlots
         {
             get
             {
@@ -11514,7 +11514,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FixedInSlots
+        internal string FixedInSlots
         {
             get
             {
@@ -11528,7 +11528,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort ObjectUUID_LocalIndex
+        internal ushort ObjectUUID_LocalIndex
         {
             get
             {
@@ -11543,7 +11543,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("V1.0")]
-        public string RequiredSchemaVersion
+        internal string RequiredSchemaVersion
         {
             get
             {
@@ -11558,7 +11558,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool MultipleWriteSupported
+        internal bool MultipleWriteSupported
         {
             get
             {
@@ -11573,7 +11573,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(true)]
-        public bool IOXS_Required
+        internal bool IOXS_Required
         {
             get
             {
@@ -11588,7 +11588,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("DCP")]
-        public string AddressAssignment
+        internal string AddressAssignment
         {
             get
             {
@@ -11602,7 +11602,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PhysicalSubslots
+        internal string PhysicalSubslots
         {
             get
             {
@@ -11617,7 +11617,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(ushort), "300")]
-        public ushort RemoteApplicationTimeout
+        internal ushort RemoteApplicationTimeout
         {
             get
             {
@@ -11632,7 +11632,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "4068")]
-        public uint MaxSupportedRecordSize
+        internal uint MaxSupportedRecordSize
         {
             get
             {
@@ -11647,7 +11647,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
-        public uint PowerOnToCommReady
+        internal uint PowerOnToCommReady
         {
             get
             {
@@ -11662,7 +11662,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ParameterizationSpeedupSupported
+        internal bool ParameterizationSpeedupSupported
         {
             get
             {
@@ -11676,7 +11676,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool NameOfStationNotTransferable
+        internal bool NameOfStationNotTransferable
         {
             get
             {
@@ -11691,7 +11691,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool SharedDeviceSupported
+        internal bool SharedDeviceSupported
         {
             get
             {
@@ -11706,7 +11706,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool SharedInputSupported
+        internal bool SharedInputSupported
         {
             get
             {
@@ -11720,7 +11720,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool DeviceAccessSupported
+        internal bool DeviceAccessSupported
         {
             get
             {
@@ -11734,7 +11734,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte NumberOfDeviceAccessAR
+        internal byte NumberOfDeviceAccessAR
         {
             get
             {
@@ -11748,7 +11748,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool NumberOfDeviceAccessARSpecified
+        internal bool NumberOfDeviceAccessARSpecified
         {
             get
             {
@@ -11763,7 +11763,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(byte), "1")]
-        public byte NumberOfImplicitAR
+        internal byte NumberOfImplicitAR
         {
             get
             {
@@ -11777,7 +11777,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string WebServer
+        internal string WebServer
         {
             get
             {
@@ -11792,7 +11792,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool AutoConfigurationSupported
+        internal bool AutoConfigurationSupported
         {
             get
             {
@@ -11807,7 +11807,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool CIR_Supported
+        internal bool CIR_Supported
         {
             get
             {
@@ -11822,7 +11822,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PrmBeginPrmEndSequenceSupported
+        internal bool PrmBeginPrmEndSequenceSupported
         {
             get
             {
@@ -11837,7 +11837,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool LLDP_NoD_Supported
+        internal bool LLDP_NoD_Supported
         {
             get
             {
@@ -11851,7 +11851,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ResetToFactoryModes
+        internal string ResetToFactoryModes
         {
             get
             {
@@ -11866,7 +11866,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool IO_SupervisorSupported
+        internal bool IO_SupervisorSupported
         {
             get
             {
@@ -11880,7 +11880,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool CheckDeviceID_Allowed
+        internal bool CheckDeviceID_Allowed
         {
             get
             {
@@ -11895,7 +11895,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool PROFIenergyASE_Supported
+        internal bool PROFIenergyASE_Supported
         {
             get
             {
@@ -11910,7 +11910,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool AdaptsRealIdentification
+        internal bool AdaptsRealIdentification
         {
             get
             {
@@ -11924,7 +11924,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint NumberOfSubmodules
+        internal uint NumberOfSubmodules
         {
             get
             {
@@ -11938,7 +11938,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool NumberOfSubmodulesSpecified
+        internal bool NumberOfSubmodulesSpecified
         {
             get
             {
@@ -11957,7 +11957,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class CertificationInfoT
+    internal partial class CertificationInfoT
     {
 
         private string conformanceClassField;
@@ -11968,7 +11968,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ConformanceClass
+        internal string ConformanceClass
         {
             get
             {
@@ -11982,7 +11982,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ApplicationClass
+        internal string ApplicationClass
         {
             get
             {
@@ -11996,7 +11996,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string NetloadClass
+        internal string NetloadClass
         {
             get
             {
@@ -12015,7 +12015,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceAccessPointItemTIOConfigData
+    internal partial class DeviceAccessPointItemTIOConfigData
     {
 
         private ushort maxInputLengthField;
@@ -12040,14 +12040,14 @@
 
         private bool maxApplicationDataLengthFieldSpecified;
 
-        public DeviceAccessPointItemTIOConfigData()
+        internal DeviceAccessPointItemTIOConfigData()
         {
             this.applicationLengthIncludesIOxSField = false;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxInputLength
+        internal ushort MaxInputLength
         {
             get
             {
@@ -12061,7 +12061,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxOutputLength
+        internal ushort MaxOutputLength
         {
             get
             {
@@ -12075,7 +12075,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxDataLength
+        internal ushort MaxDataLength
         {
             get
             {
@@ -12089,7 +12089,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxDataLengthSpecified
+        internal bool MaxDataLengthSpecified
         {
             get
             {
@@ -12104,7 +12104,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool ApplicationLengthIncludesIOxS
+        internal bool ApplicationLengthIncludesIOxS
         {
             get
             {
@@ -12118,7 +12118,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxApplicationInputLength
+        internal ushort MaxApplicationInputLength
         {
             get
             {
@@ -12132,7 +12132,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxApplicationInputLengthSpecified
+        internal bool MaxApplicationInputLengthSpecified
         {
             get
             {
@@ -12146,7 +12146,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxApplicationOutputLength
+        internal ushort MaxApplicationOutputLength
         {
             get
             {
@@ -12160,7 +12160,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxApplicationOutputLengthSpecified
+        internal bool MaxApplicationOutputLengthSpecified
         {
             get
             {
@@ -12174,7 +12174,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxApplicationDataLength
+        internal ushort MaxApplicationDataLength
         {
             get
             {
@@ -12188,7 +12188,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxApplicationDataLengthSpecified
+        internal bool MaxApplicationDataLengthSpecified
         {
             get
             {
@@ -12207,7 +12207,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class UseableModulesTModuleItemRef
+    internal partial class UseableModulesTModuleItemRef
     {
 
         private string moduleItemTargetField;
@@ -12220,7 +12220,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string ModuleItemTarget
+        internal string ModuleItemTarget
         {
             get
             {
@@ -12234,7 +12234,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AllowedInSlots
+        internal string AllowedInSlots
         {
             get
             {
@@ -12248,7 +12248,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string UsedInSlots
+        internal string UsedInSlots
         {
             get
             {
@@ -12262,7 +12262,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FixedInSlots
+        internal string FixedInSlots
         {
             get
             {
@@ -12281,7 +12281,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ARVendorBlockRequestT
+    internal partial class ARVendorBlockRequestT
     {
 
         private object[] itemsField;
@@ -12294,7 +12294,7 @@
 
         private ushort aPStructureIdentifierField;
 
-        public ARVendorBlockRequestT()
+        internal ARVendorBlockRequestT()
         {
             this.aPIField = ((uint)(0));
         }
@@ -12302,7 +12302,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Const", typeof(RecordDataConstT))]
         [System.Xml.Serialization.XmlElementAttribute("Ref", typeof(RecordDataRefT))]
-        public object[] Items
+        internal object[] Items
         {
             get
             {
@@ -12316,7 +12316,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MenuItem", IsNullable = false)]
-        public MenuItemT[] MenuList
+        internal MenuItemT[] MenuList
         {
             get
             {
@@ -12330,7 +12330,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public uint Length
+        internal uint Length
         {
             get
             {
@@ -12345,7 +12345,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
-        public uint API
+        internal uint API
         {
             get
             {
@@ -12359,7 +12359,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort APStructureIdentifier
+        internal ushort APStructureIdentifier
         {
             get
             {
@@ -12378,7 +12378,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceAccessPointItemTSystemDefinedSubmoduleList
+    internal partial class DeviceAccessPointItemTSystemDefinedSubmoduleList
     {
 
         private InterfaceSubmoduleItemT interfaceSubmoduleItemField;
@@ -12386,7 +12386,7 @@
         private BuiltInPortSubmoduleItemT[] portSubmoduleItemField;
 
         /// <remarks/>
-        public InterfaceSubmoduleItemT InterfaceSubmoduleItem
+        internal InterfaceSubmoduleItemT InterfaceSubmoduleItem
         {
             get
             {
@@ -12400,7 +12400,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("PortSubmoduleItem")]
-        public BuiltInPortSubmoduleItemT[] PortSubmoduleItem
+        internal BuiltInPortSubmoduleItemT[] PortSubmoduleItem
         {
             get
             {
@@ -12419,7 +12419,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceAccessPointItemTAssetManagement
+    internal partial class DeviceAccessPointItemTAssetManagement
     {
     }
 
@@ -12429,7 +12429,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SlotListTSlotItem
+    internal partial class SlotListTSlotItem
     {
 
         private ushort slotNumberField;
@@ -12438,7 +12438,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort SlotNumber
+        internal ushort SlotNumber
         {
             get
             {
@@ -12452,7 +12452,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "token")]
-        public string TextId
+        internal string TextId
         {
             get
             {
@@ -12471,7 +12471,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class SlotGroupsTSlotGroup
+    internal partial class SlotGroupsTSlotGroup
     {
 
         private ExternalTextRefT nameField;
@@ -12481,7 +12481,7 @@
         private string slotListField;
 
         /// <remarks/>
-        public ExternalTextRefT Name
+        internal ExternalTextRefT Name
         {
             get
             {
@@ -12494,7 +12494,7 @@
         }
 
         /// <remarks/>
-        public ExternalTextRefT InfoText
+        internal ExternalTextRefT InfoText
         {
             get
             {
@@ -12508,7 +12508,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SlotList
+        internal string SlotList
         {
             get
             {
@@ -12527,7 +12527,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceAccessPointItemTFieldbusIntegrationSlots
+    internal partial class DeviceAccessPointItemTFieldbusIntegrationSlots
     {
 
         private ushort maxSupportedField;
@@ -12536,7 +12536,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort MaxSupported
+        internal ushort MaxSupported
         {
             get
             {
@@ -12550,7 +12550,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Range
+        internal string Range
         {
             get
             {
@@ -12569,7 +12569,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationProcessT
+    internal partial class ApplicationProcessT
     {
 
         private DeviceAccessPointItemT[] deviceAccessPointListField;
@@ -12596,7 +12596,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DeviceAccessPointItem", IsNullable = false)]
-        public DeviceAccessPointItemT[] DeviceAccessPointList
+        internal DeviceAccessPointItemT[] DeviceAccessPointList
         {
             get
             {
@@ -12610,7 +12610,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ModuleItem", IsNullable = false)]
-        public ModuleItemT[] ModuleList
+        internal ModuleItemT[] ModuleList
         {
             get
             {
@@ -12625,7 +12625,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("PortSubmoduleItem", typeof(PortSubmoduleItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("SubmoduleItem", typeof(SubmoduleItemT), IsNullable = false)]
-        public ObjectT[] SubmoduleList
+        internal ObjectT[] SubmoduleList
         {
             get
             {
@@ -12639,7 +12639,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ValueItem", IsNullable = false)]
-        public ValueItemT[] ValueList
+        internal ValueItemT[] ValueList
         {
             get
             {
@@ -12655,7 +12655,7 @@
         [System.Xml.Serialization.XmlArrayItemAttribute("ChannelDiagItem", typeof(ChannelDiagItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileChannelDiagItem", typeof(ProfileChannelDiagItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("SystemDefinedChannelDiagItem", typeof(SystemDefinedChannelDiagItemT), IsNullable = false)]
-        public object[] ChannelDiagList
+        internal object[] ChannelDiagList
         {
             get
             {
@@ -12671,7 +12671,7 @@
         [System.Xml.Serialization.XmlArrayItemAttribute("ChannelProcessAlarmItem", typeof(ChannelProcessAlarmItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileChannelProcessAlarmItem", typeof(ProfileChannelProcessAlarmItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("SystemDefinedChannelProcessAlarmItem", typeof(SystemDefinedChannelProcessAlarmItemT), IsNullable = false)]
-        public object[] ChannelProcessAlarmList
+        internal object[] ChannelProcessAlarmList
         {
             get
             {
@@ -12686,7 +12686,7 @@
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ProfileUnitDiagTypeItem", typeof(ProfileUnitDiagTypeItemT), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("UnitDiagTypeItem", typeof(UnitDiagTypeItemT), IsNullable = false)]
-        public object[] UnitDiagTypeList
+        internal object[] UnitDiagTypeList
         {
             get
             {
@@ -12700,7 +12700,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("LogBookEntryItem", IsNullable = false)]
-        public LogBookEntryItemT[] LogBookEntryList
+        internal LogBookEntryItemT[] LogBookEntryList
         {
             get
             {
@@ -12714,7 +12714,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("GraphicItem", IsNullable = false)]
-        public GraphicItemT[] GraphicsList
+        internal GraphicItemT[] GraphicsList
         {
             get
             {
@@ -12728,7 +12728,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("CategoryItem", IsNullable = false)]
-        public CategoryItemT[] CategoryList
+        internal CategoryItemT[] CategoryList
         {
             get
             {
@@ -12741,7 +12741,7 @@
         }
 
         /// <remarks/>
-        public ApplicationProcessTExternalTextList ExternalTextList
+        internal ApplicationProcessTExternalTextList ExternalTextList
         {
             get
             {
@@ -12760,7 +12760,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ApplicationProcessTExternalTextList
+    internal partial class ApplicationProcessTExternalTextList
     {
 
         private ExternalTextT[] primaryLanguageField;
@@ -12769,7 +12769,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Text", IsNullable = false)]
-        public ExternalTextT[] PrimaryLanguage
+        internal ExternalTextT[] PrimaryLanguage
         {
             get
             {
@@ -12783,7 +12783,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Language")]
-        public LanguageT[] Language
+        internal LanguageT[] Language
         {
             get
             {
@@ -12802,13 +12802,13 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceFunctionT
+    internal partial class DeviceFunctionT
     {
 
         private FamilyT familyField;
 
         /// <remarks/>
-        public FamilyT Family
+        internal FamilyT Family
         {
             get
             {
@@ -12827,7 +12827,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class DeviceIdentityT
+    internal partial class DeviceIdentityT
     {
 
         private ExternalTextRefT infoTextField;
@@ -12839,7 +12839,7 @@
         private string deviceIDField;
 
         /// <remarks/>
-        public ExternalTextRefT InfoText
+        internal ExternalTextRefT InfoText
         {
             get
             {
@@ -12852,7 +12852,7 @@
         }
 
         /// <remarks/>
-        public TokenParameterT VendorName
+        internal TokenParameterT VendorName
         {
             get
             {
@@ -12866,7 +12866,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string VendorID
+        internal string VendorID
         {
             get
             {
@@ -12880,7 +12880,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string DeviceID
+        internal string DeviceID
         {
             get
             {
@@ -12899,7 +12899,7 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.profibus.com/GSDML/2003/11/DeviceProfile")]
-    public partial class ProfileBodyT
+    internal partial class ProfileBodyT
     {
 
         private DeviceIdentityT deviceIdentityField;
@@ -12909,7 +12909,7 @@
         private ApplicationProcessT applicationProcessField;
 
         /// <remarks/>
-        public DeviceIdentityT DeviceIdentity
+        internal DeviceIdentityT DeviceIdentity
         {
             get
             {
@@ -12922,7 +12922,7 @@
         }
 
         /// <remarks/>
-        public DeviceFunctionT DeviceFunction
+        internal DeviceFunctionT DeviceFunction
         {
             get
             {
@@ -12935,7 +12935,7 @@
         }
 
         /// <remarks/>
-        public ApplicationProcessT ApplicationProcess
+        internal ApplicationProcessT ApplicationProcess
         {
             get
             {
@@ -12955,14 +12955,14 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     [System.Xml.Serialization.XmlRootAttribute("Transforms", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class TransformsType
+    internal partial class TransformsType
     {
 
         private TransformType[] transformField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Transform")]
-        public TransformType[] Transform
+        internal TransformType[] Transform
         {
             get
             {

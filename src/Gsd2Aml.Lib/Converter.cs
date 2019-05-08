@@ -13,6 +13,9 @@ namespace Gsd2Aml.Lib
     // TODO: translation table string dot handling
     // TODO: get ressources
     // TODO: timestamp
+    /// <summary>
+    /// The converter class which contains the logic to convert a GSD formatted file to an AML file.
+    /// </summary>
     public static class Converter
     {
         private static CAEXFile AmlObject { get; } = new CAEXFile();

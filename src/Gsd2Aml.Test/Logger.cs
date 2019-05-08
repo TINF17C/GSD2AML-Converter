@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Gsd2Aml.Test
 {
-    class Logger : ILoggingService
+    internal class Logger : ILoggingService
     {
         public void Log(LogLevel level, string message)
         {

@@ -5,6 +5,9 @@ using System.IO;
 
 namespace Gsd2Aml.Lib
 {
+    /// <summary>
+    /// Compress an AML file and its resources to an .amlx package using the AML.Engine.
+    /// </summary>
     public static class Compressor
     {
         private const string Gsd2AmlName = "GSD2AML";
