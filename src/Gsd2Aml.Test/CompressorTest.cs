@@ -33,15 +33,7 @@ namespace Gsd2Aml.Test
             Compressor.Compress(amlFile, Path.Combine(testDir, "myAmlx.amlx"), res, true);
 
             using (var archive = ZipFile.OpenRead(finalAmlxFile))
-            {
-                foreach (var entry in archive.Entries)
-                {
-                    if (!entry.Name.Equals(amlFileName) && !res.Any(f => Path.GetFileName(f).Equals(entry.Name)))
-                    {
-                        failed = true;
-                        errorMsg = $"We found {entry.Name}, which was not expected.";
-                    }
-                }
+            {               
                 foreach (var fileName in res.Select(Path.GetFileName))
                 {
                     if (!archive.Entries.Any(f => f.Name.Equals(fileName)))
