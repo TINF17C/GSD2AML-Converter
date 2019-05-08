@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CAEXFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" FileName="output.amlx" SchemaVersion="2.15">
+  <AdditionalInformation xsi:type="WriterHeader">
+    <WriterName>GSD2AML</WriterName>
+    <WriterID>GUID</WriterID>
+    <WriterVendor>TINF17C</WriterVendor>
+    <WriterVersion>1.0.0</WriterVersion>
+    <WriterRelease>1.0.0</WriterRelease>
+    <LastWritingDateTime>2000-01-01T00:00:00.0000000+00:00</LastWritingDateTime>
+    <WriterProjectTitle>unspecified</WriterProjectTitle>
+    <WriterProjectID>unspecified</WriterProjectID>
+  </AdditionalInformation>
+  <SystemUnitClassLib Name="ComponentSystemUnitClassLib">
+    <SystemUnitClass ID="GUID" Name="$1">
+      <SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
+      <InternalElement ID="GUID" Name="DeviceIdentification">
+        <Attribute Name="Manufacturer" AttributeDataType="xs:string">
+          <Value />
+        </Attribute>
+        <Attribute Name="Model" AttributeDataType="xs:string">
+          <Value />
+        </Attribute>
+        <Attribute Name="ProductCode" AttributeDataType="xs:string">
+          <Value />
+        </Attribute>
+        <Attribute Name="DeviceClass" AttributeDataType="xs:string">
+          <Value />
+        </Attribute>
+        <Attribute Name="ShortDescription" AttributeDataType="xs:string">
+          <Value />
+        </Attribute>
+        <Attribute Name="ArticleIdentificationOfVendor" AttributeDataType="xs:string">
+          <Value />
+        </Attribute>
+      </InternalElement>
+      <InternalElement ID="GUID" Name="GSDML">
+        <SupportedRoleClass RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
+        <ExternalInterface ID="GUID" Name="GSDML 2.35" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+          <Attribute Name="refURI" AttributeDataType="xs:anyURI">
+            <Value />
+          </Attribute>
+          <Attribute Name="MIMEType" AttributeDataType="xs:string">
+            <Value />
+          </Attribute>
+        </ExternalInterface>
+      </InternalElement>
+    </SystemUnitClass>
+  </SystemUnitClassLib>
+</CAEXFile>
