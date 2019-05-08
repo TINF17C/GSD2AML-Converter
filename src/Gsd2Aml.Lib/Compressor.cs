@@ -1,8 +1,6 @@
 ﻿using Gsd2Aml.Lib.Logging;
 using System;
 using System.IO;
-using System.IO.Compression;
-using Aml.Engine;
 
 namespace Gsd2Aml.Lib
 {
@@ -22,15 +20,13 @@ namespace Gsd2Aml.Lib
         {
             if (amlFilePath.Equals("") || destination.Equals(""))
             {
-                Util.Logger?.Log(LogLevel.Error, "The AML or destination string cant be omitted.");
                 throw new Exception("AML or destination string was omitted.");
             }
 
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
-            if (String.IsNullOrEmpty(tmpPath))
+            if (string.IsNullOrEmpty(tmpPath))
             {
-                Util.Logger?.Log(LogLevel.Error, "Path to Temp folder is unexpectedly null.");
                 throw new Exception("Path to Temp folder unexpectedly null.");
             }
 
@@ -48,15 +44,14 @@ namespace Gsd2Aml.Lib
                 if (amlFileName != null) CopyFile(amlFilePath, amlFileTmpPath);
 
                 Zip(amlFileTmpPath, destination, ressources, overwriteFile);
+
                 Util.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
 
                 DeleteFolder(tmpPath);
             }
             catch (IOException e)
             {
-                Util.Logger?.Log(LogLevel.Error, e.Message);
-                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Error while compressing the AML-file and the ressources to the .amlx file.", e);
+                throw new IOException("Error while compressing the AML-file and the ressources to the .amlx file.", e);
             }
         }
 
@@ -65,8 +60,9 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="source">The directory you want to be zipped.</param>
         /// <param name="destination">The directory you want to store the zip archive in.</param>
+        /// <param name="ressources">An array of paths to the ressources to be part of the .amlx package.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="IOException"></exception>
         private static void Zip(string sourceAML, string destination, string[] ressources, bool overwriteFile)
         {
             if (overwriteFile)
@@ -83,24 +79,18 @@ namespace Gsd2Aml.Lib
                     foreach (var ressource in ressources)
                     {
                         var fileName = Path.GetFileName(ressource);
-                        if (fileName != null)
-                        {
-                            ac.AddAnyContent(
-                                root,
-                                Path.Combine(Path.GetTempPath(), Gsd2AmlName, fileName),
-                                new Uri("/" + fileName, UriKind.Relative));
-                        }
+                        var fileTmpPath = Path.Combine(Path.GetTempPath(), Gsd2AmlName, fileName);
+                        var fileUri = new Uri("/" + fileName, UriKind.Relative);
+                        if (fileName != null) ac.AddAnyContent(root, fileTmpPath, fileUri);                       
                     }
 
                     ac.Save();
                     ac.Close();
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Util.Logger?.Log(LogLevel.Error, e.Message);
-                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create the .amlx compressed file.", e);
+                throw new IOException("Could not create the .amlx compressed file.", e);
             }
         }
 
@@ -119,9 +109,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger?.Log(LogLevel.Error, e.Message);
-                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create the the temporary directory which was created to compress the .amlx file.", e);
+                throw new IOException("Could not create the the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -139,9 +127,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger?.Log(LogLevel.Error, e.Message);
-                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.", e);
+                throw new IOException("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -161,9 +147,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                Util.Logger?.Log(LogLevel.Error, e.Message);
-                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not delete the temporary directory which was created to compress the .amlx file.", e);
+                throw new IOException("Could not delete the temporary directory which was created to compress the .amlx file.", e);
             }
         }
 
@@ -171,7 +155,8 @@ namespace Gsd2Aml.Lib
         /// Creates a directory path.
         /// </summary>
         /// <param name="destination">The directory path.</param>
-        /// <exception cref="Exception"></exception>
+        /// <returns>Path to the created directory.</returns>
+        /// <exception cref="IOException"></exception>
         private static string CreateDirectory(string destination)
         {
             var output = new DirectoryInfo(destination);
@@ -186,11 +171,9 @@ namespace Gsd2Aml.Lib
             {
                 return Directory.CreateDirectory(output.FullName).FullName;
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Util.Logger?.Log(LogLevel.Error, e.Message);
-                Util.Logger?.Log(LogLevel.Trace, e.StackTrace);
-                throw new Exception("Could not create output directory for destination");
+                throw new IOException("Could not create output directory for destination", e);
             }
         }
     }
