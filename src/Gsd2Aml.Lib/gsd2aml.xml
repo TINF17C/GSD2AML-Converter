@@ -27,6 +27,82 @@
     </Replacement>
   </ProfileBody>
 
+  <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
+    <Replacement>
+      <SystemUnitClassType.ExternalInterface>
+        <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/IO-Link Port">
+          <Attribute Name="SlotNumber" AttributeDataType="xs:integer">
+            <Value>$2</Value>
+          </Attribute>
+        </ExternalInterface>
+      </SystemUnitClassType.ExternalInterface>
+    </Replacement>
+    <Reference Ref="$1" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem TextId="" />
+    </Reference>
+    <Reference Ref="$2">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem SlotNumber="" />
+    </Reference>
+  </ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
+
+  <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
+    <Replacement>
+      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/PNIO-Port">
+        <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
+          <Value>$2</Value>
+        </Attribute>
+        <Attribute Name="MAUTypes" AttributeDataType="xs:integer">
+          <Value>$3</Value>
+        </Attribute>
+        <Attribute Name="IdentNumber" AttributeDataType="xs:string">
+          <Value>$4</Value>
+        </Attribute>
+        <Attribute Name="MaxPortTxDelay" AttributeDataType="xs:integer">
+          <Value>$5</Value>
+        </Attribute>
+        <Attribute Name="MaxPortRxDelay" AttributeDataType="xs:integer">
+          <Value>$6</Value>
+        </Attribute>
+        <Attribute Name="LinkStateDiagnosisCapability" AttributeDataType="xs:string">
+          <Value>$7</Value>
+        </Attribute>
+        <Attribute Name="SupportsRingportConfig" AttributeDataType="xs:boolean">
+          <Value>$8</Value>
+        </Attribute>
+        <Attribute Name="IsDefaultRingport" AttributeDataType="xs:boolean">
+          <Value>$9</Value>
+        </Attribute>
+      </ExternalInterface>
+    </Replacement>
+    <Reference Ref="$1" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem TextId="" />
+    </Reference>
+    <Reference Ref="$2">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubslotNumber="" />
+    </Reference>
+    <Reference Ref="$3">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MAUTypes="" />
+    </Reference>
+    <Reference Ref="$4">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubmoduleIdentNumber="" />
+    </Reference>
+    <Reference Ref="$5">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortTxDelay="" />
+    </Reference>
+    <Reference Ref="$6">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortRxDelay="" />
+    </Reference>
+    <Reference Ref="$7">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem LinkStateDiagnosisCapability="" />
+    </Reference>
+    <Reference Ref="$8">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SupportsRingportConfig="" />
+    </Reference>
+    <Reference Ref="$9">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem IsDefaultRingport="" />
+    </Reference>
+  </ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
+
   <DeviceIdentity>
     <Replacement>
       <CAEXFile.SystemUnitClass>
@@ -86,53 +162,16 @@
             </InternalElement>
 
             <InternalElement CAEXObject.Name="PhysicalInterfaces" CAEXObject.ID="GUID">
-              <!--<Attribute Name="MaxInputLength" AttributeDataType="xs:integer">
-                <Value>1440</Value>
-              </Attribute>
 
-              <Attribute Name="MaxOutputLength" AttributeDataType="xs:integer">
-                <Value>1440</Value>
-              </Attribute>-->
-
-              <!-- TODO: PortSubmoduleItem -->
-              <ExternalInterface Name="$6" ID="GUID" RefBaseClassPath="physicalEndPoint/PNIO-Port">
-                <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
-                  <Value>$7</Value>
-                </Attribute>
-                <Attribute Name="MAUTypes" AttributeDataType="xs:integer">
-                  <Value>$8</Value>
-                </Attribute>
-                <Attribute Name="IdentNumber" AttributeDataType="xs:string">
-                  <Value>$9</Value>
-                </Attribute>
-                <Attribute Name="MaxPortTxDelay" AttributeDataType="xs:integer">
-                  <Value>$10</Value>
-                </Attribute>
-                <Attribute Name="MaxPortRxDelay" AttributeDataType="xs:integer">
-                  <Value>$11</Value>
-                </Attribute>
-                <Attribute Name="LinkStateDiagnosisCapability" AttributeDataType="xs:string">
-                  <Value>$12</Value>
-                </Attribute>
-                <Attribute Name="SupportsRingportConfig" AttributeDataType="xs:boolean">
-                  <Value>$13</Value>
-                </Attribute>
-                <Attribute Name="IsDefaultRingport" AttributeDataType="xs:boolean">
-                  <Value>$14</Value>
-                </Attribute>
-              </ExternalInterface>
-
-              <!-- TODO: SlotItem -->
-              <ExternalInterface Name="$15" ID="GUID" RefBaseClassPath="physicalEndPoint/IO-Link Port">
-                <Attribute Name="SlotNumber" AttributeDataType="xs:integer">
-                  <Value>$16</Value>
-                </Attribute>
-              </ExternalInterface>
+              <SystemUnitClassType.ExternalInterface>
+                <Rule>ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem</Rule>
+                <!-- <Rule>ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem</Rule> -->
+              </SystemUnitClassType.ExternalInterface>
 
             </InternalElement>
 
             <!-- TODO: GraphItemRef -->
-            <InternalElement Name="DeviceSymbol" ID="GUID">
+            <!--<InternalElement Name="DeviceSymbol" ID="GUID">
               <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
 
               <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
@@ -140,11 +179,11 @@
                   <Value>$17</Value>
                 </Attribute>
               </ExternalInterface>
-            </InternalElement>
+            </InternalElement>-->
 
-            <!-- TODO: InterfaceSubModuleItem-->
-            <InternalElement Name="LogicalInterface" ID="GUID">
-              <ExternalInterface Name="$18" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
+            <InternalElement CAEXObject.Name="LogicalInterface" CAEXObject.ID="GUID">
+              <!-- TODO: InterfaceSubModuleItem -->
+              <!--<ExternalInterface Name="$18" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
                 <Attribute Name="SupportedRT_Classes" AttributeDataType="xs:string">
                   <Value>$19</Value>
                 </Attribute>
@@ -235,7 +274,7 @@
                     <Value>$42</Value>
                   </Attribute>
                 </InternalElement>
-              </ExternalInterface>
+              </ExternalInterface>-->
             </InternalElement>
 
           </SystemUnitClassType.InternalElement>
@@ -257,39 +296,6 @@
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.InfoText TextId="" />
     </Reference>
     <Reference Ref="5" Type="GSDRef" />
-    <Reference Ref="$6" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem TextId="" />
-    </Reference>
-    <Reference Ref="$7">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubslotNumber="" />
-    </Reference>
-    <Reference Ref="$8">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MAUTypes="" />
-    </Reference>
-    <Reference Ref="$9">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubmoduleIdentNumber="" />
-    </Reference>
-    <Reference Ref="$10">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortTxDelay="" />
-    </Reference>
-    <Reference Ref="$11">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortRxDelay="" />
-    </Reference>
-    <Reference Ref="$12">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem LinkStateDiagnosisCapability="" />
-    </Reference>
-    <Reference Ref="$13">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SupportsRingportConfig="" />
-    </Reference>
-    <Reference Ref="$14">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem IsDefaultRingport="" />
-    </Reference>
-    <Reference Ref="$15" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem TextId="" />
-    </Reference>
-    <Reference Ref="$16">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem SlotNumber="" />
-    </Reference>
     <Reference Ref="$17" Type="GraphicRef">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef GraphicItemTarget="" />
     </Reference>

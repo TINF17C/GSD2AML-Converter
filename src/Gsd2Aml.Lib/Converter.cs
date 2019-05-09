@@ -188,6 +188,11 @@ namespace Gsd2Aml.Lib
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
                 if (childNode.Name.Equals("#comment")) continue;
+                if (childNode.Name.Equals("Rule"))
+                {
+
+                    continue;
+                }
 
                 Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
                 var (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);

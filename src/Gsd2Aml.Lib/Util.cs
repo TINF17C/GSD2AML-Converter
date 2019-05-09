@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
@@ -155,25 +157,43 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// This method deserializes the GSD file to check if it is syntactically correct.
+        /// This method checks the GSD file against the the xsd-files and validates it.
         /// </summary>
         /// <param name="inputFile">The path to the GSD file.</param>
         internal static void CheckGsdFileForCorrectness(string inputFile)
         {
-            var serializer = new XmlSerializer(typeof(ISO15745Profile));
-            using (var reader = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
+            var xmlDocument = new XmlDocument();
+            xmlDocument.Load(inputFile);
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var xsdResources = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".xsd"));
+
+            var settings = new XmlReaderSettings {DtdProcessing = DtdProcessing.Ignore, ValidationType = ValidationType.Schema};
+            
+            foreach (var xsdFile in xsdResources)
             {
-                try
+                var xsdResourceStream = assembly.GetManifestResourceStream(xsdFile);
+
+                if (xsdResourceStream == null)
                 {
-                    _ = serializer.Deserialize(reader);
+                    throw new Exception();
                 }
-                catch (Exception e)
-                {
-                    Converter.Logger?.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}");
-                    throw new XmlException($"Invalid GSD-file. Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}", e);
-                }
+
+                var xmlReader = XmlReader.Create(xsdResourceStream, settings);
+                xmlDocument.Schemas.Add(null, xmlReader);
+            }
+
+            try
+            {
+                xmlDocument.Validate(null);
+            }
+            catch (Exception e)
+            {
+                Converter.Logger?.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}");
+                throw new XmlException($"Invalid GSD-file. Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}", e);
             }
             Converter.Logger?.Log(LogLevel.Info, $"GSD file was deserialized correctly. Path to the GSD file: {inputFile}");
+
         }
 
         /// <summary>
