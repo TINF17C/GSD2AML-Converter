@@ -9,13 +9,13 @@
           <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
         </Control>
 
-        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Tick the shortcuts you want to create, then click !(loc.WixUINext)" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Tick the shortcuts you want to create, then click Next" />
         <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="Create Shortcuts" />
         <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallDirDlgBannerBitmap)" />
         <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
 
-        <Control Id="FolderLabel" Type="Text" X="20" Y="60" Width="290" Height="30" NoPrefix="yes" Text="Select the shortcuts to create:" />
+        <Control Id="SelectionLabel" Type="Text" X="20" Y="60" Width="290" Height="30" NoPrefix="yes" Text="Select the shortcuts to create:" />
         <Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="20" Y="100" Width="330" Height="18" CheckBoxValue="0" Property="WIXUI_CREATEDESKTOPSHORTCUT" Text="Create shortcut on the Desktop" />
         <Control Id="StartmenuShortcutCheckBox" Type="CheckBox" X="20" Y="120" Width="330" Height="18" CheckBoxValue="0" Property="WIXUI_CREATESTARTMENUSHORTCUT" Text="Create shortcut in the Start menu" />
       </Dialog>

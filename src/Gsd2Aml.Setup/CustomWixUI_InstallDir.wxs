@@ -42,6 +42,7 @@ Patch dialog sequence:
       <DialogRef Id="PrepareDlg" />
       <DialogRef Id="ProgressDlg" />
       <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="SelectScopeDlg"/>
       <DialogRef Id="ShortcutDlg"/>
       <DialogRef Id="UserExit" />
 
@@ -54,9 +55,16 @@ Patch dialog sequence:
       <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
 
       <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
-      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">LicenseAccepted = "1"</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="SelectScopeDlg">LicenseAccepted = "1"</Publish>
 
-      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="SelectScopeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="SelectScopeDlg" Control="Next" Property="ALLUSERS" Value="2">WIXUI_INSTALLMODE = "0"</Publish>
+      <Publish Dialog="SelectScopeDlg" Control="Next" Property="MSIINSTALLPERUSER" Value="1">WIXUI_INSTALLMODE = "0"</Publish>
+      <Publish Dialog="SelectScopeDlg" Control="Next" Property="ALLUSERS" Value="1">WIXUI_INSTALLMODE = "1"</Publish>
+      <Publish Dialog="SelectScopeDlg" Control="Next" Property="MSIINSTALLPERUSER" Value="{}">WIXUI_INSTALLMODE = "1"</Publish>
+      <Publish Dialog="SelectScopeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">1</Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="SelectScopeDlg">1</Publish>
       <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
       <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
       <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
