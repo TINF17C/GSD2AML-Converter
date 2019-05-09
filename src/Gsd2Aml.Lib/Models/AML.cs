@@ -1614,7 +1614,12 @@ namespace Gsd2Aml.Lib.Models
 
         public string WriterRelease { get; set; }
 
-        public string LastWritingDateTime { get; set; }
+        private string lastWritingDateTime;
+        public string LastWritingDateTime
+        {
+            get => DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
+            set => lastWritingDateTime = value;
+        }
 
         public string WriterProjectTitle { get; set; }
 

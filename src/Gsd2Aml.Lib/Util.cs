@@ -2,7 +2,6 @@
 using Gsd2Aml.Lib.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -200,15 +199,13 @@ namespace Gsd2Aml.Lib
         /// If the translation table is not in the installation folder, it will be loaded from resources.
         /// </summary>
         /// <returns>Returns the translation table XmlDocument object.</returns>
-        internal static XmlDocument LoadTranslationsTable()
+        internal static XmlDocument LoadTranslationTable()
         {
             var translationTable = new XmlDocument();
-
             var assembly = Assembly.GetExecutingAssembly();
-
             var assemblyFolder = Path.GetDirectoryName(assembly.Location);
 
-            if (null != assemblyFolder)
+            if (assemblyFolder != null)
             {
                 var translationTableLocation = Path.Combine(assemblyFolder, CTranslationTableFileName);
                 if (File.Exists(translationTableLocation))
@@ -218,7 +215,6 @@ namespace Gsd2Aml.Lib
             }
 
             var translationTableResource = assembly.GetManifestResourceNames().First(x => x.EndsWith(CTranslationTableFileName));
-
             var translationTableResourceStream = assembly.GetManifestResourceStream(translationTableResource);
 
             if (translationTableResourceStream == null)

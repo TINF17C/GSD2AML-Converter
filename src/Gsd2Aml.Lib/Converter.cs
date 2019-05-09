@@ -12,7 +12,6 @@ namespace Gsd2Aml.Lib
     // TODO: References implemention.
     // TODO: translation table string dot handling
     // TODO: get ressources
-    // TODO: timestamp
     // TODO: update readme
     // TODO: write tests
     /// <summary>
@@ -80,7 +79,7 @@ namespace Gsd2Aml.Lib
 
             // Initialize the GSD XML documents and translation table. Then load these documents.
             var gsdDocument = Util.LoadXmlDocument(inputFile);
-            var translationTable = Util.LoadTranslationsTable();
+            var translationTable = Util.LoadTranslationTable();
 
             if (translationTable.DocumentElement == null)
             {
