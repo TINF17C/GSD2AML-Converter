@@ -243,162 +243,130 @@
       </CAEXFile.SystemUnitClass>
     </Replacement>
     <!-- Caution! There can be multiple DeviceAccessPointItems in a DeviceAccessPointList. Just take the first one, it shouldn,t matter which one you choose regardless. -->
-    <Reference Ref="$1" Type="SingleTextRef" Internal="false">
-      <ISO15745Profile>
-        <ProfileBody>
-          <ApplicationProcess>
-            <DeviceAccessPointList>
-              <DeviceAccessPointItem>
-                <ModuleInfo>
-                  <Name TextId="" />
-                </ModuleInfo>
-              </DeviceAccessPointItem>
-            </DeviceAccessPointList>
-          </ApplicationProcess>
-        </ProfileBody>
-      </ISO15745Profile>
+    <Reference Ref="$1" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.Name TextId="" />
     </Reference>
-    <Reference Ref="$2" Type="DirectRef" Internal="true">
-      <DeviceIdentity>
-        <VendorName Value="" />
-      </DeviceIdentity>
+    <Reference Ref="$2">
+      <ISO15745Profile.ProfileBody.DeviceIdentity.VendorName Value="" />
     </Reference>
-    <Reference Ref="$3" Type="DirectRef" Internal="false">
-      <ISO15745Profile>
-        <ProfileBody>
-          <DeviceFunction>
-            <Family MainFamily="" />
-          </DeviceFunction>
-        </ProfileBody>
-      </ISO15745Profile>
+    <Reference Ref="$3">
+      <ISO15745Profile.ProfileBody.DeviceFunction.Family MainFamily="" />
     </Reference>
     <!-- Again, just choose the first one. -->
-    <Reference Ref="$4" Type="SingleTextRef" Internal="false">
-      <ISO15745Profile>
-        <ProfileBody>
-          <ApplicationProcess>
-            <DeviceAccessPointList>
-              <DeviceAccessPointItem>
-                <ModuleInfo>
-                  <InfoText TextId="" />
-                </ModuleInfo>
-              </DeviceAccessPointItem>
-            </DeviceAccessPointList>
-          </ApplicationProcess>
-        </ProfileBody>
-      </ISO15745Profile>
+    <Reference Ref="$4" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.InfoText TextId="" />
     </Reference>
     <Reference Ref="5" Type="GSDRef" />
-    <Reference Ref="$6" Type="SingleTextRef" Internal="true">
-      <PortSubmoduleItem TextId="" />
+    <Reference Ref="$6" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem TextId="" />
     </Reference>
-    <Reference Ref="$7" Type="InlineRef">
-      <InterfaceSubmoduleItem SubslotNumber="" />
+    <Reference Ref="$7">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubslotNumber="" />
     </Reference>
-    <Reference Ref="$8" Type="InlineRef">
-      <InterfaceSubmoduleItem MAUTypes="" />
+    <Reference Ref="$8">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MAUTypes="" />
     </Reference>
-    <Reference Ref="$9" Type="InlineRef">
-      <InterfaceSubmoduleItem SubmoduleIdentNumber="" />
+    <Reference Ref="$9">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubmoduleIdentNumber="" />
     </Reference>
-    <Reference Ref="$10" Type="InlineRef">
-      <InterfaceSubmoduleItem MaxPortTxDelay="" />
+    <Reference Ref="$10">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortTxDelay="" />
     </Reference>
-    <Reference Ref="$11" Type="InlineRef">
-      <InterfaceSubmoduleItem MaxPortRxDelay="" />
+    <Reference Ref="$11">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortRxDelay="" />
     </Reference>
-    <Reference Ref="$12" Type="InlineRef">
-      <InterfaceSubmoduleItem LinkStateDiagnosisCapability="" />
+    <Reference Ref="$12">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem LinkStateDiagnosisCapability="" />
     </Reference>
-    <Reference Ref="$13" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportsRingportConfig="" />
+    <Reference Ref="$13">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SupportsRingportConfig="" />
     </Reference>
-    <Reference Ref="$14" Type="InlineRef">
-      <InterfaceSubmoduleItem IsDefaultRingport="" />
+    <Reference Ref="$14">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem IsDefaultRingport="" />
     </Reference>
-    <Reference Ref="$15" Type="SingleTextRef" Internal="true">
-      <SlotItem TextId="" />
+    <Reference Ref="$15" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem TextId="" />
     </Reference>
-    <Reference Ref="$16" Type="InlineRef">
-      <SlotItem SlotNumber="" />
+    <Reference Ref="$16">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem SlotNumber="" />
     </Reference>
-    <Reference Ref="$17" Type="GraphicRef" Internal="true">
-      <GraphicItemRef GraphicItemTarget="" />
+    <Reference Ref="$17" Type="GraphicRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef GraphicItemTarget="" />
     </Reference>
-    <Reference Ref="$18" Type="SingleTextRef" Internal="true">
-      <InterfaceSubmoduleItem TextId="" />
+    <Reference Ref="$18" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem TextId="" />
     </Reference>
-    <Reference Ref="$19" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportedRT_Classes="" />
+    <Reference Ref="$19">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedRT_Classes="" />
     </Reference>
-    <Reference Ref="$20" Type="InlineRef">
-      <InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
+    <Reference Ref="$20">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
     </Reference>
-    <Reference Ref="$21" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportedProtocols="" />
+    <Reference Ref="$21">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedProtocols="" />
     </Reference>
-    <Reference Ref="$22" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportedMibs="" />
+    <Reference Ref="$22">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedMibs="" />
     </Reference>
-    <Reference Ref="$23" Type="InlineRef">
-      <InterfaceSubmoduleItem SubslotNumber="" />
+    <Reference Ref="$23">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubslotNumber="" />
     </Reference>
-    <Reference Ref="$24" Type="InlineRef">
-      <InterfaceSubmoduleItem SubmoduleIdentNumber="" />
+    <Reference Ref="$24">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubmoduleIdentNumber="" />
     </Reference>
-    <Reference Ref="$25" Type="InlineRef">
-      <InterfaceSubmoduleItem DCP_HelloSupported="" />
+    <Reference Ref="$25">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_HelloSupported="" />
     </Reference>
-    <Reference Ref="$26" Type="InlineRef">
-      <InterfaceSubmoduleItem DelayMeasurementSupported="" />
+    <Reference Ref="$26">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DelayMeasurementSupported="" />
     </Reference>
-    <Reference Ref="$27" Type="InlineRef">
-      <InterfaceSubmoduleItem NetworkComponentDiagnosisSupported="" />
+    <Reference Ref="$27">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem NetworkComponentDiagnosisSupported="" />
     </Reference>
-    <Reference Ref="$28" Type="InlineRef">
-      <InterfaceSubmoduleItem DCP_BoundarySupported="" />
+    <Reference Ref="$28">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_BoundarySupported="" />
     </Reference>
-    <Reference Ref="$29" Type="InlineRef">
-      <InterfaceSubmoduleItem PTP_BoundarySupported="" />
+    <Reference Ref="$29">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem PTP_BoundarySupported="" />
     </Reference>
-    <Reference Ref="$30" Type="InlineRef">
-      <ApplicationRelations NumberOfAr="" />
+    <Reference Ref="$30">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations NumberOfAr="" />
     </Reference>
-    <Reference Ref="$31" Type="InlineRef">
-      <ApplicationProcess StartupMode="" />
+    <Reference Ref="$31">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations StartupMode="" />
     </Reference>
-    <Reference Ref="$32" Type="InlineRef">
-      <TimingProperties SendClock="" />
+    <Reference Ref="$32">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties SendClock="" />
     </Reference>
-    <Reference Ref="$33" Type="InlineRef">
-      <TimingProperties ReductionRatio="" />
+    <Reference Ref="$33">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties ReductionRatio="" />
     </Reference>
-    <Reference Ref="$34" Type="InlineRef">
-      <RT_Class3TimingProperties SendClock="" />
+    <Reference Ref="$34">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties SendClock="" />
     </Reference>
-    <Reference Ref="$35" Type="InlineRef">
-      <RT_Class3TimingProperties ReductionRatio="" />
+    <Reference Ref="$35">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties ReductionRatio="" />
     </Reference>
-    <Reference Ref="$36" Type="InlineRef">
-      <MediaRedundancy SupportedRole="" />
+    <Reference Ref="$36">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.MediaRedundancy SupportedRole="" />
     </Reference>
-    <Reference Ref="$37" Type="InlineRef">
-      <RT_Class3Properties MaxBridgeDelay="" />
+    <Reference Ref="$37">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxBridgeDelay="" />
     </Reference>
-    <Reference Ref="$38" Type="InlineRef">
-      <RT_Class3Properties MaxNumberIR_FrameData="" />
+    <Reference Ref="$38">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxNumberIR_FrameData="" />
     </Reference>
-    <Reference Ref="$39" Type="InlineRef">
-      <SynchronisationMode SupportedRole="" />
+    <Reference Ref="$39">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedRole="" />
     </Reference>
-    <Reference Ref="$40" Type="InlineRef">
-      <SynchronisationMode MaxLocalJitter="" />
+    <Reference Ref="$40">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode MaxLocalJitter="" />
     </Reference>
-    <Reference Ref="$41" Type="InlineRef">
-      <SynchronisationMode T_PLL_MAX="" />
+    <Reference Ref="$41">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode T_PLL_MAX="" />
     </Reference>
-    <Reference Ref="$42" Type="InlineRef">
-      <SynchronisationMode SupportedSyncProtocols="" />
+    <Reference Ref="$42">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedSyncProtocols="" />
     </Reference>
   </DeviceIdentity>
 
