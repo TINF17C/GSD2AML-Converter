@@ -30,7 +30,7 @@ namespace Gsd2Aml.Cli
                 CheckOutput();
             }
 
-            Console.WriteLine("Started conversion process.");
+            Console.WriteLine($"{Environment.NewLine}Started conversion process.");
             Util.Logger.Log(LogLevel.Info, "The conversion process starts.");
 
             try
@@ -51,8 +51,7 @@ namespace Gsd2Aml.Cli
             catch (Exception e)
             {
                 Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
-                Util.Logger.Log(LogLevel.Error, "Conversion failed." +
-                                                $"{Environment.NewLine}{e}");
+                Util.Logger.Log(LogLevel.Error, e.ToString());
                 Environment.Exit(1);
             }
         }
@@ -68,43 +67,54 @@ namespace Gsd2Aml.Cli
 
             string userInput;
 
+            Console.Write($"{Environment.NewLine}");
+
             do
             {
                 Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
                 userInput = Console.ReadKey().KeyChar.ToString().ToLower();
-                Console.WriteLine(Environment.NewLine);
+                Console.Write(Environment.NewLine);
             } while (!userInput.Equals("y") && !userInput.Equals("n"));
 
             if (!userInput.Equals("n")) return;
 
-            Console.WriteLine("Could not convert file because the output file should not be overwritten.");
+            Console.WriteLine($"{Environment.NewLine}Could not convert file because the output file should not be overwritten.");
             Util.Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
             Environment.Exit(0);
         }
 
         /// <summary>
-        /// Checks if the output file is valid. If not it changes the string:
-        /// 1) outputFile is empty --> inputFileDirectory + timestamp.amlx
-        /// 2) outputFile is like ...\test or ...\.amlx --> outputDirectory + timestamp.amlx (Example: ...\test\[timestamp].amlx ...\.amlx\[timestamp].amlx)
+        /// Checks if the output file is valid. If not it changes the string.
         /// </summary>
         /// <returns>A valid outputFile string.</returns>
         internal void GetOutputFile()
         {
+            if (File.Exists(Settings.OutputFile)) return;
+
+            var defaultFilePath = Lib.Util.GetOutputFileName(Settings.InputFile) + "x";
+
             if (string.IsNullOrEmpty(Settings.OutputFile))
             {
-                var inputDirectoryName = Path.GetDirectoryName(Settings.InputFile);
-                if (!string.IsNullOrEmpty(inputDirectoryName))
-                {
-                    Settings.OutputFile = Path.Combine(inputDirectoryName, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
-                }
+                Settings.OutputFile = defaultFilePath;
+                return;
             }
 
-            if (!string.IsNullOrEmpty(Path.GetExtension(Settings.OutputFile)) &&
-                !string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(Settings.OutputFile))) return;
-
-            if (Settings.OutputFile != null)
+            try
             {
-                Settings.OutputFile = Path.Combine(Settings.OutputFile, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".amlx");
+                var directory = Path.GetDirectoryName(Settings.OutputFile);
+                Directory.CreateDirectory(directory);
+            }
+            catch (Exception e)
+            {
+                Util.Logger.Log(LogLevel.Error, $"User passed invalid output flag: {Settings.OutputFile}");
+                throw new Exception($"{Environment.NewLine}Error: You passed an invalid output path." +
+                                    $"{Environment.NewLine}For more information run 'gsd2aml --help'.", e);
+            }
+
+            if (string.IsNullOrEmpty(Path.GetExtension(Settings.OutputFile)) ||
+                string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(Settings.OutputFile)))
+            {
+                Settings.OutputFile = Path.Combine(Settings.OutputFile, Path.GetFileName(defaultFilePath));
             }
         }
     }

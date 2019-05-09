@@ -11,7 +11,10 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
-    internal static class Util
+    /// <summary>
+    /// Contains utility functions which provide helping functionalities for the conversion process.
+    /// </summary>
+    public static class Util
     {
         private const string CTranslationTableFileName = "gsd2aml.xml";
 
@@ -237,7 +240,7 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <returns>The correctly generated output file name.</returns>
-        internal static string GetOutputFileName(string inputFile)
+        public static string GetOutputFileName(string inputFile)
         {
             if (string.IsNullOrEmpty(inputFile))
             {

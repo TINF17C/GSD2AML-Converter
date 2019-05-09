@@ -5,6 +5,9 @@ using System.IO;
 
 namespace Gsd2Aml.Lib
 {
+    /// <summary>
+    /// Compress an AML file and its resources to an .amlx package using the AML.Engine.
+    /// </summary>
     public static class Compressor
     {
         private const string Gsd2AmlName = "GSD2AML";
@@ -69,6 +72,10 @@ namespace Gsd2Aml.Lib
             if (overwriteFile)
             {
                 File.Delete(destination);
+            }
+            else if (File.Exists(destination))
+            {
+                throw new IOException("Could not create the .amlx compressed file because the file should not be overwritten.");
             }
 
             try

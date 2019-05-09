@@ -8,8 +8,8 @@ namespace Gsd2Aml.Cli
 {
     internal class Settings
     {
-        private const string CHelp = "--help";
-        private const string CHelpShort = "-h";
+        internal const string CHelp = "--help";
+        internal const string CHelpShort = "-h";
 
         private const string CInputFile = "--input";
         private const string CInputFileShort = "-i";
@@ -49,14 +49,15 @@ namespace Gsd2Aml.Cli
 
         /// <summary>
         /// This method checks three things:
-        /// 1) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
-        /// 2. If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
+        /// 1) If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
+        /// 2) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
         /// 3) If the user passed --output and --string at the same time.
         /// If one of the above happens, an error will be thrown.
         /// </summary>
         /// <exception cref="ArgumentException">The argument list is invalid.</exception>
         internal void CheckCliArguments()
         {
+            // Check for 1)
             for (var i = 0; i < Arguments.Length - 1; i += 2)
             {
                 if (Args.IndexOf(Arguments[i]) < 0 || Args.IndexOf(Arguments[i + 1]) < 0) continue;
@@ -66,11 +67,13 @@ namespace Gsd2Aml.Cli
                                             $"{Environment.NewLine}For more information run 'gsd2aml --help'.");
             }
 
+            // Check for 2)
             if (Args.Count != Args.Distinct().Count())
             {
                 PrintMultipleParameterError();
             }
 
+            // Check for 3)
             if (Args.IndexOf(COutputFile) < 0 && Args.IndexOf(COutputFileShort) < 0 ||
                 Args.IndexOf(CStringOutput) < 0 && Args.IndexOf(CStringOutputShort) < 0) return;
 
@@ -94,16 +97,11 @@ namespace Gsd2Aml.Cli
 
             for (var i = 0; i < Args.Count; i++)
             {
-                if (Args[i].Equals(CHelp) || Args[i].Equals(CHelpShort))
+                if (!parameter.ContainsKey(Args[i])) continue;
+
+                if (i + 1 < Args.Count)
                 {
-                    Util.PrintHelpText();
-                }
-                else if (parameter.ContainsKey(Args[i]))
-                {
-                    if (i + 1 < Args.Count)
-                    {
-                        parameter[Args[i]] = Args[i + 1];
-                    }
+                    parameter[Args[i]] = Args[i + 1];
                 }
             }
 

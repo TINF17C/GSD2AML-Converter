@@ -12,7 +12,7 @@ namespace Gsd2Aml.Cli
         /// <param name="args">Arguments which were passed to the program.</param>
         private static void Main(string[] args)
         {
-            if (args.Length == 0 || args.Contains("-h") || args.Contains("--help"))
+            if (args.Length == 0 || args.Contains(Settings.CHelp) || args.Contains(Settings.CHelpShort))
             {
                 Util.Logger.Log(LogLevel.Info, "Arguments array is empty or contains a -h/--help flag.");
                 Util.PrintHelpText();
