@@ -12,6 +12,10 @@ namespace Gsd2Aml.Cli
         /// <param name="args">Arguments which were passed to the program.</param>
         private static void Main(string[] args)
         {
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+
             if (args.Length == 0 || args.Contains(Settings.CHelp) || args.Contains(Settings.CHelpShort))
             {
                 Util.Logger.Log(LogLevel.Info, "Arguments array is empty or contains a -h/--help flag.");
