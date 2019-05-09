@@ -25,7 +25,7 @@ namespace Gsd2Aml.Lib
         /// <returns>The property info, the type of the found property and if the type is an array.</returns>
         internal static (PropertyInfo, Type, bool) GetProperty(string searchedProperty)
         {
-            Converter.Logger?.Log(LogLevel.Info, $"Search following property {searchedProperty}");
+            Converter.Logger?.Log(LogLevel.Debug, $"Search following property {searchedProperty}");
 
             PropertyInfo propertyInfo = null;
 
@@ -38,14 +38,14 @@ namespace Gsd2Aml.Lib
                 var currentType = propertyInfo == null ? typeof(Wrapper) : propertyInfo.PropertyType;
                 propertyInfo = SearchPropertyByString(currentType, splitString);
 
-                Converter.Logger?.Log(LogLevel.Info, $"Found the property {propertyInfo?.Name} with this declaring type {propertyInfo?.DeclaringType}.");
+                Converter.Logger?.Log(LogLevel.Debug, $"Found the property {propertyInfo?.Name} with this declaring type {propertyInfo?.DeclaringType}.");
 
                 if (propertyInfo == null) break;
             }
 
             if (propertyInfo == null)
             {
-                Converter.Logger?.Log(LogLevel.Info, $"Property was not found {searchedProperty}");
+                Converter.Logger?.Log(LogLevel.Error, $"Property was not found {searchedProperty}");
                 throw new NullReferenceException("A property was not found.");
             }
 
@@ -55,7 +55,7 @@ namespace Gsd2Aml.Lib
                                 ? propertyInfo.PropertyType.GetElementType()
                                 : propertyInfo.PropertyType;
 
-            Converter.Logger?.Log(LogLevel.Info, $"Found valid property for {searchedProperty}. " +
+            Converter.Logger?.Log(LogLevel.Debug, $"Found valid property for {searchedProperty}. " +
                                        $"Property: {propertyInfo} " +
                                        $"Type: {propertyType} " +
                                        $"Declaring Type: {propertyInfo.DeclaringType} " +
@@ -110,7 +110,7 @@ namespace Gsd2Aml.Lib
         /// <returns>The replacement node and a list which contains all references.</returns>
         internal static (XmlNode, ICollection<XmlNode>) GetInformationFromRule(XmlNode translationRule)
         {
-            Converter.Logger?.Log(LogLevel.Info, $"Parsing the rule for {translationRule.Name}.");
+            Converter.Logger?.Log(LogLevel.Debug, $"Parsing the rule for {translationRule.Name}.");
 
             // Initialize all out parameters with default values.
             var references = new List<XmlNode>();
@@ -120,7 +120,7 @@ namespace Gsd2Aml.Lib
             var alreadyReadReplacement = false;
             foreach (XmlNode xmlNode in translationRule.ChildNodes)
             {
-                Converter.Logger?.Log(LogLevel.Info, $"Reading following XmlNode: {xmlNode.Name}");
+                Converter.Logger?.Log(LogLevel.Debug, $"Reading following XmlNode: {xmlNode.Name}");
                 switch (xmlNode.Name)
                 {
                     case "Reference":
@@ -145,7 +145,7 @@ namespace Gsd2Aml.Lib
                 }
             }
 
-            Converter.Logger?.Log(LogLevel.Info, "Successfully got the information out of the translation rule.");
+            Converter.Logger?.Log(LogLevel.Debug, "Successfully got the information out of the translation rule.");
 
             // Check if replacement is null.
             if (replacement != null) return (replacement, references);

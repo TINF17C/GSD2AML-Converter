@@ -106,7 +106,7 @@ namespace Gsd2Aml.Cli
             }
             catch (Exception e)
             {
-                Util.Logger.Log(LogLevel.Error, $"User passed invalid output flag: {Settings.OutputFile}");
+                Util.Logger.Log(LogLevel.Error, $"User passed invalid output path: {Settings.OutputFile}");
                 throw new Exception($"{Environment.NewLine}Error: You passed an invalid output path." +
                                     $"{Environment.NewLine}For more information run 'gsd2aml --help'.", e);
             }
