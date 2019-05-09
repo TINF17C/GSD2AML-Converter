@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,10 @@ namespace Gsd2Aml.Gui
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string ProductTitle => "GSD2AML Converter";
+
+        public string ProductVersion => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+
         public MainWindow()
         {
             InitializeComponent();
