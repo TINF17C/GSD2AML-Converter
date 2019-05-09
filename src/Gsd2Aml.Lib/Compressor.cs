@@ -73,6 +73,10 @@ namespace Gsd2Aml.Lib
             {
                 File.Delete(destination);
             }
+            else if (File.Exists(destination))
+            {
+                throw new IOException("Could not create the .amlx compressed file because the file should not be overwritten.");
+            }
 
             try
             {

@@ -237,7 +237,7 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <returns>The correctly generated output file name.</returns>
-        internal static string GetOutputFileName(string inputFile)
+        public static string GetOutputFileName(string inputFile)
         {
             if (string.IsNullOrEmpty(inputFile))
             {

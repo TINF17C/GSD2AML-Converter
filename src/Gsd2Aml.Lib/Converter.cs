@@ -13,7 +13,8 @@ namespace Gsd2Aml.Lib
     // TODO: translation table string dot handling
     // TODO: get ressources
     // TODO: timestamp
-    // TODO: default file name output cli
+    // TODO: update readme
+    // TODO: write tests
     /// <summary>
     /// The converter class which contains the logic to convert a GSD formatted file to an AML file.
     /// </summary>

@@ -17,7 +17,7 @@ namespace Gsd2Aml.Cli
                                                   $"{Environment.NewLine}\t-h, --help\t\tPrints this info and the converter's usage/options." +
                                                   $"{Environment.NewLine}\t-i, --input file\tThe path to the file which should be converted. Example: C:\\path\\to\\input\\file.xml" +
                                                   $"{Environment.NewLine}\t-o, --output file\tSets the path to the output file. Example: C:\\path\\to\\output\\file.amlx" +
-                                                  $"{Environment.NewLine}\t\t\t\tIf nothing is specified default is: C:\\path\\to\\input\\file\\<timestamp>.amlx (OPTIONAL)" +
+                                                  $"{Environment.NewLine}\t\t\t\tIf nothing is specified default is: C:\\path\\to\\input\\file\\<input-file-name>.amlx (OPTIONAL)" +
                                                   $"{Environment.NewLine}\t-s, --string\t\tPrints the generated AML XML file to stdout. No *.amlx file will be generated. (OPTIONAL)" +
                                                   $"{Environment.NewLine}Note:" +
                                                   $"{Environment.NewLine}\t--output and --string cannot be used together.";
