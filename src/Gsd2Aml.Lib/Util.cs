@@ -160,7 +160,7 @@ namespace Gsd2Aml.Lib
         internal static void CheckGsdFileForCorrectness(string inputFile)
         {
             var serializer = new XmlSerializer(typeof(ISO15745Profile));
-            using (var reader = new FileStream(inputFile, FileMode.Open))
+            using (var reader = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
             {
                 try
                 {
