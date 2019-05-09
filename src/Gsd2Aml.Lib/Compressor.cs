@@ -19,12 +19,13 @@ namespace Gsd2Aml.Lib
         /// <param name="destination">The directory you want to store the archive in including the name of the archive.amlx.</param>
         /// <param name="resources">An array of paths to the resources to be part of the .amlx package.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="IOException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="Exception"></exception>
         public static void Compress(string amlFilePath, string destination, string[] resources, bool overwriteFile = false)
         {
-            if (string.IsNullOrEmpty(amlFilePath)) throw new ArgumentException("AML file path was null or empty.");
-            if (string.IsNullOrEmpty(destination)) throw new ArgumentException("Destination file path was null or empty.");
+            if (string.IsNullOrEmpty(amlFilePath)) throw new ArgumentNullException(amlFilePath, "AML file path was null or empty.");
+            if (string.IsNullOrEmpty(destination)) throw new ArgumentNullException(destination, "Destination file path was null or empty.");
 
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
@@ -49,13 +50,18 @@ namespace Gsd2Aml.Lib
 
                 Zip(amlFileTmpPath, destination, resources, overwriteFile);
 
-                Converter.Logger?.Log(LogLevel.Info, $"Successfully saved .amlx package {Path.GetFileName(destination)} to {destination}.");
+                Converter.Logger?.Log(LogLevel.Info,
+                    $"Successfully saved .amlx package {Path.GetFileName(destination)} to {destination}.");
 
                 DeleteFolder(tmpPath);
             }
             catch (IOException e)
             {
-                throw new IOException("Error while compressing the AML-file and the resources to the .amlx package.", e);
+                throw new IOException("Error while compressing the AML and resource files to the .amlx package.", e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An exception occured while compressing the AML and resource files to the .amlx package.", e);
             }
         }
 
@@ -66,9 +72,13 @@ namespace Gsd2Aml.Lib
         /// <param name="destination">The directory you want to store the zip archive in.</param>
         /// <param name="resources">An array of paths to the resources to be part of the .amlx package.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="IOException"></exception>
+        /// <exception cref="Exception"></exception>
         private static void Zip(string sourceAml, string destination, IEnumerable<string> resources, bool overwriteFile)
         {
+            if (string.IsNullOrEmpty(sourceAml)) throw new ArgumentNullException(sourceAml, "Source Aml was null or empty.");
+            if (string.IsNullOrEmpty(destination)) throw new ArgumentNullException(destination, "Destination was null or empty.");
             if (overwriteFile)
             {
                 File.Delete(destination);
@@ -99,7 +109,11 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                throw new IOException("Could not create the .amlx compressed file.", e);
+                throw new IOException("Could not create the .amlx package while using the AutomationML container.", e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An exception occured while creating the .amlx package while using the AutomationML container.", e);
             }
         }
 
@@ -108,17 +122,34 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="folderName">The name of the folder to be created.</param>
         /// <returns>The path to the directory as a string.</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="IOException"></exception>
+        /// <exception cref="PathTooLongException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="Exception"></exception>
         private static string CreateTmpDirectory(string folderName)
         {
+            if (string.IsNullOrEmpty(folderName)) throw new ArgumentNullException(folderName, "Folder name was null or empty.");
             try
             {
                 var path = Path.Combine(Path.GetTempPath(), folderName);
                 return CreateDirectory(path);
             }
+            catch (PathTooLongException e)
+            {
+                throw new PathTooLongException("Could not create TMP directory for creating the .amlx package because the path was too long.", e);
+            }
             catch (IOException e)
             {
                 throw new IOException("Could not create the the temporary directory which was created to compress the .amlx package.", e);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new UnauthorizedAccessException("Could not create TMP directory for creating the .amlx package because of unauthorized access.", e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An exception occured while creating the TMP directory for creating the .amlx package.", e);
             }
         }
 
@@ -127,16 +158,34 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="source">The source path.</param>
         /// <param name="destination">The destination path.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="IOException"></exception>
+        /// <exception cref="PathTooLongException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="Exception"></exception>
         private static void CopyFile(string source, string destination)
         {
+            if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(source, "Source was null or empty.");
+            if (string.IsNullOrEmpty(destination)) throw  new ArgumentNullException(destination, "Destination was null or empty.");
             try
             {
                 File.Copy(source, destination, true);
             }
+            catch (PathTooLongException e)
+            {
+                throw new PathTooLongException("Could not copy the file because a path was too long.", e);
+            }
             catch (IOException e)
             {
-                throw new IOException("Could not copy a resource file to the temporary directory which was created to compress the .amlx package.", e);
+                throw new IOException("Could not copy a file to the temporary directory which was created to compress the .amlx package.", e);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new UnauthorizedAccessException("Could not copy a file because of unauthorized access.", e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An exception occured while copying a file.", e);
             }
         }
 
@@ -144,9 +193,14 @@ namespace Gsd2Aml.Lib
         /// Deletes a folder if it exists.
         /// </summary>
         /// <param name="destination">The destination path.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="IOException"></exception>
+        /// <exception cref="PathTooLongException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="Exception"></exception>
         private static void DeleteFolder(string destination)
         {
+            if (string.IsNullOrEmpty(destination)) throw new ArgumentNullException(destination, "Destination was null or empty");
             try
             {
                 if (Directory.Exists(destination))
@@ -154,9 +208,21 @@ namespace Gsd2Aml.Lib
                     Directory.Delete(destination, true);
                 }
             }
+            catch (PathTooLongException e)
+            {
+                throw new PathTooLongException("Could not delete the directory because the path was too long.", e);
+            }
             catch (IOException e)
             {
-                throw new IOException("Could not delete the temporary directory which was created to compress the .amlx package.", e);
+                throw new IOException("Could not delete the directory which was created to compress the .amlx package.", e);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new UnauthorizedAccessException("Could not delete the directory because of unauthorized access.", e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An exception occured while deleting a directory.", e);
             }
         }
 
@@ -165,23 +231,37 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="destination">The directory path.</param>
         /// <returns>Path to the created directory.</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="IOException"></exception>
+        /// <exception cref="PathTooLongException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="Exception"></exception>
         private static string CreateDirectory(string destination)
         {
+            if (string.IsNullOrEmpty(destination)) throw new ArgumentNullException(destination, "Destination path was null or empty.");
             var output = new DirectoryInfo(destination);
 
-            if (string.IsNullOrEmpty(output.FullName) || output.Exists)
-            {
-                return output.Exists ? output.FullName : null;
-            }
+            if (output.Exists) return output.Exists ? output.FullName : null;
 
             try
             {
                 return Directory.CreateDirectory(output.FullName).FullName;
             }
+            catch (PathTooLongException e)
+            {
+                throw new PathTooLongException("Could not create destination output directory because the path was too long.", e);
+            }
             catch (IOException e)
             {
-                throw new IOException("Could not create destination output directory for creating the .amlx package.", e);
+                throw new IOException("Could not create destination output directory.", e);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new UnauthorizedAccessException("Could not create destination output directory because of unauthorized access.", e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An exception occured while creating a directory.", e);
             }
         }
     }
