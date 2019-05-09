@@ -37,6 +37,7 @@
           </SystemUnitClassType.SupportedRoleClass>
 
           <SystemUnitClassType.InternalElement>
+
             <InternalElement CAEXObject.Name="DeviceIdentification" CAEXObject.ID="GUID">
               <SystemUnitClassType.Attribute>
                 <Attribute CAEXObject.Name="Manufacturer" Attribute.AttributeDataType="xs:string">
@@ -52,7 +53,7 @@
                 </Attribute>
 
                 <Attribute CAEXObject.Name="DeviceClass" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>I/O</Attribute.Value>
+                  <Attribute.Value>$3</Attribute.Value>
                 </Attribute>
 
                 <Attribute CAEXObject.Name="ShortDescription" Attribute.AttributeDataType="xs:string">
@@ -64,8 +65,8 @@
                 </Attribute>
               </SystemUnitClassType.Attribute>
             </InternalElement>
-            <InternalElement CAEXObject.Name="GSDML" CAEXObject.ID="GUID">
 
+            <InternalElement CAEXObject.Name="GSDML" CAEXObject.ID="GUID">
               <SystemUnitClassType.SupportedRoleClass>
                 <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
               </SystemUnitClassType.SupportedRoleClass>
@@ -82,14 +83,162 @@
                   </ExternalInterface.Attribute>
                 </ExternalInterface>
               </SystemUnitClassType.ExternalInterface>
+            </InternalElement>
+
+            <InternalElement CAEXObject.Name="PhysicalInterfaces" CAEXObject.ID="GUID">
+              <!--<Attribute Name="MaxInputLength" AttributeDataType="xs:integer">
+                <Value>1440</Value>
+              </Attribute>
+
+              <Attribute Name="MaxOutputLength" AttributeDataType="xs:integer">
+                <Value>1440</Value>
+              </Attribute>-->
+
+              <!-- TODO: PortSubmoduleItem -->
+              <ExternalInterface Name="$6" ID="GUID" RefBaseClassPath="physicalEndPoint/PNIO-Port">
+                <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
+                  <Value>$7</Value>
+                </Attribute>
+                <Attribute Name="MAUTypes" AttributeDataType="xs:integer">
+                  <Value>$8</Value>
+                </Attribute>
+                <Attribute Name="IdentNumber" AttributeDataType="xs:string">
+                  <Value>$9</Value>
+                </Attribute>
+                <Attribute Name="MaxPortTxDelay" AttributeDataType="xs:integer">
+                  <Value>$10</Value>
+                </Attribute>
+                <Attribute Name="MaxPortRxDelay" AttributeDataType="xs:integer">
+                  <Value>$11</Value>
+                </Attribute>
+                <Attribute Name="LinkStateDiagnosisCapability" AttributeDataType="xs:string">
+                  <Value>$12</Value>
+                </Attribute>
+                <Attribute Name="SupportsRingportConfig" AttributeDataType="xs:boolean">
+                  <Value>$13</Value>
+                </Attribute>
+                <Attribute Name="IsDefaultRingport" AttributeDataType="xs:boolean">
+                  <Value>$14</Value>
+                </Attribute>
+              </ExternalInterface>
+
+              <!-- TODO: SlotItem -->
+              <ExternalInterface Name="$15" ID="GUID" RefBaseClassPath="physicalEndPoint/IO-Link Port">
+                <Attribute Name="SlotNumber" AttributeDataType="xs:integer">
+                  <Value>$16</Value>
+                </Attribute>
+              </ExternalInterface>
 
             </InternalElement>
 
-            <HEAD>
-              <InternalElement Name="PhysicalInterfaces" ID="GUID" />
-            </HEAD>
-          </SystemUnitClassType.InternalElement>
+            <!-- TODO: GraphItemRef -->
+            <InternalElement Name="DeviceSymbol" ID="GUID">
+              <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
 
+              <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+                <Attribute Name="refUri" AttributeDataType="xs:anyURI">
+                  <Value>$17</Value>
+                </Attribute>
+              </ExternalInterface>
+            </InternalElement>
+
+            <!-- TODO: InterfaceSubModuleItem-->
+            <InternalElement Name="LogicalInterface" ID="GUID">
+              <ExternalInterface Name="$18" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
+                <Attribute Name="SupportedRT_Classes" AttributeDataType="xs:string">
+                  <Value>$19</Value>
+                </Attribute>
+                <Attribute Name="IsochroneModeInRT_Classes" AttributeDataType="xs:string">
+                  <Value>$20</Value>
+                </Attribute>
+                <Attribute Name="SupportedProtocols" AttributeDataType="xs:string">
+                  <Value>$21</Value>
+                </Attribute>
+                <Attribute Name="SupportedMibs" AttributeDataType="xs:string">
+                  <Value>$22</Value>
+                </Attribute>
+                <Attribute Name="SubslotNumber" AttributeDataType="xs:string">
+                  <Value>$23</Value>
+                </Attribute>
+                <Attribute Name="SubmoduleIdentNumber" AttributeDataType="xs:string">
+                  <Value>$24</Value>
+                </Attribute>
+                <Attribute Name="DCP_HelloSupported" AttributeDataType="xs:boolean">
+                  <Value>$25</Value>
+                </Attribute>
+                <Attribute Name="DelayMeasurementSupported" AttributeDataType="xs:boolean">
+                  <Value>$26</Value>
+                </Attribute>
+                <Attribute Name="NetworkComponentDiagnosisSupported" AttributeDataType="xs:boolean">
+                  <Value>$27</Value>
+                </Attribute>
+                <Attribute Name="DCP_BoundarySupported" AttributeDataType="xs:boolean">
+                  <Value>$28</Value>
+                </Attribute>
+                <Attribute Name="PTP_BoundarySupported" AttributeDataType="xs:boolean">
+                  <Value>$29</Value>
+                </Attribute>
+
+                <InternalElement Name="ApplicationRelations" ID="GUID">
+                  <Attribute Name="NumberOfAR" AttributeDataType="xs:integer">
+                    <Value>$30</Value>
+                  </Attribute>
+                  <Attribute Name="StartupMode" AttributeDataType="xs:string">
+                    <Value>$31</Value>
+                  </Attribute>
+
+                  <InternalElement Name="TimingProperties" ID="GUID">
+                    <Attribute Name="SendClock" AttributeDataType="xs:string">
+                      <Value>$32</Value>
+                    </Attribute>
+                    <Attribute Name="ReductionRatio" AttributeDataType="xs:string">
+                      <Value>$33</Value>
+                    </Attribute>
+                  </InternalElement>
+
+                  <InternalElement Name="RT_Class3TimingProperties" ID="GUID">
+                    <Attribute Name="SendClock" AttributeDataType="xs:string">
+                      <Value>$34</Value>
+                    </Attribute>
+                    <Attribute Name="ReductionRatio" AttributeDataType="xs:string">
+                      <Value>$35</Value>
+                    </Attribute>
+                  </InternalElement>
+                </InternalElement>
+
+                <InternalElement Name="MediaRedundancy" ID="GUID">
+                  <Attribute Name="SupportedRole" AttributeDataType="xs:string">
+                    <Value>$36</Value>
+                  </Attribute>
+                </InternalElement>
+
+                <InternalElement Name="RT_Class3Properties" ID="GUID">
+                  <Attribute Name="MaxBridgeDelay" AttributeDataType="xs:integer">
+                    <Value>$37</Value>
+                  </Attribute>
+                  <Attribute Name="MaxNumberIR_FrameData" AttributeDataType="xs:integer">
+                    <Value>$38</Value>
+                  </Attribute>
+                </InternalElement>
+
+                <InternalElement Name="SynchronisationMode" ID="GUID">
+                  <Attribute Name="SupportedRole" AttributeDataType="xs:string">
+                    <Value>$39</Value>
+                  </Attribute>
+                  <Attribute Name="MaxLocalJitter" AttributeDataType="xs:integer">
+                    <Value>$40</Value>
+                  </Attribute>
+                  <Attribute Name="T_PLL_MAX" AttributeDataType="xs:integer">
+                    <Value>$41</Value>
+                  </Attribute>
+                  <Attribute Name="SupportedSyncProtocols" AttributeDataType="xs:string">
+                    <Value>$42</Value>
+                  </Attribute>
+                </InternalElement>
+              </ExternalInterface>
+            </InternalElement>
+
+          </SystemUnitClassType.InternalElement>
         </SystemUnitClass>
       </CAEXFile.SystemUnitClass>
     </Replacement>
@@ -140,261 +289,117 @@
       </ISO15745Profile>
     </Reference>
     <Reference Ref="5" Type="GSDRef" />
-  </DeviceIdentity>
-
-  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of InterfaceSubmoduleItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon. -->
-  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original InterfaceSubmoduleItem! -->
-  <InterfaceSubmoduleItem>
-    <Replacement>
-      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
-        <Attribute Name="SupportedRT_Classes" AttributeDataType="xs:string">
-          <Value>$2</Value>
-        </Attribute>
-        <Attribute Name="IsochroneModeInRT_Classes" AttributeDataType="xs:string">
-          <Value>$3</Value>
-        </Attribute>
-        <Attribute Name="SupportedProtocols" AttributeDataType="xs:string">
-          <Value>$4</Value>
-        </Attribute>
-        <Attribute Name="SupportedMibs" AttributeDataType="xs:boolean">
-          <Value>$5</Value>
-        </Attribute>
-        <Attribute Name="SubslotNumber" AttributeDataType="xs:string">
-          <Value>$6</Value>
-        </Attribute>
-        <Attribute Name="SubmoduleIdentNumber" AttributeDataType="xs:integer">
-          <Value>$7</Value>
-        </Attribute>
-        <Attribute Name="DCP_HelloSupported" AttributeDataType="xs:string">
-          <Value>$8</Value>
-        </Attribute>
-      </ExternalInterface>
-    </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef" Internal="true">
-      <InterfaceSubmoduleItem TextId="" />
-    </Reference>
-    <Reference Ref="$2" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportedRT_Classes="" />
-    </Reference>
-    <Reference Ref="$3" Type="InlineRef">
-      <InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
-    </Reference>
-    <Reference Ref="$4" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportedProtocols="" />
-    </Reference>
-    <Reference Ref="$5" Type="InlineRef">
-      <InterfaceSubmoduleItem SupportedMibs="" />
-    </Reference>
-    <Reference Ref="$6" Type="InlineRef">
-      <InterfaceSubmoduleItem SubslotNumber="" />
-    </Reference>
-    <Reference Ref="$7" Type="InlineRef">
-      <InterfaceSubmoduleItem SubmoduleIdentNumber="" />
-    </Reference>
-    <Reference Ref="$8" Type="InlineRef">
-      <InterfaceSubmoduleItem DCP_HelloSupported="" />
-    </Reference>
-  </InterfaceSubmoduleItem>
-
-  <RT_Class3Properties>
-    <Replacement>
-      <InternalElement Name="RT_Class3Properties" ID="GUID">
-        <Attribute Name="MaxBridgeDelay" AttributeDataType="xs:integer">
-          <Value>$1</Value>
-        </Attribute>
-        <Attribute Name="MaxNumberIR_FrameData" AttributeDataType="xs:integer">
-          <Value>$2</Value>
-        </Attribute>
-      </InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="InlineRef">
-      <RT_Class3Properties MaxBridgeDelay="" />
-    </Reference>
-    <Reference Ref="$2" Type="InlineRef">
-      <RT_Class3Properties MaxNumberIR_FrameData="" />
-    </Reference>
-  </RT_Class3Properties>
-
-  <SynchronisationMode>
-    <Replacement>
-      <InternalElement Name="SynchronisationMode" ID="GUID">
-        <Attribute Name="SupportedRole" AttributeDataType="xs:string">
-          <Value>$1</Value>
-        </Attribute>
-        <Attribute Name="MaxLocalJitter" AttributeDataType="xs:integer">
-          <Value>$2</Value>
-        </Attribute>
-        <Attribute Name="T_PLL_MAX" AttributeDataType="xs:integer">
-          <Value>$3</Value>
-        </Attribute>
-        <Attribute Name="SupportedSyncProtocols" AttributeDataType="xs:string">
-          <Value>$4</Value>
-        </Attribute>
-      </InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="InlineRef">
-      <SynchronisationMode SupportedRole="" />
-    </Reference>
-    <Reference Ref="$2" Type="InlineRef">
-      <SynchronisationMode MaxLocalJitter="" />
-    </Reference>
-    <Reference Ref="$3" Type="InlineRef">
-      <SynchronisationMode T_PLL_MAX="" />
-    </Reference>
-    <Reference Ref="$4" Type="InlineRef">
-      <SynchronisationMode SupportedSyncProtocols="" />
-    </Reference>
-  </SynchronisationMode>
-
-  <ApplicationRelations>
-    <Replacement>
-      <InternalElement Name="ApplicationRelations">
-      </InternalElement>
-    </Replacement>
-  </ApplicationRelations>
-
-  <TimingProperties>
-    <Replacement>
-      <InternalElement Name="TimingProperties" ID="GUID">
-        <Attribute Name="SendClock" AttributeDataType="xs:string">
-          <Value>$1</Value>
-        </Attribute>
-        <Attribute Name="ReductionRatio" AttributeDataType="xs:string">
-          <Value>$2</Value>
-        </Attribute>
-      </InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="InlineRef">
-      <TimingProperties SendClock="" />
-    </Reference>
-    <Reference Ref="$2" Type="InlineRef">
-      <TimingProperties ReductionRatio="" />
-    </Reference>
-  </TimingProperties>
-
-  <RT_Class3TimingProperties>
-    <Replacement>
-      <InternalElement Name="RT_Class3TimingProperties" ID="GUID">
-        <Attribute Name="SendClock" AttributeDataType="xs:string">
-          <Value>$1</Value>
-        </Attribute>
-        <Attribute Name="ReductionRatio" AttributeDataType="xs:string">
-          <Value>$2</Value>
-        </Attribute>
-      </InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="InlineRef">
-      <RT_Class3TimingProperties SendClock="" />
-    </Reference>
-    <Reference Ref="$2" Type="InlineRef">
-      <RT_Class3TimingProperties ReductionRatio="" />
-    </Reference>
-  </RT_Class3TimingProperties>
-
-  <MediaRedundancy>
-    <Replacement>
-      <InternalElement Name="MediaRedundancy" ID="GUID">
-        <Attribute Name="SupportedRole" AttributeDataType="xs:string">
-          <Value>$1</Value>
-        </Attribute>
-      </InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="InlineRef">
-      <MediaRedundancy SupportedRole="" />
-    </Reference>
-  </MediaRedundancy>
-
-  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of PortSubmoduleItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon.  -->
-  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original PortSubmoduleItem! -->
-  <PortSubmoduleItem>
-    <Replacement>
-      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/PNIO-Port">
-        <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
-          <Value>$2</Value>
-        </Attribute>
-        <Attribute Name="MAUTypes" AttributeDataType="xs:integer">
-          <Value>$3</Value>
-        </Attribute>
-        <Attribute Name="IdentNumber" AttributeDataType="xs:string">
-          <Value>$4</Value>
-        </Attribute>
-        <Attribute Name="MaxPortTxDelay" AttributeDataType="xs:integer">
-          <Value>$5</Value>
-        </Attribute>
-        <Attribute Name="MaxPortRxDelay" AttributeDataType="xs:integer">
-          <Value>$6</Value>
-        </Attribute>
-        <Attribute Name="LinkStateDiagnosisCapability" AttributeDataType="xs:string">
-          <Value>$7</Value>
-        </Attribute>
-        <Attribute Name="SupportsRingportConfig" AttributeDataType="xs:boolean">
-          <Value>$8</Value>
-        </Attribute>
-        <Attribute Name="IsDefaultRingport" AttributeDataType="xs:boolean">
-          <Value>$9</Value>
-        </Attribute>
-      </ExternalInterface>
-    </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef" Internal="true">
+    <Reference Ref="$6" Type="SingleTextRef" Internal="true">
       <PortSubmoduleItem TextId="" />
     </Reference>
-    <Reference Ref="$2" Type="InlineRef">
+    <Reference Ref="$7" Type="InlineRef">
       <InterfaceSubmoduleItem SubslotNumber="" />
     </Reference>
-    <Reference Ref="$3" Type="InlineRef">
+    <Reference Ref="$8" Type="InlineRef">
       <InterfaceSubmoduleItem MAUTypes="" />
     </Reference>
-    <Reference Ref="$4" Type="InlineRef">
+    <Reference Ref="$9" Type="InlineRef">
       <InterfaceSubmoduleItem SubmoduleIdentNumber="" />
     </Reference>
-    <Reference Ref="$5" Type="InlineRef">
+    <Reference Ref="$10" Type="InlineRef">
       <InterfaceSubmoduleItem MaxPortTxDelay="" />
     </Reference>
-    <Reference Ref="$6" Type="InlineRef">
+    <Reference Ref="$11" Type="InlineRef">
       <InterfaceSubmoduleItem MaxPortRxDelay="" />
     </Reference>
-    <Reference Ref="$7" Type="InlineRef">
+    <Reference Ref="$12" Type="InlineRef">
       <InterfaceSubmoduleItem LinkStateDiagnosisCapability="" />
     </Reference>
-    <Reference Ref="$8" Type="InlineRef">
+    <Reference Ref="$13" Type="InlineRef">
       <InterfaceSubmoduleItem SupportsRingportConfig="" />
     </Reference>
-    <Reference Ref="$9" Type="InlineRef">
+    <Reference Ref="$14" Type="InlineRef">
       <InterfaceSubmoduleItem IsDefaultRingport="" />
     </Reference>
-  </PortSubmoduleItem>
-
-  <GraphicItemRef>
-    <Replacement>
-      <InternalElement Name="DeviceSymbol" ID="GUID">
-        <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
-
-        <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
-          <Attribute Name="refUri" AttributeDataType="xs:anyURI">
-            <Value>$1</Value>
-          </Attribute>
-        </ExternalInterface>
-      </InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="GraphicRef" Internal="true">
-      <GraphicItemRef GraphicItemTarget="" />
-    </Reference>
-  </GraphicItemRef>
-
-  <SlotItem>
-    <Replacement>
-      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/IO-Link Port">
-        <Attribute Name="SlotNumber" AttributeDataType="xs:integer">
-          <Value>$2</Value>
-        </Attribute>
-      </ExternalInterface>
-    </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef" Internal="true">
+    <Reference Ref="$15" Type="SingleTextRef" Internal="true">
       <SlotItem TextId="" />
     </Reference>
-    <Reference Ref="$2" Type="InlineRef">
+    <Reference Ref="$16" Type="InlineRef">
       <SlotItem SlotNumber="" />
     </Reference>
-  </SlotItem>
+    <Reference Ref="$17" Type="GraphicRef" Internal="true">
+      <GraphicItemRef GraphicItemTarget="" />
+    </Reference>
+    <Reference Ref="$18" Type="SingleTextRef" Internal="true">
+      <InterfaceSubmoduleItem TextId="" />
+    </Reference>
+    <Reference Ref="$19" Type="InlineRef">
+      <InterfaceSubmoduleItem SupportedRT_Classes="" />
+    </Reference>
+    <Reference Ref="$20" Type="InlineRef">
+      <InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
+    </Reference>
+    <Reference Ref="$21" Type="InlineRef">
+      <InterfaceSubmoduleItem SupportedProtocols="" />
+    </Reference>
+    <Reference Ref="$22" Type="InlineRef">
+      <InterfaceSubmoduleItem SupportedMibs="" />
+    </Reference>
+    <Reference Ref="$23" Type="InlineRef">
+      <InterfaceSubmoduleItem SubslotNumber="" />
+    </Reference>
+    <Reference Ref="$24" Type="InlineRef">
+      <InterfaceSubmoduleItem SubmoduleIdentNumber="" />
+    </Reference>
+    <Reference Ref="$25" Type="InlineRef">
+      <InterfaceSubmoduleItem DCP_HelloSupported="" />
+    </Reference>
+    <Reference Ref="$26" Type="InlineRef">
+      <InterfaceSubmoduleItem DelayMeasurementSupported="" />
+    </Reference>
+    <Reference Ref="$27" Type="InlineRef">
+      <InterfaceSubmoduleItem NetworkComponentDiagnosisSupported="" />
+    </Reference>
+    <Reference Ref="$28" Type="InlineRef">
+      <InterfaceSubmoduleItem DCP_BoundarySupported="" />
+    </Reference>
+    <Reference Ref="$29" Type="InlineRef">
+      <InterfaceSubmoduleItem PTP_BoundarySupported="" />
+    </Reference>
+    <Reference Ref="$30" Type="InlineRef">
+      <ApplicationRelations NumberOfAr="" />
+    </Reference>
+    <Reference Ref="$31" Type="InlineRef">
+      <ApplicationProcess StartupMode="" />
+    </Reference>
+    <Reference Ref="$32" Type="InlineRef">
+      <TimingProperties SendClock="" />
+    </Reference>
+    <Reference Ref="$33" Type="InlineRef">
+      <TimingProperties ReductionRatio="" />
+    </Reference>
+    <Reference Ref="$34" Type="InlineRef">
+      <RT_Class3TimingProperties SendClock="" />
+    </Reference>
+    <Reference Ref="$35" Type="InlineRef">
+      <RT_Class3TimingProperties ReductionRatio="" />
+    </Reference>
+    <Reference Ref="$36" Type="InlineRef">
+      <MediaRedundancy SupportedRole="" />
+    </Reference>
+    <Reference Ref="$37" Type="InlineRef">
+      <RT_Class3Properties MaxBridgeDelay="" />
+    </Reference>
+    <Reference Ref="$38" Type="InlineRef">
+      <RT_Class3Properties MaxNumberIR_FrameData="" />
+    </Reference>
+    <Reference Ref="$39" Type="InlineRef">
+      <SynchronisationMode SupportedRole="" />
+    </Reference>
+    <Reference Ref="$40" Type="InlineRef">
+      <SynchronisationMode MaxLocalJitter="" />
+    </Reference>
+    <Reference Ref="$41" Type="InlineRef">
+      <SynchronisationMode T_PLL_MAX="" />
+    </Reference>
+    <Reference Ref="$42" Type="InlineRef">
+      <SynchronisationMode SupportedSyncProtocols="" />
+    </Reference>
+  </DeviceIdentity>
 
 </body>
