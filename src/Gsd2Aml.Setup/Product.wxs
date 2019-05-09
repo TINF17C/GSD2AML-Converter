@@ -11,6 +11,11 @@
       <ComponentGroupRef Id="Environment" />
 		</Feature>
 
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Condition Message="This application requires .NET Framework 4.7. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460798")]]>
+    </Condition>
+
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <WixVariable Id="WixUILicenseRtf" Value="Resources\LICENSE.rtf" />
     <WixVariable Id="WixUIBannerBmp" Value="Resources\Banner.bmp"/>
