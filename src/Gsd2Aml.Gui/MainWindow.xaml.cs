@@ -62,8 +62,14 @@ namespace Gsd2Aml.Gui
         {
             try
             {
+                var overwrite = false;
+                if (System.IO.File.Exists(TxtAmlFile.Text))
+                {
+                    overwrite = MessageBox.Show(this, $"The File \"{TxtAmlFile.Text}\" already exits.\n\nDo you want to overwrite it?", "GSD2AML Converter", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+                }
+
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Start conversion of file \"" + TxtGsdFile.Text + "\"");
-                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, false);
+                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, overwrite);
 
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Conversion successfully completed!");
                 MessageBox.Show(this, "Conversion successfully completed!", "GSD2AML Converter");
