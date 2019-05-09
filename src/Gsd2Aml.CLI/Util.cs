@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Gsd2Aml.Cli
 {
@@ -6,7 +7,8 @@ namespace Gsd2Aml.Cli
     {
         internal static Logger Logger { get; } = new Logger();
 
-        private static string HelpText { get; } = $"{Environment.NewLine}GSD2AML Converter" +
+        private static string HelpText { get; } = $"{Environment.NewLine}GSD2AML Converter (Version: " +
+                                                  $"{System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion})" +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Converts a GSD-formatted file in an AML-formatted file." +
                                                   $"{Environment.NewLine}" +

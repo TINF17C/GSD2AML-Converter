@@ -13,6 +13,7 @@ namespace Gsd2Aml.Lib
     // TODO: get ressources
     // TODO: update readme
     // TODO: write tests
+    // TODO: change some logs to debug
     /// <summary>
     /// The converter class which contains the logic to convert a GSD formatted file to an AML file.
     /// </summary>
@@ -122,7 +123,6 @@ namespace Gsd2Aml.Lib
                 if (translationRule == null)
                 {
                     Logger?.Log(LogLevel.Info, "Translation rule was not found. Skip the node.");
-                    // Handle(gsdChildNode, currentAmlHead);
                     continue;
                 }
                 Logger?.Log(LogLevel.Info, $"Translation rule was found. GsdHead: {currentGsdHead.Name} Translation rule: {translationRule.Name} " +
@@ -174,11 +174,6 @@ namespace Gsd2Aml.Lib
             // Set the replacementInstance to the current AML head object and set the new AML head.
             var newAmlHead = isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance;
             replacementProperty.SetValue(currentAmlHead, newAmlHead);
-
-            if (_perhapsNewAmlHead == null) return newAmlHead;
-
-            newAmlHead = _perhapsNewAmlHead;
-            _perhapsNewAmlHead = null;
 
             return newAmlHead;
         }
@@ -251,8 +246,6 @@ namespace Gsd2Aml.Lib
             }
         }
 
-        private static dynamic _perhapsNewAmlHead;
-
         /// <summary>
         /// This function iterates over all sub properties of the replacement to translate these and set it into the replacementInstance.
         /// </summary>
@@ -264,27 +257,10 @@ namespace Gsd2Aml.Lib
             // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
-                PropertyInfo subProperty;
-                dynamic subPropertyInstance;
-                
-                if (childNode.Name.Equals("HEAD"))
-                {
-                    (subProperty, subPropertyInstance) = TranslateSubProperties(childNode.FirstChild);
-                    _perhapsNewAmlHead = subPropertyInstance;
-
-                    if (isReplacementPropertyArray)
-                    {
-                        replacementInstance.Add(subPropertyInstance);
-                    }
-                    else
-                    {
-                        subProperty.SetValue(replacementInstance, subPropertyInstance);
-                    }
-                    continue;
-                }
+                if (childNode.Name.Equals("#comment")) continue;
 
                 Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
-                (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);
+                var (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);
                 Logger?.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
                                                 $"Type: {subPropertyInstance.GetType()}");
 
