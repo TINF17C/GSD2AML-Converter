@@ -64,14 +64,65 @@ namespace Gsd2Aml.Gui
             {
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Start conversion of file \"" + TxtGsdFile.Text + "\"");
                 Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, false);
+
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Conversion successfully completed!");
                 MessageBox.Show(this, "Conversion successfully completed!", "GSD2AML Converter");
+
+                if (GetAmlEditor() is string editor && !string.IsNullOrEmpty(editor))
+                {
+                    if (MessageBox.Show(this, "Do you want to open the file in AutomationML Editor?", "GSD2AML Converter", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        try
+                        {
+                            App.Logger.Log(Lib.Logging.LogLevel.Debug, "Trying to start AutomationML Editor");
+                            System.Diagnostics.Process.Start(editor, "\"" + TxtAmlFile.Text + "\"");
+                        }
+                        catch (Exception ex)
+                        {
+                            App.Logger.Log(Lib.Logging.LogLevel.Error, ex.Message);
+                            MessageBox.Show(this, "An error occured when trying to open the AutomationML Editor.", "GSD2AML Converter", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
                 App.Logger.Log(Lib.Logging.LogLevel.Error, ex.Message);
                 MessageBox.Show(this, ex.Message, "GSD2AML Converter: Conversion failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private string GetAmlEditor()
+        {
+            try
+            {
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "Search for AutomationML Editor");
+                var key = Registry.CurrentUser.OpenSubKey(@"Software\AutomationML\AutomationML Editor");
+
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "Opened key \"" + key.Name + "\"");
+                key = key.OpenSubKey(key.GetSubKeyNames().FirstOrDefault());
+
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "Opened subkey \"" + key.Name + "\"");
+                var valueName = key.GetValueNames().FirstOrDefault();
+
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "Reading value from \"" + valueName + "\"");
+                var value = key.GetValue(valueName).ToString();
+
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, "Result from value is \"" + value + "\"");
+                var dir = new System.IO.DirectoryInfo(value);
+
+                if (dir.Exists)
+                {
+                    var file = dir.GetFiles("AutomationML Editor.lnk", System.IO.SearchOption.TopDirectoryOnly).FirstOrDefault();
+                    return file.FullName;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Log(Lib.Logging.LogLevel.Debug, ex.Message);
+            }
+
+            return string.Empty;
         }
 
         #region Drag&Drop
