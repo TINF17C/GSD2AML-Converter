@@ -22,19 +22,5 @@
   <xsl:template match="wix:ComponentRef[key('pdb-search', @Id)]" />
   <xsl:template match="wix:Component[key('doc-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('doc-search', @Id)]" />
-  
-  <xsl:template match="wix:File[@Id='Gsd2Aml.Gui.exe']">
-    <xsl:copy>
-      <xsl:variable name="leadingSpace" select="preceding-sibling::text()[1]" />
-      <xsl:apply-templates select="@*"/>
-       <!--Add linebreak and indentation, as requested in the comments--> 
-      <xsl:value-of select="concat($leadingSpace, '  ')" />
-      <Shortcut Id="{@Id}" Name="GSD2AML Converter" Icon="Gsd2Aml.Gui.exe" IconIndex="0" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Directory="ProgramMenuFolder" xmlns="http://schemas.microsoft.com/wix/2006/wi">
-        <Icon Id="Gsd2Aml.Gui.exe" SourceFile="$(var.SourceDir)\Gsd2Aml.Gui.exe" xmlns="http://schemas.microsoft.com/wix/2006/wi"/>
-      </Shortcut>
-       <!--Linebreak and indentation--> 
-      <xsl:value-of select="$leadingSpace"/>
-    </xsl:copy>
-  </xsl:template>
 
 </xsl:transform>

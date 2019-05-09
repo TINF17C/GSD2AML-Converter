@@ -9,6 +9,8 @@
 		<Feature Id="ProductFeature" Title="$(var.ProductMainName)" Level="1">
       <ComponentGroupRef Id="Components" />
       <ComponentGroupRef Id="Environment" />
+      <ComponentGroupRef Id="StartMenuShortcut" />
+      <ComponentGroupRef Id="DesktopShortcut" />
 		</Feature>
 
     <PropertyRef Id="NETFRAMEWORK45" />
@@ -17,6 +19,7 @@
     </Condition>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
     <WixVariable Id="WixUILicenseRtf" Value="Resources\LICENSE.rtf" />
     <WixVariable Id="WixUIBannerBmp" Value="Resources\Banner.bmp"/>
     <WixVariable Id="WixUIDialogBmp" Value="Resources\Dialog.bmp"/>
@@ -25,7 +28,7 @@
     <Property Id="ARPPRODUCTICON" Value="Converter.ico" />
 
     <UI>
-      <UIRef Id="WixUI_InstallDir" />
+      <UIRef Id="CustomWixUI_InstallDir" />
     </UI>
   </Product>
 
@@ -38,6 +41,8 @@
       </Directory>
       <Directory Id="ProgramMenuFolder">
       </Directory>
+      <Directory Id="DesktopFolder">
+      </Directory>
     </Directory>
 	</Fragment>
 
@@ -49,6 +54,24 @@
       </Component>
       <Component Id="BatForCli" Guid="EBF043BB-F332-463D-AED2-10C6C14E832B">
         <File Id="BatForCli" KeyPath="yes" Source="..\..\dpl\gsd2aml.bat"/>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="StartMenuShortcut" Directory="ProgramMenuFolder">
+      <Component Id="GuiStartMenuShortcut" Guid="21CB1FC1-C555-4B11-92D1-91AD4B95B9C9">
+        <Condition>WIXUI_CREATESTARTMENUSHORTCUT</Condition>
+        <Shortcut Id="GuiStartMenuShortcut" Name="GSD2AML Converter"
+                  Target="[#Gsd2Aml.Gui.exe]"
+                  WorkingDirectory="INSTALLFOLDER"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\GSD2AML Converter" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="DesktopShortcut" Directory="DesktopFolder">
+      <Component Id="GuiDesktopShortcut" Guid="2D0A481A-8BD1-407F-B308-619514BEDFBE">
+        <Condition>WIXUI_CREATEDESKTOPSHORTCUT</Condition>
+        <Shortcut Id="GuiDesktopShortcut" Name="GSD2AML Converter"
+                  Target="[#Gsd2Aml.Gui.exe]"
+                  WorkingDirectory="INSTALLFOLDER"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\GSD2AML Converter" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </ComponentGroup>
   </Fragment>

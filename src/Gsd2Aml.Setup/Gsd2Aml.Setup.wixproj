@@ -35,7 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components.wxs" />
+    <Compile Include="CustomWixUI_InstallDir.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="ShortcutDlg.wxs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Filter.xslt" />
