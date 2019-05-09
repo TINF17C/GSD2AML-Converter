@@ -50,7 +50,13 @@ namespace Gsd2Aml.Cli
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
+                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}.");
+
+                if (null != e.InnerException)
+                {
+                    Console.Write(e.InnerException.Message);
+                }
+
                 Util.Logger.Log(LogLevel.Error, e.ToString());
                 Environment.Exit(1);
             }
