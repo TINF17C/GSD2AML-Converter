@@ -20,42 +20,42 @@ namespace Gsd2Aml.Lib
         /// <param name="resources">An array of paths to the resources to be part of the .amlx package.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
         /// <exception cref="IOException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static void Compress(string amlFilePath, string destination, string[] resources, bool overwriteFile = false)
         {
-            if (amlFilePath.Equals("") || destination.Equals(""))
-            {
-                throw new Exception("AML or destination string was omitted.");
-            }
+            if (string.IsNullOrEmpty(amlFilePath)) throw new ArgumentException("AML file path was null or empty.");
+            if (string.IsNullOrEmpty(destination)) throw new ArgumentException("Destination file path was null or empty.");
 
             var tmpPath = CreateTmpDirectory(Gsd2AmlName);
 
-            if (string.IsNullOrEmpty(tmpPath))
-            {
-                throw new Exception("Path to Temp folder unexpectedly null.");
-            }
+            if (string.IsNullOrEmpty(tmpPath)) throw new IOException("Path to GSD2AML-Temp folder unexpectedly null or empty.");
+
+            var amlFileName = Path.GetFileName(amlFilePath);
+            if (string.IsNullOrEmpty(amlFileName)) throw new IOException("AML filename unexpectedly null or empty.");
+
+            var amlFileTmpPath = Path.Combine(tmpPath, amlFileName);
+            if (string.IsNullOrEmpty(amlFileTmpPath)) throw new IOException("Path to AML file in TMP directory unexpectedly null or empty.");
 
             try
             {
                 foreach (var resource in resources)
                 {
                     var fileName = Path.GetFileName(resource);
-                    if (fileName != null) CopyFile(resource, Path.Combine(tmpPath, fileName));
+                    if (!string.IsNullOrEmpty(fileName)) CopyFile(resource, Path.Combine(tmpPath, fileName));
+                    else throw new IOException($"Resource filename unexpectedly null or empty");
                 }
-
-                var amlFileName = Path.GetFileName(amlFilePath);
-                var amlFileTmpPath = Path.Combine(tmpPath, amlFileName);
 
                 if (!string.IsNullOrEmpty(amlFileName)) CopyFile(amlFilePath, amlFileTmpPath);
 
                 Zip(amlFileTmpPath, destination, resources, overwriteFile);
 
-                Converter.Logger?.Log(LogLevel.Info, $"Successfully saved AMLX package to {destination}.");
+                Converter.Logger?.Log(LogLevel.Info, $"Successfully saved .amlx package {Path.GetFileName(destination)} to {destination}.");
 
                 DeleteFolder(tmpPath);
             }
             catch (IOException e)
             {
-                throw new IOException("Error while compressing the AML-file and the resources to the .amlx file.", e);
+                throw new IOException("Error while compressing the AML-file and the resources to the .amlx package.", e);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                throw new IOException("Could not create the the temporary directory which was created to compress the .amlx file.", e);
+                throw new IOException("Could not create the the temporary directory which was created to compress the .amlx package.", e);
             }
         }
 
@@ -136,7 +136,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                throw new IOException("Could not copy a resource file to the temporary directory which was created to compress the .amlx file.", e);
+                throw new IOException("Could not copy a resource file to the temporary directory which was created to compress the .amlx package.", e);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                throw new IOException("Could not delete the temporary directory which was created to compress the .amlx file.", e);
+                throw new IOException("Could not delete the temporary directory which was created to compress the .amlx package.", e);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Gsd2Aml.Lib
             }
             catch (IOException e)
             {
-                throw new IOException("Could not create output directory for destination", e);
+                throw new IOException("Could not create destination output directory for creating the .amlx package.", e);
             }
         }
     }
