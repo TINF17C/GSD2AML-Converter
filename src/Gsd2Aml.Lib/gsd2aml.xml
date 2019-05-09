@@ -11,7 +11,7 @@
           <WriterVendor>GSD2AML TINF17C</WriterVendor>
           <WriterVersion>1.0.0</WriterVersion>
           <WriterRelease>1.0.0</WriterRelease>
-          <LastWritingDateTime>2000-01-01T00:00:00.0000000+00:00</LastWritingDateTime>
+          <LastWritingDateTime></LastWritingDateTime>
           <WriterProjectTitle>GSD2AML Converter</WriterProjectTitle>
           <WriterProjectID>GSD2AML Converter</WriterProjectID>
         </WriterHeader>
@@ -46,19 +46,19 @@
                 <Attribute CAEXObject.Name="Model" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$1</Attribute.Value>
                 </Attribute>
-                
+
                 <Attribute CAEXObject.Name="ProductCode" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$1</Attribute.Value>
                 </Attribute>
-                
+
                 <Attribute CAEXObject.Name="DeviceClass" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>I/O</Attribute.Value>
                 </Attribute>
-                
+
                 <Attribute CAEXObject.Name="ShortDescription" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$4</Attribute.Value>
                 </Attribute>
-                
+
                 <Attribute CAEXObject.Name="ArticleIdentificationOfVendor" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$1</Attribute.Value>
                 </Attribute>
@@ -84,12 +84,16 @@
               </SystemUnitClassType.ExternalInterface>
 
             </InternalElement>
+
+            <HEAD>
+              <InternalElement Name="PhysicalInterfaces" ID="GUID" />
+            </HEAD>
           </SystemUnitClassType.InternalElement>
 
         </SystemUnitClass>
       </CAEXFile.SystemUnitClass>
     </Replacement>
-
+    <!-- Caution! There can be multiple DeviceAccessPointItems in a DeviceAccessPointList. Just take the first one, it shouldn,t matter which one you choose regardless. -->
     <Reference Ref="$1" Type="SingleTextRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
@@ -105,13 +109,11 @@
         </ProfileBody>
       </ISO15745Profile>
     </Reference>
-
     <Reference Ref="$2" Type="DirectRef" Internal="true">
       <DeviceIdentity>
         <VendorName Value="" />
       </DeviceIdentity>
     </Reference>
-
     <Reference Ref="$3" Type="DirectRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
@@ -121,7 +123,7 @@
         </ProfileBody>
       </ISO15745Profile>
     </Reference>
-    
+    <!-- Again, just choose the first one. -->
     <Reference Ref="$4" Type="SingleTextRef" Internal="false">
       <ISO15745Profile>
         <ProfileBody>
@@ -140,39 +142,9 @@
     <Reference Ref="5" Type="GSDRef" />
   </DeviceIdentity>
 
-  <ApplicationProcess.DeviceAccessPointList>
-    <Replacement>
-      <InternalElement Name="DeviceAccessPoints" ID="GUID">
-      </InternalElement>
-    </Replacement>
-  </ApplicationProcess.DeviceAccessPointList>
-
-  <DeviceAccessPointItem>
-    <Replacement>
-      <InternalElement Name="$1"></InternalElement>
-    </Replacement>
-    <Reference Ref="$1" Type="InlineRef">
-      <DeviceAccessPointItem ID=""></DeviceAccessPointItem>
-    </Reference>
-  </DeviceAccessPointItem>
-
-  <SubslotList.SubslotItem>
-    <Replacement>
-      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/SubSlot">
-        <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
-          <Value>$2</Value>
-        </Attribute>
-      </ExternalInterface>
-    </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef" Internal="true">
-      <SubslotItem TextId="" />
-    </Reference>
-    <Reference Ref="$2" Type="InlineRef">
-      <SubslotItem SubslotNumber="" />
-    </Reference>
-  </SubslotList.SubslotItem>
-
-  <SystemDefinedSubmoduleList.InterfaceSubmoduleItem>
+  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of InterfaceSubmoduleItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon. -->
+  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original InterfaceSubmoduleItem! -->
+  <InterfaceSubmoduleItem>
     <Replacement>
       <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
         <Attribute Name="SupportedRT_Classes" AttributeDataType="xs:string">
@@ -222,7 +194,7 @@
     <Reference Ref="$8" Type="InlineRef">
       <InterfaceSubmoduleItem DCP_HelloSupported="" />
     </Reference>
-  </SystemDefinedSubmoduleList.InterfaceSubmoduleItem>
+  </InterfaceSubmoduleItem>
 
   <RT_Class3Properties>
     <Replacement>
@@ -332,9 +304,11 @@
     </Reference>
   </MediaRedundancy>
 
+  <!-- TODO: These are only attributes of the example gsd balluff bni pnt 202 105. Attributes of PortSubmoduleItem as descibes by the GSD Whitepaper may be missing. These missing attributes will be implemented soon.  -->
+  <!-- Caution: Ignore any Attribute Element, where the Name does not exists on the original PortSubmoduleItem! -->
   <PortSubmoduleItem>
     <Replacement>
-      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/Port">
+      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/PNIO-Port">
         <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
           <Value>$2</Value>
         </Attribute>
@@ -390,14 +364,14 @@
     </Reference>
   </PortSubmoduleItem>
 
-  <Graphics.GraphicItemRef>
+  <GraphicItemRef>
     <Replacement>
       <InternalElement Name="DeviceSymbol" ID="GUID">
         <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
 
         <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
           <Attribute Name="refUri" AttributeDataType="xs:anyURI">
-            <Value>$5</Value>
+            <Value>$1</Value>
           </Attribute>
         </ExternalInterface>
       </InternalElement>
@@ -405,6 +379,22 @@
     <Reference Ref="$1" Type="GraphicRef" Internal="true">
       <GraphicItemRef GraphicItemTarget="" />
     </Reference>
-  </Graphics.GraphicItemRef>
+  </GraphicItemRef>
+
+  <SlotItem>
+    <Replacement>
+      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/IO-Link Port">
+        <Attribute Name="SlotNumber" AttributeDataType="xs:integer">
+          <Value>$2</Value>
+        </Attribute>
+      </ExternalInterface>
+    </Replacement>
+    <Reference Ref="$1" Type="SingleTextRef" Internal="true">
+      <SlotItem TextId="" />
+    </Reference>
+    <Reference Ref="$2" Type="InlineRef">
+      <SlotItem SlotNumber="" />
+    </Reference>
+  </SlotItem>
 
 </body>

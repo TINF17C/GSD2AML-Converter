@@ -10,7 +10,6 @@ using System.Xml.Serialization;
 namespace Gsd2Aml.Lib
 {
     // TODO: References implemention.
-    // TODO: translation table string dot handling
     // TODO: get ressources
     // TODO: update readme
     // TODO: write tests
@@ -123,11 +122,12 @@ namespace Gsd2Aml.Lib
                 if (translationRule == null)
                 {
                     Logger?.Log(LogLevel.Info, "Translation rule was not found. Skip the node.");
+                    // Handle(gsdChildNode, currentAmlHead);
                     continue;
                 }
-                Logger?.Log(LogLevel.Info, $"Translation rule was found. GsdHead: {currentGsdHead.Name} Translation rule: {translationRule.Name}" +
+                Logger?.Log(LogLevel.Info, $"Translation rule was found. GsdHead: {currentGsdHead.Name} Translation rule: {translationRule.Name} " +
                                                "Now we are trying to translate it.");
-
+                
                 // Translate the gsdChildNode to AML.
                 var newAmlHead = Translate(ref currentAmlHead, translationRule);
                 Logger?.Log(LogLevel.Info, $"Translated successfully {gsdChildNode.Name} to {translationRule["Replacement"]?.FirstChild.Name}.");
@@ -174,6 +174,11 @@ namespace Gsd2Aml.Lib
             // Set the replacementInstance to the current AML head object and set the new AML head.
             var newAmlHead = isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance;
             replacementProperty.SetValue(currentAmlHead, newAmlHead);
+
+            if (_perhapsNewAmlHead == null) return newAmlHead;
+
+            newAmlHead = _perhapsNewAmlHead;
+            _perhapsNewAmlHead = null;
 
             return newAmlHead;
         }
@@ -229,7 +234,6 @@ namespace Gsd2Aml.Lib
                 // Get the property and type of the attribute.
                 var (attributeProperty, attributePropertyType, _) = Util.GetProperty(attribute.Name);
                 
-
                 // Create the instance of the attribute and assume it is a string. If not, it throws a exception.
                 dynamic attributeInstance;
 
@@ -247,6 +251,8 @@ namespace Gsd2Aml.Lib
             }
         }
 
+        private static dynamic _perhapsNewAmlHead;
+
         /// <summary>
         /// This function iterates over all sub properties of the replacement to translate these and set it into the replacementInstance.
         /// </summary>
@@ -258,8 +264,27 @@ namespace Gsd2Aml.Lib
             // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
             foreach (XmlNode childNode in replacement.ChildNodes)
             {
+                PropertyInfo subProperty;
+                dynamic subPropertyInstance;
+                
+                if (childNode.Name.Equals("HEAD"))
+                {
+                    (subProperty, subPropertyInstance) = TranslateSubProperties(childNode.FirstChild);
+                    _perhapsNewAmlHead = subPropertyInstance;
+
+                    if (isReplacementPropertyArray)
+                    {
+                        replacementInstance.Add(subPropertyInstance);
+                    }
+                    else
+                    {
+                        subProperty.SetValue(replacementInstance, subPropertyInstance);
+                    }
+                    continue;
+                }
+
                 Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
-                var (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);
+                (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);
                 Logger?.Log(LogLevel.Info, $"Successfully translated {childNode.Name}. " +
                                                 $"Type: {subPropertyInstance.GetType()}");
 

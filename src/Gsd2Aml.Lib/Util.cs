@@ -137,6 +137,8 @@ namespace Gsd2Aml.Lib
                         replacement = xmlNode.FirstChild;
                         alreadyReadReplacement = true;
                         break;
+                    case "#comment":
+                        break;
                     default:
                         Converter.Logger?.Log(LogLevel.Error, $"Translation table has an unknown element. The name of the node: {xmlNode.Name}");
                         throw new XmlException("Translation table has an unknown element.");
