@@ -19,14 +19,19 @@ namespace Gsd2Aml.Cli
 
         private const string CStringOutput = "--string";
         private const string CStringOutputShort = "-s";
-        
-        private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort };
+
+        private const string CValidation = "--validate";
+        private const string CValidationShort = "-v";
+
+        private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort, CValidation, CValidationShort };
 
         internal string InputFile { get; set; }
 
         internal string OutputFile { get; set; }
 
         internal bool StringOutput { get; set; }
+
+        internal bool Validation { get; set; }
 
         internal List<string> Args { get; set; }
 
@@ -109,6 +114,8 @@ namespace Gsd2Aml.Cli
             OutputFile = parameter[COutputFileShort] ?? parameter[COutputFile];
             StringOutput = Args.FindIndex(arg => arg.Equals(CStringOutputShort)) >= 0 ||
                            Args.FindIndex(arg => arg.Equals(CStringOutput)) >= 0;
+            Validation = Args.FindIndex(arg => arg.Equals(CValidationShort)) >= 0 ||
+                         Args.FindIndex(arg => arg.Equals(CValidation)) >= 0;
         }
 
         /// <summary>
