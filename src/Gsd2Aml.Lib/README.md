@@ -1,13 +1,74 @@
-# GSD2AML Rules
+# Gsd2Aml.Lib
 
-## Tables of Content
+Welcome to the Gsd2Aml.Lib! This library was developed as a student project by (in alphabetical order)
+1. Nico Dietz
+2. Steffen Gerdes
+3. Constantin Ruhdorfer
+4. Jonas Komarek
+5. Phuc Quang Vu
+6. Michael Weidmann
+
+at [Cooperate State University Stuttgart](https://www.dhbw-stuttgart.de/home/).
+This project is distributed via:
+1. [GitHub](https://github.com/TINF17C/GSD2AML-Converter)
+2. [NuGet](https://www.nuget.org/packages/Gsd2Aml.Lib)
+
+We can be found as a [GitHub Team](https://github.com/orgs/TINF17C/teams/gsd2aml).
+
+## About this project
+
+This library converts a Profinet (PN-)GSD file to AutomationML.
+The library can either
+1. return a string containing the AutomatonML content.
+2. convert the GSD file to an .aml file and package that, including all its dependencies, into an .amlx package. This process uses the [AML.Engine](https://www.nuget.org/packages/Aml.Engine).
+
+## Contributing to this project
+
+Contributions are always welcome!
+If you want to contribute feel free to fork this repo and later perform a pull request. 
+
+## File structure
+
+The relevant files and folders are listed here.
+
+### Logging/
+Contains the logging service.
+
+### Models/
+Contains the classes representing AML and GSD.
+Also contains the used XSD files.
+
+### Properties/
+Contains the assembly info.
+
+### Compressor.cs
+Contains all the logic that is required to:
+1. Create a temporary folder
+2. Find files and copy them to this folder
+3. Uses the AML.Engine to build the .amlx package
+
+### Converter.cs
+Contains all the logic that traverses the GSD file and uses the rulesset file to translate the GSD file to AML.
+
+### Util.cs
+Contains the utility functionality.
+
+### gsd2aml.xml
+This is the rulesset file.
+Please have a look below.
+
+## GSD2AML Rules
+
+The rules for conversion are written in XML and are listed here.
+
+### Tables of Content
 
 1. [Structure](#structure)
 2. [References](#references)
 3. [Reference Types](#reference_types)
 4. [Special Reference Types](#special_reference_types)
 
-## <a name="structure"></a>Structure
+### <a name="structure"></a>Structure
 
 This section will explain the structure of a gsd2aml rulesset file.
 
@@ -27,9 +88,9 @@ A rule must start with the GSD element, which is to be replaced. It must have a 
 
 Additionally a rule can also have any number of `<Reference>` childs. References will be explained in the following section.
 
-## <a name="references"></a>References
+### <a name="references"></a>References
 
-### <a name="references-normal_references"></a>Normal Reference
+#### <a name="references-normal_references"></a>Normal Reference
 
 It may not be possible to replace a GSD element with a static replacements. Let's look at this example:
 
@@ -68,7 +129,7 @@ The conversion rule for "SubslotItem" may look like this:
 
 Every reference within the replacement element shall have a corresponding reference element. This element must have the attribute `Ref=""` with the identifier. The different [types](#reference_types) will be explained later. The content of the reference shall be a is the location of the referenced value. The inmost element of a reference may have one or none attributes. If the attribute exists, its value will be the return value. If it does not exists, the value of the inmost tag will be used.
 
-### <a name="references-true_references"></a>True Reference
+#### <a name="references-true_references"></a>True Reference
 
 You may have noticed that the example above never resolved the GSD attribute TextId of the "SubslotItem" element. This is because the TextId attribute in itself is also a reference within the GSD file and as such must be handled differently. To differentiate this case from a normal reference, it shall be named "true reference".
 
@@ -98,37 +159,37 @@ These references must be handled differently by the GSD2AML Converter. The conve
 
 The type `SingleTextRef` will tell the converter to search under `ExternalTextList/PrimaryLanguage`. The content of a true reference is the location of the corresponding id.
 
-### <a name="references-internal"></a>Internal
+#### <a name="references-internal"></a>Internal
 
 You may have noticed the use of the reference attribute `Internal` in the examples above. This attribute will take a boolean value (`true` or `false`) and can be used for convenience purposes. If `Internal` is set to true, it will limit the scope of the reference to only the GSD rule element (in this case `<SubslotItem>`). If the value can not be found within this element `Internal` has to be set to `false` and the entire XML tree, beginning from `<ISO15745>` has to be given.
 
 If the reference value is conveniently not a true reference and also an attribute on the rule element, [`Type="InlineRef"`](#reference_types-inlineref) can be used.
 
-## <a name="reference_types"></a>Reference Types
+### <a name="reference_types"></a>Reference Types
 
 This section will list the different reference types and their uses.
 
-### <a name="reference_types-singletextref"></a>SingleTextRef
+#### <a name="reference_types-singletextref"></a>SingleTextRef
 
 A `SingleTextRef` is a true reference. Within the GSD it will reference an element within `<ExternalTextList>`. As the name suggest it will only return a single text. It will only over use the `<PrimaryLanguage>`. The location of the reference __id__ used in the GSD will be given as content of the reference.
 
 
-### <a name="reference_types-graphicref"></a>GraphicRef
+#### <a name="reference_types-graphicref"></a>GraphicRef
 
 A `GraphicRef` is a true reference. Within the GSD it will reference an element within `GraphicsList`. The location of the reference __id__ used in the GSD will be given as content of the reference.
 
-### <a name="reference_types-directref"></a>DirectRef
+#### <a name="reference_types-directref"></a>DirectRef
 
 A `DirectRef` is __not__ a true reference. It will directly use the value of the referenced location. 
 
-### <a name="reference_types-inlineref"></a>InlineRef
+#### <a name="reference_types-inlineref"></a>InlineRef
 
 An `InlineRef` is __not__ a true reference and a derivative of a [`DirectRef`](#reference_types-directref). It signals that that referenced value is the value of an attribute of the rule element.
 
-## <a name="special_reference_types></a>Special Reference Types
+### <a name="special_reference_types></a>Special Reference Types
 
 There are several special reference types for values that cannot be directly read from the GSD file.
 
-### <a name="special_reference_types"></a>GSDRef
+#### <a name="special_reference_types"></a>GSDRef
 
 `GSDRef` returns a relative path to the original GSD file.
