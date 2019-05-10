@@ -10,8 +10,8 @@ namespace Gsd2Aml.Cli
     {
         internal static Logger Logger { get; } = new Logger();
 
-        private static string HelpText { get; } = $"{Environment.NewLine}GSD2AML Converter (Version: " +
-                                                  $"{System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion})" +
+        private static string HelpText { get; } = $"{Environment.NewLine}{System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductName} " +
+                                                  $"(Version: {System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion})" +
                                                   $"{Environment.NewLine}" +
                                                   $"{Environment.NewLine}Converts a GSD-formatted file in an AML-formatted file." +
                                                   $"{Environment.NewLine}" +
@@ -24,9 +24,11 @@ namespace Gsd2Aml.Cli
                                                   $"{Environment.NewLine}\t-o, --output file\tSets the path to the output file. Example: C:\\path\\to\\output\\file.amlx" +
                                                   $"{Environment.NewLine}\t\t\t\tIf nothing is specified default is: C:\\path\\to\\input\\file\\<input-file-name>.amlx (OPTIONAL)" +
                                                   $"{Environment.NewLine}\t-s, --string\t\tPrints the generated AML XML file to stdout. No *.amlx file will be generated. (OPTIONAL)" +
-                                                  $"{Environment.NewLine}\t-n, --novalidate\t\tValidates the GSD not against the specification. (OPTIONAL)" +
+                                                  $"{Environment.NewLine}\t-n, --novalidate\tValidates the GSD not against the specification. (OPTIONAL)" +
                                                   $"{Environment.NewLine}Note:" +
-                                                  $"{Environment.NewLine}\t--output and --string cannot be used together.";
+                                                  $"{Environment.NewLine}\t--output and --string cannot be used together." +
+                                                  $"{Environment.NewLine}" +
+                                                  $"{Environment.NewLine}Find us on GitHub: https://github.com/TINF17C/GSD2AML-Converter";
 
         /// <summary>
         /// Prints the help text and exits the program.

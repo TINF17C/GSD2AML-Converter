@@ -16,6 +16,20 @@ namespace Gsd2Aml.Lib
     {
         private const string CTranslationTableFileName = "gsd2aml.xml";
 
+        private const string CTextPath = "ProfileBody.ApplicationProcess.ExternalTextList.PrimaryLanguage";
+        private const string CRealTextName = "Text";
+        private const string CRealTextId = "TextId";
+        private const string CReferenceTextId = "TextId";
+        private const string CRealValueTextName = "Value";
+
+        internal const string CGraphicPath = "ProfileBody.ApplicationProcess.GraphicsList";
+        internal const string CRealGraphicName = "GraphicItem";
+        private const string CRealGraphicId = "ID";
+        private const string CReferenceGraphicId = "GraphicItemTarget";
+        internal const string CRealValueGraphicName = "GraphicFile";
+
+        internal static string RelativeGsdFilePath { get; set; }
+
         /// <summary>
         /// Gets the property information (PropertyInfo, Type, bool isArray) of a string.
         /// The string indicates a way through the properties. The different "stations" are separated by dots.
@@ -106,12 +120,12 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="translationRule">The translation rule that is parsed.</param>
         /// <returns>The replacement node and a list which contains all references.</returns>
-        internal static (XmlNode, ICollection<XmlNode>) GetInformationFromRule(XmlNode translationRule)
+        internal static (XmlNode, Dictionary<string, string>, List<XmlNode>) GetInformationFromRule(XmlNode translationRule)
         {
             Converter.Logger?.Log(LogLevel.Debug, $"Parsing the rule for {translationRule.Name}.");
 
             // Initialize all out parameters with default values.
-            var references = new List<XmlNode>();
+            var xmlNodeReferences = new List<XmlNode>();
             XmlNode replacement = null;
 
             // Iterate over the child nodes of the replacement and save these correctly.
@@ -122,7 +136,7 @@ namespace Gsd2Aml.Lib
                 switch (xmlNode.Name)
                 {
                     case "Reference":
-                        references.Add(xmlNode);
+                        xmlNodeReferences.Add(xmlNode);
                         break;
                     case "Replacement":
                         if (alreadyReadReplacement)
@@ -145,10 +159,163 @@ namespace Gsd2Aml.Lib
             Converter.Logger?.Log(LogLevel.Debug, "Successfully got the information out of the translation rule.");
 
             // Check if replacement is null.
-            if (replacement != null) return (replacement, references);
+            if (replacement != null) return (replacement, ParseReferences(xmlNodeReferences), xmlNodeReferences);
 
             Converter.Logger?.Log(LogLevel.Error, $"Rule {translationRule.Name} does not have any replacement for a rule.");
             throw new XmlException("Translation table has no replacement for a rule.");
+        }
+
+        /// <summary>
+        /// Parses the references given in the translation table and saves them to a dictionary.
+        /// </summary>
+        /// <param name="ruleReferences">The references in a list of XmlNodes.</param>
+        /// <param name="xmlNode">Optional parameter which is a GSD tag and will be used instead of the iterated one.</param>
+        /// <returns>A dictionary which contains for each reference identifier the correct value.</returns>
+        internal static Dictionary<string, string> ParseReferences(IEnumerable<XmlNode> ruleReferences, XmlNode xmlNode = null)
+        {
+            var references = new Dictionary<string, string>();
+
+            foreach (var reference in ruleReferences)
+            {
+                var referenceAttributes = reference.Attributes;
+                if (referenceAttributes == null)
+                {
+                    Converter.Logger?.Log(LogLevel.Error, "Reference of a rule has no attributes.");
+                    throw new InvalidDataException("Reference of a rule has no attributes.");
+                }
+
+                var referenceId = referenceAttributes["Ref"]?.Value;
+
+                if (referenceId == null)
+                {
+                    Converter.Logger?.Log(LogLevel.Error, "Reference of a rule has no key.");
+                    throw new InvalidDataException("Reference of a rule has no key.");
+                }
+
+                var referenceType = referenceAttributes["Type"]?.Value;
+
+                switch (referenceType)
+                {
+                    case "TextRef":
+                        var referenceTextValue = ParseRealReference(CTextPath, reference, CReferenceTextId, CRealTextId, CRealTextName, CRealValueTextName, xmlNode);
+                        references.Add(referenceId, referenceTextValue);
+                        break;
+                    case "GraphicRef":
+                        var referenceGraphicValue = ParseRealReference(CGraphicPath, reference, CReferenceGraphicId, CRealGraphicId, CRealGraphicName, CRealValueGraphicName, xmlNode);
+                        references.Add(referenceId, referenceGraphicValue);
+                        break;
+                    case "RelGsdFilePath":
+                        references.Add(referenceId, RelativeGsdFilePath);
+                        break;
+                    case null:
+                        var referenceChild = reference.FirstChild;
+                        var referenceChildAttributes = referenceChild.Attributes;
+
+                        if (referenceChildAttributes == null)
+                        {
+                            continue;
+                        }
+
+                        var referenceChildAttributeName = referenceChildAttributes[0].Name;
+
+                        var gsd = xmlNode ?? IterateThroughGsdDocument(referenceChild.Name);
+
+                        var gsdAttributes = gsd?.Attributes;
+
+                        if (gsdAttributes?[referenceChildAttributeName] == null)
+                        {
+                            continue;
+                        }
+
+                        if (gsd.Attributes != null)
+                            references.Add(referenceId, gsd.Attributes[referenceChildAttributeName].Value);
+                        break;
+                    default:
+                        Converter.Logger?.Log(LogLevel.Error, "Reference does not have a valid/supported type.");
+                        throw new InvalidDataException("Reference does not have a valid/supported type.");
+                }
+            }
+            return references;
+        }
+
+        /// <summary>
+        /// Parse real references (TextRef, GraphicRef) and find the correct value.
+        /// </summary>
+        /// <param name="path">Path to the real GSD element.</param>
+        /// <param name="reference">The reference contains the reference.</param>
+        /// <param name="referenceIdName">The referenceIdName contains the name of the reference id.</param>
+        /// <param name="realIdName">The realIdName contains the name of the real id.</param>
+        /// <param name="realElementName">The realElementname contains the name of the real element tag.</param>
+        /// <param name="realValueName">The realValueName contains the name of the real value attribute.</param>
+        /// <param name="xmlNode">Optional parameter which is a GSD tag and will be used instead of the iterated one.</param>
+        /// <returns>The value of the real reference.</returns>
+        private static string ParseRealReference(string path, XmlNode reference, string referenceIdName, string realIdName, string realElementName, string realValueName, XmlNode xmlNode)
+        {
+            var refNode = xmlNode ?? IterateThroughGsdDocument(reference.FirstChild.Name);
+
+            if (!refNode.Name.EndsWith(reference.FirstChild.Name.Split('.').Last()))
+            {
+                refNode = IterateThroughGsdDocument(reference.FirstChild.Name, (XmlElement)xmlNode);
+            }
+
+            if (refNode.Attributes == null) return null;
+            var refId = refNode.Attributes[referenceIdName]?.Value;
+
+            if (refId == null)
+            {
+                Converter.Logger?.Log(LogLevel.Warning, $"GSD reference element does not have a valid reference id.");
+                throw new InvalidDataException($"GSD reference element does not have a valid id.");
+            }
+
+            var realNode = IterateThroughGsdDocument(path);
+            var realNodeItemList = realNode.GetElementsByTagName(realElementName);
+
+            foreach (XmlNode realItem in realNodeItemList)
+            {
+                var realItemAttributes = realItem.Attributes;
+
+                if (realItemAttributes == null)
+                {
+                    Converter.Logger?.Log(LogLevel.Warning, $"GSD real element does not have any attributes.");
+                    throw new InvalidDataException($"GSD real element does not have any attributes.");
+                }
+
+                if (realItemAttributes[realIdName].Value.Equals(refId))
+                {
+                    return realItemAttributes[realValueName].Value;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Iterates through the GSD document with the given path.
+        /// </summary>
+        /// <param name="path">The by dots seperated path through the GSD docment.</param>
+        /// <param name="alternativeIterator">Optional parameter. If it is set the iteration starts from there.</param>
+        /// <returns>The last XmlNode of the path.</returns>
+        internal static XmlElement IterateThroughGsdDocument(string path, XmlElement alternativeIterator = null)
+        {
+            var splitStrings = path.Split('.');
+            var iteratorNode = alternativeIterator ?? Converter.GsdDocument.DocumentElement;
+
+            if (iteratorNode == null)
+            {
+                Converter.Logger?.Log(LogLevel.Debug, $"Could not find the right GSD node for this rule: {path}");
+                return null;
+            }
+
+            foreach (var splitString in splitStrings)
+            {
+                iteratorNode = iteratorNode[splitString];
+
+                if (iteratorNode != null) continue;
+
+                Converter.Logger?.Log(LogLevel.Debug, $"Could not find the right GSD node for this rule: {path}");
+                return null;
+            }
+            return iteratorNode;
         }
 
         /// <summary>
@@ -185,7 +352,7 @@ namespace Gsd2Aml.Lib
             catch (Exception e)
             {
                 Converter.Logger?.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. {e.Message} Path to the GSD file: {inputFile}");
-                throw new XmlException($"Invalid GSD-file. Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}", e);
+                throw new XmlException($"Invalid GSD-file. Failed to deserialize the GSD-File correctly. {e.Message} Path to the GSD file: {inputFile}", e);
             }
             Converter.Logger?.Log(LogLevel.Info, $"GSD file was deserialized correctly. Path to the GSD file: {inputFile}");
         }

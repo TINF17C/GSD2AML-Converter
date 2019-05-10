@@ -1,4 +1,5 @@
-﻿using Gsd2Aml.Lib.Logging;
+﻿using System;
+using Gsd2Aml.Lib.Logging;
 using Gsd2Aml.Lib.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -9,10 +10,6 @@ using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
-    // TODO: References implemention.
-    // TODO: get ressources
-    // TODO: update readme
-    // TODO: write tests
     /// <summary>
     /// The converter class which contains the logic to convert a GSD formatted file to an AML file.
     /// </summary>
@@ -24,7 +21,7 @@ namespace Gsd2Aml.Lib
 
         private static List<XmlNode> TranslationRules { get; } = new List<XmlNode>();
 
-        private static XmlDocument GsdDocument { get; set; }
+        internal static XmlDocument GsdDocument { get; set; }
 
         /// <summary>
         /// Converts a GSDML input file and returns the resulting AML file as a string.
@@ -34,6 +31,8 @@ namespace Gsd2Aml.Lib
         /// <returns>The AML object serialized to a XML string.</returns>
         public static string Convert(string inputFile, bool strictValidation = true)
         {
+            Util.RelativeGsdFilePath = "/" + Path.GetFileName(inputFile);
+
             Logger?.Log(LogLevel.Info, "Conversion to string started.");
             StartConversion(inputFile, Util.GetOutputFileName(inputFile), strictValidation);
 
@@ -54,6 +53,8 @@ namespace Gsd2Aml.Lib
         /// <param name="strictValidation">A flag which indicates if the GSD should be checked for correctness.</param>
         public static void Convert(string inputFile, string outputFile, bool overwriteFile, bool strictValidation = true)
         {
+            Util.RelativeGsdFilePath = Path.GetFileName(inputFile);
+
             Logger?.Log(LogLevel.Info, "Conversion to file started.");
             StartConversion(inputFile, outputFile, strictValidation);
 
@@ -64,8 +65,18 @@ namespace Gsd2Aml.Lib
             {
                 serializer.Serialize(textWriter, AmlObject);
             }
-            
-            Compressor.Compress(temporaryPath, outputFile, new string[0], overwriteFile);
+
+            var resources = new List<string> {inputFile};
+
+            foreach (XmlNode xmlNode in Util.IterateThroughGsdDocument(Util.CGraphicPath).GetElementsByTagName(Util.CRealGraphicName))
+            {
+                var xmlNodeAttributes = xmlNode.Attributes;
+                var file = xmlNodeAttributes?[Util.CRealValueGraphicName].Value;
+                file += string.IsNullOrEmpty(Path.GetExtension(file)) ? ".bmp" : string.Empty;
+                resources.Add(Path.Combine(Path.GetDirectoryName(inputFile) ?? throw new InvalidOperationException("Invalid input file path."), file));
+            }
+
+            Compressor.Compress(temporaryPath, outputFile, resources.ToArray(), overwriteFile);
 
             File.Delete(temporaryPath);
         }
@@ -165,15 +176,15 @@ namespace Gsd2Aml.Lib
         private static dynamic Translate<TA>(ref TA currentAmlHead, XmlNode translationRule)
         {
             // Get information of the translation rule. (replacement and references)
-            var (replacement, references) = Util.GetInformationFromRule(translationRule);
+            var (replacement, references, _) = Util.GetInformationFromRule(translationRule);
 
             // Get the information fo the replacement node. (PropertyInfo, Type, isArray)
             var (replacementProperty, replacementPropertyType, isReplacementPropertyArray) = Util.GetProperty(replacement.Name);
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
             var replacementInstance = Util.CreateInstance(replacementPropertyType, isReplacementPropertyArray);
-
-            AddSubInstancesToInstance(replacement, replacementInstance, isReplacementPropertyArray);
+            SetAttributes(replacement, replacementInstance, references);
+            AddSubInstancesToInstance(replacement, replacementInstance, isReplacementPropertyArray, references);
 
             // Set the replacementInstance to the current AML head object and set the new AML head.
             var newAmlHead = isReplacementPropertyArray ? replacementInstance.ToArray() : replacementInstance;
@@ -188,7 +199,8 @@ namespace Gsd2Aml.Lib
         /// <param name="replacement">The replacement rule.</param>
         /// <param name="replacementInstance">The replacement instance in which the sub properties will be set.</param>
         /// <param name="isReplacementPropertyArray">A flag which indicates whether the current instance is an array or not.</param>
-        private static void AddSubInstancesToInstance(XmlNode replacement, dynamic replacementInstance, bool isReplacementPropertyArray)
+        /// <param name="references">Dictionary which contains information about the references.</param>
+        private static void AddSubInstancesToInstance(XmlNode replacement, dynamic replacementInstance, bool isReplacementPropertyArray, Dictionary<string, string> references)
         {
             // Iterate over all sub properties of the replacement to translate these and set it into the replacementInstance.
             foreach (XmlNode childNode in replacement.ChildNodes)
@@ -201,7 +213,7 @@ namespace Gsd2Aml.Lib
                 }
 
                 Logger?.Log(LogLevel.Info, $"Translate sub property {childNode.Name}.");
-                var (subProperty, subPropertyInstance) = TranslateSubProperties(childNode);
+                var (subProperty, subPropertyInstance) = TranslateSubProperties(childNode, references);
                 Logger?.Log(LogLevel.Debug, $"Successfully translated {childNode.Name}.");
 
                 if (isReplacementPropertyArray)
@@ -223,7 +235,7 @@ namespace Gsd2Aml.Lib
         /// <param name="childNode">The rule node which contains the information which rule should be applied.</param>
         /// <param name="replacementInstance">The instance in which the rule instance will be set/added.</param>
         private static void HandleRuleCall(XmlNode childNode, dynamic replacementInstance)
-        {
+        { 
             // Get the translation rule
             var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(childNode.InnerText));
 
@@ -233,33 +245,30 @@ namespace Gsd2Aml.Lib
                 return;
             }
 
-            var splitStrings = translationRule.Name.Split('.');
-            var iteratorNode = GsdDocument.DocumentElement;
-            var (ruleReplacement, ruleReferences) = Util.GetInformationFromRule(translationRule);
-
-            if (iteratorNode == null)
+            var lastNode = Util.IterateThroughGsdDocument(translationRule.Name);
+            if (lastNode == null)
             {
-                Logger.Log(LogLevel.Debug, $"Could not find the right GSD node for this rule: {translationRule.Name}");
-                return;
+                Logger?.Log(LogLevel.Error, $"Failed to iterate thorugh a rule path. {translationRule.Name}");
+                throw new InvalidDataException("Failed to handle a rule call in translation table.");
             }
 
-            for (var i = 0; i < splitStrings.Length - 1; i++)
+            var preLastnode = (XmlElement) lastNode.ParentNode;
+            var (ruleReplacement, _, refList) = Util.GetInformationFromRule(translationRule);
+            var nodeList = preLastnode?.GetElementsByTagName(lastNode.Name);
+
+            if (nodeList == null)
             {
-                iteratorNode = iteratorNode[splitStrings[i]];
-
-                if (iteratorNode != null) continue;
-
-                Logger.Log(LogLevel.Debug, $"Could not find the right GSD node for this rule: {translationRule.Name}");
-                return;
+                Logger?.Log(LogLevel.Error, $"Could not create a list out of {lastNode.Name}.");
+                throw new InvalidDataException("Could not create a list out of a rule call in translation table.");
             }
 
-            var nodeList = iteratorNode.GetElementsByTagName(splitStrings[splitStrings.Length - 1]);
-
-            foreach (var node in nodeList)
+            foreach (XmlNode node in nodeList)
             {
-                var (ruleReplacementProperty, ruleReplacementPropertyType, isRuleReplacementPropertyArray) = Util.GetProperty(ruleReplacement.Name);
+                var ruleReferences = Util.ParseReferences(refList, node);
+                var (_, ruleReplacementPropertyType, isRuleReplacementPropertyArray) = Util.GetProperty(ruleReplacement.Name);
                 var ruleReplacementInstance = Util.CreateInstance(ruleReplacementPropertyType, isRuleReplacementPropertyArray);
-                AddSubInstancesToInstance(ruleReplacement, ruleReplacementInstance, isRuleReplacementPropertyArray);
+                SetAttributes(ruleReplacement, ruleReplacementInstance, ruleReferences);
+                AddSubInstancesToInstance(ruleReplacement, ruleReplacementInstance, isRuleReplacementPropertyArray, ruleReferences);
                 replacementInstance.Add(ruleReplacementInstance);
             }
         }
@@ -268,8 +277,9 @@ namespace Gsd2Aml.Lib
         /// Translates the sub properties of a translation rule.
         /// </summary>
         /// <param name="replacement">The XmlNode replacement rule.</param>
+        /// <param name="references">Dictionary which contains information about the references of a rule.</param>
         /// <returns>The property info which describes the translationInstance and the translation instance in which the sub property instances will be set.</returns>
-        private static (PropertyInfo, dynamic) TranslateSubProperties(XmlNode replacement)
+        private static (PropertyInfo, dynamic) TranslateSubProperties(XmlNode replacement, Dictionary<string, string> references)
         {
             // Get the information of the replacement node. (PropertyInfo, Type, isArray)
             var (translationProperty, translationPropertyType, isTranslationPropertyArray) = Util.GetProperty(replacement.Name);
@@ -278,8 +288,22 @@ namespace Gsd2Aml.Lib
             var translationInstance = Util.CreateInstance(translationPropertyType, isTranslationPropertyArray);
             
             // Set attribute and inner text to the translation instance.
-            if (translationInstance is string || replacement.Name.Equals("Attribute.Value")) translationInstance = replacement.InnerText;
-            SetAttributes(replacement, translationInstance);
+            if (translationInstance is string || replacement.Name.Equals("Attribute.Value"))
+            {
+                if (replacement.InnerText.Contains('$') && references.ContainsKey(replacement.InnerText))
+                {
+                    translationInstance = references[replacement.InnerText];
+                }
+                else if (replacement.InnerText.Contains('$') && !references.ContainsKey(replacement.InnerText))
+                {
+                    translationInstance = string.Empty;
+                }
+                else
+                {
+                    translationInstance = replacement.InnerText;
+                }
+            }
+            SetAttributes(replacement, translationInstance, references);
             Logger?.Log(LogLevel.Debug, $"Successfully set attributes to {replacement.Name}.");
 
             // If the current node has only a text in it or no children it returns the translationProperty.
@@ -292,7 +316,7 @@ namespace Gsd2Aml.Lib
             }
 
             // Create replacement instance. If the replacement is an array then create a list. If not then a normal instance.
-            AddSubInstancesToInstance(replacement, translationInstance, isTranslationPropertyArray);
+            AddSubInstancesToInstance(replacement, translationInstance, isTranslationPropertyArray, references);
 
             if (isTranslationPropertyArray) translationInstance = translationInstance.ToArray();
             return (translationProperty, translationInstance);
@@ -305,7 +329,8 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="replacement">The replacement node of the translation table which will be used to set those attributes to the instance.</param>
         /// <param name="translationInstance">The instance in which the attributes will be set.</param>
-        private static void SetAttributes(XmlNode replacement, dynamic translationInstance)
+        /// <param name="references">Dictionary which contains information about the references of a rule.</param>
+        private static void SetAttributes(XmlNode replacement, dynamic translationInstance, IReadOnlyDictionary<string, string> references)
         {
             // If there are not attributes, it is not possible to translate them.
             if (replacement.Attributes == null) return;
@@ -317,11 +342,24 @@ namespace Gsd2Aml.Lib
                 var (attributeProperty, attributePropertyType, _) = Util.GetProperty(attribute.Name);
                 
                 // Create the instance of the attribute and assume it is a string. If not, it throws a exception.
-                dynamic attributeInstance;
+                dynamic attributeInstance = null;
+
+                if (attribute.Name.Contains("ID")) attributeInstance = Guid.NewGuid().ToString();
 
                 if (attributePropertyType == typeof(string))
                 {
-                    attributeInstance = attribute.Value;
+                    if (attribute.Value.Contains('$') && references.ContainsKey(attribute.Value))
+                    {
+                        attributeInstance = references[attribute.Value];
+                    }
+                    else if (attribute.Value.Contains('$') && !references.ContainsKey(attribute.Value))
+                    {
+                        attributeInstance = string.Empty;
+                    }
+                    else if (attributeInstance == null)
+                    {
+                        attributeInstance = attribute.Value;
+                    }
                 }
                 else
                 {

@@ -40,29 +40,42 @@
 
             <InternalElement CAEXObject.Name="DeviceIdentification" CAEXObject.ID="GUID">
               <SystemUnitClassType.Attribute>
-                <Attribute CAEXObject.Name="Manufacturer" Attribute.AttributeDataType="xs:string">
+                <Attribute CAEXObject.Name="VendorName" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$2</Attribute.Value>
                 </Attribute>
 
-                <Attribute CAEXObject.Name="Model" Attribute.AttributeDataType="xs:string">
+                <Attribute CAEXObject.Name="VendorID" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$8</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="DeviceName" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$1</Attribute.Value>
                 </Attribute>
 
-                <Attribute CAEXObject.Name="ProductCode" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$1</Attribute.Value>
+                <Attribute CAEXObject.Name="DeviceID" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$9</Attribute.Value>
                 </Attribute>
 
-                <Attribute CAEXObject.Name="DeviceClass" Attribute.AttributeDataType="xs:string">
+                <Attribute CAEXObject.Name="DeviceFamily" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$3</Attribute.Value>
                 </Attribute>
 
-                <Attribute CAEXObject.Name="ShortDescription" Attribute.AttributeDataType="xs:string">
+                <Attribute CAEXObject.Name="ProductText" Attribute.AttributeDataType="xs:string">
                   <Attribute.Value>$4</Attribute.Value>
                 </Attribute>
 
-                <Attribute CAEXObject.Name="ArticleIdentificationOfVendor" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$1</Attribute.Value>
+                <Attribute CAEXObject.Name="HardwareRelease" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$6</Attribute.Value>
                 </Attribute>
+
+                <Attribute CAEXObject.Name="SoftwareRelease" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$7</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="OrderNumber" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$10</Attribute.Value>
+                </Attribute>
+
               </SystemUnitClassType.Attribute>
             </InternalElement>
 
@@ -107,20 +120,35 @@
       </CAEXFile.SystemUnitClass>
     </Replacement>
     <!-- Caution! There can be multiple DeviceAccessPointItems in a DeviceAccessPointList. Just take the first one, it shouldn,t matter which one you choose regardless. -->
-    <Reference Ref="$1" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.Name TextId="" />
+    <Reference Ref="$1" Type="TextRef">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.Name TextId="" />
     </Reference>
     <Reference Ref="$2">
-      <ISO15745Profile.ProfileBody.DeviceIdentity.VendorName Value="" />
+      <ProfileBody.DeviceIdentity.VendorName Value="" />
     </Reference>
     <Reference Ref="$3">
-      <ISO15745Profile.ProfileBody.DeviceFunction.Family MainFamily="" />
+      <ProfileBody.DeviceFunction.Family MainFamily="" />
     </Reference>
     <!-- Again, just choose the first one. -->
-    <Reference Ref="$4" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.InfoText TextId="" />
+    <Reference Ref="$4" Type="TextRef">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.InfoText TextId="" />
     </Reference>
-    <Reference Ref="$5" Type="GSDRef" />
+    <Reference Ref="$5" Type="RelGsdFilePath" />
+    <Reference Ref="$6">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.HardwareRelease Value="" />
+    </Reference>
+    <Reference Ref="$7">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.SoftwareRelease Value="" />
+    </Reference>
+    <Reference Ref="$8">
+      <ProfileBody.DeviceIdentity VendorID=""/>
+    </Reference>
+    <Reference Ref="$9">
+      <ProfileBody.DeviceIdentity DeviceID=""/>
+    </Reference>
+    <Reference Ref="$10">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.OrderNumber Value="" />
+    </Reference>
   </DeviceIdentity>
 
   <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
@@ -133,11 +161,11 @@
         </ExternalInterface.Attribute>
       </ExternalInterface>
     </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem TextId="" />
+    <Reference Ref="$1" Type="TextRef">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem TextId="" />
     </Reference>
     <Reference Ref="$2">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem SlotNumber="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem SlotNumber="" />
     </Reference>
   </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
 
@@ -172,32 +200,32 @@
         </ExternalInterface.Attribute>
       </ExternalInterface>
     </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem TextId="" />
+    <Reference Ref="$1" Type="TextRef">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem TextId="" />
     </Reference>
     <Reference Ref="$2">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubslotNumber="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubslotNumber="" />
     </Reference>
     <Reference Ref="$3">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MAUTypes="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MAUTypes="" />
     </Reference>
     <Reference Ref="$4">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubmoduleIdentNumber="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SubmoduleIdentNumber="" />
     </Reference>
     <Reference Ref="$5">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortTxDelay="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortTxDelay="" />
     </Reference>
     <Reference Ref="$6">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortRxDelay="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem MaxPortRxDelay="" />
     </Reference>
     <Reference Ref="$7">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem LinkStateDiagnosisCapability="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem LinkStateDiagnosisCapability="" />
     </Reference>
     <Reference Ref="$8">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SupportsRingportConfig="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem SupportsRingportConfig="" />
     </Reference>
     <Reference Ref="$9">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem IsDefaultRingport="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem IsDefaultRingport="" />
     </Reference>
   </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
 
@@ -218,7 +246,7 @@
       </InternalElement>
     </Replacement>
     <Reference Ref="$1" Type="GraphicRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef GraphicItemTarget="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef GraphicItemTarget="" />
     </Reference>
   </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef>
 
@@ -336,80 +364,80 @@
         </SystemUnitClassType.InternalElement>
       </InternalElement>
     </Replacement>
-    <Reference Ref="$1" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem TextId="" />
+    <Reference Ref="$1" Type="TextRef">
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem TextId="" />
     </Reference>
     <Reference Ref="$2">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedRT_Classes="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedRT_Classes="" />
     </Reference>
     <Reference Ref="$3">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
     </Reference>
     <Reference Ref="$4">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedProtocols="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedProtocols="" />
     </Reference>
     <Reference Ref="$5">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedMibs="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedMibs="" />
     </Reference>
     <Reference Ref="$6">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubslotNumber="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubslotNumber="" />
     </Reference>
     <Reference Ref="$7">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubmoduleIdentNumber="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubmoduleIdentNumber="" />
     </Reference>
     <Reference Ref="$8">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_HelloSupported="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_HelloSupported="" />
     </Reference>
     <Reference Ref="$9">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DelayMeasurementSupported="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DelayMeasurementSupported="" />
     </Reference>
     <Reference Ref="$10">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem NetworkComponentDiagnosisSupported="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem NetworkComponentDiagnosisSupported="" />
     </Reference>
     <Reference Ref="$11">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_BoundarySupported="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_BoundarySupported="" />
     </Reference>
     <Reference Ref="$12">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem PTP_BoundarySupported="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem PTP_BoundarySupported="" />
     </Reference>
     <Reference Ref="$13">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations NumberOfAr="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations NumberOfAr="" />
     </Reference>
     <Reference Ref="$14">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations StartupMode="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations StartupMode="" />
     </Reference>
     <Reference Ref="$15">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties SendClock="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties SendClock="" />
     </Reference>
     <Reference Ref="$16">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties ReductionRatio="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties ReductionRatio="" />
     </Reference>
     <Reference Ref="$17">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties SendClock="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties SendClock="" />
     </Reference>
     <Reference Ref="$18">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties ReductionRatio="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties ReductionRatio="" />
     </Reference>
     <Reference Ref="$19">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.MediaRedundancy SupportedRole="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.MediaRedundancy SupportedRole="" />
     </Reference>
     <Reference Ref="$20">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxBridgeDelay="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxBridgeDelay="" />
     </Reference>
     <Reference Ref="$21">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxNumberIR_FrameData="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxNumberIR_FrameData="" />
     </Reference>
     <Reference Ref="$22">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedRole="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedRole="" />
     </Reference>
     <Reference Ref="$23">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode MaxLocalJitter="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode MaxLocalJitter="" />
     </Reference>
     <Reference Ref="$24">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode T_PLL_MAX="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode T_PLL_MAX="" />
     </Reference>
     <Reference Ref="$25">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedSyncProtocols="" />
+      <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedSyncProtocols="" />
     </Reference>
   </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem>
 
