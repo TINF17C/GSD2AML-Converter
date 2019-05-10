@@ -1,0 +1,2214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:base="http://www.profibus.com/GSDML/2003/11/Primitives" xmlns:gsdml="http://www.profibus.com/GSDML/2003/11/DeviceProfile" targetNamespace="http://www.profibus.com/GSDML/2003/11/DeviceProfile" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.35">
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:import namespace="http://www.profibus.com/GSDML/2003/11/Primitives" schemaLocation="GSDML-Primitives-v2.35.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>This schema contains the device profile for the General Station Description Markup Language (GSDML).</xsd:documentation>
+		<xsd:appinfo>
+			<schemainfo versiondate="20180423"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<!--________________________________________-->
+	<!--*** ISO 15745 Profile definition ***-->
+	<xsd:element name="ISO15745Profile">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ProfileHeader" type="gsdml:ProfileHeaderT"/>
+				<xsd:element name="ProfileBody" type="gsdml:ProfileBodyT">
+					<xsd:key name="ExternalText-ID">
+						<xsd:selector xpath=".//gsdml:PrimaryLanguage/gsdml:Text"/>
+						<xsd:field xpath="@TextId"/>
+					</xsd:key>
+					<xsd:keyref name="ExternalText-TextId" refer="gsdml:ExternalText-ID">
+						<xsd:selector xpath=".//gsdml:Name|.//gsdml:InfoText|.//gsdml:Help|.//gsdml:Assign|.//gsdml:Ref|.//gsdml:CategoryItem|.//gsdml:DataItem|.//gsdml:BitDataItem|.//gsdml:SlotItem|.//gsdml:SubslotItem|.//gsdml:InterfaceSubmoduleItem|.//gsdml:PortSubmoduleItem|.//gsdml:DCP_FlashOnceSignalUnit"/>
+						<xsd:field xpath="@TextId"/>
+					</xsd:keyref>
+					<xsd:keyref name="Language-TextId" refer="gsdml:ExternalText-ID">
+						<xsd:selector xpath=".//gsdml:Language/gsdml:Text"/>
+						<xsd:field xpath="@TextId"/>
+					</xsd:keyref>
+				</xsd:element>
+				<xsd:element ref="ds:Signature" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--________________________________________-->
+	<!--*** ProfileHeader ***-->
+	<xsd:complexType name="ProfileHeaderT">
+		<xsd:sequence>
+			<xsd:element name="ProfileIdentification" type="xsd:string"/>
+			<xsd:element name="ProfileRevision" type="xsd:string"/>
+			<xsd:element name="ProfileName" type="xsd:string"/>
+			<xsd:element name="ProfileSource" type="xsd:string"/>
+			<xsd:element name="ProfileClassID" type="base:ProfileClassID_EnumT"/>
+			<xsd:element name="ProfileDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="AdditionalInformation" type="xsd:anyURI" minOccurs="0"/>
+			<xsd:element name="ISO15745Reference" type="gsdml:ISO15745ReferenceT"/>
+			<xsd:element name="IASInterfaceType" type="base:IASInterfaceEnumT" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ISO15745ReferenceT">
+		<xsd:sequence>
+			<xsd:element name="ISO15745Part" type="xsd:positiveInteger"/>
+			<xsd:element name="ISO15745Edition" type="xsd:positiveInteger"/>
+			<xsd:element name="ProfileTechnology" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** ProfileBody ***-->
+	<xsd:complexType name="ProfileBodyT">
+		<xsd:sequence>
+			<xsd:element name="DeviceIdentity" type="gsdml:DeviceIdentityT"/>
+			<xsd:element name="DeviceFunction" type="gsdml:DeviceFunctionT"/>
+			<xsd:element name="ApplicationProcess" type="gsdml:ApplicationProcessT">
+				<xsd:unique name="All-SubmoduleItem-ID">
+					<xsd:selector xpath=".//gsdml:SubmoduleItem|.//gsdml:VirtualSubmoduleItem|.//gsdml:InterfaceSubmoduleItem|.//gsdml:PortSubmoduleItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:unique>
+				<xsd:key name="ModuleItem-ID">
+					<xsd:selector xpath=".//gsdml:ModuleItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:key>
+				<xsd:key name="SubmoduleItem-ID">
+					<xsd:selector xpath=".//gsdml:SubmoduleItem|.//gsdml:SubmoduleList/gsdml:PortSubmoduleItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:key>
+				<xsd:key name="GraphicItem-ID">
+					<xsd:selector xpath=".//gsdml:GraphicItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:key>
+				<xsd:key name="CategoryItem-ID">
+					<xsd:selector xpath=".//gsdml:CategoryItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:key>
+				<xsd:key name="ValueItem-ID">
+					<xsd:selector xpath=".//gsdml:ValueItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:key>
+				<xsd:keyref name="ModuleItemRef-ModuleItemTarget" refer="gsdml:ModuleItem-ID">
+					<xsd:selector xpath=".//gsdml:ModuleItemRef"/>
+					<xsd:field xpath="@ModuleItemTarget"/>
+				</xsd:keyref>
+				<xsd:keyref name="SubmoduleItemRef-SubmoduleItemTarget" refer="gsdml:SubmoduleItem-ID">
+					<xsd:selector xpath=".//gsdml:SubmoduleItemRef"/>
+					<xsd:field xpath="@SubmoduleItemTarget"/>
+				</xsd:keyref>
+				<xsd:keyref name="GraphicItemRef-GraphicItemTarget" refer="gsdml:GraphicItem-ID">
+					<xsd:selector xpath=".//gsdml:GraphicItemRef"/>
+					<xsd:field xpath="@GraphicItemTarget"/>
+				</xsd:keyref>
+				<xsd:keyref name="ModuleInfo-CategoryRef" refer="gsdml:CategoryItem-ID">
+					<xsd:selector xpath=".//gsdml:ModuleInfo"/>
+					<xsd:field xpath="@CategoryRef"/>
+				</xsd:keyref>
+				<xsd:keyref name="ModuleInfo-SubCategory1Ref" refer="gsdml:CategoryItem-ID">
+					<xsd:selector xpath=".//gsdml:ModuleInfo"/>
+					<xsd:field xpath="@SubCategory1Ref"/>
+				</xsd:keyref>
+				<xsd:keyref name="Ref-ValueItemTarget" refer="gsdml:ValueItem-ID">
+					<xsd:selector xpath=".//gsdml:Ref"/>
+					<xsd:field xpath="@ValueItemTarget"/>
+				</xsd:keyref>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** DeviceIdentity ***-->
+	<xsd:complexType name="DeviceIdentityT">
+		<xsd:sequence>
+			<xsd:element name="InfoText" type="base:ExternalTextRefT"/>
+			<xsd:element name="VendorName" type="base:TokenParameterT"/>
+		</xsd:sequence>
+		<xsd:attribute name="VendorID" type="base:Unsigned16hexT" use="required"/>
+		<xsd:attribute name="DeviceID" type="base:Unsigned16hex0T" use="required"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** DeviceFunction ***-->
+	<xsd:complexType name="DeviceFunctionT">
+		<xsd:sequence>
+			<xsd:element name="Family" type="gsdml:FamilyT"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FamilyT">
+		<xsd:attribute name="MainFamily" type="base:FamilyEnumT" use="required"/>
+		<xsd:attribute name="ProductFamily" type="xsd:normalizedString"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** ApplicationProcess ***-->
+	<xsd:complexType name="ApplicationProcessT">
+		<xsd:sequence>
+			<xsd:element name="DeviceAccessPointList">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains one or more device access point (DAP) descriptions of the same family.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:sequence>
+						<xsd:element name="DeviceAccessPointItem" type="gsdml:DeviceAccessPointItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="DeviceAccessPointItem-ID">
+					<xsd:selector xpath="gsdml:DeviceAccessPointItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="ModuleList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains all module descriptions.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:sequence>
+						<xsd:element name="ModuleItem" type="gsdml:ModuleItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SubmoduleList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains all submodule descriptions except for those embedded in the modules.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="SubmoduleItem" type="gsdml:SubmoduleItemT"/>
+						<xsd:element name="PortSubmoduleItem" type="gsdml:PortSubmoduleItemT"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValueList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains elements for the assignment of values to text strings.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:sequence>
+						<xsd:element name="ValueItem" type="gsdml:ValueItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ChannelDiagList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>Specifies a list of - channel type specific - error texts.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ChannelDiagItem" type="gsdml:ChannelDiagItemT"/>
+						<xsd:element name="SystemDefinedChannelDiagItem" type="gsdml:SystemDefinedChannelDiagItemT"/>
+						<xsd:element name="ProfileChannelDiagItem" type="gsdml:ProfileChannelDiagItemT"/>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="ChannelDiagItem-ErrorType">
+					<xsd:selector xpath="gsdml:ChannelDiagItem|gsdml:SystemDefinedChannelDiagItem"/>
+					<xsd:field xpath="@ErrorType"/>
+				</xsd:unique>
+				<xsd:unique name="ProfileChannelDiagItem-ErrorType">
+					<xsd:selector xpath="gsdml:ProfileChannelDiagItem"/>
+					<xsd:field xpath="@API"/>
+					<xsd:field xpath="@ErrorType"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="ChannelProcessAlarmList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>Specifies a list of - channel process alarm specific - reason texts.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ChannelProcessAlarmItem" type="gsdml:ChannelProcessAlarmItemT"/>
+						<xsd:element name="SystemDefinedChannelProcessAlarmItem" type="gsdml:SystemDefinedChannelProcessAlarmItemT"/>
+						<xsd:element name="ProfileChannelProcessAlarmItem" type="gsdml:ProfileChannelProcessAlarmItemT"/>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="ChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:ChannelProcessAlarmItem"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+				<xsd:unique name="SystemDefinedChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:SystemDefinedChannelProcessAlarmItem"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+				<xsd:unique name="ProfileChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:ProfileChannelProcessAlarmItem"/>
+					<xsd:field xpath="@API"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="UnitDiagTypeList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list assigns diagnostic values to manufacturer specific status and error messages.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="UnitDiagTypeItem" type="gsdml:UnitDiagTypeItemT"/>
+						<xsd:element name="ProfileUnitDiagTypeItem" type="gsdml:ProfileUnitDiagTypeItemT"/>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="UnitDiagTypeItem-USI">
+					<xsd:selector xpath="gsdml:UnitDiagTypeItem"/>
+					<xsd:field xpath="@UserStructureIdentifier"/>
+				</xsd:unique>
+				<xsd:unique name="ProfileUnitDiagTypeItem-USI">
+					<xsd:selector xpath="gsdml:ProfileUnitDiagTypeItem"/>
+					<xsd:field xpath="@API"/>
+					<xsd:field xpath="@UserStructureIdentifier"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="LogBookEntryList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="LogBookEntryItem" type="gsdml:LogBookEntryItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="LogBookEntryItem-Status">
+					<xsd:selector xpath="gsdml:LogBookEntryItem"/>
+					<xsd:field xpath="@Status"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="GraphicsList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains graphic items, which can contain either external references to graphic files or embedded graphic information.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:sequence>
+						<xsd:element name="GraphicItem" type="gsdml:GraphicItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CategoryList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains text definitions for catalog categories for modules and submodules.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:sequence>
+						<xsd:element name="CategoryItem" type="gsdml:CategoryItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ExternalTextList">
+				<xsd:complexType>
+					<xsd:annotation>
+						<xsd:documentation>This list contains language dependent text strings.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:sequence>
+						<xsd:element name="PrimaryLanguage" type="gsdml:PrimaryLanguageT"/>
+						<xsd:element name="Language" type="gsdml:LanguageT" minOccurs="0" maxOccurs="unbounded">
+							<xsd:unique name="Language-ID">
+								<xsd:selector xpath="gsdml:Text"/>
+								<xsd:field xpath="@TextId"/>
+							</xsd:unique>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="Language">
+					<xsd:selector xpath="gsdml:Language"/>
+					<xsd:field xpath="@xml:lang"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** DeviceAccessPointItem ***-->
+	<xsd:complexType name="DeviceAccessPointItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="ModuleInfo" type="gsdml:ModuleInfoT"/>
+					<xsd:element name="CertificationInfo" type="gsdml:CertificationInfoT" minOccurs="0"/>
+					<xsd:element name="SubslotList" type="gsdml:SubslotListT" minOccurs="0">
+						<xsd:unique name="DAP-SubslotNumber">
+							<xsd:selector xpath="gsdml:SubslotItem"/>
+							<xsd:field xpath="@SubslotNumber"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="IOConfigData">
+						<xsd:complexType>
+							<xsd:attribute name="MaxInputLength" type="base:Unsigned16T" use="required"/>
+							<xsd:attribute name="MaxOutputLength" type="base:Unsigned16T" use="required"/>
+							<xsd:attribute name="MaxDataLength" type="base:Unsigned16T"/>
+							<xsd:attribute name="ApplicationLengthIncludesIOxS" type="xsd:boolean" default="false"/>
+							<xsd:attribute name="MaxApplicationInputLength" type="base:Unsigned16T"/>
+							<xsd:attribute name="MaxApplicationOutputLength" type="base:Unsigned16T"/>
+							<xsd:attribute name="MaxApplicationDataLength" type="base:Unsigned16T"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="UseableModules" type="gsdml:UseableModulesT" minOccurs="0">
+						<xsd:unique name="DAP-ModuleItemRef-ModuleItemTarget">
+							<xsd:selector xpath="gsdml:ModuleItemRef"/>
+							<xsd:field xpath="@ModuleItemTarget"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="ARVendorBlock" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Request" type="gsdml:ARVendorBlockRequestT" maxOccurs="unbounded">
+									<xsd:unique name="Request-Const-ByteOffset">
+										<xsd:selector xpath="gsdml:Const"/>
+										<xsd:field xpath="@ByteOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Request-Ref-Offset">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ByteOffset"/>
+										<xsd:field xpath="@BitOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Request-Ref-ID">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ID"/>
+									</xsd:unique>
+									<xsd:keyref name="Request-ParameterRef-ParameterTarget" refer="gsdml:Request-Ref-ID">
+										<xsd:selector xpath="gsdml:MenuList/gsdml:MenuItem/gsdml:ParameterRef"/>
+										<xsd:field xpath="@ParameterTarget"/>
+									</xsd:keyref>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+						<xsd:unique name="ARVendorBlock-Request">
+							<xsd:selector xpath="gsdml:Request"/>
+							<xsd:field xpath="@API"/>
+							<xsd:field xpath="@APStructureIdentifier"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="VirtualSubmoduleList" type="gsdml:VirtualSubmoduleListT" minOccurs="0"/>
+					<xsd:element name="SystemDefinedSubmoduleList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="InterfaceSubmoduleItem" type="gsdml:InterfaceSubmoduleItemT"/>
+								<xsd:element name="PortSubmoduleItem" type="gsdml:BuiltInPortSubmoduleItemT" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+						<xsd:unique name="DAP-SystemDefinedSubslotNumber">
+							<xsd:selector xpath="gsdml:PortSubmoduleItem|gsdml:InterfaceSubmoduleItem"/>
+							<xsd:field xpath="@SubslotNumber"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="Graphics" type="gsdml:GraphicsReferenceT" minOccurs="0"/>
+					<xsd:element name="AssetManagement" minOccurs="0">
+						<xsd:complexType/>
+					</xsd:element>
+					<xsd:element name="ApplicationRelations" type="gsdml:ApplicationRelationsObsoleteT" minOccurs="0"/>
+					<xsd:element name="SystemRedundancy" type="gsdml:SystemRedundancyT" minOccurs="0"/>
+					<xsd:element name="UseableSubmodules" type="gsdml:UseableSubmodulesT" minOccurs="0">
+						<xsd:unique name="DAP-SubmoduleItemRef-SubmoduleItemTarget">
+							<xsd:selector xpath="gsdml:SubmoduleItemRef"/>
+							<xsd:field xpath="@SubmoduleItemTarget"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="SlotList" type="gsdml:SlotListT" minOccurs="0">
+						<xsd:unique name="SlotItem-SlotNumber">
+							<xsd:selector xpath="gsdml:SlotItem"/>
+							<xsd:field xpath="@SlotNumber"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="SlotGroups" type="gsdml:SlotGroupsT" minOccurs="0"/>
+					<xsd:element name="FieldbusIntegrationSlots" minOccurs="0">
+						<xsd:complexType>
+							<xsd:attribute name="MaxSupported" use="required">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned16T">
+										<xsd:minInclusive value="1"/>
+										<xsd:maxInclusive value="32767"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="Range">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:pattern value="\d+\.\.\d+"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="ModuleIdentNumber" type="base:Unsigned32hex0T" use="required"/>
+				<xsd:attribute name="PNIO_Version" type="base:VersionStringT" use="required"/>
+				<xsd:attribute name="PhysicalSlots" type="base:ValueListT" use="required"/>
+				<xsd:attribute name="MinDeviceInterval" type="base:Unsigned16T" use="required"/>
+				<xsd:attribute name="ImplementationType" type="xsd:normalizedString"/>
+				<xsd:attribute name="DNS_CompatibleName" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:pattern value="[0-9a-zA-Z]([0-9a-zA-Z\-]{0,61}[0-9a-zA-Z])?(\.[0-9a-zA-Z]([0-9a-zA-Z\-]{0,61}[0-9a-zA-Z])?)*"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="AllowedInSlots" type="base:ValueListT"/>
+				<xsd:attribute name="FixedInSlots" type="base:ValueListT" use="required"/>
+				<xsd:attribute name="ObjectUUID_LocalIndex" type="base:Unsigned16T" use="required"/>
+				<xsd:attribute name="RequiredSchemaVersion" type="base:VersionStringT" default="V1.0"/>
+				<xsd:attribute name="MultipleWriteSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="IOXS_Required" type="xsd:boolean" default="true"/>
+				<xsd:attribute name="AddressAssignment" type="base:TokenListT" default="DCP"/>
+				<xsd:attribute name="PhysicalSubslots" type="base:ValueListT"/>
+				<xsd:attribute name="RemoteApplicationTimeout" type="base:Unsigned16T" default="300"/>
+				<xsd:attribute name="MaxSupportedRecordSize" default="4068">
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned32T">
+							<xsd:minInclusive value="4068"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="PowerOnToCommReady" type="base:Unsigned32T" default="0"/>
+				<xsd:attribute name="ParameterizationSpeedupSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="NameOfStationNotTransferable" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="SharedDeviceSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="SharedInputSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="DeviceAccessSupported" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="NumberOfDeviceAccessAR">
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned8T">
+							<xsd:minInclusive value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="NumberOfImplicitAR" default="1">
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned8T">
+							<xsd:minInclusive value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="WebServer">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:pattern value="https?://(:[0-9]+)?(/[a-zA-Z0-9\-._~:?#@%!$&amp;&apos;()*+,;=]+)*/?"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="AutoConfigurationSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="CIR_Supported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="PrmBeginPrmEndSequenceSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="LLDP_NoD_Supported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="ResetToFactoryModes" type="base:ValueListT"/>
+				<xsd:attribute name="IO_SupervisorSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="CheckDeviceID_Allowed" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="PROFIenergyASE_Supported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="AdaptsRealIdentification" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="NumberOfSubmodules">
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned32T">
+							<xsd:minInclusive value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ModuleInfoT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="InfoText" type="base:ExternalTextRefT"/>
+			<xsd:element name="Family" type="gsdml:FamilyT" minOccurs="0"/>
+			<xsd:element name="VendorName" type="base:TokenParameterT" minOccurs="0"/>
+			<xsd:element name="OrderNumber" type="base:TokenParameterT" minOccurs="0"/>
+			<xsd:element name="HardwareRelease" type="base:TokenParameterT" minOccurs="0"/>
+			<xsd:element name="SoftwareRelease" type="base:TokenParameterT" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="CategoryRef" type="base:RefIdT"/>
+		<xsd:attribute name="SubCategory1Ref" type="base:RefIdT"/>
+	</xsd:complexType>
+	<xsd:complexType name="CertificationInfoT">
+		<xsd:attribute name="ConformanceClass" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="A|B|C"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="ApplicationClass" type="base:TokenListT" use="required"/>
+		<xsd:attribute name="NetloadClass">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="I|II|III"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ApplicationRelationsObsoleteT">
+		<xsd:sequence>
+			<xsd:element name="TimingProperties" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="SendClock" type="base:ValueListT" default="32"/>
+					<xsd:attribute name="ReductionRatio" type="base:ValueListT"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="AR_BlockVersion" type="base:Unsigned16T" use="required"/>
+		<xsd:attribute name="IOCR_BlockVersion" type="base:Unsigned16T" use="required"/>
+		<xsd:attribute name="AlarmCR_BlockVersion" type="base:Unsigned16T" use="required"/>
+		<xsd:attribute name="SubmoduleDataBlockVersion" type="base:Unsigned16T" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="SystemRedundancyT">
+		<xsd:attribute name="DeviceType" type="base:SRDeviceTypeEnumT" use="required"/>
+		<xsd:attribute name="MaxSwitchOverTime" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="1"/>
+					<xsd:maxInclusive value="60000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="PrimaryAR_OnBothNAPsSupported" type="xsd:boolean"/>
+		<xsd:attribute name="RT_InputOnBackupAR_Supported" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="NumberOfAR_Sets" default="1">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned8T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MinRDHT">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="3"/>
+					<xsd:maxInclusive value="199"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="DataInvalidOnBackupAR_Supported" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="S2MaxInputOnBackupDelay">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="3000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="R2MaxInputOnBackupDelay">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="3000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="UseableModulesT">
+		<xsd:sequence>
+			<xsd:element name="ModuleItemRef" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="ModuleItemTarget" type="base:RefIdT" use="required"/>
+					<xsd:attribute name="AllowedInSlots" type="base:ValueListT"/>
+					<xsd:attribute name="UsedInSlots" type="base:ValueListT"/>
+					<xsd:attribute name="FixedInSlots" type="base:ValueListT"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SlotListT">
+		<xsd:sequence>
+			<xsd:element name="SlotItem" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="SlotNumber" type="base:Unsigned16T" use="required"/>
+					<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SlotGroupsT">
+		<xsd:sequence>
+			<xsd:element name="SlotGroup" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Name" type="base:ExternalTextRefT"/>
+						<xsd:element name="InfoText" type="base:ExternalTextRefT"/>
+					</xsd:sequence>
+					<xsd:attribute name="SlotList" type="base:ValueListT" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** ModuleItem ***-->
+	<xsd:complexType name="ModuleItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="ModuleInfo" type="gsdml:ModuleInfoT"/>
+					<xsd:element name="SubslotList" type="gsdml:SubslotListT" minOccurs="0">
+						<xsd:unique name="Module-SubslotNumber">
+							<xsd:selector xpath="gsdml:SubslotItem"/>
+							<xsd:field xpath="@SubslotNumber"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="VirtualSubmoduleList" type="gsdml:VirtualSubmoduleListT" minOccurs="0"/>
+					<xsd:element name="SystemDefinedSubmoduleList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="PortSubmoduleItem" type="gsdml:BuiltInPortSubmoduleItemT" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+						<xsd:unique name="Module-SystemDefinedSubslotNumber">
+							<xsd:selector xpath="gsdml:PortSubmoduleItem"/>
+							<xsd:field xpath="@SubslotNumber"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="UseableSubmodules" type="gsdml:UseableSubmodulesT" minOccurs="0">
+						<xsd:unique name="Module-SubmoduleItemRef-SubmoduleItemTarget">
+							<xsd:selector xpath="gsdml:SubmoduleItemRef"/>
+							<xsd:field xpath="@SubmoduleItemTarget"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="Graphics" type="gsdml:GraphicsReferenceT" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="ModuleIdentNumber" type="base:Unsigned32hex0T" use="required"/>
+				<xsd:attribute name="RequiredSchemaVersion" type="base:VersionStringT" default="V1.0"/>
+				<xsd:attribute name="PhysicalSubslots" type="base:ValueListT"/>
+				<xsd:attribute name="FieldbusType" type="base:Unsigned16T"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SubslotListT">
+		<xsd:sequence>
+			<xsd:element name="SubslotItem" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="SubslotNumber" type="base:Unsigned16T" use="required"/>
+					<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VirtualSubmoduleListT">
+		<xsd:sequence>
+			<xsd:element name="VirtualSubmoduleItem" type="gsdml:BuiltInSubmoduleItemT" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UseableSubmodulesT">
+		<xsd:sequence>
+			<xsd:element name="SubmoduleItemRef" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="SubmoduleItemTarget" type="base:RefIdT" use="required"/>
+					<xsd:attribute name="AllowedInSubslots" type="base:ValueListT"/>
+					<xsd:attribute name="UsedInSubslots" type="base:ValueListT"/>
+					<xsd:attribute name="FixedInSubslots" type="base:ValueListT"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** SubmoduleItem ***-->
+	<xsd:complexType name="SubmoduleItemT">
+		<xsd:complexContent>
+			<xsd:extension base="gsdml:SubmoduleItemBaseT">
+				<xsd:attribute name="RequiredSchemaVersion" type="base:VersionStringT" default="V2.1"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PortSubmoduleItemT">
+		<xsd:complexContent>
+			<xsd:extension base="gsdml:PortSubmoduleItemBaseT">
+				<xsd:sequence>
+					<xsd:element name="ModuleInfo" type="gsdml:ModuleInfoT"/>
+					<xsd:element name="Graphics" type="gsdml:GraphicsReferenceT" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="RequiredSchemaVersion" type="base:VersionStringT" default="V2.25"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** ValueItem ***-->
+	<xsd:complexType name="ValueItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+					<xsd:element name="Assignments" type="gsdml:ValueAssignmentsT" minOccurs="0">
+						<xsd:unique name="Assign-Content">
+							<xsd:selector xpath="gsdml:Assign"/>
+							<xsd:field xpath="@Content"/>
+						</xsd:unique>
+						<xsd:unique name="Assign-TextId">
+							<xsd:selector xpath="gsdml:Assign"/>
+							<xsd:field xpath="@TextId"/>
+						</xsd:unique>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ValueAssignmentsT">
+		<xsd:sequence>
+			<xsd:element name="Assign" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+					<xsd:attribute name="Content" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="-?\d+(\.\d+)?([eE]-?\d+)?"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** ChannelDiagItem ***-->
+	<xsd:complexType name="ChannelDiagItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ExtChannelDiagList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ExtChannelDiagItem" type="gsdml:ExtChannelDiagItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="ExtChannelDiagItem-ErrorType">
+					<xsd:selector xpath="gsdml:ExtChannelDiagItem"/>
+					<xsd:field xpath="@ErrorType"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="ErrorType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="15"/>
+					<xsd:maxInclusive value="32767"/>
+					<!-- 0x000F-0x001F normative, but vendor on legacy devices, 0x0020-0x00FF for common profiles, 0x0100-0x7FFF vendor -->
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaintenanceAlarmState" type="base:TokenList1T" default="D"/>
+	</xsd:complexType>
+	<xsd:complexType name="SystemDefinedChannelDiagItemT">
+		<xsd:sequence>
+			<xsd:element name="ExtChannelDiagList">
+				<xsd:complexType>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ExtChannelDiagItem" type="gsdml:ExtChannelDiagItemT"/>
+						<xsd:element name="ProfileExtChannelDiagItem">
+							<xsd:complexType>
+								<xsd:complexContent>
+									<xsd:extension base="gsdml:ProfileExtChannelDiagItemT">
+										<xsd:attribute name="API" use="required">
+											<xsd:simpleType>
+												<xsd:restriction base="base:Unsigned32T">
+													<xsd:minInclusive value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:attribute>
+									</xsd:extension>
+								</xsd:complexContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="SystemDefinedExtChannelDiagItem-ErrorType">
+					<xsd:selector xpath="gsdml:ExtChannelDiagItem"/>
+					<xsd:field xpath="@ErrorType"/>
+				</xsd:unique>
+				<xsd:unique name="SystemDefinedProfileExtChannelDiagItem-ErrorType">
+					<xsd:selector xpath="gsdml:ProfileExtChannelDiagItem"/>
+					<xsd:field xpath="@API"/>
+					<xsd:field xpath="@ErrorType"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="ErrorType" use="required">
+			<xsd:simpleType>
+				<xsd:union>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:maxInclusive value="31"/>
+							<!-- 0x0000-0x000E normative, 0x000F-0x001F normative, but vendor on legacy devices -->
+						</xsd:restriction>
+					</xsd:simpleType>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="32768"/>
+							<xsd:maxInclusive value="36863"/>
+							<!-- 0x8000-0x8FFF normative -->
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:union>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ProfileChannelDiagItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ExtChannelDiagList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ExtChannelDiagItem" type="gsdml:ExtChannelDiagItemT"/>
+						<xsd:element name="ProfileExtChannelDiagItem" type="gsdml:ProfileExtChannelDiagItemT"/>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="ProfileExtChannelDiagItem-ErrorType">
+					<xsd:selector xpath="gsdml:ExtChannelDiagItem|gsdml:ProfileExtChannelDiagItem"/>
+					<xsd:field xpath="@ErrorType"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="API" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="ErrorType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="36864"/>
+					<xsd:maxInclusive value="40959"/>
+					<!-- 0x9000-0x9FFF profile -->
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaintenanceAlarmState" type="base:TokenList1T" default="D"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExtChannelDiagItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ExtChannelAddValue" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DataItem" type="gsdml:ExtChannelAddValueItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="DataItem-ID">
+					<xsd:selector xpath="gsdml:DataItem"/>
+					<xsd:field xpath="@Id"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="ErrorType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="1"/>
+					<xsd:maxInclusive value="32767"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaintenanceAlarmState" type="base:TokenList1T" default="D"/>
+	</xsd:complexType>
+	<xsd:complexType name="ProfileExtChannelDiagItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ExtChannelAddValue" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DataItem" type="gsdml:ExtChannelAddValueItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="ProfileDiagDataItem-ID">
+					<xsd:selector xpath="gsdml:DataItem"/>
+					<xsd:field xpath="@Id"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="ErrorType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="36864"/>
+					<xsd:maxInclusive value="40959"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaintenanceAlarmState" type="base:TokenList1T" default="D"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExtChannelAddValueItemT">
+		<xsd:attribute name="Id" type="base:Unsigned8T" use="required"/>
+		<xsd:attribute name="DataType" type="base:ExtChannelAddValueDataItemTypeEnumT" use="required"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** ChannelProcessAlarmItem ***-->
+	<xsd:complexType name="ChannelProcessAlarmItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ExtChannelProcessAlarmList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ExtChannelProcessAlarmItem" type="gsdml:ExtChannelProcessAlarmItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="ExtChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:ExtChannelProcessAlarmItem"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="Reason" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="256"/>
+					<xsd:maxInclusive value="32767"/>
+					<!-- 0x0100-0x7FFF vendor -->
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="SystemDefinedChannelProcessAlarmItemT">
+		<xsd:sequence>
+			<xsd:element name="ExtChannelProcessAlarmList">
+				<xsd:complexType>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ExtChannelProcessAlarmItem" type="gsdml:ExtChannelProcessAlarmItemT"/>
+						<xsd:element name="ProfileExtChannelProcessAlarmItem">
+							<xsd:complexType>
+								<xsd:complexContent>
+									<xsd:extension base="gsdml:ProfileExtChannelProcessAlarmItemT">
+										<xsd:attribute name="API" use="required">
+											<xsd:simpleType>
+												<xsd:restriction base="base:Unsigned32T">
+													<xsd:minInclusive value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:attribute>
+									</xsd:extension>
+								</xsd:complexContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="SystemDefinedExtChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:ExtChannelProcessAlarmItem"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+				<xsd:unique name="SystemDefinedProfileExtChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:ProfileExtChannelProcessAlarmItem"/>
+					<xsd:field xpath="@API"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="Reason" use="required">
+			<xsd:simpleType>
+				<xsd:union>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:maxInclusive value="255"/>
+							<!-- 0x0000-0x00FF normative -->
+						</xsd:restriction>
+					</xsd:simpleType>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="32768"/>
+							<xsd:maxInclusive value="36863"/>
+							<!-- 0x8000-0x8FFF normative -->
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:union>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ProfileChannelProcessAlarmItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ExtChannelProcessAlarmList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ExtChannelProcessAlarmItem" type="gsdml:ExtChannelProcessAlarmItemT"/>
+						<xsd:element name="ProfileExtChannelProcessAlarmItem" type="gsdml:ProfileExtChannelProcessAlarmItemT"/>
+					</xsd:choice>
+				</xsd:complexType>
+				<xsd:unique name="ProfileExtChannelProcessAlarmItem-Reason">
+					<xsd:selector xpath="gsdml:ExtChannelProcessAlarmItem|gsdml:ProfileExtChannelProcessAlarmItem"/>
+					<xsd:field xpath="@Reason"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="API" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="Reason" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="36864"/>
+					<xsd:maxInclusive value="40959"/>
+					<!-- 0x9000-0x9FFF profile -->
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ExtChannelProcessAlarmItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ProcessAlarmReasonAddValue" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DataItem" type="gsdml:ProcessAlarmReasonAddValueItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="ProcessAlarmDataItem-ID">
+					<xsd:selector xpath="gsdml:DataItem"/>
+					<xsd:field xpath="@Id"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="Reason" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="1"/>
+					<xsd:maxInclusive value="32767"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ProfileExtChannelProcessAlarmItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="ProcessAlarmReasonAddValue" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DataItem" type="gsdml:ProcessAlarmReasonAddValueItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="ProfileProcessAlarmDataItem-ID">
+					<xsd:selector xpath="gsdml:DataItem"/>
+					<xsd:field xpath="@Id"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="Reason" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="36864"/>
+					<xsd:maxInclusive value="40959"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessAlarmReasonAddValueItemT">
+		<xsd:attribute name="Id" type="base:Unsigned8T" use="required"/>
+		<xsd:attribute name="DataType" type="base:ProcessAlarmReasonAddValueDataItemTypeEnumT" use="required"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** UnitDiagTypeItem ***-->
+	<xsd:complexType name="UnitDiagTypeItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="Ref" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="gsdml:ValueItemReferenceT">
+							<xsd:attribute name="DataType" type="base:UnitDiagRefTypeEnumT" use="required"/>
+							<xsd:attribute name="DefaultValue" type="xsd:string">
+								<xsd:annotation>
+									<xsd:documentation>Obsolete, only for compatibility to V2.0-V2.1.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="UserStructureIdentifier" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="32767"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ProfileUnitDiagTypeItemT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+			<xsd:element name="Ref" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="gsdml:ValueItemReferenceT">
+							<xsd:attribute name="DataType" type="base:UnitDiagRefTypeEnumT" use="required"/>
+							<xsd:attribute name="DefaultValue" type="xsd:string">
+								<xsd:annotation>
+									<xsd:documentation>Obsolete, only for compatibility to V2.0-V2.1.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="API" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="UserStructureIdentifier" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="36864"/>
+					<xsd:maxInclusive value="40959"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** LogBookEntryItemT ***-->
+	<xsd:complexType name="LogBookEntryItemT">
+		<xsd:choice>
+			<xsd:element name="ErrorCode2Value" type="gsdml:ErrorCode2T"/>
+			<xsd:element name="ErrorCode2List">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ErrorCode2Item" type="gsdml:ErrorCode2ItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="ErrorCode2Item-ErrorCode2">
+					<xsd:selector xpath="gsdml:ErrorCode2Item"/>
+					<xsd:field xpath="@ErrorCode2"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:choice>
+		<xsd:attribute name="Status" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:maxExclusive value="16777216"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ErrorCode2T">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:element name="Help" type="base:ExternalTextRefT" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ErrorCode2ItemT">
+		<xsd:complexContent>
+			<xsd:extension base="gsdml:ErrorCode2T">
+				<xsd:attribute name="ErrorCode2" type="base:Unsigned8T" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** GraphicItem ***-->
+	<xsd:complexType name="GraphicItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence minOccurs="0">
+					<xsd:element name="Embedded">
+						<xsd:complexType mixed="true">
+							<xsd:complexContent>
+								<xsd:restriction base="xsd:anyType">
+									<xsd:sequence>
+										<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>This element contains graphics information in SVG (Scalable Vector Graphics) format.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:any>
+									</xsd:sequence>
+								</xsd:restriction>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="GraphicFile" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** CategoryItem ***-->
+	<xsd:complexType name="CategoryItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="InfoText" type="base:ExternalTextRefT" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** Language ***-->
+	<xsd:complexType name="PrimaryLanguageT">
+		<xsd:sequence>
+			<xsd:element name="Text" type="base:ExternalTextT" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LanguageT">
+		<xsd:sequence>
+			<xsd:element name="Text" type="base:ExternalTextT" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute ref="xml:lang" use="required"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** Interface Submodule ***-->
+	<xsd:complexType name="InterfaceSubmoduleItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="General" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="DCP_FlashOnceSignalUnit" type="base:ExternalTextRefT" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RecordDataList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="ParameterRecordDataItem" type="gsdml:ParameterRecordDataT" maxOccurs="unbounded">
+									<xsd:unique name="Interface-Const-ByteOffset">
+										<xsd:selector xpath="gsdml:Const"/>
+										<xsd:field xpath="@ByteOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Interface-Ref-Offset">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ByteOffset"/>
+										<xsd:field xpath="@BitOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Interface-Ref-ID">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ID"/>
+									</xsd:unique>
+									<xsd:keyref name="Interface-ParameterRef-ParameterTarget" refer="gsdml:Interface-Ref-ID">
+										<xsd:selector xpath="gsdml:MenuList/gsdml:MenuItem/gsdml:ParameterRef"/>
+										<xsd:field xpath="@ParameterTarget"/>
+									</xsd:keyref>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+						<xsd:unique name="Interface-ParameterRecordDataItem-Index">
+							<xsd:selector xpath="gsdml:ParameterRecordDataItem"/>
+							<xsd:field xpath="@Index"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="RT_Class3Properties" type="gsdml:RT_Class3PropertiesT" minOccurs="0"/>
+					<xsd:element name="SynchronisationMode" minOccurs="0">
+						<xsd:complexType>
+							<xsd:attribute name="SupportedRole" type="base:SyncRoleEnumT" default="SyncSlave"/>
+							<xsd:attribute name="MaxLocalJitter" type="base:Unsigned16T"/>
+							<xsd:attribute name="T_PLL_MAX" type="base:Unsigned16T" default="1000"/>
+							<xsd:attribute name="PeerToPeerJitter" type="base:Unsigned16T"/>
+							<xsd:attribute name="SupportedSyncProtocols" type="base:TokenListT" default=""/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="TimeSynchronisation" minOccurs="0">
+						<xsd:complexType/>
+					</xsd:element>
+					<xsd:element name="ReportingSystem" minOccurs="0">
+						<xsd:complexType/>
+					</xsd:element>
+					<xsd:element name="ApplicationRelations" type="gsdml:ApplicationRelationsT" minOccurs="0"/>
+					<xsd:element name="MediaRedundancy" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Interconnection" minOccurs="0">
+									<xsd:complexType>
+										<xsd:attribute name="SupportedMRP_InterconnRole" type="base:TokenList1exT"/>
+										<xsd:attribute name="MaxMRP_InterconnInstances">
+											<xsd:simpleType>
+												<xsd:restriction base="base:Unsigned8T">
+													<xsd:minInclusive value="1"/>
+													<xsd:maxInclusive value="16"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:attribute>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:attribute name="SupportedRole" type="base:TokenList1exT" default="Client"/>
+							<xsd:attribute name="SupportedMultipleRole" type="base:TokenList1exT" default="Client"/>
+							<xsd:attribute name="MaxMRP_Instances">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned8T">
+										<xsd:minInclusive value="1"/>
+										<xsd:maxInclusive value="16"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="MRPD_Supported" type="xsd:boolean" default="false"/>
+							<xsd:attribute name="MRT_Supported" type="xsd:boolean" default="false"/>
+							<xsd:attribute name="AdditionalProtocolsSupported" type="xsd:boolean" default="false"/>
+							<xsd:attribute name="AdditionalForwardingRulesSupported" type="xsd:boolean" default="false"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="SubmoduleIdentNumber" type="base:Unsigned32hexT" use="required"/>
+				<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+				<xsd:attribute name="SubslotNumber" default="32768">
+					<xsd:annotation>
+						<xsd:documentation>0x8i00 is allowed here. i = interface number.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="32768"/>
+							<xsd:maxInclusive value="36863"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="SupportedRT_Class" type="base:RT_ClassEnumT" default="Class1"/>
+				<xsd:attribute name="SupportedRT_Classes" type="base:TokenList1T"/>
+				<xsd:attribute name="IsochroneModeSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="IsochroneModeInRT_Classes" type="base:TokenListT" default=""/>
+				<xsd:attribute name="SupportedProtocols" type="base:TokenListT" use="required"/>
+				<xsd:attribute name="NetworkComponentDiagnosisSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="DCP_HelloSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="PTP_BoundarySupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="DCP_BoundarySupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="MulticastBoundarySupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="ParameterizationDisallowed" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="DelayMeasurementSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="Writeable_IM_Records" type="base:ValueListT"/>
+				<xsd:attribute name="IM5_Supported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="MaxFrameStartTime" default="1600">
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="1600"/>
+							<xsd:maxInclusive value="5000"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="MinNRT_Gap" default="960">
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="960"/>
+							<xsd:maxInclusive value="2000"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="PDEV_CombinedObjectSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="UsesStaticARP_CacheEntries" type="xsd:boolean" default="false"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ApplicationRelationsT">
+		<xsd:sequence>
+			<xsd:element name="TimingProperties" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="SendClock" type="base:ValueListT" default="32"/>
+					<xsd:attribute name="ReductionRatio" type="base:ValueListT"/>
+					<xsd:attribute name="ReductionRatioPow2" type="base:ValueListT"/>
+					<xsd:attribute name="PreferredSendClock" type="base:Unsigned16T"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RT_Class3TimingProperties" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="SendClock" type="base:ValueListT" default="32"/>
+					<xsd:attribute name="ReductionRatio" type="base:ValueListT"/>
+					<xsd:attribute name="ReductionRatioPow2" type="base:ValueListT"/>
+					<xsd:attribute name="MaxReductionRatioIsochroneMode" type="base:Unsigned16T"/>
+					<xsd:attribute name="PreferredSendClock" type="base:Unsigned16T"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="StartupMode" type="base:TokenList1T" default="Legacy"/>
+		<xsd:attribute name="NumberOfAdditionalInputCR" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="NumberOfAdditionalOutputCR" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="NumberOfAdditionalMulticastProviderCR" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="NumberOfMulticastConsumerCR" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="PullModuleAlarmSupported" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="NumberOfAR" type="base:Unsigned16T" default="1"/>
+	</xsd:complexType>
+	<xsd:complexType name="RT_Class3PropertiesT">
+		<xsd:attribute name="StartupMode" type="base:TokenList1T" default="Legacy"/>
+		<xsd:attribute name="ForwardingMode" type="base:TokenList1T"/>
+		<xsd:attribute name="MaxBridgeDelay" type="base:Unsigned16T" use="required"/>
+		<xsd:attribute name="MaxBridgeDelayFFW" type="base:Unsigned16T"/>
+		<xsd:attribute name="MaxDFP_Feed">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="2000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaxDFP_Frames" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="AlignDFP_Subframes" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="DFP_OutboundTruncationSupported" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="DFP_RedundantPathLayoutSupported" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="MaxNumberIR_FrameData" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="1024"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaxRangeIR_FrameID" default="1024">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="2"/>
+					<xsd:maxInclusive value="3840"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="FragmentationType" type="base:FragmentationTypeEnumT"/>
+		<xsd:attribute name="MaxRedPeriodLength" default="3875">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="500"/>
+					<xsd:maxInclusive value="4000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MinFSO" default="5000">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="1760"/>
+					<xsd:maxInclusive value="5000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MinRTC3_Gap" default="1120">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="1120"/>
+					<xsd:maxInclusive value="2000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MinYellowTime" default="9600">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="6720"/>
+					<xsd:maxInclusive value="125000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="YellowSafetyMargin" default="160">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="1640"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="MaxRetentionTime">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="20000"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** Port Submodule ***-->
+	<xsd:complexType name="BuiltInPortSubmoduleItemT">
+		<xsd:complexContent>
+			<xsd:extension base="gsdml:PortSubmoduleItemBaseT">
+				<xsd:attribute name="SubslotNumber" use="required">
+					<xsd:annotation>
+						<xsd:documentation>0x8ipp is allowed here. i = interface number, pp = port number.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="32768"/>
+							<xsd:maxInclusive value="36863"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PortSubmoduleItemBaseT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="RecordDataList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="ParameterRecordDataItem" type="gsdml:ParameterRecordDataT" maxOccurs="unbounded">
+									<xsd:unique name="Port-Const-ByteOffset">
+										<xsd:selector xpath="gsdml:Const"/>
+										<xsd:field xpath="@ByteOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Port-Ref-Offset">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ByteOffset"/>
+										<xsd:field xpath="@BitOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Port-Ref-ID">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ID"/>
+									</xsd:unique>
+									<xsd:keyref name="Port-ParameterRef-ParameterTarget" refer="gsdml:Port-Ref-ID">
+										<xsd:selector xpath="gsdml:MenuList/gsdml:MenuItem/gsdml:ParameterRef"/>
+										<xsd:field xpath="@ParameterTarget"/>
+									</xsd:keyref>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+						<xsd:unique name="Port-ParameterRecordDataItem-Index">
+							<xsd:selector xpath="gsdml:ParameterRecordDataItem"/>
+							<xsd:field xpath="@Index"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="MAUTypeList">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="MAUTypeItem" type="gsdml:MAUTypeItemT" maxOccurs="unbounded"/>
+							</xsd:sequence>
+							<xsd:attribute name="ExtensionSupported" type="xsd:boolean" default="false"/>
+						</xsd:complexType>
+						<xsd:unique name="Port-MAUTypeItem-Value">
+							<xsd:selector xpath="gsdml:MAUTypeItem"/>
+							<xsd:field xpath="@Value"/>
+							<xsd:field xpath="@Extension"/>
+						</xsd:unique>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="SubmoduleIdentNumber" type="base:Unsigned32hexT" use="required"/>
+				<xsd:attribute name="MAUType" type="base:MAUTypeEnumT" default="100BASETXFD"/>
+				<xsd:attribute name="MAUTypes" type="base:ValueListT"/>
+				<xsd:attribute name="FiberOpticTypes" type="base:ValueListT"/>
+				<xsd:attribute name="MaxPortTxDelay" type="base:Unsigned16T"/>
+				<xsd:attribute name="MaxPortRxDelay" type="base:Unsigned16T"/>
+				<xsd:attribute name="PortDeactivationSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="LinkStateDiagnosisCapability" type="base:LinkStateDiagnosisEnumT"/>
+				<xsd:attribute name="PowerBudgetControlSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="SupportsRingportConfig" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="IsDefaultRingport" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="SupportsMRP_InterconnPortConfig" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="ParameterizationDisallowed" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="Writeable_IM_Records" type="base:ValueListT"/>
+				<xsd:attribute name="IM5_Supported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="CheckMAUTypeSupported" type="xsd:boolean"/>
+				<xsd:attribute name="CheckMAUTypeDifferenceSupported" type="xsd:boolean"/>
+				<xsd:attribute name="ShortPreamble100MBitSupported" type="xsd:boolean"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MAUTypeItemT">
+		<xsd:attribute name="Value" type="base:Unsigned16T" use="required"/>
+		<xsd:attribute name="Extension" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="AdjustSupported" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** "normal" Submodule ***-->
+	<xsd:complexType name="BuiltInSubmoduleItemT">
+		<xsd:complexContent>
+			<xsd:extension base="gsdml:SubmoduleItemBaseT">
+				<xsd:attribute name="FixedInSubslots" type="base:ValueListT"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SubmoduleItemBaseT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="IOData">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Input" type="gsdml:IODataT" minOccurs="0">
+									<xsd:unique name="Input-Channel-Number">
+										<xsd:selector xpath="gsdml:Channel"/>
+										<xsd:field xpath="@Number"/>
+									</xsd:unique>
+									<xsd:unique name="Input-Channel-BitOffset">
+										<xsd:selector xpath="gsdml:Channel/gsdml:Data|gsdml:Channel/gsdml:Quality"/>
+										<xsd:field xpath="@BitOffset"/>
+										<xsd:field xpath="@OppositeDirection"/>
+									</xsd:unique>
+								</xsd:element>
+								<xsd:element name="Output" type="gsdml:IODataT" minOccurs="0">
+									<xsd:unique name="Output-Channel-Number">
+										<xsd:selector xpath="gsdml:Channel"/>
+										<xsd:field xpath="@Number"/>
+									</xsd:unique>
+									<xsd:unique name="Output-Channel-BitOffset">
+										<xsd:selector xpath="gsdml:Channel/gsdml:Data|gsdml:Channel/gsdml:Quality"/>
+										<xsd:field xpath="@BitOffset"/>
+										<xsd:field xpath="@OppositeDirection"/>
+									</xsd:unique>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:attribute name="F_IO_StructureDescVersion" type="base:Unsigned8T" default="1"/>
+							<xsd:attribute name="F_IO_StructureDescCRC" type="base:Unsigned32T"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RecordDataList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="ParameterRecordDataItem" type="gsdml:ParameterRecordDataT" minOccurs="0" maxOccurs="unbounded">
+									<xsd:unique name="Const-ByteOffset">
+										<xsd:selector xpath="gsdml:Const"/>
+										<xsd:field xpath="@ByteOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Ref-Offset">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ByteOffset"/>
+										<xsd:field xpath="@BitOffset"/>
+									</xsd:unique>
+									<xsd:unique name="Ref-ID">
+										<xsd:selector xpath="gsdml:Ref"/>
+										<xsd:field xpath="@ID"/>
+									</xsd:unique>
+									<xsd:keyref name="ParameterRef-ParameterTarget" refer="gsdml:Ref-ID">
+										<xsd:selector xpath="gsdml:MenuList/gsdml:MenuItem/gsdml:ParameterRef"/>
+										<xsd:field xpath="@ParameterTarget"/>
+									</xsd:keyref>
+								</xsd:element>
+								<xsd:element name="F_ParameterRecordDataItem" type="gsdml:F_ParameterRecordDataT" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+						<xsd:unique name="ParameterRecordDataItem-Index">
+							<xsd:selector xpath="gsdml:ParameterRecordDataItem|gsdml:F_ParameterRecordDataItem"/>
+							<xsd:field xpath="@Index"/>
+						</xsd:unique>
+					</xsd:element>
+					<xsd:element name="ModuleInfo" type="gsdml:ModuleInfoT"/>
+					<xsd:element name="Graphics" type="gsdml:GraphicsReferenceT" minOccurs="0"/>
+					<xsd:element name="IsochroneMode" minOccurs="0">
+						<xsd:complexType>
+							<xsd:attribute name="T_DC_Base" use="required">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned16T">
+										<xsd:minInclusive value="1"/>
+										<xsd:maxInclusive value="1024"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="T_DC_Min" type="base:Unsigned16T" use="required"/>
+							<xsd:attribute name="T_DC_Max" type="base:Unsigned16T" use="required"/>
+							<xsd:attribute name="T_IO_Base" use="required">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned32T">
+										<xsd:minInclusive value="1"/>
+										<xsd:maxInclusive value="32000000"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="T_IO_InputMin" use="required">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned32T">
+										<xsd:minInclusive value="1"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="T_IO_OutputMin" use="required">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned32T">
+										<xsd:minInclusive value="1"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="IsochroneModeRequired" type="xsd:boolean" default="false"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="SlotCluster" minOccurs="0">
+						<xsd:complexType>
+							<xsd:attribute name="Count" use="required">
+								<xsd:simpleType>
+									<xsd:restriction base="base:Unsigned16T">
+										<xsd:minInclusive value="1"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="FieldbusType" type="base:Unsigned16T" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="PROFIenergy" type="gsdml:PROFIenergyT" minOccurs="0"/>
+					<xsd:element name="ReportingSystemEvents" type="gsdml:ReportingSystemEventsT" minOccurs="0">
+						<xsd:unique name="Observer-Type">
+							<xsd:selector xpath="gsdml:Observer"/>
+							<xsd:field xpath="@Type"/>
+						</xsd:unique>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="SubmoduleIdentNumber" type="base:Unsigned32hexT" use="required"/>
+				<xsd:attribute name="API" type="base:Unsigned32T" default="0"/>
+				<xsd:attribute name="PROFIsafeSupported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="Writeable_IM_Records" type="base:ValueListT"/>
+				<xsd:attribute name="IM5_Supported" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="Max_iParameterSize" type="base:Unsigned32T" default="0"/>
+				<xsd:attribute name="SubsysModuleDirIndex" type="base:Unsigned16T"/>
+				<xsd:attribute name="SupportedSubstitutionModes" type="base:ValueListT"/>
+				<xsd:attribute name="MayIssueProcessAlarm" type="xsd:boolean" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PROFIenergyT">
+		<xsd:sequence>
+			<xsd:element name="EnergySavingModeList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="EnergySavingModeItem" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:attribute name="ID" type="base:Unsigned8T" use="required"/>
+								<xsd:attribute name="TimeToPause" type="base:Unsigned32T" use="required"/>
+								<xsd:attribute name="RTTO" type="base:Unsigned32T" use="required"/>
+								<xsd:attribute name="TimeMinLengthOfStay" type="base:Unsigned32T" use="required"/>
+								<xsd:attribute name="PowerConsumption" type="xsd:float" default="0.0"/>
+								<xsd:attribute name="EnergyConsumptionToDestination" type="xsd:float" default="0.0"/>
+								<xsd:attribute name="EnergyConsumptionToOperation" type="xsd:float" default="0.0"/>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="EnergySavingModeItem-ID">
+					<xsd:selector xpath="gsdml:EnergySavingModeItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="MeasurementList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="MeasurementItem" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="MeasurementValue" maxOccurs="unbounded">
+										<xsd:complexType>
+											<xsd:attribute name="ID" use="required">
+												<xsd:simpleType>
+													<xsd:restriction base="base:Unsigned16T">
+														<xsd:minInclusive value="1"/>
+													</xsd:restriction>
+												</xsd:simpleType>
+											</xsd:attribute>
+											<xsd:attribute name="AccuracyDomain" use="required">
+												<xsd:simpleType>
+													<xsd:restriction base="base:Unsigned8T">
+														<xsd:minInclusive value="1"/>
+													</xsd:restriction>
+												</xsd:simpleType>
+											</xsd:attribute>
+											<xsd:attribute name="AccuracyClass" use="required">
+												<xsd:simpleType>
+													<xsd:restriction base="base:Unsigned8T">
+														<xsd:minInclusive value="1"/>
+													</xsd:restriction>
+												</xsd:simpleType>
+											</xsd:attribute>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="Number" type="base:Unsigned16T"/>
+							</xsd:complexType>
+							<xsd:unique name="MeasurementValue-ID">
+								<xsd:selector xpath="gsdml:MeasurementValue"/>
+								<xsd:field xpath="@ID"/>
+							</xsd:unique>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:unique name="MeasurementItem-Number">
+					<xsd:selector xpath="gsdml:MeasurementItem"/>
+					<xsd:field xpath="@Number"/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="ProfileVersion" type="base:VersionStringT" use="required"/>
+		<xsd:attribute name="EntityClass" type="base:PE_EntityClassEnumT"/>
+		<xsd:attribute name="EntitySubclass" type="base:PE_EntitySubclassEnumT"/>
+		<xsd:attribute name="DynamicTimeAndEnergyValues" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="PESAP_uses_PROFIenergyASE" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReportingSystemEventsT">
+		<xsd:sequence>
+			<xsd:element name="Observer" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="Type" type="xsd:string" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IODataT">
+		<xsd:sequence>
+			<xsd:element name="DataItem" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="BitDataItem" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:attribute name="BitOffset" type="base:Unsigned8T" use="required"/>
+								<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:attribute name="DataType" type="base:DataItemTypeEnumT" use="required"/>
+					<xsd:attribute name="Length">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned16T">
+								<xsd:minInclusive value="1"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="UseAsBits" type="xsd:boolean" default="false"/>
+					<xsd:attribute name="Subordinate" type="xsd:boolean" default="false"/>
+					<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+				</xsd:complexType>
+				<xsd:unique name="BitDataItem-BitOffset">
+					<xsd:selector xpath="gsdml:BitDataItem"/>
+					<xsd:field xpath="@BitOffset"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="Channel" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Data">
+							<xsd:complexType>
+								<xsd:attribute name="BitOffset" use="required">
+									<xsd:simpleType>
+										<xsd:restriction base="base:Unsigned16T">
+											<xsd:maxInclusive value="11511"/>
+											<!-- 1439*8-1 -->
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+								<xsd:attribute name="BitLength" use="required">
+									<xsd:simpleType>
+										<xsd:restriction base="base:Unsigned16T">
+											<xsd:minInclusive value="1"/>
+											<xsd:maxInclusive value="11512"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="Quality" minOccurs="0">
+							<xsd:complexType>
+								<xsd:attribute name="BitOffset" use="required">
+									<xsd:simpleType>
+										<xsd:restriction base="base:Unsigned16T">
+											<xsd:maxInclusive value="11511"/>
+											<!-- 1439*8-1 -->
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+								<xsd:attribute name="Format" type="base:QualityFormat_EnumT" use="required"/>
+								<xsd:attribute name="OppositeDirection" type="xsd:boolean" default="false"/>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:attribute name="Number" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned16T">
+								<xsd:maxInclusive value="32767"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="Consistency" type="base:IODataConsistencyEnumT" default="Item consistency"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** Parameter Record ***-->
+	<xsd:complexType name="RecordDataConstT">
+		<xsd:attribute name="ByteOffset" type="base:Unsigned32T" default="0"/>
+		<xsd:attribute name="Data" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="0x[0-9a-fA-F][0-9a-fA-F](,0x[0-9a-fA-F][0-9a-fA-F])*"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="RecordDataRefT">
+		<xsd:complexContent>
+			<xsd:extension base="gsdml:ValueItemReferenceT">
+				<xsd:attribute name="ID" type="base:IdT"/>
+				<xsd:attribute name="DataType" type="base:RecordDataRefTypeEnumT" use="required"/>
+				<xsd:attribute name="DefaultValue" type="xsd:string" use="required"/>
+				<xsd:attribute name="AllowedValues" type="base:SignedOrFloatValueListT"/>
+				<xsd:attribute name="Changeable" type="xsd:boolean" default="true"/>
+				<xsd:attribute name="Visible" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="RecordDataBaseG">
+		<xsd:sequence>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element name="Const" type="gsdml:RecordDataConstT"/>
+				<xsd:element name="Ref" type="gsdml:RecordDataRefT"/>
+			</xsd:choice>
+			<xsd:element name="MenuList" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="MenuItem" type="gsdml:MenuItemT" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+				<xsd:key name="MenuItem-ID">
+					<xsd:selector xpath="gsdml:MenuItem"/>
+					<xsd:field xpath="@ID"/>
+				</xsd:key>
+				<xsd:keyref name="MenuRef-MenuTarget" refer="gsdml:MenuItem-ID">
+					<xsd:selector xpath="gsdml:MenuItem/gsdml:MenuRef"/>
+					<xsd:field xpath="@MenuTarget"/>
+				</xsd:keyref>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ARVendorBlockRequestT">
+		<xsd:group ref="gsdml:RecordDataBaseG"/>
+		<xsd:attribute name="Length" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="API" type="base:Unsigned32T" default="0"/>
+		<xsd:attribute name="APStructureIdentifier" type="base:Unsigned16T" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterRecordDataT">
+		<xsd:sequence>
+			<xsd:element name="Name" type="base:ExternalTextRefT"/>
+			<xsd:group ref="gsdml:RecordDataBaseG"/>
+		</xsd:sequence>
+		<xsd:attribute name="Index" use="required">
+			<xsd:simpleType>
+				<xsd:union>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:maxInclusive value="32767"/>
+							<!-- 0x0000-0x7FFF vendor specific -->
+						</xsd:restriction>
+					</xsd:simpleType>
+					<xsd:simpleType>
+						<xsd:restriction base="base:Unsigned16T">
+							<xsd:minInclusive value="45056"/>
+							<xsd:maxInclusive value="49151"/>
+							<!-- 0xB000-0xBFFF profile specific -->
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:union>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="Length" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned32T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="TransferSequence" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="ChangeableWithBump" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<xsd:complexType name="MenuItemT">
+		<xsd:complexContent>
+			<xsd:extension base="base:ObjectT">
+				<xsd:sequence>
+					<xsd:element name="Name" type="base:ExternalTextRefT"/>
+					<xsd:choice maxOccurs="unbounded">
+						<xsd:element name="ParameterRef" type="gsdml:ParameterRefT"/>
+						<xsd:element name="MenuRef" type="gsdml:MenuRefT"/>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterRefT">
+		<xsd:attribute name="ParameterTarget" type="base:RefIdT" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="MenuRefT">
+		<xsd:attribute name="MenuTarget" type="base:RefIdT" use="required"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** F-Parameter Record ***-->
+	<xsd:complexType name="F_ParameterRecordDataT">
+		<xsd:sequence>
+			<xsd:element name="F_Check_iPar">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:F_Check_iParEnumT" default="NoCheck"/>
+					<xsd:attribute name="AllowedValues" default="Check NoCheck">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="(Check)? ?(NoCheck)?"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="Changeable" type="xsd:boolean" default="false"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" default="false"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_SIL">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:F_SIL_EnumT" default="SIL3"/>
+					<xsd:attribute name="AllowedValues" default="SIL1 SIL2 SIL3 NoSIL">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="(SIL1)? ?(SIL2)? ?(SIL3)? ?(NoSIL)?"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="Changeable" type="xsd:boolean" default="true"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_CRC_Length">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:F_CRC_LengthEnumT" default="3-Byte-CRC"/>
+					<xsd:attribute name="AllowedValues" default="3-Byte-CRC">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="3-Byte-CRC|4-Byte-CRC"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="false"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" default="false"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_CRC_Seed" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:F_CRC_SeedEnumT" fixed="CRC-Seed24/32"/>
+					<xsd:attribute name="AllowedValues" fixed="CRC-Seed24/32">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="CRC-Seed24/32"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="false"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_Passivation" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:F_PassivationEnumT" default="Device/Module"/>
+					<xsd:attribute name="AllowedValues" default="Device/Module">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="Device/Module|Channel"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="false"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_Block_ID">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" default="0">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned8T">
+								<xsd:minInclusive value="0"/>
+								<xsd:maxInclusive value="7"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" default="0..7"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" default="false"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" default="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_Par_Version">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" fixed="1">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned8T">
+								<xsd:minInclusive value="0"/>
+								<xsd:maxInclusive value="3"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" fixed="1"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="false"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_Source_Add">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" default="1">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned16T">
+								<xsd:minInclusive value="1"/>
+								<xsd:maxInclusive value="65534"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" default="1..65534"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="true"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_Dest_Add">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" default="1">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned16T">
+								<xsd:minInclusive value="1"/>
+								<xsd:maxInclusive value="65534"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" default="1..65534"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="true"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_WD_Time">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" default="150">
+						<xsd:simpleType>
+							<xsd:restriction base="base:Unsigned16T">
+								<xsd:minInclusive value="1"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" default="1..65535"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="true"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_Par_CRC">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:Unsigned16T" default="53356"/>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" fixed="0..65535"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="true"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="F_iPar_CRC" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="DefaultValue" type="base:Unsigned32T" default="0"/>
+					<xsd:attribute name="AllowedValues" type="base:ValueListT" fixed="0..4294967295"/>
+					<xsd:attribute name="Changeable" type="xsd:boolean" fixed="true"/>
+					<xsd:attribute name="Visible" type="xsd:boolean" fixed="true"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="F_ParamDescCRC" type="base:Unsigned16T" use="required"/>
+		<xsd:attribute name="F_SupportedParameters" type="base:TokenListT"/>
+		<xsd:attribute name="Index" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:maxInclusive value="32767"/>
+					<!-- 0x0000-0x7FFF vendor specific -->
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="TransferSequence" type="base:Unsigned16T" default="0"/>
+		<xsd:attribute name="ChangeableWithBump" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<!--________________________________________-->
+	<!--*** Reference types ***-->
+	<xsd:complexType name="ValueItemReferenceT">
+		<xsd:attribute name="ValueItemTarget" type="base:RefIdT"/>
+		<xsd:attribute name="ByteOffset" type="base:Unsigned32T" use="required"/>
+		<xsd:attribute name="BitOffset" default="0">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned8T">
+					<xsd:minInclusive value="0"/>
+					<xsd:maxInclusive value="7"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="BitLength" default="1">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:integer">
+					<xsd:minInclusive value="1"/>
+					<xsd:maxInclusive value="15"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="TextId" type="base:ExternalTextRefIdT" use="required"/>
+		<xsd:attribute name="Length">
+			<xsd:simpleType>
+				<xsd:restriction base="base:Unsigned16T">
+					<xsd:minInclusive value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="GraphicsReferenceT">
+		<xsd:sequence>
+			<xsd:element name="GraphicItemRef" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="Type" type="base:GraphicsTypeEnumT" use="required"/>
+					<xsd:attribute name="GraphicItemTarget" type="base:RefIdT" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -31,7 +31,7 @@ namespace Gsd2Aml.Cli
 
         internal bool StringOutput { get; set; }
 
-        internal bool Validation { get; set; }
+        internal bool Validation { get; set; } = true;
 
         internal List<string> Args { get; set; }
 
@@ -57,7 +57,7 @@ namespace Gsd2Aml.Cli
         /// 1) If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
         /// 2) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
         /// 3) If the user passed --output and --string at the same time.
-        /// If one of the above happens, an error will be thrown.
+        /// If one of the above happens, an exception will be thrown.
         /// </summary>
         /// <exception cref="ArgumentException">The argument list is invalid.</exception>
         internal void CheckCliArguments()
@@ -114,8 +114,7 @@ namespace Gsd2Aml.Cli
             OutputFile = parameter[COutputFileShort] ?? parameter[COutputFile];
             StringOutput = Args.FindIndex(arg => arg.Equals(CStringOutputShort)) >= 0 ||
                            Args.FindIndex(arg => arg.Equals(CStringOutput)) >= 0;
-            Validation = Args.FindIndex(arg => arg.Equals(CValidationShort)) >= 0 ||
-                         Args.FindIndex(arg => arg.Equals(CValidation)) >= 0;
+            if (Args.Contains(CValidationShort) || Args.Contains(CValidation)) Validation = false;
         }
 
         /// <summary>

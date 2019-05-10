@@ -57,8 +57,7 @@ namespace Gsd2Aml.Cli
         }
 
         /// <summary>
-        /// Checks if the output file already exists.
-        /// Asks the user whether to overwrite the file or stop the conversion.
+        /// Checks if the output file already exists. If yes the user will be asked whether the file should be overwritten.
         /// </summary>
         private void CheckOutput()
         {
@@ -102,11 +101,18 @@ namespace Gsd2Aml.Cli
             try
             {
                 var directory = Path.GetDirectoryName(Settings.OutputFile);
+
+                if (string.IsNullOrEmpty(directory)) {
+                    Util.Logger.Log(LogLevel.Error, $"User passed invalid output path: {Settings.OutputFile}");
+                    throw new NullReferenceException($"{Environment.NewLine}Error: You passed an invalid output path." +
+                                                        $"{Environment.NewLine}For more information run 'gsd2aml --help'");
+                }
+
                 Directory.CreateDirectory(directory);
             }
             catch (Exception e)
             {
-                Util.Logger.Log(LogLevel.Error, $"User passed invalid output flag: {Settings.OutputFile}");
+                Util.Logger.Log(LogLevel.Error, $"User passed invalid output path: {Settings.OutputFile}");
                 throw new Exception($"{Environment.NewLine}Error: You passed an invalid output path." +
                                     $"{Environment.NewLine}For more information run 'gsd2aml --help'.", e);
             }
