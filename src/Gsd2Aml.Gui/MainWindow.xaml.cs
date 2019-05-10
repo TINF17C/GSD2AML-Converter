@@ -16,11 +16,11 @@ namespace Gsd2Aml.Gui
         private bool _strictModeEnabled = true;
         private bool _warningShown = false;
 
-        public string ProductTitle => "GSD2AML Converter";
+        public string ProductTitle => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductName;
 
         public string ProductVersion => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
 
-        public string Company => "Corporative State University Stuttgart TINF17C";
+        public string Copyright => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).LegalCopyright;
 
         public bool StrictModeEnabled
         {

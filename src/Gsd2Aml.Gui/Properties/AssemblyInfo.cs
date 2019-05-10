@@ -7,12 +7,12 @@ using System.Windows;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("Gda2Aml.Gui")]
+[assembly: AssemblyTitle("Gsd2Aml.Gui")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Gda2Aml.Gui")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("Corporative State University Stuttgart TINF17C")]
+[assembly: AssemblyProduct("GSD2AML Converter")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Corporative State University Stuttgart TINF17C")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

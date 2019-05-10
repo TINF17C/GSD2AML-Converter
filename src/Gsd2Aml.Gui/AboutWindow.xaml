@@ -4,14 +4,14 @@
         Title="About"
         Height="250"
         ResizeMode="NoResize"
-        Width="270"
+        Width="400"
         WindowStyle="ToolWindow"
         WindowStartupLocation="CenterOwner"
         WindowState="Normal">
     <StackPanel HorizontalAlignment="Center">
         <TextBlock Text="{Binding ProductTitle}" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
         <TextBlock Text="{Binding ProductVersion, StringFormat=Version {0}}" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
-        <TextBlock Text="{Binding Company}" Height="Auto" HorizontalAlignment="Center" Margin="0,5" Width="Auto" />
+        <TextBlock Text="{Binding Copyright}" Height="Auto" HorizontalAlignment="Center" Margin="0,5" Width="Auto" />
         <TextBlock Text="Developed by:" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
         <TextBlock Text="Nico Dietz" Height="Auto" HorizontalAlignment="Center" Width="Auto" />                   
         <TextBlock Text="Steffen Gerdes" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
