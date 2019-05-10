@@ -31,10 +31,10 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <returns>The AML object serialized to a XML string.</returns>
-        public static string Convert(string inputFile)
+        public static string Convert(string inputFile, bool strictValidation = true)
         {
             Logger?.Log(LogLevel.Info, "Conversion to string started.");
-            StartConversion(inputFile, Util.GetOutputFileName(inputFile));
+            StartConversion(inputFile, Util.GetOutputFileName(inputFile), strictValidation);
 
             using (var stringwriter = new StringWriter())
             {
