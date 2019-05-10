@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Gsd2Aml.Cli
 {
+    /// <summary>
+    /// Stores the settings specified by the user.
+    /// </summary>
     internal class Settings
     {
         internal const string CHelp = "--help";
@@ -49,13 +52,13 @@ namespace Gsd2Aml.Cli
             Args = args;
             CheckCliArguments();
             ParseCliArguments();
-            CheckGsdmlExistence();
+            CheckGsdExistence();
         }
 
         /// <summary>
         /// This method checks three things:
-        /// 1) If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
-        /// 2) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
+        /// 1) If the user passed the corresponding long/short argument to an argument multiple times. E.g. gsd2aml -i --input
+        /// 2) If the user passed the same argument multiple times . E.g. gsd2aml -i -i
         /// 3) If the user passed --output and --string at the same time.
         /// If one of the above happens, an exception will be thrown.
         /// </summary>
@@ -88,7 +91,7 @@ namespace Gsd2Aml.Cli
         }
 
         /// <summary>
-        /// This method parses the CLI Arguments and maps them to the Settings properties.
+        /// This method parses the CLI Arguments and maps them to the settings properties.
         /// </summary>
         internal void ParseCliArguments()
         {
@@ -114,14 +117,17 @@ namespace Gsd2Aml.Cli
             OutputFile = parameter[COutputFileShort] ?? parameter[COutputFile];
             StringOutput = Args.FindIndex(arg => arg.Equals(CStringOutputShort)) >= 0 ||
                            Args.FindIndex(arg => arg.Equals(CStringOutput)) >= 0;
-            if (Args.Contains(CValidationShort) || Args.Contains(CValidation)) Validation = false;
+            if (!Args.Contains(CValidationShort) && !Args.Contains(CValidation)) return;
+            Console.WriteLine("Warning: The GSD file validation was turned off.");
+            Util.Logger.Log(LogLevel.Warning, "GSD file validation was turned off.");
+            Validation = false;
         }
 
         /// <summary>
         /// Checks for the existence of the GSD file.
         /// </summary>
         /// <exception cref="FileNotFoundException">The GSD file could not be found.</exception>
-        private void CheckGsdmlExistence()
+        private void CheckGsdExistence()
         {
             if (File.Exists(InputFile))
             {

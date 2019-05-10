@@ -5,6 +5,9 @@ using System.IO;
 
 namespace Gsd2Aml.Cli
 {
+    /// <summary>
+    /// Acts on the settings and converts the input according to the settings.
+    /// </summary>
     internal class Trigger
     {
         internal Settings Settings { get; }
@@ -12,7 +15,7 @@ namespace Gsd2Aml.Cli
         /// <summary>
         /// Constructor for Trigger.
         /// </summary>
-        /// <param name="settings">The Settings object which contains all argument information.</param>
+        /// <param name="settings">The Settings object which contains all of the passed information.</param>
         internal Trigger(Settings settings)
         {
             Settings = settings;
@@ -70,7 +73,7 @@ namespace Gsd2Aml.Cli
 
             do
             {
-                Console.Write($"{finfo.FullName} exists already. Overwrite file? (y/n): ");
+                Console.Write($"{finfo.FullName} already exists. Overwrite file? (y/n): ");
                 userInput = Console.ReadKey().KeyChar.ToString().ToLower();
                 Console.Write(Environment.NewLine);
             } while (!userInput.Equals("y") && !userInput.Equals("n"));
@@ -78,7 +81,7 @@ namespace Gsd2Aml.Cli
             if (!userInput.Equals("n")) return;
 
             Console.WriteLine($"{Environment.NewLine}Could not convert file because the output file should not be overwritten.");
-            Util.Logger.Log(LogLevel.Info, "The user does not want to overwrite the file.");
+            Util.Logger.Log(LogLevel.Info, "User does not want to overwrite the file.");
             Environment.Exit(0);
         }
 

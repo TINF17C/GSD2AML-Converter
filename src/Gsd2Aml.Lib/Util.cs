@@ -63,7 +63,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// Searches recursively a class down to find a property by string.
+        /// Recursively searches a class to find a property by string.
         /// </summary>
         /// <param name="type">The type object, which represents the currently iterated class.</param>
         /// <param name="propertyName">The name of the property being searched for.</param>
@@ -276,7 +276,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// This function creates the an instance out of a type and a flag whether an array needs to be created.
+        /// This function creates the an instance out of a type and a flag whether an array needs to be created or not.
         /// </summary>
         /// <param name="propertyType">The type object which describes the type of the instance.</param>
         /// <param name="isPropertyArray">Flag which indicates whether an array is needed.</param>
