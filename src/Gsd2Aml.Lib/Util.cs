@@ -6,9 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace Gsd2Aml.Lib
 {
@@ -51,17 +48,16 @@ namespace Gsd2Aml.Lib
                 throw new NullReferenceException("A property was not found.");
             }
 
-            // Set the other out parameters.
             var isPropertyArray = propertyInfo.PropertyType.IsArray;
             var propertyType = isPropertyArray
                                 ? propertyInfo.PropertyType.GetElementType()
                                 : propertyInfo.PropertyType;
 
             Converter.Logger?.Log(LogLevel.Debug, $"Found valid property for {searchedProperty}. " +
-                                       $"Property: {propertyInfo} " +
-                                       $"Type: {propertyType} " +
-                                       $"Declaring Type: {propertyInfo.DeclaringType} " +
-                                       $"Is array: {isPropertyArray}");
+                                                    $"Property: {propertyInfo} " +
+                                                    $"Type: {propertyType} " +
+                                                    $"Declaring Type: {propertyInfo.DeclaringType} " +
+                                                    $"Is array: {isPropertyArray}");
 
             return (propertyInfo, propertyType, isPropertyArray);
         }
@@ -132,8 +128,8 @@ namespace Gsd2Aml.Lib
                         if (alreadyReadReplacement)
                         {
                             Converter.Logger?.Log(LogLevel.Error, "Translation table has mutliple replacements for a rule." +
-                                                      $"First replacement: {replacement.FirstChild.Name}" +
-                                                      $"Second replacement: {xmlNode.FirstChild.Name}");
+                                                                    $"First replacement: {replacement.FirstChild.Name}" +
+                                                                    $"Second replacement: {xmlNode.FirstChild.Name}");
                             throw new XmlException("Translation table has mutliple replacements for a rule.");
                         }
                         replacement = xmlNode.FirstChild;
@@ -146,7 +142,6 @@ namespace Gsd2Aml.Lib
                         throw new XmlException("Translation table has an unknown element.");
                 }
             }
-
             Converter.Logger?.Log(LogLevel.Debug, "Successfully got the information out of the translation rule.");
 
             // Check if replacement is null.
@@ -173,10 +168,10 @@ namespace Gsd2Aml.Lib
             foreach (var xsdFile in xsdResources)
             {
                 var xsdResourceStream = assembly.GetManifestResourceStream(xsdFile);
-
                 if (xsdResourceStream == null)
                 {
-                    throw new Exception();
+                    Converter.Logger?.Log(LogLevel.Error, "The xsd file resource stream is null.");
+                    throw new NullReferenceException("The xsd file resource stream is null.");
                 }
 
                 var xmlReader = XmlReader.Create(xsdResourceStream, settings);
@@ -189,11 +184,10 @@ namespace Gsd2Aml.Lib
             }
             catch (Exception e)
             {
-                Converter.Logger?.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}");
+                Converter.Logger?.Log(LogLevel.Error, $"Failed to deserialize the GSD-File correctly. {e.Message} Path to the GSD file: {inputFile}");
                 throw new XmlException($"Invalid GSD-file. Failed to deserialize the GSD-File correctly. Path to the GSD file: {inputFile}", e);
             }
             Converter.Logger?.Log(LogLevel.Info, $"GSD file was deserialized correctly. Path to the GSD file: {inputFile}");
-
         }
 
         /// <summary>

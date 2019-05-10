@@ -27,15 +27,15 @@
     </Replacement>
   </ProfileBody>
 
-  <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
+  <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
     <Replacement>
-      <SystemUnitClassType.ExternalInterface>
-        <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/IO-Link Port">
-          <Attribute Name="SlotNumber" AttributeDataType="xs:integer">
-            <Value>$2</Value>
+      <ExternalInterface CAEXObject.Name="$1" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="physicalEndPoint/IO-Link Port">
+        <ExternalInterface.Attribute>
+          <Attribute CAEXObject.Name="SlotNumber" Attribute.AttributeDataType="xs:integer">
+            <Attribute.Value>$2</Attribute.Value>
           </Attribute>
-        </ExternalInterface>
-      </SystemUnitClassType.ExternalInterface>
+        </ExternalInterface.Attribute>
+      </ExternalInterface>
     </Replacement>
     <Reference Ref="$1" Type="SingleTextRef">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem TextId="" />
@@ -43,35 +43,37 @@
     <Reference Ref="$2">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem SlotNumber="" />
     </Reference>
-  </ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
+  </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
 
-  <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
+  <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
     <Replacement>
-      <ExternalInterface Name="$1" ID="GUID" RefBaseClassPath="physicalEndPoint/PNIO-Port">
-        <Attribute Name="SubslotNumber" AttributeDataType="xs:integer">
-          <Value>$2</Value>
-        </Attribute>
-        <Attribute Name="MAUTypes" AttributeDataType="xs:integer">
-          <Value>$3</Value>
-        </Attribute>
-        <Attribute Name="IdentNumber" AttributeDataType="xs:string">
-          <Value>$4</Value>
-        </Attribute>
-        <Attribute Name="MaxPortTxDelay" AttributeDataType="xs:integer">
-          <Value>$5</Value>
-        </Attribute>
-        <Attribute Name="MaxPortRxDelay" AttributeDataType="xs:integer">
-          <Value>$6</Value>
-        </Attribute>
-        <Attribute Name="LinkStateDiagnosisCapability" AttributeDataType="xs:string">
-          <Value>$7</Value>
-        </Attribute>
-        <Attribute Name="SupportsRingportConfig" AttributeDataType="xs:boolean">
-          <Value>$8</Value>
-        </Attribute>
-        <Attribute Name="IsDefaultRingport" AttributeDataType="xs:boolean">
-          <Value>$9</Value>
-        </Attribute>
+      <ExternalInterface CAEXObject.Name="$1" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="physicalEndPoint/PNIO-Port">
+        <ExternalInterface.Attribute>
+          <Attribute CAEXObject.Name="SubslotNumber" Attribute.AttributeDataType="xs:integer">
+            <Attribute.Value>$2</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="MAUTypes" Attribute.AttributeDataType="xs:integer">
+            <Attribute.Value>$3</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="IdentNumber" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$4</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="MaxPortTxDelay" Attribute.AttributeDataType="xs:integer">
+            <Attribute.Value>$5</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="MaxPortRxDelay" Attribute.AttributeDataType="xs:integer">
+            <Attribute.Value>$6</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="LinkStateDiagnosisCapability" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$7</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="SupportsRingportConfig" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$8</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="IsDefaultRingport" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$9</Attribute.Value>
+          </Attribute>
+        </ExternalInterface.Attribute>
       </ExternalInterface>
     </Replacement>
     <Reference Ref="$1" Type="SingleTextRef">
@@ -101,7 +103,7 @@
     <Reference Ref="$9">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem IsDefaultRingport="" />
     </Reference>
-  </ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
+  </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
 
   <DeviceIdentity>
     <Replacement>
@@ -151,10 +153,10 @@
                 <ExternalInterface CAEXObject.Name="GSDML 2.35" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
                   <ExternalInterface.Attribute>
                     <Attribute CAEXObject.Name="refURI" Attribute.AttributeDataType="xs:anyURI">
-                      <Value>$5</Value>
+                      <Attribute.Value>$5</Attribute.Value>
                     </Attribute>
                     <Attribute CAEXObject.Name="MIMEType" Attribute.AttributeDataType="xs:string">
-                      <Value>application/xml</Value>
+                      <Attribute.Value>application/xml</Attribute.Value>
                     </Attribute>
                   </ExternalInterface.Attribute>
                 </ExternalInterface>
@@ -164,14 +166,15 @@
             <InternalElement CAEXObject.Name="PhysicalInterfaces" CAEXObject.ID="GUID">
 
               <SystemUnitClassType.ExternalInterface>
-                <Rule>ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem</Rule>
-                <!-- <Rule>ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem</Rule> -->
+                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem</Rule>
+                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem</Rule>
               </SystemUnitClassType.ExternalInterface>
 
             </InternalElement>
 
             <!-- TODO: GraphItemRef -->
-            <!--<InternalElement Name="DeviceSymbol" ID="GUID">
+            <Rule></Rule>
+            <InternalElement Name="DeviceSymbol" ID="GUID">
               <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
 
               <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
@@ -179,7 +182,7 @@
                   <Value>$17</Value>
                 </Attribute>
               </ExternalInterface>
-            </InternalElement>-->
+            </InternalElement>
 
             <InternalElement CAEXObject.Name="LogicalInterface" CAEXObject.ID="GUID">
               <!-- TODO: InterfaceSubModuleItem -->

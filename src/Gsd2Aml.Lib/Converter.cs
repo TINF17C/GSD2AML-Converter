@@ -13,6 +13,7 @@ namespace Gsd2Aml.Lib
     // TODO: get ressources
     // TODO: update readme
     // TODO: write tests
+    // TODO: decide how to validate the gsd file
     /// <summary>
     /// The converter class which contains the logic to convert a GSD formatted file to an AML file.
     /// </summary>
@@ -23,6 +24,8 @@ namespace Gsd2Aml.Lib
         private static CAEXFile AmlObject { get; } = new CAEXFile();
 
         private static List<XmlNode> TranslationRules { get; } = new List<XmlNode>();
+
+        private static XmlDocument GsdDocument { get; set; }
 
         /// <summary>
         /// The convert function which returns the AML file as string.
@@ -74,10 +77,10 @@ namespace Gsd2Aml.Lib
         /// <param name="outputFile">The path to the output file.</param>
         private static void StartConversion(string inputFile, string outputFile)
         {
-            Util.CheckGsdFileForCorrectness(inputFile);
+            // Util.CheckGsdFileForCorrectness(inputFile);
 
             // Initialize the GSD XML documents and translation table. Then load these documents.
-            var gsdDocument = Util.LoadXmlDocument(inputFile);
+            GsdDocument = Util.LoadXmlDocument(inputFile);
             var translationTable = Util.LoadTranslationTable();
 
             if (translationTable.DocumentElement == null)
@@ -93,10 +96,10 @@ namespace Gsd2Aml.Lib
 
             // Set FileName property of CAEX-element.
             AmlObject.GetType().GetProperties().FirstOrDefault(p => p.Name.Equals("FileName"))?.SetValue(AmlObject, new FileInfo(outputFile).Name);
-            Logger?.Log(LogLevel.Info, "Added the FileName attribute to the CAEXFile element.");
+            Logger?.Log(LogLevel.Debug, "Added the FileName attribute to the CAEXFile element.");
 
             Logger?.Log(LogLevel.Info, "Start the Handle function.");
-            Handle(gsdDocument.DocumentElement, AmlObject);
+            Handle(GsdDocument.DocumentElement, AmlObject);
             Logger?.Log(LogLevel.Info, "Successfully ended the Handle function.");
         }
 
@@ -121,10 +124,10 @@ namespace Gsd2Aml.Lib
                 // If the rule does not exist, it cannot be translated. It continues with the next property.
                 if (translationRule == null)
                 {
-                    Logger?.Log(LogLevel.Info, $"Translation rule for {gsdChildNode.Name} was not found. Skip the node.");
+                    Logger?.Log(LogLevel.Debug, $"Translation rule for {gsdChildNode.Name} was not found. Skip the node.");
                     continue;
                 }
-                Logger?.Log(LogLevel.Info, $"Translation rule was found for {gsdChildNode.Name} Now we are trying to translate it.");
+                Logger?.Log(LogLevel.Debug, $"Translation rule was found for {gsdChildNode.Name}. Now we are trying to translate it.");
                 
                 // Translate the gsdChildNode to AML.
                 var newAmlHead = Translate(ref currentAmlHead, translationRule);
@@ -142,7 +145,7 @@ namespace Gsd2Aml.Lib
                 else
                 {
                     // Call the Handle function with the current gsdChildNode and the new AML head.
-                    Logger?.Log(LogLevel.Info, "The translated AML is not an array. Therefore the Handle function will be directly called.");
+                    Logger?.Log(LogLevel.Debug, "The translated AML is not an array. Therefore the Handle function will be directly called.");
                     Handle(gsdChildNode, newAmlHead);
                 }
             }
@@ -190,7 +193,7 @@ namespace Gsd2Aml.Lib
                 if (childNode.Name.Equals("#comment")) continue;
                 if (childNode.Name.Equals("Rule"))
                 {
-
+                    HandleRuleCall(childNode, replacementInstance);
                     continue;
                 }
 
@@ -210,6 +213,47 @@ namespace Gsd2Aml.Lib
             }
         }
 
+        private static void HandleRuleCall(XmlNode childNode, dynamic replacementInstance)
+        {
+            var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(childNode.InnerText));
+
+            if (translationRule == null)
+            {
+                Logger?.Log(LogLevel.Debug, $"Translation rule for {childNode.Name} was not found. Skip the node.");
+                return;
+            }
+
+            var splitStrings = translationRule.Name.Split('.');
+            var iteratorNode = GsdDocument.DocumentElement;
+            var (ruleReplacement, ruleReferences) = Util.GetInformationFromRule(translationRule);
+
+            if (iteratorNode == null)
+            {
+                Logger.Log(LogLevel.Debug, $"Could not find the right GSD node for this rule: {translationRule.Name}");
+                return;
+            }
+
+            for (var i = 0; i < splitStrings.Length - 1; i++)
+            {
+                iteratorNode = iteratorNode[splitStrings[i]];
+
+                if (iteratorNode != null) continue;
+
+                Logger.Log(LogLevel.Debug, $"Could not find the right GSD node for this rule: {translationRule.Name}");
+                return;
+            }
+
+            var nodeList = iteratorNode.GetElementsByTagName(splitStrings[splitStrings.Length - 1]);
+
+            foreach (var node in nodeList)
+            {
+                var (ruleReplacementProperty, ruleReplacementPropertyType, isRuleReplacementPropertyArray) = Util.GetProperty(ruleReplacement.Name);
+                var ruleReplacementInstance = Util.CreateInstance(ruleReplacementPropertyType, isRuleReplacementPropertyArray);
+                AddSubInstancesToInstance(ruleReplacement, ruleReplacementInstance, isRuleReplacementPropertyArray);
+                replacementInstance.Add(ruleReplacementInstance);
+            }
+        }
+
         /// <summary>
         /// The translation of the sub properties of a translation rule.
         /// </summary>
@@ -224,7 +268,7 @@ namespace Gsd2Aml.Lib
             var translationInstance = Util.CreateInstance(translationPropertyType, isTranslationPropertyArray);
             
             // Set attribute and inner text to the translation instance.
-            if (translationInstance is string) translationInstance = replacement.InnerText;
+            if (translationInstance is string || replacement.Name.Equals("Attribute.Value")) translationInstance = replacement.InnerText;
             SetAttributes(replacement, translationInstance);
             Logger?.Log(LogLevel.Debug, $"Successfully set attributes to {replacement.Name}.");
 
@@ -277,7 +321,5 @@ namespace Gsd2Aml.Lib
                 attributeProperty.SetValue(translationInstance, attributeInstance);
             }
         }
-
-
     }
 }

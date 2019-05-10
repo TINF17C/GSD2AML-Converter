@@ -51,12 +51,6 @@ namespace Gsd2Aml.Cli
             catch (Exception e)
             {
                 Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}.");
-
-                if (null != e.InnerException)
-                {
-                    Console.Write(e.InnerException.Message);
-                }
-
                 Util.Logger.Log(LogLevel.Error, e.ToString());
                 Environment.Exit(1);
             }
@@ -108,6 +102,13 @@ namespace Gsd2Aml.Cli
             try
             {
                 var directory = Path.GetDirectoryName(Settings.OutputFile);
+
+                if (string.IsNullOrEmpty(directory)) {
+                    Util.Logger.Log(LogLevel.Error, $"User passed invalid output path: {Settings.OutputFile}");
+                    throw new NullReferenceException($"{Environment.NewLine}Error: You passed an invalid output path." +
+                                                        $"{Environment.NewLine}For more information run 'gsd2aml --help'");
+                }
+
                 Directory.CreateDirectory(directory);
             }
             catch (Exception e)

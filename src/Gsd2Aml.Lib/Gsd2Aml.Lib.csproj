@@ -75,9 +75,6 @@
     <EmbeddedResource Include="Models\xsd\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Models\xsd\xmldsig-core-schema_org.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="README.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

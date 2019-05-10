@@ -6,7 +6,7 @@
     public interface ILoggingService
     {
         /// <summary>
-        /// Log method which puts the message with the specific log level into the log file.
+        /// Log method which puts a message with the specific log level into the log file.
         /// </summary>
         /// <param name="level">The level of the log message.</param>
         /// <param name="message">The message of the log.</param>
