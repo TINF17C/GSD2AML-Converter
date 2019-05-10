@@ -213,6 +213,13 @@ namespace Gsd2Aml.Lib
             }
         }
 
+        /// <summary>
+        /// This function handles a new Rule call in the translation table.
+        /// It takes then the inner text of the rule node and translate it with the corresponding rule.
+        /// and 
+        /// </summary>
+        /// <param name="childNode">The rule node which contains the information which rule should be called.</param>
+        /// <param name="replacementInstance">The instance in which the rule instance will be set/added.</param>
         private static void HandleRuleCall(XmlNode childNode, dynamic replacementInstance)
         {
             var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(childNode.InnerText));
