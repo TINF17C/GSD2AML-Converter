@@ -42,8 +42,25 @@ namespace Gsd2Aml.Lib
                 foreach (var resource in resources)
                 {
                     var fileName = Path.GetFileName(resource);
-                    if (!string.IsNullOrEmpty(fileName)) CopyFile(resource, Path.Combine(tmpPath, fileName));
-                    else throw new IOException($"Resource filename unexpectedly null or empty");
+                    if (string.IsNullOrEmpty(fileName))
+                    {
+                        Converter.Logger?.Log(LogLevel.Warning, "While copying a null or empty filename was found - skipping.");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            CopyFile(resource, Path.Combine(tmpPath, fileName));
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            Converter.Logger?.Log(LogLevel.Warning, $"While trying to copy {fileName} the file was not found - skipping.");
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Converter.Logger?.Log(LogLevel.Warning, $"While trying to copy {resource} the directory was not found - skipping.");
+                        }
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(amlFileName)) CopyFile(amlFilePath, amlFileTmpPath);
@@ -99,11 +116,10 @@ namespace Gsd2Aml.Lib
                         var fileName = Path.GetFileName(resource);
                         if (string.IsNullOrEmpty(fileName)) continue;
                         var fileTmpPath = Path.Combine(Path.GetTempPath(), Gsd2AmlName, fileName);
+                        if (!File.Exists(fileTmpPath)) continue;
                         var fileUri = new Uri("/" + fileName, UriKind.Relative);
                         ac.AddAnyContent(root, fileTmpPath, fileUri);
-
                     }
-
                     ac.Close();
                 }
             }
@@ -170,6 +186,14 @@ namespace Gsd2Aml.Lib
             try
             {
                 File.Copy(source, destination, true);
+            }
+            catch (FileNotFoundException)
+            {
+                throw;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                throw;
             }
             catch (PathTooLongException e)
             {
