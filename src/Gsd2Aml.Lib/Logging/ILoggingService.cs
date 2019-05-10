@@ -14,7 +14,7 @@
     }
 
     /// <summary>
-    /// 
+    /// Enum which contains all possible log levels.
     /// </summary>
     public enum LogLevel
     {

@@ -13,7 +13,6 @@ namespace Gsd2Aml.Lib
     // TODO: get ressources
     // TODO: update readme
     // TODO: write tests
-    // TODO: decide how to validate the gsd file
     /// <summary>
     /// The converter class which contains the logic to convert a GSD formatted file to an AML file.
     /// </summary>
@@ -28,10 +27,10 @@ namespace Gsd2Aml.Lib
         private static XmlDocument GsdDocument { get; set; }
 
         /// <summary>
-        /// The convert function which returns the AML file as string.
+        /// The convert function which returns the AML file as a string.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
-        /// <returns>The AML object serialized to a XML string.</returns>
+        /// <returns>The converted AML object serialized to a XML string.</returns>
         public static string Convert(string inputFile)
         {
             Logger?.Log(LogLevel.Info, "Conversion to string started.");
@@ -46,7 +45,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// The convert function which will create a .amlx file.
+        /// The convert function which will create the .amlx package.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
@@ -79,7 +78,7 @@ namespace Gsd2Aml.Lib
         {
             // Util.CheckGsdFileForCorrectness(inputFile);
 
-            // Initialize the GSD XML documents and translation table. Then load these documents.
+            // Load the GSD and the translation table XML document.
             GsdDocument = Util.LoadXmlDocument(inputFile);
             var translationTable = Util.LoadTranslationTable();
 
@@ -153,7 +152,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// The actual translation of the GSD object to AML object.
+        /// The actual translation of the GSD object to an AML object.
         /// </summary>
         /// <typeparam name="TA">The type of the AML head object.</typeparam>
         /// <param name="currentAmlHead">The AML head object in which the translation object will be set.</param>
@@ -215,13 +214,13 @@ namespace Gsd2Aml.Lib
 
         /// <summary>
         /// This function handles a new Rule call in the translation table.
-        /// It takes then the inner text of the rule node and translate it with the corresponding rule.
-        /// and 
+        /// It takes the inner text of the rule node and translate it with the corresponding rule.
         /// </summary>
         /// <param name="childNode">The rule node which contains the information which rule should be called.</param>
         /// <param name="replacementInstance">The instance in which the rule instance will be set/added.</param>
         private static void HandleRuleCall(XmlNode childNode, dynamic replacementInstance)
         {
+            // Get the translation rule
             var translationRule = TranslationRules.FirstOrDefault(node => node.Name.Equals(childNode.InnerText));
 
             if (translationRule == null)

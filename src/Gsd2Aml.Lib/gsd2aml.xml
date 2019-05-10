@@ -27,6 +27,102 @@
     </Replacement>
   </ProfileBody>
 
+  <DeviceIdentity>
+    <Replacement>
+      <CAEXFile.SystemUnitClass>
+        <SystemUnitClass CAEXObject.Name="$1" CAEXObject.ID="GUID">
+
+          <SystemUnitClassType.SupportedRoleClass>
+            <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
+          </SystemUnitClassType.SupportedRoleClass>
+
+          <SystemUnitClassType.InternalElement>
+
+            <InternalElement CAEXObject.Name="DeviceIdentification" CAEXObject.ID="GUID">
+              <SystemUnitClassType.Attribute>
+                <Attribute CAEXObject.Name="Manufacturer" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$2</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="Model" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$1</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="ProductCode" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$1</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="DeviceClass" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$3</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="ShortDescription" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$4</Attribute.Value>
+                </Attribute>
+
+                <Attribute CAEXObject.Name="ArticleIdentificationOfVendor" Attribute.AttributeDataType="xs:string">
+                  <Attribute.Value>$1</Attribute.Value>
+                </Attribute>
+              </SystemUnitClassType.Attribute>
+            </InternalElement>
+
+            <InternalElement CAEXObject.Name="GSDML" CAEXObject.ID="GUID">
+              <SystemUnitClassType.SupportedRoleClass>
+                <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
+              </SystemUnitClassType.SupportedRoleClass>
+
+              <SystemUnitClassType.ExternalInterface>
+                <ExternalInterface CAEXObject.Name="GSDML 2.35" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+                  <ExternalInterface.Attribute>
+                    <Attribute CAEXObject.Name="refURI" Attribute.AttributeDataType="xs:anyURI">
+                      <Attribute.Value>$5</Attribute.Value>
+                    </Attribute>
+                    <Attribute CAEXObject.Name="MIMEType" Attribute.AttributeDataType="xs:string">
+                      <Attribute.Value>application/xml</Attribute.Value>
+                    </Attribute>
+                  </ExternalInterface.Attribute>
+                </ExternalInterface>
+              </SystemUnitClassType.ExternalInterface>
+            </InternalElement>
+
+            <InternalElement CAEXObject.Name="PhysicalInterfaces" CAEXObject.ID="GUID">
+
+              <SystemUnitClassType.ExternalInterface>
+                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem</Rule>
+                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem</Rule>
+              </SystemUnitClassType.ExternalInterface>
+
+            </InternalElement>
+
+            <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef</Rule>
+
+            <InternalElement CAEXObject.Name="LogicalInterface" CAEXObject.ID="GUID">
+              <SystemUnitClassType.InternalElement>
+                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem</Rule>
+              </SystemUnitClassType.InternalElement>
+            </InternalElement>
+
+          </SystemUnitClassType.InternalElement>
+        </SystemUnitClass>
+      </CAEXFile.SystemUnitClass>
+    </Replacement>
+    <!-- Caution! There can be multiple DeviceAccessPointItems in a DeviceAccessPointList. Just take the first one, it shouldn,t matter which one you choose regardless. -->
+    <Reference Ref="$1" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.Name TextId="" />
+    </Reference>
+    <Reference Ref="$2">
+      <ISO15745Profile.ProfileBody.DeviceIdentity.VendorName Value="" />
+    </Reference>
+    <Reference Ref="$3">
+      <ISO15745Profile.ProfileBody.DeviceFunction.Family MainFamily="" />
+    </Reference>
+    <!-- Again, just choose the first one. -->
+    <Reference Ref="$4" Type="SingleTextRef">
+      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.InfoText TextId="" />
+    </Reference>
+    <Reference Ref="$5" Type="GSDRef" />
+  </DeviceIdentity>
+
   <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem>
     <Replacement>
       <ExternalInterface CAEXObject.Name="$1" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="physicalEndPoint/IO-Link Port">
@@ -105,279 +201,216 @@
     </Reference>
   </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem>
 
-  <DeviceIdentity>
+  <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef>
     <Replacement>
-      <CAEXFile.SystemUnitClass>
-        <SystemUnitClass CAEXObject.Name="$1" CAEXObject.ID="GUID">
+      <InternalElement CAEXObject.Name="DeviceSymbol" CAEXObject.ID="GUID">
+        <InternalElement.RoleRequirements InternalElement.RoleRequirements.RefBaseRoleClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
 
-          <SystemUnitClassType.SupportedRoleClass>
-            <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription/PNGSD" />
-          </SystemUnitClassType.SupportedRoleClass>
-
-          <SystemUnitClassType.InternalElement>
-
-            <InternalElement CAEXObject.Name="DeviceIdentification" CAEXObject.ID="GUID">
-              <SystemUnitClassType.Attribute>
-                <Attribute CAEXObject.Name="Manufacturer" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$2</Attribute.Value>
-                </Attribute>
-
-                <Attribute CAEXObject.Name="Model" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$1</Attribute.Value>
-                </Attribute>
-
-                <Attribute CAEXObject.Name="ProductCode" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$1</Attribute.Value>
-                </Attribute>
-
-                <Attribute CAEXObject.Name="DeviceClass" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$3</Attribute.Value>
-                </Attribute>
-
-                <Attribute CAEXObject.Name="ShortDescription" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$4</Attribute.Value>
-                </Attribute>
-
-                <Attribute CAEXObject.Name="ArticleIdentificationOfVendor" Attribute.AttributeDataType="xs:string">
-                  <Attribute.Value>$1</Attribute.Value>
-                </Attribute>
-              </SystemUnitClassType.Attribute>
-            </InternalElement>
-
-            <InternalElement CAEXObject.Name="GSDML" CAEXObject.ID="GUID">
-              <SystemUnitClassType.SupportedRoleClass>
-                <SupportedRoleClass SupportedRoleClass.RefRoleClassPath="AutomationMLComponentBaseRCL/AdditionalDeviceDescription" />
-              </SystemUnitClassType.SupportedRoleClass>
-
-              <SystemUnitClassType.ExternalInterface>
-                <ExternalInterface CAEXObject.Name="GSDML 2.35" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
-                  <ExternalInterface.Attribute>
-                    <Attribute CAEXObject.Name="refURI" Attribute.AttributeDataType="xs:anyURI">
-                      <Attribute.Value>$5</Attribute.Value>
-                    </Attribute>
-                    <Attribute CAEXObject.Name="MIMEType" Attribute.AttributeDataType="xs:string">
-                      <Attribute.Value>application/xml</Attribute.Value>
-                    </Attribute>
-                  </ExternalInterface.Attribute>
-                </ExternalInterface>
-              </SystemUnitClassType.ExternalInterface>
-            </InternalElement>
-
-            <InternalElement CAEXObject.Name="PhysicalInterfaces" CAEXObject.ID="GUID">
-
-              <SystemUnitClassType.ExternalInterface>
-                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SlotList.SlotItem</Rule>
-                <Rule>ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.PortSubmoduleItem</Rule>
-              </SystemUnitClassType.ExternalInterface>
-
-            </InternalElement>
-
-            <!-- TODO: GraphItemRef -->
-            <Rule>
-              <InternalElement Name="DeviceSymbol" ID="GUID">
-                <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
-
-                <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
-                  <Attribute Name="refUri" AttributeDataType="xs:anyURI">
-                    <Value>$17</Value>
-                  </Attribute>
-                </ExternalInterface>
-              </InternalElement>
-            </Rule>
-
-            <InternalElement CAEXObject.Name="LogicalInterface" CAEXObject.ID="GUID">
-              <!-- TODO: InterfaceSubModuleItem -->
-              <!--<ExternalInterface Name="$18" ID="GUID" RefBaseClassPath="physicalEndPoint/Interface">
-                <Attribute Name="SupportedRT_Classes" AttributeDataType="xs:string">
-                  <Value>$19</Value>
-                </Attribute>
-                <Attribute Name="IsochroneModeInRT_Classes" AttributeDataType="xs:string">
-                  <Value>$20</Value>
-                </Attribute>
-                <Attribute Name="SupportedProtocols" AttributeDataType="xs:string">
-                  <Value>$21</Value>
-                </Attribute>
-                <Attribute Name="SupportedMibs" AttributeDataType="xs:string">
-                  <Value>$22</Value>
-                </Attribute>
-                <Attribute Name="SubslotNumber" AttributeDataType="xs:string">
-                  <Value>$23</Value>
-                </Attribute>
-                <Attribute Name="SubmoduleIdentNumber" AttributeDataType="xs:string">
-                  <Value>$24</Value>
-                </Attribute>
-                <Attribute Name="DCP_HelloSupported" AttributeDataType="xs:boolean">
-                  <Value>$25</Value>
-                </Attribute>
-                <Attribute Name="DelayMeasurementSupported" AttributeDataType="xs:boolean">
-                  <Value>$26</Value>
-                </Attribute>
-                <Attribute Name="NetworkComponentDiagnosisSupported" AttributeDataType="xs:boolean">
-                  <Value>$27</Value>
-                </Attribute>
-                <Attribute Name="DCP_BoundarySupported" AttributeDataType="xs:boolean">
-                  <Value>$28</Value>
-                </Attribute>
-                <Attribute Name="PTP_BoundarySupported" AttributeDataType="xs:boolean">
-                  <Value>$29</Value>
-                </Attribute>
-
-                <InternalElement Name="ApplicationRelations" ID="GUID">
-                  <Attribute Name="NumberOfAR" AttributeDataType="xs:integer">
-                    <Value>$30</Value>
-                  </Attribute>
-                  <Attribute Name="StartupMode" AttributeDataType="xs:string">
-                    <Value>$31</Value>
-                  </Attribute>
-
-                  <InternalElement Name="TimingProperties" ID="GUID">
-                    <Attribute Name="SendClock" AttributeDataType="xs:string">
-                      <Value>$32</Value>
-                    </Attribute>
-                    <Attribute Name="ReductionRatio" AttributeDataType="xs:string">
-                      <Value>$33</Value>
-                    </Attribute>
-                  </InternalElement>
-
-                  <InternalElement Name="RT_Class3TimingProperties" ID="GUID">
-                    <Attribute Name="SendClock" AttributeDataType="xs:string">
-                      <Value>$34</Value>
-                    </Attribute>
-                    <Attribute Name="ReductionRatio" AttributeDataType="xs:string">
-                      <Value>$35</Value>
-                    </Attribute>
-                  </InternalElement>
-                </InternalElement>
-
-                <InternalElement Name="MediaRedundancy" ID="GUID">
-                  <Attribute Name="SupportedRole" AttributeDataType="xs:string">
-                    <Value>$36</Value>
-                  </Attribute>
-                </InternalElement>
-
-                <InternalElement Name="RT_Class3Properties" ID="GUID">
-                  <Attribute Name="MaxBridgeDelay" AttributeDataType="xs:integer">
-                    <Value>$37</Value>
-                  </Attribute>
-                  <Attribute Name="MaxNumberIR_FrameData" AttributeDataType="xs:integer">
-                    <Value>$38</Value>
-                  </Attribute>
-                </InternalElement>
-
-                <InternalElement Name="SynchronisationMode" ID="GUID">
-                  <Attribute Name="SupportedRole" AttributeDataType="xs:string">
-                    <Value>$39</Value>
-                  </Attribute>
-                  <Attribute Name="MaxLocalJitter" AttributeDataType="xs:integer">
-                    <Value>$40</Value>
-                  </Attribute>
-                  <Attribute Name="T_PLL_MAX" AttributeDataType="xs:integer">
-                    <Value>$41</Value>
-                  </Attribute>
-                  <Attribute Name="SupportedSyncProtocols" AttributeDataType="xs:string">
-                    <Value>$42</Value>
-                  </Attribute>
-                </InternalElement>
-              </ExternalInterface>-->
-            </InternalElement>
-
-          </SystemUnitClassType.InternalElement>
-        </SystemUnitClass>
-      </CAEXFile.SystemUnitClass>
+        <SystemUnitClassType.ExternalInterface>
+          <ExternalInterface CAEXObject.Name="ExternalDataReference" CAEXObject.ID="GUID" ExternalInterface.RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+            <ExternalInterface.Attribute>
+              <Attribute CAEXObject.Name="refUri" Attribute.AttributeDataType="xs:anyURI">
+                <Attribute.Value>$1</Attribute.Value>
+              </Attribute>
+            </ExternalInterface.Attribute>
+          </ExternalInterface>
+        </SystemUnitClassType.ExternalInterface>
+      </InternalElement>
     </Replacement>
-    <!-- Caution! There can be multiple DeviceAccessPointItems in a DeviceAccessPointList. Just take the first one, it shouldn,t matter which one you choose regardless. -->
-    <Reference Ref="$1" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.Name TextId="" />
-    </Reference>
-    <Reference Ref="$2">
-      <ISO15745Profile.ProfileBody.DeviceIdentity.VendorName Value="" />
-    </Reference>
-    <Reference Ref="$3">
-      <ISO15745Profile.ProfileBody.DeviceFunction.Family MainFamily="" />
-    </Reference>
-    <!-- Again, just choose the first one. -->
-    <Reference Ref="$4" Type="SingleTextRef">
-      <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.ModuleInfo.InfoText TextId="" />
-    </Reference>
-    <Reference Ref="5" Type="GSDRef" />
-    <Reference Ref="$17" Type="GraphicRef">
+    <Reference Ref="$1" Type="GraphicRef">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef GraphicItemTarget="" />
     </Reference>
-    <Reference Ref="$18" Type="SingleTextRef">
+  </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.Graphics.GraphicItemRef>
+
+  <ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem>
+    <Replacement>
+      <InternalElement CAEXObject.Name="$1" CAEXObject.ID="GUID" InternalElement.RefBaseSystemUnitPath="physicalEndPoint/Interface">
+        <SystemUnitClassType.Attribute>
+          <Attribute CAEXObject.Name="SupportedRT_Classes" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$2</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="IsochroneModeInRT_Classes" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$3</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="SupportedProtocols" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$4</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="SupportedMibs" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$5</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="SubslotNumber" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$6</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="SubmoduleIdentNumber" Attribute.AttributeDataType="xs:string">
+            <Attribute.Value>$7</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="DCP_HelloSupported" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$8</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="DelayMeasurementSupported" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$9</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="NetworkComponentDiagnosisSupported" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$10</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="DCP_BoundarySupported" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$11</Attribute.Value>
+          </Attribute>
+          <Attribute CAEXObject.Name="PTP_BoundarySupported" Attribute.AttributeDataType="xs:boolean">
+            <Attribute.Value>$12</Attribute.Value>
+          </Attribute>
+        </SystemUnitClassType.Attribute>
+
+        <SystemUnitClassType.InternalElement>
+          <InternalElement CAEXObject.Name="ApplicationRelations" CAEXObject.ID="GUID">
+
+            <SystemUnitClassType.Attribute>
+              <Attribute CAEXObject.Name="NumberOfAR" Attribute.AttributeDataType="xs:integer">
+                <Attribute.Value>$13</Attribute.Value>
+              </Attribute>
+              <Attribute CAEXObject.Name="StartupMode" Attribute.AttributeDataType="xs:string">
+                <Attribute.Value>$14</Attribute.Value>
+              </Attribute>
+            </SystemUnitClassType.Attribute>
+
+            <SystemUnitClassType.InternalElement>
+              <InternalElement CAEXObject.Name="TimingProperties" CAEXObject.ID="GUID">
+                <SystemUnitClassType.Attribute>
+                  <Attribute CAEXObject.Name="SendClock" Attribute.AttributeDataType="xs:string">
+                    <Attribute.Value>$15</Attribute.Value>
+                  </Attribute>
+                  <Attribute CAEXObject.Name="ReductionRatio" Attribute.AttributeDataType="xs:string">
+                    <Attribute.Value>$16</Attribute.Value>
+                  </Attribute>
+                </SystemUnitClassType.Attribute>
+              </InternalElement>
+
+              <InternalElement CAEXObject.Name="RT_Class3TimingProperties" CAEXObject.ID="GUID">
+                <SystemUnitClassType.Attribute>
+                  <Attribute CAEXObject.Name="SendClock" Attribute.AttributeDataType="xs:string">
+                    <Attribute.Value>$17</Attribute.Value>
+                  </Attribute>
+                  <Attribute CAEXObject.Name="ReductionRatio" Attribute.AttributeDataType="xs:string">
+                    <Attribute.Value>$18</Attribute.Value>
+                  </Attribute>
+                </SystemUnitClassType.Attribute>
+              </InternalElement>
+            </SystemUnitClassType.InternalElement>
+          </InternalElement>
+
+          <InternalElement CAEXObject.Name="MediaRedundancy" CAEXObject.ID="GUID">
+            <SystemUnitClassType.Attribute>
+              <Attribute CAEXObject.Name="SupportedRole" Attribute.AttributeDataType="xs:string">
+                <Attribute.Value>$19</Attribute.Value>
+              </Attribute>
+            </SystemUnitClassType.Attribute>
+          </InternalElement>
+
+          <InternalElement CAEXObject.Name="RT_Class3Properties" CAEXObject.ID="GUID">
+            <SystemUnitClassType.Attribute>
+              <Attribute CAEXObject.Name="MaxBridgeDelay" Attribute.AttributeDataType="xs:integer">
+                <Attribute.Value>$20</Attribute.Value>
+              </Attribute>
+              <Attribute CAEXObject.Name="MaxNumberIR_FrameData" Attribute.AttributeDataType="xs:integer">
+                <Attribute.Value>$21</Attribute.Value>
+              </Attribute>
+            </SystemUnitClassType.Attribute>
+          </InternalElement>
+
+          <InternalElement CAEXObject.Name="SynchronisationMode" CAEXObject.ID="GUID">
+            <SystemUnitClassType.Attribute>
+              <Attribute CAEXObject.Name="SupportedRole" Attribute.AttributeDataType="xs:string">
+                <Attribute.Value>$22</Attribute.Value>
+              </Attribute>
+              <Attribute CAEXObject.Name="MaxLocalJitter" Attribute.AttributeDataType="xs:integer">
+                <Attribute.Value>$23</Attribute.Value>
+              </Attribute>
+              <Attribute CAEXObject.Name="T_PLL_MAX" Attribute.AttributeDataType="xs:integer">
+                <Attribute.Value>$24</Attribute.Value>
+              </Attribute>
+              <Attribute CAEXObject.Name="SupportedSyncProtocols" Attribute.AttributeDataType="xs:string">
+                <Attribute.Value>$25</Attribute.Value>
+              </Attribute>
+            </SystemUnitClassType.Attribute>
+          </InternalElement>
+        </SystemUnitClassType.InternalElement>
+      </InternalElement>
+    </Replacement>
+    <Reference Ref="$1" Type="SingleTextRef">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem TextId="" />
     </Reference>
-    <Reference Ref="$19">
+    <Reference Ref="$2">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedRT_Classes="" />
     </Reference>
-    <Reference Ref="$20">
+    <Reference Ref="$3">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem IsochroneModeInRT_Classes="" />
     </Reference>
-    <Reference Ref="$21">
+    <Reference Ref="$4">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedProtocols="" />
     </Reference>
-    <Reference Ref="$22">
+    <Reference Ref="$5">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SupportedMibs="" />
     </Reference>
-    <Reference Ref="$23">
+    <Reference Ref="$6">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubslotNumber="" />
     </Reference>
-    <Reference Ref="$24">
+    <Reference Ref="$7">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem SubmoduleIdentNumber="" />
     </Reference>
-    <Reference Ref="$25">
+    <Reference Ref="$8">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_HelloSupported="" />
     </Reference>
-    <Reference Ref="$26">
+    <Reference Ref="$9">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DelayMeasurementSupported="" />
     </Reference>
-    <Reference Ref="$27">
+    <Reference Ref="$10">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem NetworkComponentDiagnosisSupported="" />
     </Reference>
-    <Reference Ref="$28">
+    <Reference Ref="$11">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem DCP_BoundarySupported="" />
     </Reference>
-    <Reference Ref="$29">
+    <Reference Ref="$12">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem PTP_BoundarySupported="" />
     </Reference>
-    <Reference Ref="$30">
+    <Reference Ref="$13">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations NumberOfAr="" />
     </Reference>
-    <Reference Ref="$31">
+    <Reference Ref="$14">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations StartupMode="" />
     </Reference>
-    <Reference Ref="$32">
+    <Reference Ref="$15">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties SendClock="" />
     </Reference>
-    <Reference Ref="$33">
+    <Reference Ref="$16">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.TimingProperties ReductionRatio="" />
     </Reference>
-    <Reference Ref="$34">
+    <Reference Ref="$17">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties SendClock="" />
     </Reference>
-    <Reference Ref="$35">
+    <Reference Ref="$18">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.ApplicationRelations.RT_Class3TimingProperties ReductionRatio="" />
     </Reference>
-    <Reference Ref="$36">
+    <Reference Ref="$19">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.MediaRedundancy SupportedRole="" />
     </Reference>
-    <Reference Ref="$37">
+    <Reference Ref="$20">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxBridgeDelay="" />
     </Reference>
-    <Reference Ref="$38">
+    <Reference Ref="$21">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.RT_Class3Properties MaxNumberIR_FrameData="" />
     </Reference>
-    <Reference Ref="$39">
+    <Reference Ref="$22">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedRole="" />
     </Reference>
-    <Reference Ref="$40">
+    <Reference Ref="$23">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode MaxLocalJitter="" />
     </Reference>
-    <Reference Ref="$41">
+    <Reference Ref="$24">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode T_PLL_MAX="" />
     </Reference>
-    <Reference Ref="$42">
+    <Reference Ref="$25">
       <ISO15745Profile.ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem.SynchronisationMode SupportedSyncProtocols="" />
     </Reference>
-  </DeviceIdentity>
+  </ProfileBody.ApplicationProcess.DeviceAccessPointList.DeviceAccessPointItem.SystemDefinedSubmoduleList.InterfaceSubmoduleItem>
 
 </body>

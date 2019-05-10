@@ -50,15 +50,14 @@ namespace Gsd2Aml.Cli
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}.");
+                Console.WriteLine($"Conversion failed. Please contact the developers. {e.Message}");
                 Util.Logger.Log(LogLevel.Error, e.ToString());
                 Environment.Exit(1);
             }
         }
 
         /// <summary>
-        /// Checks if the output file already exists.
-        /// Asks the user whether to overwrite the file or stop the conversion.
+        /// Checks if the output file already exists. If yes the user will be asked whether the file should be overwritten.
         /// </summary>
         private void CheckOutput()
         {

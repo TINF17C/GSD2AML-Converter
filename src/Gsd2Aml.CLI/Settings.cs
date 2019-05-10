@@ -52,7 +52,7 @@ namespace Gsd2Aml.Cli
         /// 1) If the user passed multiple times the corresponding long/short argument to an argument. E.g. gsd2aml -i --input
         /// 2) If the user passed multiple times the same argument. E.g. gsd2aml -i -i
         /// 3) If the user passed --output and --string at the same time.
-        /// If one of the above happens, an error will be thrown.
+        /// If one of the above happens, an exception will be thrown.
         /// </summary>
         /// <exception cref="ArgumentException">The argument list is invalid.</exception>
         internal void CheckCliArguments()
