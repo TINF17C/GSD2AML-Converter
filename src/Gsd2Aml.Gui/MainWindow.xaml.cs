@@ -102,7 +102,7 @@ namespace Gsd2Aml.Gui
                 }
 
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Start conversion of file \"" + TxtGsdFile.Text + "\"");
-                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, overwrite);
+                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, overwrite, StrictModeEnabled);
 
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Conversion successfully completed!");
                 MessageBox.Show(this, "Conversion successfully completed!", "GSD2AML Converter");
