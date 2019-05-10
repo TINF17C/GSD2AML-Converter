@@ -2,7 +2,7 @@
 <Include>
   <!-- Product -->
   <?ifndef ManufacturerName ?>
-  <?define ManufacturerName="DHBW Stuttgart TINF17C" ?>
+  <?define ManufacturerName="Corporative State University Stuttgart TINF17C" ?>
   <?endif?>
   <?ifndef ProductMainName ?>
   <?define ProductMainName="GSD2AML Converter" ?>
