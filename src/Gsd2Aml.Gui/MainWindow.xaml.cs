@@ -45,6 +45,9 @@ namespace Gsd2Aml.Gui
             }
         }
 
+        /// <summary>
+        /// Initializes the main window component.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -91,6 +94,11 @@ namespace Gsd2Aml.Gui
         }
         #endregion
 
+        /// <summary>
+        /// On click tries to convert the file and prompts the user whether or not to open the file in AutomationML Editor if one is installed.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">Corresponding event.</param>
         private void Convert_OnClick(object sender, RoutedEventArgs e)
         {
             try
@@ -131,6 +139,10 @@ namespace Gsd2Aml.Gui
             }
         }
 
+        /// <summary>
+        /// Searches for an installed AutomationML Editor and returns it.
+        /// </summary>
+        /// <returns>Path to the AutomationML Editor.</returns>
         private string GetAmlEditor()
         {
             try
@@ -304,6 +316,11 @@ namespace Gsd2Aml.Gui
 
         #endregion
 
+        /// <summary>
+        /// Takes the GSDML file path and tries to convert it to an .amlx output path.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">Corresponding event.</param>
         private void TxtGsdFile_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             var senderText = ((TextBox)sender).Text;
