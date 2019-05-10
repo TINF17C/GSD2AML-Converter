@@ -38,13 +38,13 @@ namespace Gsd2Aml.Cli
                 Converter.Logger = Util.Logger;
                 if (Settings.StringOutput)
                 {
-                    var amlString = Converter.Convert(Settings.InputFile);
+                    var amlString = Converter.Convert(Settings.InputFile, Settings.Validation);
                     Console.WriteLine($"Successfully converted the GSD file to an AML string. {Environment.NewLine}");
                     Console.WriteLine(amlString);
                 }
                 else
                 {
-                    Converter.Convert(Settings.InputFile, Settings.OutputFile, true);
+                    Converter.Convert(Settings.InputFile, Settings.OutputFile, true, Settings.Validation);
                     Console.WriteLine($"Successfully converted the GSD file to a .amlx package and saved it to {Settings.OutputFile}");
                 }
             }
