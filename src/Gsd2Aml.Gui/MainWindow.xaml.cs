@@ -17,6 +17,8 @@ namespace Gsd2Aml.Gui
 
         public string ProductVersion => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
 
+        public bool StrictModeEnabled { get; set; } = true;
+
         public MainWindow()
         {
             InitializeComponent();
