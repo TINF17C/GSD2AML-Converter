@@ -16,9 +16,11 @@ namespace Gsd2Aml.Gui
         private bool _strictModeEnabled = true;
         private bool _warningShown = false;
 
-        public string ProductTitle => "GSD2AML Converter";
+        public string ProductTitle => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductName;
 
         public string ProductVersion => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+
+        public string Copyright => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).LegalCopyright;
 
         public bool StrictModeEnabled
         {
@@ -110,7 +112,7 @@ namespace Gsd2Aml.Gui
                 }
 
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Start conversion of file \"" + TxtGsdFile.Text + "\"");
-                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, overwrite);
+                Lib.Converter.Convert(TxtGsdFile.Text, TxtAmlFile.Text, overwrite, StrictModeEnabled);
 
                 App.Logger.Log(Lib.Logging.LogLevel.Info, "Conversion successfully completed!");
                 MessageBox.Show(this, "Conversion successfully completed!", "GSD2AML Converter");
@@ -334,6 +336,12 @@ namespace Gsd2Aml.Gui
 
                 TxtAmlFile.Text = System.IO.Path.Combine(diretoryName, fileName);
             }
+        }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            var about = new AboutWindow() { DataContext = this, Owner = this };
+            about.ShowDialog();
         }
     }
 }

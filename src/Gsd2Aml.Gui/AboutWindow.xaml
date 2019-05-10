@@ -1,0 +1,28 @@
+﻿<Window x:Class="Gsd2Aml.Gui.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About"
+        Height="250"
+        ResizeMode="NoResize"
+        Width="400"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        WindowState="Normal">
+    <StackPanel HorizontalAlignment="Center">
+        <TextBlock Text="{Binding ProductTitle}" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="{Binding ProductVersion, StringFormat=Version {0}}" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="{Binding Copyright}" Height="Auto" HorizontalAlignment="Center" Margin="0,5" Width="Auto" />
+        <TextBlock Text="Developed by:" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="Nico Dietz" Height="Auto" HorizontalAlignment="Center" Width="Auto" />                   
+        <TextBlock Text="Steffen Gerdes" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="Constantin Ruhdorfer" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="Jonas Komarek" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="Phuc Quang Vu" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <TextBlock Text="Michael Weidmann" Height="Auto" HorizontalAlignment="Center" Width="Auto" />
+        <Label Height="Auto" HorizontalAlignment="Center" Margin="0,5,0,0" Width="Auto">
+            <Hyperlink NavigateUri="https://github.com/tinf17c/gsd2aml-converter" RequestNavigate="Hyperlink_RequestNavigate">
+                GitHub
+            </Hyperlink>
+        </Label>
+    </StackPanel>
+</Window>

@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-  <!-- Hier nun alle Defines die durch den Präprozessor aufgelöst werden -->
-  <!-- Konfiguration -->
-
-  <?ifndef myFiles ?>
-  <?define myFiles="File" ?>
-  <?endif?>
-
-  <!-- Produkt -->
+  <!-- Product -->
   <?ifndef ManufacturerName ?>
-  <?define ManufacturerName="DHBW Stuttgart TINF17C" ?>
+  <?define ManufacturerName="Corporative State University Stuttgart TINF17C" ?>
   <?endif?>
   <?ifndef ProductMainName ?>
   <?define ProductMainName="GSD2AML Converter" ?>
@@ -17,7 +10,7 @@
   <?ifndef ProductVersion ?>
   <?define ProductVersion="0.9.0.0" ?>
   <?endif?>
-  <!-- nicht von "außen" überschreibbare Variablen -->
+  
   <?define myManufacturerDir="GSD2AML Converter" ?>
   <?define myProductDir="GSD2AML Converter" ?>
   <?define UpgradeGuid="215ee4e9-2335-468c-8a74-7f60fd5db8bb"?>
