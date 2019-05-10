@@ -70,16 +70,18 @@
             <Button Content="..." Click="BrowseAmlFile_OnClick" DockPanel.Dock="Right" Padding="5,0" />
             <TextBox x:Name="TxtAmlFile" />
         </DockPanel>
-        
-        <Button Content="Convert" Click="Convert_OnClick" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
-                Height="Auto" HorizontalAlignment="Center" Padding="5" VerticalAlignment="Center"  Width="Auto">
-            <Button.IsEnabled>
-                <MultiBinding Converter="{StaticResource PathValidator}">
-                    <Binding ElementName="TxtGsdFile" Path="Text" Mode="OneWay" />
-                    <Binding ElementName="TxtAmlFile" Path="Text" Mode="OneWay" />
-                </MultiBinding>
-            </Button.IsEnabled>
-        </Button>
+
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Top" Width="Auto">
+            <Button Content="Convert" Click="Convert_OnClick" HorizontalAlignment="Center" Padding="5" Width="Auto">
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource PathValidator}">
+                        <Binding ElementName="TxtGsdFile" Path="Text" Mode="OneWay" />
+                        <Binding ElementName="TxtAmlFile" Path="Text" Mode="OneWay" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+            <CheckBox Content="use strict mode" IsChecked="{Binding StrictModeEnabled}" HorizontalAlignment="Center" Margin="0,5" ToolTip="Turns the validation of the given GSDML file on/off" />
+        </StackPanel>
 
         <TextBlock FontSize="10" Foreground="Gray" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="5,0,0,5" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="Auto">
             <TextBlock.Text>

@@ -13,9 +13,37 @@ namespace Gsd2Aml.Gui
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _strictModeEnabled = true;
+        private bool _warningShown = false;
+
         public string ProductTitle => "GSD2AML Converter";
 
         public string ProductVersion => System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+
+        public bool StrictModeEnabled
+        {
+            get { return _strictModeEnabled; }
+            set
+            {
+                if (!value)
+                {
+                    if (_warningShown)
+                    {
+                        _strictModeEnabled = value;
+                    }
+                    else if (MessageBox.Show(this, "WARNING!\n\nBy turning strict mode off, the converter will not validate GSDML files anymore.",
+                        "GSD2AML Converter", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK)
+                    {
+                        _warningShown = true;
+                        _strictModeEnabled = value;
+                    }
+                }
+                else
+                {
+                    _strictModeEnabled = value;
+                }
+            }
+        }
 
         public MainWindow()
         {
