@@ -173,16 +173,17 @@
             </InternalElement>
 
             <!-- TODO: GraphItemRef -->
-            <Rule></Rule>
-            <InternalElement Name="DeviceSymbol" ID="GUID">
-              <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
+            <Rule>
+              <InternalElement Name="DeviceSymbol" ID="GUID">
+                <RoleRequirements RefBaseClassPath="AutomationMLComponentStandardRCL/ComponentPicture" />
 
-              <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
-                <Attribute Name="refUri" AttributeDataType="xs:anyURI">
-                  <Value>$17</Value>
-                </Attribute>
-              </ExternalInterface>
-            </InternalElement>
+                <ExternalInterface Name="ExternalDataReference" ID="GUID" RefBaseClassPath="AutomationMLInterfaceClassLib/AutomationMLBaseInterface/ExternalDataConnector">
+                  <Attribute Name="refUri" AttributeDataType="xs:anyURI">
+                    <Value>$17</Value>
+                  </Attribute>
+                </ExternalInterface>
+              </InternalElement>
+            </Rule>
 
             <InternalElement CAEXObject.Name="LogicalInterface" CAEXObject.ID="GUID">
               <!-- TODO: InterfaceSubModuleItem -->
