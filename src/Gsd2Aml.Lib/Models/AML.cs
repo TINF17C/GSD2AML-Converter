@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Serialization;
 
@@ -832,7 +833,7 @@ namespace Gsd2Aml.Lib.Models
     public partial class CAEXObject : CAEXBasicObject
     {
 
-        private string idField;
+        private string idField = Guid.NewGuid().ToString();
 
         private string nameField;
 
@@ -1614,12 +1615,7 @@ namespace Gsd2Aml.Lib.Models
 
         public string WriterRelease { get; set; }
 
-        private string lastWritingDateTime;
-        public string LastWritingDateTime
-        {
-            get => DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
-            set => lastWritingDateTime = value;
-        }
+        public string LastWritingDateTime { get; set; } = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
 
         public string WriterProjectTitle { get; set; }
 
