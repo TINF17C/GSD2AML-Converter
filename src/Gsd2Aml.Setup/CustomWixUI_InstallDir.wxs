@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
-
-
 
 <!--
 First-time install dialog sequence:
  - WixUI_WelcomeDlg
  - WixUI_LicenseAgreementDlg
+ - Custom_SelectScopeDlg
  - WixUI_InstallDirDlg
+ - Custom_ShortcutDlg
  - WixUI_VerifyReadyDlg
  - WixUI_DiskCostDlg
 
@@ -20,7 +19,6 @@ Maintenance dialog sequence:
 Patch dialog sequence:
  - WixUI_WelcomeDlg
  - WixUI_VerifyReadyDlg
-
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
