@@ -50,10 +50,11 @@ namespace Gsd2Aml.Lib
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
         /// <param name="overwriteFile">A flag which indicates if the file should be overwritten if it exists.</param>
-        public static void Convert(string inputFile, string outputFile, bool overwriteFile)
+        /// <param name="strictValidation">A flag which indicates if the GSD should be checked for correctness.</param>
+        public static void Convert(string inputFile, string outputFile, bool overwriteFile, bool strictValidation = true)
         {
             Logger?.Log(LogLevel.Info, "Conversion to file started.");
-            StartConversion(inputFile, outputFile);
+            StartConversion(inputFile, outputFile, strictValidation);
 
             var serializer = new XmlSerializer(AmlObject.GetType());
             var temporaryPath = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(outputFile) + ".aml");
@@ -74,9 +75,9 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
-        private static void StartConversion(string inputFile, string outputFile)
+        private static void StartConversion(string inputFile, string outputFile, bool strictValidation)
         {
-            Util.CheckGsdFileForCorrectness(inputFile);
+            if (strictValidation) Util.CheckGsdFileForCorrectness(inputFile);
 
             // Initialize the GSD XML documents and translation table. Then load these documents.
             var gsdDocument = Util.LoadXmlDocument(inputFile);
