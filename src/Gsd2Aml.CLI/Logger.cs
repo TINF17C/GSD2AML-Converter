@@ -3,10 +3,18 @@ using NLog;
 
 namespace Gsd2Aml.Cli
 {
+    /// <summary>
+    /// The logger instance of the CLI.
+    /// </summary>
     public class Logger : ILoggingService
     {
         private NLog.Logger NlogLogger { get; } = LogManager.GetLogger("cli_logger");
         
+        /// <summary>
+        /// Logs a message to the specified log level using NLog.
+        /// </summary>
+        /// <param name="level">The level on which to log on.</param>
+        /// <param name="message">The log message.</param>
         public void Log(Lib.Logging.LogLevel level, string message)
         {
             NLog.LogLevel logLevel;

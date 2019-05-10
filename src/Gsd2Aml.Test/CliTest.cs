@@ -5,9 +5,15 @@ using System.Collections.Generic;
 
 namespace Gsd2Aml.Test
 {
+    /// <summary>
+    /// Performs tests on the CLI.
+    /// </summary>
     [TestClass]
     public class CliTest
     {
+        /// <summary>
+        /// Test whether the output file path is correctly set.
+        /// </summary>
         [TestMethod]
         public void TestGetOutputFile()
         {
@@ -26,6 +32,9 @@ namespace Gsd2Aml.Test
             Assert.AreEqual(res, outputPath);
         }
 
+        /// <summary>
+        /// Checks whether .amlx is appended correctly to the output file.
+        /// </summary>
         [TestMethod]
         public void TestGetOutputFileWithNoOutput()
         {
@@ -45,6 +54,9 @@ namespace Gsd2Aml.Test
             StringAssert.StartsWith(res, expected);
         }
 
+        /// <summary>
+        /// Checks whether the CLI fails on multiple, but equal parameters.
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "Expected ArgumentException.")]
         public void TestMultipleParameterErrorInvoke()
@@ -57,6 +69,9 @@ namespace Gsd2Aml.Test
             settings.PrintMultipleParameterError();
         }
 
+        /// <summary>
+        /// Checks whether multiple parameters are correctly parsed.
+        /// </summary>
         [TestMethod]
         public void TestMultipleParameterErrorNoInvoke()
         {
@@ -76,6 +91,9 @@ namespace Gsd2Aml.Test
             }
         }
 
+        /// <summary>
+        /// Tests whether the CLI fails on double short/long parameters. 
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "Expected ArgumentException.")]
         public void TestCheckCliArgumentsWithIllegalArguments()
@@ -88,6 +106,9 @@ namespace Gsd2Aml.Test
             settings.CheckCliArguments();
         }
 
+        /// <summary>
+        /// Tests whether the CLI works with legal arguments.
+        /// </summary>
         [TestMethod]
         public void TestCheckCliArgumentsWithLegalArguments()
         {
@@ -100,6 +121,9 @@ namespace Gsd2Aml.Test
             settings.CheckCliArguments();
         }
 
+        /// <summary>
+        /// Tests whether CLI arguments are parsed correctly.
+        /// </summary>
         [TestMethod]
         public void TestParseCliArguments()
         {

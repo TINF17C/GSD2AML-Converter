@@ -3,6 +3,9 @@ using System.Reflection;
 
 namespace Gsd2Aml.Cli
 {
+    /// <summary>
+    /// Contains utility logic.
+    /// </summary>
     internal static class Util
     {
         internal static Logger Logger { get; } = new Logger();

@@ -8,9 +8,19 @@ using System.Reflection;
 
 namespace Gsd2Aml.Test
 {
+    /// <summary>
+    /// Tests the compressor.
+    /// </summary>
     [TestClass]
     public class CompressorTest
     {
+        /// <summary>
+        /// A full end-to-end test of the compressor.
+        /// Checks for:
+        ///     1. A correctly stored .amlx package
+        ///     2. The correct content within the .amlx package
+        /// Deletes the package at the end.
+        /// </summary>
         [TestMethod]
         public void TestCompressor()
         {
@@ -29,11 +39,14 @@ namespace Gsd2Aml.Test
             var res = Directory.GetFiles(testDir).Where(f => !Path.GetFileName(f).Equals(amlFileName)).ToArray();
             var amlFile = Directory.GetFiles(testDir).First(f => Path.GetFileName(f).Equals(amlFileName));
 
+            // Tests for 1)
+
             var finalAmlxFile = Path.Combine(testDir, "myAmlx.amlx");
             Compressor.Compress(amlFile, Path.Combine(testDir, "myAmlx.amlx"), res, true);
 
             using (var archive = ZipFile.OpenRead(finalAmlxFile))
-            {               
+            {
+                // Tests for 2)
                 foreach (var fileName in res.Select(Path.GetFileName))
                 {
                     if (archive.Entries.Any(f => f.Name.Equals(fileName))) continue;
@@ -52,6 +65,9 @@ namespace Gsd2Aml.Test
             if (failed) Assert.Fail(errorMsg);
         }
 
+        /// <summary>
+        /// Checks whether the Compressor fails on omitted AML name.
+        /// </summary>
         [TestMethod]
         public void FailOnOmittedAmlName() 
         {
@@ -71,6 +87,9 @@ namespace Gsd2Aml.Test
 
         }
 
+        /// <summary>
+        /// Checks whether the Compressor fails on omitted destination path.
+        /// </summary>
         [TestMethod]
         public void FailOnOmittedDestinationPath()
         {
@@ -89,6 +108,9 @@ namespace Gsd2Aml.Test
             }
         }
 
+        /// <summary>
+        /// Tests whether the Compressor works correctly when no resources are specified.
+        /// </summary>
         [TestMethod]
         public void TestEmptyResources()
         {

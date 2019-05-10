@@ -27,7 +27,7 @@ namespace Gsd2Aml.Lib
         private static XmlDocument GsdDocument { get; set; }
 
         /// <summary>
-        /// The convert function which returns the AML file as a string.
+        /// Converts a GSDML input file and returns the resulting AML file as a string.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="strictValidation">A flag which indicates if the GSD should be checked for correctness.</param>
@@ -46,7 +46,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// The convert function which will create the .amlx package.
+        /// Converts a GSDML input file and creates the .amlx package.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
@@ -71,12 +71,12 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// Deserializes the translation table and the input file. Then it checks the input file if it is valid.
+        /// Deserializes the translation table and the input file. Then it checks the input file for validity.
         /// After that it starts the conversion process.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
-        /// <param name="strictValidation">A flag which indicates if the GSD should be checked for correctness.</param>
+        /// <param name="strictValidation">A flag which indicates if the GSDML should be checked for correctness.</param>
         private static void StartConversion(string inputFile, string outputFile, bool strictValidation)
         {
             if (strictValidation) Util.CheckGsdFileForCorrectness(inputFile);
@@ -106,7 +106,8 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// Starts the real conversion process. It iterates over the GSD properties and translates it to AML.
+        /// Starts the real conversion process.
+        /// It iterates over the GSDML properties and translates it to AML.
         /// Then it recursively starts a new Handle call with the translated property.
         /// </summary>
         /// <typeparam name="TA">The type of the current AML head object.</typeparam>
@@ -160,7 +161,7 @@ namespace Gsd2Aml.Lib
         /// <typeparam name="TA">The type of the AML head object.</typeparam>
         /// <param name="currentAmlHead">The AML head object in which the translation object will be set.</param>
         /// <param name="translationRule">The translation rule which will be used to translate the GSD object to an AML object.</param>
-        /// <returns>Return value is the new AML head object.</returns>
+        /// <returns>The new AML head object.</returns>
         private static dynamic Translate<TA>(ref TA currentAmlHead, XmlNode translationRule)
         {
             // Get information of the translation rule. (replacement and references)
@@ -182,7 +183,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// This function iterates over all sub properties of the replacement to translate these and set it into the replacementInstance.
+        /// This function iterates over all sub properties of the replacement to translate these and set them into the replacementInstance.
         /// </summary>
         /// <param name="replacement">The replacement rule.</param>
         /// <param name="replacementInstance">The replacement instance in which the sub properties will be set.</param>
@@ -219,7 +220,7 @@ namespace Gsd2Aml.Lib
         /// This function handles a new Rule call in the translation table.
         /// It takes the inner text of the rule node and translate it with the corresponding rule.
         /// </summary>
-        /// <param name="childNode">The rule node which contains the information which rule should be called.</param>
+        /// <param name="childNode">The rule node which contains the information which rule should be applied.</param>
         /// <param name="replacementInstance">The instance in which the rule instance will be set/added.</param>
         private static void HandleRuleCall(XmlNode childNode, dynamic replacementInstance)
         {
@@ -264,7 +265,7 @@ namespace Gsd2Aml.Lib
         }
 
         /// <summary>
-        /// The translation of the sub properties of a translation rule.
+        /// Translates the sub properties of a translation rule.
         /// </summary>
         /// <param name="replacement">The XmlNode replacement rule.</param>
         /// <returns>The property info which describes the translationInstance and the translation instance in which the sub property instances will be set.</returns>
@@ -299,7 +300,8 @@ namespace Gsd2Aml.Lib
 
         /// <summary>
         /// This function sets the attributes of a replacement node to the translation instance.
-        /// This function assumes that all attributes are of type string. If not, then please contact the developers.
+        /// This function assumes that all attributes are of type string.
+        /// If not, then please contact the developers <see href="https://github.com/TINF17C/GSD2AML-Converter"/>.
         /// </summary>
         /// <param name="replacement">The replacement node of the translation table which will be used to set those attributes to the instance.</param>
         /// <param name="translationInstance">The instance in which the attributes will be set.</param>

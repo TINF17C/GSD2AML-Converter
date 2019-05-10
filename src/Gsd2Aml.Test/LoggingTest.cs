@@ -7,9 +7,15 @@ using System.IO;
 
 namespace Gsd2Aml.Test
 {
+    /// <summary>
+    /// Tests the logger.
+    /// </summary>
     [TestClass]
     public class LoggingTest
     {
+        /// <summary>
+        /// Checks whether various messages are logged correctly for the CLI.
+        /// </summary>
         [TestMethod]
         public void TestCliLogging()
         {
@@ -77,6 +83,9 @@ namespace Gsd2Aml.Test
 
         }
 
+        /// <summary>
+        /// Checks whether various messages are logged correctly for the GUI.
+        /// </summary>
         [TestMethod]
         public void TestGuiLogging()
         {
@@ -141,6 +150,11 @@ namespace Gsd2Aml.Test
             }
         }
 
+        /// <summary>
+        /// Gets the file name of the current log file.
+        /// </summary>
+        /// <param name="searchedTarget">The log target name.</param>
+        /// <returns>The file name of the log file.</returns>
         private static string GetLogFileName(string searchedTarget)
         {
             var wrapperTarget = LogManager.Configuration.FindTargetByName(searchedTarget) as WrapperTargetBase;
