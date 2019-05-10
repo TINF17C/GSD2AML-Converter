@@ -30,6 +30,7 @@ namespace Gsd2Aml.Lib
         /// The convert function which returns the AML file as string.
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
+        /// <param name="strictValidation">A flag which indicates if the GSD should be checked for correctness.</param>
         /// <returns>The AML object serialized to a XML string.</returns>
         public static string Convert(string inputFile, bool strictValidation = true)
         {
@@ -75,6 +76,7 @@ namespace Gsd2Aml.Lib
         /// </summary>
         /// <param name="inputFile">The path to the input file.</param>
         /// <param name="outputFile">The path to the output file.</param>
+        /// <param name="strictValidation">A flag which indicates if the GSD should be checked for correctness.</param>
         private static void StartConversion(string inputFile, string outputFile, bool strictValidation)
         {
             if (strictValidation) Util.CheckGsdFileForCorrectness(inputFile);

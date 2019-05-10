@@ -20,8 +20,8 @@ namespace Gsd2Aml.Cli
         private const string CStringOutput = "--string";
         private const string CStringOutputShort = "-s";
 
-        private const string CValidation = "--validate";
-        private const string CValidationShort = "-v";
+        private const string CValidation = "--novalidate";
+        private const string CValidationShort = "-n";
 
         private static string[] Arguments { get; } = { CHelp, CHelpShort, CInputFile, CInputFileShort, COutputFile, COutputFileShort, CStringOutput, CStringOutputShort, CValidation, CValidationShort };
 
