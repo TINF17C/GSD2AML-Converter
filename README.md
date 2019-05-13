@@ -1,6 +1,6 @@
 # Gsd2Aml
 
-Welcome to the Gsd2Aml! This project was developed as a student project by (in alphabetical order)
+Welcome to Gsd2Aml! This project was developed as a student project by (in alphabetical order)
 
 1. Nico Dietz
 2. Steffen Gerdes
