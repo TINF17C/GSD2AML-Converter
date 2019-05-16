@@ -248,8 +248,8 @@ namespace Gsd2Aml.Lib
             var lastNode = Util.IterateThroughGsdDocument(translationRule.Name);
             if (lastNode == null)
             {
-                Logger?.Log(LogLevel.Error, $"Failed to iterate thorugh a rule path. {translationRule.Name}");
-                throw new InvalidDataException("Failed to handle a rule call in translation table.");
+                Logger?.Log(LogLevel.Warning, $"Failed to iterate thorugh a rule path. {translationRule.Name}");
+                // throw new InvalidDataException("Failed to handle a rule call in translation table.");
             }
 
             var preLastnode = (XmlElement) lastNode.ParentNode;
