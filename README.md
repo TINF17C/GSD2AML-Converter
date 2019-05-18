@@ -9,7 +9,8 @@ Welcome to Gsd2Aml! This project was developed as a student project by (in alpha
 5. Phuc Quang Vu
 6. Michael Weidmann
 
-at [Cooperate State University Stuttgart](https://www.dhbw-stuttgart.de/home/).
+at [Cooperate State University Stuttgart](https://www.dhbw-stuttgart.de/home/) under supervision of [Markus Rentschler](http://wwwlehre.dhbw-stuttgart.de/~rentschler/).
+
 This project is distributed via:
 
 1. [GitHub](https://github.com/TINF17C/GSD2AML-Converter)
