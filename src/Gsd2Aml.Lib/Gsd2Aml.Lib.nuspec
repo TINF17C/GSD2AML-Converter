@@ -9,18 +9,16 @@
     <projectUrl>https://github.com/TINF17C/GSD2AML-Converter</projectUrl>
     <license type="file">LICENSE.md</license>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <!--<iconUrl>https://github.com/TINF17C/GSD2AML-Converter/nuget_icon.png</iconUrl>-->
-    <releaseNotes>First public release</releaseNotes>
+    <iconUrl>https://github.com/TINF17C/GSD2AML-Converter/blob/master/res/logo.png</iconUrl>
     <description>Library to perform a conversion from Profinet gsd to aml/amlx files</description>
     <copyright>$copyright$</copyright>
     <tags>aml amlx automationml gsd Profinet</tags>
-	<!--<repository type="git" url="https://github.com/TINF17C/GSD2AML-Converter/gsd2aml-converter.git" />--><!-- TODO: Add correct repo path -->
+	<repository type="git" url="https://github.com/TINF17C/GSD2AML-Converter.git" />
   </metadata>
   <files>
     <file src="gsd2aml.xml" target="content" />
     <file src="README.md" target="content" />
     <file src="README.md" target="" />
     <file src="..\..\LICENSE.md" target="" />
-    <!--<file src="bin\Release\Gsd2Aml.Lib.xml" target="lib\net47" />-->
   </files>
 </package>
