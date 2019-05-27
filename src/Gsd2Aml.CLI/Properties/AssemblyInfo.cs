@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Gsd2Aml.Cli")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Corporative State University Stuttgart TINF17C")]
+[assembly: AssemblyCompany("Cooperative State University Stuttgart TINF17C")]
 [assembly: AssemblyProduct("GSD2AML Converter")]
-[assembly: AssemblyCopyright("Copyright ©  2019 Corporative State University Stuttgart TINF17C")]
+[assembly: AssemblyCopyright("Copyright © 2019 Cooperative State University Stuttgart TINF17C")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
