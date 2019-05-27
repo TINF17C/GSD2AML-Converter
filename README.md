@@ -28,7 +28,7 @@ There are several ways to use this project:
 2. CLI
 3. Implement the library for your own purposes
 
-You can get an installer or a portable version on the appropiate GitHub release page.
+You can get an installer or a portable version on the appropiate GitHub [release page](https://github.com/TINF17C/GSD2AML-Converter/releases).
 
 ## Contributing to this project
 
