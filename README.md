@@ -9,7 +9,7 @@ Welcome to Gsd2Aml! This project was developed as a student project by (in alpha
 5. Phuc Quang Vu
 6. Michael Weidmann
 
-at [Cooperate State University Stuttgart](https://www.dhbw-stuttgart.de/home/) under supervision of [Markus Rentschler](http://wwwlehre.dhbw-stuttgart.de/~rentschler/).
+at [Cooperate State University Stuttgart](https://www.dhbw-stuttgart.de/home/) under supervision of [Markus Rentschler](http://wwwlehre.dhbw-stuttgart.de/~rentschler/) and Christian Ewertz.
 
 This project is distributed via:
 
