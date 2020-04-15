@@ -2,14 +2,14 @@
 
 Welcome to Gsd2Aml! This project was developed as a student project by (in alphabetical order)
 
-1. Nico Dietz
-2. Steffen Gerdes
-3. Constantin Ruhdorfer
-4. Jonas Komarek
-5. Phuc Quang Vu
-6. Michael Weidmann
+1. [Nico Dietz](https://github.com/dillasyx)
+2. [Steffen Gerdes](https://github.com/SteffenGerdes)
+3. [Constantin Ruhdorfer](https://github.com/ConstantinRuhdorfer)
+4. [Jonas Komarek](https://github.com/JonasKomarek)
+5. [Vu Quang Phuc](https://github.com/VuQuangPhuc)
+6. [Michael Weidmann](https://github.com/michaelweidmann)
 
-at [Cooperate State University Stuttgart](https://www.dhbw-stuttgart.de/home/) under supervision of [Markus Rentschler](http://wwwlehre.dhbw-stuttgart.de/~rentschler/) and Christian Ewertz.
+at [Baden-Wuerttemberg Cooperative State University (DHBW) Stuttgart](https://www.dhbw-stuttgart.de/home/) under supervision of [Markus Rentschler](http://wwwlehre.dhbw-stuttgart.de/~rentschler/) and Christian Ewertz.
 
 This project is distributed via:
 
