@@ -315,7 +315,13 @@ namespace Gsd2Aml.Lib
         internal static XmlElement IterateThroughGsdDocument(string path, XmlElement alternativeIterator = null)
         {
             var splitStrings = path.Split('.');
-            var iteratorNode = alternativeIterator ?? Converter.GsdDocument.DocumentElement;
+            var iteratorNode = Converter.GsdDocument.DocumentElement;
+
+            if (alternativeIterator != null)
+            {
+                iteratorNode = alternativeIterator;
+                splitStrings = splitStrings.Skip(Array.IndexOf(splitStrings, alternativeIterator.Name) + 1).Take(splitStrings.Length).ToArray();
+            }
 
             if (iteratorNode == null)
             {
@@ -348,7 +354,7 @@ namespace Gsd2Aml.Lib
             var xsdResources = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".xsd"));
 
             var settings = new XmlReaderSettings {DtdProcessing = DtdProcessing.Ignore, ValidationType = ValidationType.Schema};
-            
+
             foreach (var xsdFile in xsdResources)
             {
                 var xsdResourceStream = assembly.GetManifestResourceStream(xsdFile);
